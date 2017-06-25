@@ -4,3 +4,5 @@ sources:
 script:
 - mkdir out/bin
 - install -m 0700 src/busybox-x86_64 out/bin/busybox
+- cd out
+- chroot . /bin/busybox --install -s /bin
