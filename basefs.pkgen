@@ -1,0 +1,10 @@
+version: v0.1
+script:
+- cd out
+- mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
+- (cd usr && mkdir bin lib)
+- ln -s usr/bin bin
+- ln -s usr/bin sbin
+- (cd var && mkdir cache db games lib local log opt spool tmp)
+- ln -s run var/run
+- ln -s run/lock var/lock
