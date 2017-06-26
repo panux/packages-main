@@ -1,3 +1,4 @@
+name: basefs
 version: v0.1
 script:
 - cd out
