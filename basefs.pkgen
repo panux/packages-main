@@ -1,7 +1,7 @@
 name: basefs
 version: v0.1
 script:
-- cd out
+- cd out/basefs
 - mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
 - (cd usr && mkdir bin lib)
 - ln -s usr/bin bin

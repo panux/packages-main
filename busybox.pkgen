@@ -3,6 +3,6 @@ version: 1.21.1
 sources:
 - https://www.busybox.net/downloads/binaries/{{.Version}}/busybox-x86_64
 script:
-- mkdir out/bin
-- install -m 0700 src/busybox-x86_64 out/bin/busybox
-- chroot out /bin/busybox --install -s /bin
+- mkdir out/busybox/bin
+- install -m 0700 src/busybox-x86_64 out/busybox/bin/busybox
+- chroot out/busybox /bin/busybox --install -s /bin

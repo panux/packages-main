@@ -1,0 +1,16 @@
+name: musl, musl-a, musl-headers, musl-tools
+version: v1.1.16
+builddependencies:
+  - gcc
+data:
+  Parallell: 30
+sources:
+  - git://git.musl-libc.org/musl?tag={{.Version}}
+script:
+  - cat $0
+  - (cd src/musl && ./configure && make -j{{.Data.Parallell}}) || exit 1
+  - make -C src/musl DESTDIR=$PWD/out/musl install-libs || exit 1
+  - make -C src/musl DESTDIR=$PWD/out/musl-a install-libs || exit 1
+  - make -C src/musl DESTDIR=$PWD/out/musl-headers install-headers || exit 1
+  - make -C src/musl DESTDIR=$PWD/out/musl-tools install-tools || exit 1
+  - rm -rf $PWD/out/musl/usr/local/musl/lib/*.a $PWD/out/musl-a/usr/local/musl/lib/*.o $PWD/out/musl-a/usr/local/musl/lib/*.so $PWD/out/musl-a/lib/
