@@ -31,6 +31,6 @@ script:
   - mv out/gnupg/usr/local/libexec out/gnupg-libexec/usr/local/libexec
   - mv out/gnupg/usr/local/share/man out/gnupg-man/usr/local/share/man
   - mv out/gnupg/usr/local/share/locale out/gnupg-locale/usr/local/share/locale
-  - mv out/gnupg/usr/local/sbin/* out/gnupg/bin/
-  - mv out/gnupg/usr/local/bin/* out/gnupg/bin/
-  - rm -rf out/gnupg/usr
+  - mv out/gnupg/usr/local/sbin/* out/gnupg/usr/bin/
+  - mv out/gnupg/usr/local/bin/* out/gnupg/usr/bin/
+  - rm -rf out/gnupg/usr/local

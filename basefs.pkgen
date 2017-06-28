@@ -3,9 +3,11 @@ version: v0.1
 script:
 - cd out/basefs
 - mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
-- (cd usr && mkdir lib)
+- (cd usr && mkdir lib bin local)
+- (cd usr/local && mkdir lib)
 - ln -s usr/bin bin
 - ln -s usr/bin sbin
+- ln -s usr/lib lib
 - (cd var && mkdir cache db games lib local log opt spool tmp)
 - ln -s run var/run
 - ln -s run/lock var/lock
