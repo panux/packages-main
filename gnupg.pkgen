@@ -1,0 +1,36 @@
+name: gnupg, gnupg-doc, gnupg-man, gnupg-locale, gnupg-help, gnupg-libexec
+version: 2.1.21
+builddependencies:
+  - alpine-sdk
+  - autoconf
+  - automake
+  - gettext-dev
+  - curl-dev
+  - libksba-dev
+  - libgcrypt-dev
+  - libgpg-error-dev
+  - npth-dev
+  - zlib-dev
+  - libassuan-dev
+  - openldap-dev
+  - imagemagick
+data:
+  Parallell: 30
+sources:
+  - https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-{{.Version}}.tar.bz2
+script:
+  - cat $0
+  - tar -xvf src/gnupg-{{.Version}}.tar.bz2 -C src
+  - mv src/gnupg-{{.Version}} src/gnupg
+  - ls src
+  - (cd src/gnupg && ./configure && make -j{{.Data.Parallell}}) || exit 1
+  - make -C src/gnupg DESTDIR=$PWD/out/gnupg install || exit 1
+  - mkdir -p out/gnupg-doc/usr/local/share out/gnupg-help/usr/local/share out/gnupg-libexec/usr/local out/gnupg-man/usr/local/share out/gnupg-locale/usr/local/share out/gnupg/bin
+  - mv out/gnupg/usr/local/share/doc out/gnupg-doc/usr/local/share/doc
+  - mv out/gnupg/usr/local/share/gnupg out/gnupg-help/usr/local/share/gnupg
+  - mv out/gnupg/usr/local/libexec out/gnupg-libexec/usr/local/libexec
+  - mv out/gnupg/usr/local/share/man out/gnupg-man/usr/local/share/man
+  - mv out/gnupg/usr/local/share/locale out/gnupg-locale/usr/local/share/locale
+  - mv out/gnupg/usr/local/sbin/* out/gnupg/bin/
+  - mv out/gnupg/usr/local/bin/* out/gnupg/bin/
+  - rm -rf out/gnupg/usr
