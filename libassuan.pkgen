@@ -1,9 +1,13 @@
-name: libassuan, libassuan-dev, libassuan-doc
+packages:
+  libassuan:
+  libassuan-dev:
+  libassuan-doc:
 version: 2.4.3
 builddependencies:
   - gcc
   - libc-dev
   - libgpg-error-dev
+  - xz
 data:
   Parallell: 30
 sources:
@@ -11,8 +15,9 @@ sources:
 script:
   - tar -xvf src/libassuan-{{.Version}}.tar.bz2 -C .
   - mv libassuan-{{.Version}} libassuan
-  - (cd libassuan && ./configure && make -j{{.Data.Parallell}})
-  - make -C libassuan DESTDIR="$PWD/out/libassuan" install
+  - (cd libassuan && ./configure)
+  - $(MAKE) -C libassuan
+  - $(MAKE) -C libassuan DESTDIR=$(shell pwd)/out/libassuan install
   - mv out/libassuan/usr/local/lib out/libassuan/lib
   - mkdir -p out/libassuan-doc/usr/local/share out/libassuan-dev/usr/local/share
   - mv out/libassuan/usr/local/share/info out/libassuan-doc/usr/local/share/info

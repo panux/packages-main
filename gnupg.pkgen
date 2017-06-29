@@ -1,4 +1,10 @@
-name: gnupg, gnupg-doc, gnupg-man, gnupg-locale, gnupg-help, gnupg-libexec
+packages:
+  gnupg:
+  gnupg-doc:
+  gnupg-man:
+  gnupg-locale:
+  gnupg-help:
+  gnupg-libexec:
 version: 2.1.21
 builddependencies:
   - alpine-sdk
@@ -19,13 +25,14 @@ data:
 sources:
   - https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-{{.Version}}.tar.bz2
 script:
-  - cat $0
   - tar -xvf src/gnupg-{{.Version}}.tar.bz2 -C src
   - mv src/gnupg-{{.Version}} src/gnupg
   - ls src
-  - (cd src/gnupg && ./configure && make -j{{.Data.Parallell}}) || exit 1
-  - make -C src/gnupg DESTDIR=$PWD/out/gnupg install || exit 1
-  - mkdir -p out/gnupg-doc/usr/local/share out/gnupg-help/usr/local/share out/gnupg-libexec/usr/local out/gnupg-man/usr/local/share out/gnupg-locale/usr/local/share out/gnupg/bin
+  - (cd src/gnupg && ./configure)
+  - $(MAKE) -C src/gnupg
+  - $(MAKE) -C src/gnupg DESTDIR=$(shell pwd)/out/gnupg install
+  - mkdir -p out/gnupg-doc/usr/local/share out/gnupg-help/usr/local/share out/gnupg-libexec/usr/local out/gnupg-man/usr/local/share out/gnupg-locale/usr/local/share out/gnupg/usr/bin
+  - find out/gnupg
   - mv out/gnupg/usr/local/share/doc out/gnupg-doc/usr/local/share/doc
   - mv out/gnupg/usr/local/share/gnupg out/gnupg-help/usr/local/share/gnupg
   - mv out/gnupg/usr/local/libexec out/gnupg-libexec/usr/local/libexec

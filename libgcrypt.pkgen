@@ -1,19 +1,22 @@
-name: libgcrypt, libgcrypt-dev, libgcrypt-doc, libgcrypt-man
+packages:
+  libgcrypt:
+  libgcrypt-dev:
+  libgcrypt-doc:
+  libgcrypt-man:
 version: 1.7.7
 builddependencies:
   - gcc
   - libc-dev
   - libgpg-error-dev
-data:
-  Parallell: 30
 sources:
   - https://www.gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-{{.Version}}.tar.bz2
 script:
   - tar -xvf src/libgcrypt-{{.Version}}.tar.bz2 -C .
   - mv libgcrypt-{{.Version}} libgcrypt
-  - (cd libgcrypt && ./configure --prefix=/usr && make -j{{.Data.Parallell}})
-  - make -C libgcrypt DESTDIR="$PWD/out/libgcrypt" install
-  - mkdir -p out/libgcrypt-doc/usr/local/share out/libgcrypt-dev/usr/local/share out/libgcrypt-man/usr/local/share
+  - (cd libgcrypt && ./configure --prefix=/usr)
+  - $(MAKE) -C libgcrypt
+  - $(MAKE) -C libgcrypt DESTDIR=$(shell pwd)/out/libgcrypt install
+  - mkdir -p out/libgcrypt-doc/usr/local/share out/libgcrypt-dev/usr/local/share out/libgcrypt-man/usr/local/share out/libgcrypt-dev/usr/local/libgcrypt
   - mv out/libgcrypt/usr/share/info out/libgcrypt-doc/usr/local/share/info
   - mv out/libgcrypt/usr/share/aclocal out/libgcrypt-dev/usr/local/share/aclocal
   - mv out/libgcrypt/usr/lib/libgcrypt.la out/libgcrypt-dev/usr/local/libgcrypt/libgcrypt.la

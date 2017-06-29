@@ -1,4 +1,5 @@
-name: busybox
+packages:
+  busybox:
 version: 1.21.1
 sources:
 - https://www.busybox.net/downloads/binaries/{{.Version}}/busybox-x86_64
