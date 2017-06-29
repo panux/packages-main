@@ -16,4 +16,4 @@ script:
   - mv out/musl/usr/local/musl/lib/*.a out/musl-a/usr/local/musl/lib/
   - unlink out/musl/lib/ld-musl-x86_64.so.1
   - (cd out/musl && ln -s usr/local/musl/lib/libc.so usr/lib/ld-musl-x86_64.so.1)
-  - rm out/musl/lib
+  - rm -r out/musl/lib
