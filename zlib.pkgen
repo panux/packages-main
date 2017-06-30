@@ -1,0 +1,28 @@
+packages:
+  zlib:
+    dependencies:
+    - musl
+  zlib-dev:
+    dependencies:
+    - zlib
+  zlib-man:
+    dependencies:
+    - zlib
+version: 1.2.3.9
+builddependencies:
+- gcc
+- libc-dev
+sources:
+- https://zlib.net/fossils/zlib-{{.Version}}.tar.gz
+script:
+- tar -xvf src/zlib-{{.Version}}.tar.gz
+- mv zlib-{{.Version}} zlib
+- (cd zlib && ./configure --prefix=/usr --shared --libdir=/usr/lib)
+- $(MAKE) -C zlib
+- $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
+- mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
+- mv out/zlib/usr/include out/zlib-dev/usr/include
+- mv out/zlib/usr/lib/libz.a out/zlib-dev/usr/lib/libz.a
+- mkdir out/zlib-man/usr
+- mv out/zlib/usr/share out/zlib-man/usr/share
+- rm -r out/zlib/usr/lib/pkgconfig
