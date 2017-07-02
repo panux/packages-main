@@ -1,5 +1,11 @@
 packages:
   gnupg:
+    dependencies:
+    - libgpg-error
+    - libassuan
+    - libgcrypt
+    - zlib
+    - libintl
   gnupg-doc:
   gnupg-man:
   gnupg-locale:
