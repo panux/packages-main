@@ -1,0 +1,15 @@
+packages:
+  shpkg:
+    dependencies:
+    - busybox
+    - gnupg
+version: v0.1-alpha
+builddependencies:
+- gnupg
+sources:
+- git://github.com/panux/shpkg?checkout=master
+script:
+- mkdir -p out/shpkg/usr/bin out/shpkg/etc/shpkg/gpg
+- install -m 0700 src/shpkg/shpkg.sh out/shpkg/usr/bin/shpkg
+- install -m 0600 src/shpkg/default.conf out/shpkg/etc/shpkg/pkg.conf
+- gpg --homedir out/shpkg/etc/shpkg/gpg --keyserver pgp.mit.edu --recv-keys DD8203F5
