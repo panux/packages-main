@@ -1,6 +1,7 @@
 packages:
   gnupg:
     dependencies:
+    - musl
     - libgpg-error
     - libassuan
     - libgcrypt
