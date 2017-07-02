@@ -32,7 +32,7 @@ script:
 - mkdir -p out/gettext-dev/usr/share out/gettext-dev/usr/lib
 - mv out/gettext/usr/lib/*.la out/gettext-dev/usr/lib/
 - mv out/gettext/usr/share/gettext out/gettext-dev/usr/share/gettext
-- mv out/gettext/usr/share/gettext-{{.Version}} out/gettext-dev/usr/share/gettext-{{.Version}}
+- mv out/gettext/usr/share/gettext-0.19.8 out/gettext-dev/usr/share/gettext-0.19.8
 - mv out/gettext/usr/include out/gettext-dev/usr/include
 - mv out/gettext/usr/share/aclocal out/gettext-dev/usr/share/aclocal
 - mkdir -p out/gettext-locale/usr/share
