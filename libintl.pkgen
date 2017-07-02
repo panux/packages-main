@@ -12,7 +12,7 @@ packages:
   libintl:
     dependencies:
     - musl
-version: 0.19.8
+version: 0.19.8.1
 builddependencies:
 - gcc
 - libc-dev
