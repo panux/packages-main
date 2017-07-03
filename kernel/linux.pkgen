@@ -33,7 +33,8 @@ script:
 - mv src/kernel.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux oldconfig
-- $(MAKE) -C linux bzImage vmlinuz modules
+- $(MAKE) -C linux
+- $(MAKE) -C linux bzImage vmlinux modules
 - mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
 - $(MAKE) -C linux INSTALL_PATH=$(shell pwd)/out/linux-kernel/boot install
 - $(MAKE) -C linux INSTALL_HDR_PATH=$(shell pwd)/out/linux-headers/usr headers_install
