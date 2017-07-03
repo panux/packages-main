@@ -5,7 +5,7 @@ version: 4.10.17
 oneshell: true
 sources:
 - https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/snapshot/linux-stable-{{.Version}}.tar.gz
-- https://github.com/panux/packages-main/blob/master/kernel/kernel.conf
+- https://raw.githubusercontent.com/panux/packages-main/master/kernel/kernel.conf
 builddependencies:
 - gcc
 - libc-dev
