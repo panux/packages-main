@@ -15,6 +15,6 @@ script:
 - mv src/kernel.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux oldconfig
-- $(MAKE) -C linux
+- $(MAKE) -C linux bzImage
 - $(MAKE) -C linux DESTDIR=$(shell pwd)/out/linux install
 - $(MAKE) -C linux headers_install INSTALL_HDR_PATH=$(shell pwd)/out/linux/usr
