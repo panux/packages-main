@@ -7,8 +7,14 @@ sources:
 - https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/snapshot/linux-stable-{{.Version}}.tar.gz
 - https://raw.githubusercontent.com/panux/packages-main/master/kernel/kernel.conf
 builddependencies:
-- gcc
-- libc-dev
+- perl
+- sed
+- installkernel
+- bash
+- gmp-dev
+- bc
+- linux-headers
+- elfutils-dev
 script:
 - tar -xf src/linux-stable-{{.Version}}.tar.gz
 - mv linux-stable-{{.Version}} linux
