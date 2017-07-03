@@ -6,7 +6,7 @@ version: v1.1.16
 builddependencies:
   - gcc
 sources:
-  - git://git.musl-libc.org/musl?tag={{.Version}}
+  - git://git.musl-libc.org/musl?checkout={{.Version}}
 script:
   - (cd src/musl && ./configure)
   - $(MAKE) -C src/musl
