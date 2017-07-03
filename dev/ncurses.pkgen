@@ -1,0 +1,29 @@
+packages:
+  ncurses:
+    dependencies:
+    - musl
+    - ncurses-terminfo
+  ncurses-man:
+    dependencies:
+    - ncurses
+  ncurses-terminfo:
+  ncurses-headers:
+version: 6.0
+builddependencies:
+- gcc
+- libc-dev
+sources:
+- https://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{.Version}}.tar.gz
+script:
+- tar -xf src/ncurses-{{.Version}}.tar.gz
+- mv ncurses-{{.Version}} ncurses
+- (cd ncurses && ./configure)
+- make -C ncurses
+- make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
+- mkdir -p out/ncurses-man/usr/share
+- mv out/ncurses/usr/share/man out/ncurses-man/usr/share/man
+- mkdir -p out/ncurses-terminfo/usr/share
+- mv out/ncurses/usr/share/terminfo out/ncurses-terminfo/usr/share/terminfo
+- mkdir out/ncurses-headers/usr
+- mv out/ncurses/usr/include out/ncurses-headers/usr/include
+- rm -rf out/ncurses/usr/share
