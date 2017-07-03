@@ -2,6 +2,7 @@ packages:
   lua:
     dependencies:
     - musl
+    - readline
   lua-headers:
   lua-man:
     dependencies:
