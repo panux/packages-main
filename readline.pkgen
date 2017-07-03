@@ -1,0 +1,39 @@
+packages:
+  readline:
+    dependencies:
+    - musl
+  readline-headers:
+  readline-doc:
+  readline-man:
+    dependencies:
+    - readline
+  readline-dev:
+    dependencies:
+    - readline-headers
+    - readline-man
+    - readline-doc
+version: 6.3
+builddependencies:
+- gcc
+- libc-dev
+sources:
+- https://ftp.gnu.org/gnu/readline/readline-{{.Version}}.tar.gz
+script:
+- tar -xf src/readline-{{.Version}}.tar.gz
+- mv readline-{{.Version}} readline
+- (cd readline && ./configure)
+- make -C readline
+- mkdir -p out/readline/usr/local/lib
+- make -C readline DESTDIR=$(shell pwd)/out/readline install
+- mv out/readline/usr/local/lib out/readline/usr/lib
+- mkdir -p out/readline-dev/usr/local/share
+- mv out/readline/usr/local/share/readline out/readline-dev/usr/local/share/readline
+- mkdir -p out/readline-headers/usr/local
+- mv out/readline/usr/local/include out/readline-headers/usr/local/include
+- mkdir -p out/readline-doc/usr/local/share
+- mv out/readline/usr/local/share/info out/readline-doc/usr/local/share/info
+- mv out/readline/usr/local/share/doc out/readline-doc/usr/local/share/doc
+- mkdir -p out/readline-man/usr/local/share
+- mv out/readline/usr/local/share/man out/readline-man/usr/local/share/man
+- rm -rf out/readline/usr/local
+- ls out/readline
