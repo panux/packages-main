@@ -15,4 +15,5 @@ script:
 - install -m 0600 src/shpkg/default.conf out/shpkg/etc/shpkg/pkg.conf
 - gpg --homedir out/shpkg/etc/shpkg/gpg --keyserver pgp.mit.edu --recv-keys DD8203F5
 - expect -c "spawn gpg --homedir out/shpkg/etc/shpkg/gpg --edit-key DD8203F5 trust quit; expect \"Your decision? \" { send \"5\r\" }; expect \"Do you really want to set this key to ultimate trust? (y/N) \" { send \"y\r\" }; interact"
-- cp out/shpkg/etc/shpkg/gpg/pubring.gpg out/shpkg/etc/shpkg/gpg/trustedkeys.gpg
+- ls out/shpkg/etc/shpkg/gpg
+- cp out/shpkg/etc/shpkg/gpg/pubring.kbx out/shpkg/etc/shpkg/gpg/trustedkeys.gpg
