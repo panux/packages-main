@@ -4,7 +4,7 @@ packages:
 version: 4.10.17
 oneshell: true
 sources:
-- https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/snapshot/linux-stable-{{.Version}}.tar.gz
+- https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
 - https://raw.githubusercontent.com/panux/packages-main/master/kernel/kernel.conf
 builddependencies:
 - perl
@@ -16,8 +16,8 @@ builddependencies:
 - linux-headers
 - elfutils-dev
 script:
-- tar -xf src/linux-stable-{{.Version}}.tar.gz
-- mv linux-stable-{{.Version}} linux
+- tar -xf src/linux-{{.Version}}.tar.xz
+- mv linux-{{.Version}} linux
 - mv src/kernel.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux oldconfig
