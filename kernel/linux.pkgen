@@ -7,7 +7,8 @@ sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
 - https://raw.githubusercontent.com/panux/packages-main/master/kernel/kernel.conf
 builddependencies:
-- alpine-sdk
+- gcc
+- libc-dev
 - perl
 - sed
 - installkernel
