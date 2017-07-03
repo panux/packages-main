@@ -2,6 +2,7 @@ packages:
   linux:
     dependencies:
     - linux-kernel
+    - linux-modules
   linux-kernel:
   linux-modules:
     dependencies:
