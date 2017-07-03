@@ -47,5 +47,5 @@ script:
   - mv out/gnupg/usr/local/share/locale out/gnupg-locale/usr/local/share/locale
   - mv out/gnupg/usr/local/sbin/* out/gnupg/usr/bin/
   - mv out/gnupg/usr/local/bin/* out/gnupg/usr/bin/
-  - (cd out/gnupg/usr/bin && ln -s gpg2 gpg)
+  - (cd out/gnupg/usr/bin && ln -s gpg2 gpg && ln -s gpgv2 gpgv)
   - rm -rf out/gnupg/usr/local
