@@ -2,6 +2,7 @@ packages:
   readline:
     dependencies:
     - musl
+    - ncurses
   readline-headers:
   readline-doc:
   readline-man:
