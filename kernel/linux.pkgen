@@ -1,5 +1,14 @@
 packages:
   linux:
+    dependencies:
+    - linux-kernel
+  linux-kernel:
+  linux-modules:
+    dependencies:
+    - linux-kernel
+  linux-firmware:
+    dependencies:
+    - linux-kernel
   linux-headers:
 version: 4.10.17
 oneshell: true
@@ -23,6 +32,9 @@ script:
 - mv src/kernel.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux oldconfig
-- $(MAKE) -C linux bzImage
-- $(MAKE) -C linux DESTDIR=$(shell pwd)/out/linux install
-- $(MAKE) -C linux headers_install INSTALL_HDR_PATH=$(shell pwd)/out/linux/usr
+- $(MAKE) -C linux bzImage vmlinuz modules
+- mkdir out/linux/boot
+- $(MAKE) -C linux INSTALL_PATH=$(shell pwd)/out/linux-kernel/boot install
+- $(MAKE) -C linux INSTALL_HDR_PATH=$(shell pwd)/out/linux-headers/usr headers_install
+- $(MAKE) -C linux INSTALL_MOD_PATH=$(shell pwd)/out/linux-modules/usr modules_install
+- $(MAKE) -C linux INSTALL_FW_PATH=$(shell pwd)/out/linux-firmware/usr firmware_install
