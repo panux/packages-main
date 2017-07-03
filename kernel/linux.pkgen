@@ -1,0 +1,20 @@
+packages:
+  linux:
+  linux-headers:
+version: 4.10.17
+oneshell: true
+sources:
+- https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/snapshot/linux-stable-{{.Version}}.tar.gz
+- https://github.com/panux/packages-main/blob/master/kernel/kernel.conf
+builddependencies:
+- gcc
+- libc-dev
+script:
+- tar -xf src/linux-stable-{{.Version}}.tar.gz
+- mv linux-stable-{{.Version}} linux
+- mv src/kernel.conf linux/.config
+- cat linux/.config
+- $(MAKE) -C linux oldconfig
+- $(MAKE) -C linux
+- $(MAKE) -C linux DESTDIR=$(shell pwd)/out/linux install
+- $(MAKE) -C linux headers_install INSTALL_HDR_PATH=$(shell pwd)/out/linux/usr
