@@ -17,15 +17,16 @@ version: 6.3
 builddependencies:
 - gcc
 - libc-dev
+- ncurses-dev
 sources:
 - https://ftp.gnu.org/gnu/readline/readline-{{.Version}}.tar.gz
 script:
 - tar -xf src/readline-{{.Version}}.tar.gz
 - mv readline-{{.Version}} readline
 - (cd readline && ./configure)
-- make -C readline
+- make -C readline SHLIB_LIBS="-L/tools/lib -lncurses"
 - mkdir -p out/readline/usr/local/lib
-- make -C readline DESTDIR=$(shell pwd)/out/readline install
+- make -C readline SHLIB_LIBS="-L/tools/lib -lncurses" DESTDIR=$(shell pwd)/out/readline install
 - mv out/readline/usr/local/lib out/readline/usr/lib
 - mkdir -p out/readline-dev/usr/local/share
 - mv out/readline/usr/local/share/readline out/readline-dev/usr/local/share/readline
