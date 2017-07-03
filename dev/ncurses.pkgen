@@ -17,7 +17,7 @@ sources:
 script:
 - tar -xf src/ncurses-{{.Version}}.tar.gz
 - mv ncurses-{{.Version}} ncurses
-- (cd ncurses && ./configure)
+- (cd ncurses && ./configure --with-shared)
 - make -C ncurses
 - make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
 - mkdir -p out/ncurses-man/usr/share
