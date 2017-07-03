@@ -1,0 +1,7 @@
+packages:
+  base:
+    dependencies:
+    - basefs
+    - busybox
+    - shpkg
+version: v0.1
