@@ -1,4 +1,4 @@
-pkgs = basefs busybox gnupg libassuan libgcrypt libgpg-error libintl musl shpkg zlib kernel/linux
+pkgs = basefs busybox gnupg libassuan libgcrypt libgpg-error libintl musl shpkg zlib kernel/linux dev/lua
 
 all: $(pkgs)
 

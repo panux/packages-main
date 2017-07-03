@@ -1,0 +1,25 @@
+packages:
+  lua:
+    dependencies:
+    - musl
+  lua-headers:
+  lua-man:
+    dependencies:
+    - lua
+version: 5.3.4
+sources:
+- https://www.lua.org/ftp/lua-{{.Version}}.tar.gz
+builddependencies:
+- gcc
+- libc-dev
+- readline-dev
+script:
+- tar -xvf src/lua-{{.Version}}.tar.gz
+- mv lua-{{.Version}} lua
+- $(MAKE) -C lua linux
+- $(MAKE) -C lua local
+- mkdir -p out/lua/usr out/lua-headers/usr/local out/lua-man/usr/local
+- mv lua/install/bin out/lua/usr/bin
+- mv lua/install/lib out/lua/usr/lib
+- mv lua/install/include out/lua-headers/usr/local/include
+- mv lua/install/man out/lua-man/usr/local/man
