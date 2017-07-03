@@ -6,6 +6,7 @@ packages:
 version: v0.1-alpha
 builddependencies:
 - gnupg
+- expect
 sources:
 - git://github.com/panux/shpkg?checkout=master
 script:
@@ -13,3 +14,4 @@ script:
 - install -m 0700 src/shpkg/shpkg.sh out/shpkg/usr/bin/shpkg
 - install -m 0600 src/shpkg/default.conf out/shpkg/etc/shpkg/pkg.conf
 - gpg --homedir out/shpkg/etc/shpkg/gpg --keyserver pgp.mit.edu --recv-keys DD8203F5
+- expect -c "spawn gpg --homedir out/shpkg/etc/shpkg/gpg --edit-key DD8203F5 0 --yes trust quit; expect \"Your decision? \" { send \"5\r\" }; expect \"Do you really want to set this key to ultimate trust? (y/N) \" { send \"y\r\" }; interact"
