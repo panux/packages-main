@@ -9,7 +9,7 @@ builddependencies:
 sources:
 - https://github.com/mtoyoda/sl/archive/{{.Version}}.tar.gz
 script:
-- tar -xf src/sl-{{.Version}}.tar.gz
+- tar -xf src/{{.Version}}.tar.gz
 - mv sl-{{.Version}} sl
 - $(MAKE) -C sl
 - mkdir -p out/sl/usr/bin
