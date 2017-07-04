@@ -1,7 +1,7 @@
 packages:
   bash:
     dependencies:
-    - glibc
+    - musl
     - ncurses
     - readline
   bash-doc:
