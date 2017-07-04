@@ -6,10 +6,12 @@ version: 5.02
 builddependencies:
 - gcc
 - libc-dev
+- ncurses-dev
 sources:
-- https://github.com/mtoyoda/sl/archive/{{.Version}}.tar.gz
+- https://codeload.github.com/mtoyoda/sl/tar.gz/{{.Version}}
 script:
-- tar -xf src/{{.Version}}.tar.gz
+- mv src/{{.Version}} sl.tar.gz
+- tar -xf sl.tar.gz
 - mv sl-{{.Version}} sl
 - $(MAKE) -C sl
 - mkdir -p out/sl/usr/bin
