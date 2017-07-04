@@ -1,0 +1,37 @@
+packages:
+  bash:
+    dependencies:
+    - glibc
+    - ncurses
+    - readline
+  bash-doc:
+  bash-headers:
+  bash-locale:
+    dependencies:
+    - bash
+version: 4.4
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- readline-dev
+- gettext-dev
+sources:
+- https://git.savannah.gnu.org/cgit/bash.git/snapshot/bash-{{.Version}}.tar.gz
+script:
+- tar -xf src/bash-{{.Version}}.tar.gz
+- mv bash-{{.Version}} bash
+- (cd bash && ./configure)
+- $(MAKE) -C bash
+- $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
+- mkdir -p out/bash-headers/usr/local/include
+- mv out/bash/usr/local/include out/bash-headers/usr/local/include
+- mkdir -p out/bash-locale/usr/local/share/locale
+- mv out/bash/usr/local/share/locale out/bash-locale/usr/local/share/locale
+- rm out/bash/usr/local/lib/bash/Makefile.inc
+- mv out/bash/usr/local/lib/bash out/bash/usr/bin
+- mv out/bash/usr/local/bin/* out/bash/usr/bin
+- mkdir -p out/bash-doc/usr/local/share
+- mv out/bash/usr/local/share/doc out/bash-doc/usr/local/share
+- mv out/bash/usr/local/share/info out/bash-doc/usr/local/share
+- rm -rf out/bash/usr/local/share
