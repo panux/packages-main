@@ -24,10 +24,10 @@ script:
 - (cd bash && ./configure)
 - $(MAKE) -C bash
 - $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
-- mkdir -p out/bash-headers/usr/local/include
-- mv out/bash/usr/local/include out/bash-headers/usr/local/include
-- mkdir -p out/bash-locale/usr/local/share/locale
-- mv out/bash/usr/local/share/locale out/bash-locale/usr/local/share/locale
+- mkdir -p out/bash-headers/usr/local
+- mv out/bash/usr/local/include out/bash-headers/usr/local
+- mkdir -p out/bash-locale/usr/local/share
+- mv out/bash/usr/local/share/locale out/bash-locale/usr/local/share
 - rm out/bash/usr/local/lib/bash/Makefile.inc
 - mv out/bash/usr/local/lib/bash out/bash/usr/bin
 - mv out/bash/usr/local/bin/* out/bash/usr/bin
