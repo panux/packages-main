@@ -1,13 +1,15 @@
 package:
   sl:
     dependencies:
-    - gcc
-    - libc-dev
+    - musl
 version: 5.02
+builddependencies:
+- gcc
+- libc-dev
 sources:
-- https://github.com/mtoyoda/sl/archive/{{version}}.tar.gz
+- https://github.com/mtoyoda/sl/archive/{{.Version}}.tar.gz
 script:
-- tar -xf src/sl-{{version}}.tar.gz
+- tar -xf src/sl-{{.Version}}.tar.gz
 - mv sl-{{.Version}} sl
 - $(MAKE) -C sl
 - mkdir -p out/sl/usr/bin
