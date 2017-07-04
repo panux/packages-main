@@ -1,0 +1,14 @@
+package:
+  sl:
+    dependencies:
+    - gcc
+    - libc-dev
+version: 5.02
+sources:
+- https://github.com/mtoyoda/sl/archive/{{version}}.tar.gz
+script:
+- tar -xf src/sl-{{version}}.tar.gz
+- mv sl-{{.Version}} sl
+- $(MAKE) -C sl
+- mkdir -p out/sl/usr/bin
+- mv sl/sl out/sl/usr/bin/sl
