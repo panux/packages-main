@@ -2,6 +2,7 @@ packages:
   sl:
     dependencies:
     - musl
+    - ncurses
 version: 5.02
 builddependencies:
 - gcc
