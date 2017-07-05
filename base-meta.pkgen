@@ -3,5 +3,5 @@ packages:
     dependencies:
     - basefs
     - busybox
-    - shpkg
+    - lpkg
 version: v0.1
