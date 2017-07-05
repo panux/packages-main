@@ -13,7 +13,7 @@ sources:
 script:
 - mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/gpg
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
-- install -m 0600 src/lpkg/default.conf out/lpkg/etc/lpkg/pkg.conf
+- install -m 0600 src/lpkg/default.conf out/lpkg/etc/lpkg/lpkg.conf
 - gpg --homedir out/lpkg/etc/lpkg/gpg --keyserver pgp.mit.edu --recv-keys DD8203F5
 - expect -c "spawn gpg --homedir out/lpkg/etc/lpkg/gpg --edit-key DD8203F5 trust quit; expect \"Your decision? \" { send \"5\r\" }; expect \"Do you really want to set this key to ultimate trust? (y/N) \" { send \"y\r\" }; interact"
 - ls out/lpkg/etc/lpkg/gpg
