@@ -17,7 +17,7 @@ sources:
 script:
   - tar -xvf src/libgpg-error-{{.Version}}.tar.bz2 -C .
   - mv libgpg-error-{{.Version}} libgpg-error
-  - (cd libgpg-error && ./configure)
+  - (cd libgpg-error && ./configure --build={{.Arch}}-pc-linux-gnu)
   - $(MAKE) -C libgpg-error
   - $(MAKE) -C libgpg-error DESTDIR=$(shell pwd)/out/libgpg-error install
   - mv out/libgpg-error/usr/local/lib out/libgpg-error/lib

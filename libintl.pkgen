@@ -21,7 +21,7 @@ sources:
 script:
 - tar -xvf src/gettext-{{.Version}}.tar.xz
 - mv gettext-{{.Version}} gettext
-- (cd gettext && ./configure --prefix=/usr --enable-shared --libdir=/usr/lib)
+- (cd gettext && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --enable-shared --libdir=/usr/lib)
 - $(MAKE) -C gettext
 - $(MAKE) -C gettext DESTDIR=$(shell pwd)/out/gettext install
 - mkdir -p out/gettext-doc/usr/share

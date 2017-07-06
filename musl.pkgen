@@ -8,7 +8,7 @@ builddependencies:
 sources:
   - git://git.musl-libc.org/musl?checkout={{.Version}}
 script:
-  - (cd src/musl && ./configure)
+  - (cd src/musl && ./configure --build={{.Arch}}-pc-linux-gnu)
   - $(MAKE) -C src/musl
   - $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl install-libs
   - $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
