@@ -1,0 +1,17 @@
+packages:
+  nano:
+    dependencies:
+version: 2.8.5
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- gawk
+sources:
+- https://www.nano-editor.org/dist/v2.8/nano-{{.Version}}.tar.xz
+script:
+- tar -xf src/nano-{{.Version}}.tar.xz
+- mv nano-{{.Version}} nano
+- (cd nano && ./configure)
+- $(MAKE) -C nano
+- $(MAKE) -C nano DESTDIR=$(shell pwd)/out/nano install
