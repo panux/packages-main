@@ -2,8 +2,8 @@ packages:
   busybox:
 version: 1.21.1
 sources:
-- https://www.busybox.net/downloads/binaries/{{.Version}}/busybox-x86_64
+- https://www.busybox.net/downloads/binaries/{{.Version}}/busybox-{{.Arch}}
 script:
 - mkdir -p out/busybox/usr/bin
-- install -m 0700 src/busybox-x86_64 out/busybox/usr/bin/busybox
+- install -m 0700 src/busybox-{{.Arch}} out/busybox/usr/bin/busybox
 - chroot out/busybox /usr/bin/busybox --install -s /usr/bin
