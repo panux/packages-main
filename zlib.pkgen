@@ -17,7 +17,7 @@ sources:
 script:
 - tar -xvf src/zlib-{{.Version}}.tar.gz
 - mv zlib-{{.Version}} zlib
-- (cd zlib && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --shared --libdir=/usr/lib)
+- (cd zlib && ./configure --prefix=/usr --shared --libdir=/usr/lib)
 - $(MAKE) -C zlib
 - $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
 - mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
