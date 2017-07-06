@@ -3,4 +3,4 @@ pkgs = base-meta basefs busybox gnupg libassuan libgcrypt libgpg-error libintl m
 all: $(pkgs)
 
 $(pkgs) :
-	bash buildpkg.sh $@ $(DEST)
+	bash buildpkg.sh $@ $(DEST) $(ARCH)
