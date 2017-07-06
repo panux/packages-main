@@ -13,7 +13,9 @@ sources:
 script:
 - mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/gpg
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
-- install -m 0600 src/lpkg/default.conf out/lpkg/etc/lpkg/lpkg.conf
+- echo REPO=http://repo.projectpanux.com/beta/{{.Arch}}/pkgs/ > out/lpkg/etc/lpkg/lpkg.conf
+- echo GPGDIR=/etc/lpkg/gpg >> out/lpkg/etc/lpkg/lpkg.conf
+- chmod 0600 out/lpkg/etc/lpkg/lpkg.conf
 - gpg --homedir out/lpkg/etc/lpkg/gpg --keyserver keys.gnupg.net --recv-keys DD8203F5
 - expect -c "spawn gpg --homedir out/lpkg/etc/lpkg/gpg --edit-key DD8203F5 trust quit; expect \"Your decision? \" { send \"5\r\" }; expect \"Do you really want to set this key to ultimate trust? (y/N) \" { send \"y\r\" }; interact"
 - ls out/lpkg/etc/lpkg/gpg
