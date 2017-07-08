@@ -1,0 +1,27 @@
+packages:
+  git:
+    dependencies:
+version: 2.13.2
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- zip
+- zlib-dev
+- subversion
+- gettext
+- musl
+- perl
+- xmlto
+- expat
+- asciidoc
+sources:
+- https://www.kernel.org/pub/software/scm/git/git-{{.Version}}.tar.xz
+script:
+- tar -xf src/git-{{.Version}}.tar.xz
+- mv git-{{.Version}} git
+- mkdir -p out/git/usr
+- mkdir -p out/git/etc/gitconfig
+- (cd git && ./configure --build={{.Arch}}-pc-linux-gnu)
+- $(MAKE) -C git
+- $(MAKE) -C git DESTDIR=$(shell pwd)/out/git install
