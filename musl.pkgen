@@ -15,4 +15,4 @@ script:
   - mkdir -p out/musl/usr/lib out/musl-a/usr/local/musl/lib
   - mv out/musl/usr/local/musl/lib/*.a out/musl-a/usr/local/musl/lib/
   - rm -r out/musl/lib
-  - (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{.Arch}}.so.1)
+  - (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{if eq .Arch "x86"}}i386{{else}}{{.Arch}}{{end}}.so.1)
