@@ -1,6 +1,16 @@
 packages:
   git:
     dependencies:
+    - git-core
+  git-core:
+    dependencies:
+    - curl
+  git-gui:
+  gitk:
+  gitweb:
+  git-man:
+  git-perl5:
+  git-bin:
 version: 2.13.2
 builddependencies:
 - gcc
@@ -25,3 +35,21 @@ script:
 - (cd git && ./configure --build={{.Arch}}-pc-linux-gnu)
 - $(MAKE) -C git
 - $(MAKE) -C git DESTDIR=$(shell pwd)/out/git install
+- mkdir -p out/git-core/usr/local/share
+- mv out/git/usr/local/share/git-core out/git-core/usr/local/share
+- mkdir -p out/git-core/usr/local/libexec
+- mv out/git/usr/local/libexec/git-core out/git-core/usr/local/libexec
+- mkdir -p out/git-gui/usr/local/share
+- mv out/git/usr/local/share/git-gui out/git-gui/usr/local/share
+- mkdir -p out/gitk/usr/local/share
+- mv out/git/usr/local/share/gitk out/gitk/usr/local/share
+- mkdir -p out/gitweb/usr/local/share
+- mv out/git/usr/local/share/gitweb out/gitweb/usr/local/share
+- mkdir -p out/git-man/usr/local/share
+- mv out/git/usr/local/share/man out/git-man/usr/local/share
+- mkdir -p out/git-perl5/usr/local/share
+- mv out/git/usr/local/share/perl5 out/git-perl5/usr/local/share
+- mkdir -p out/git-perl5/usr/local/lib
+- mv out/git/usr/local/lib/perl5 out/git-perl5/usr/local/lib
+- mkdir -p out/git-bin/usr/local
+- mv out/git/usr/local/bin out/git-bin/usr/local
