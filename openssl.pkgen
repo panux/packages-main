@@ -26,15 +26,19 @@ builddependencies:
 - perl
 - musl-dev
 - linux-headers
+data:
+    amap:
+        x86_64: x86_64
+        x86: elf
 script:
 - adduser -D test
 - tar -xf src/openssl-{{.Version}}.tar.gz
 - mv openssl-{{.Version}} openssl
-- (cd openssl && ./Configure linux-x86_64 no-weak-ssl-ciphers no-async shared)
+- (cd openssl && ./Configure linux-{{index .Data.amap .Arch}} no-weak-ssl-ciphers no-async shared)
 - $(MAKE) -C openssl
 - cp -r openssl /home/test/openssl
 - chown -R test /home/test/openssl
-- su test -c "$(MAKE) -C /home/test/openssl test"
+- su test -s /bin/sh -c "$(MAKE) -C /home/test/openssl test"
 - $(MAKE) -C openssl DESTDIR=$(shell pwd)/out/openssl install
 - mkdir -p out/openssl-engines/usr/local/lib
 - mv out/openssl/usr/local/lib/engines-* out/openssl-engines/usr/local/lib
