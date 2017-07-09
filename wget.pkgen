@@ -1,0 +1,21 @@
+packages:
+  wget:
+    dependencies:
+version: 1.19.1
+builddependencies:
+- gcc
+- gawk
+- libc-dev
+- ncurses-dev
+- gnutls
+- zlib-dev
+- gnutls-utils
+- gnutls-dev
+sources:
+- https://ftp.gnu.org/gnu/wget/wget-{{.Version}}.tar.xz
+script:
+- tar -xf src/wget-{{.Version}}.tar.xz
+- mv wget-{{.Version}} wget
+- (cd wget && ./configure --build={{.Arch}}-pc-linux-gnu)
+- $(MAKE) -C wget
+- $(MAKE) -C wget DESTDIR=$(shell pwd)/out/wget install
