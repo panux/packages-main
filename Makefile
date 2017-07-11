@@ -1,4 +1,4 @@
-pkgs = base-meta basefs busybox gnupg libassuan libgcrypt libgpg-error libintl musl shpkg zlib readline sl bash nano wget git lpkg openssl dev/lua dev/ncurses
+pkgs = base-meta basefs busybox gnupg libassuan libgcrypt libgpg-error libintl musl shpkg zlib readline sl bash nano wget git lpkg openssl curl dev/lua dev/ncurses
 
 ifeq ($(ARCH),x86_64)
 	pkgs += kernel/linux
