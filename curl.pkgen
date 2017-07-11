@@ -1,0 +1,18 @@
+packages:
+  curl:
+    dependencies:
+    - openssl
+version: 7.54.1
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- zlib-dev
+sources:
+- https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
+script:
+- tar -xf src/curl-{{.Version}}.tar.gz
+- mv curl-{{.Version}} curl
+- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu)
+- $(MAKE) -C curl
+- $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
