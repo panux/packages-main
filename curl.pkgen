@@ -13,12 +13,13 @@ builddependencies:
 - libc-dev
 - ncurses-dev
 - zlib-dev
+- openssl-dev
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
 script:
 - tar -xf src/curl-{{.Version}}.tar.gz
 - mv curl-{{.Version}} curl
-- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu --disable-static)
+- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu --with-ssl --disable-static)
 - $(MAKE) -C curl
 - $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
 - mkdir -p out/libcurl/usr/local
