@@ -1,7 +1,12 @@
 packages:
   curl:
     dependencies:
-    - openssl
+    - libcurl
+  libcurl:
+    dependencies:
+    - libopenssl
+  curl-man:
+  curl-headers:
 version: 7.54.1
 builddependencies:
 - gcc
@@ -13,6 +18,14 @@ sources:
 script:
 - tar -xf src/curl-{{.Version}}.tar.gz
 - mv curl-{{.Version}} curl
-- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu --disable-static)
 - $(MAKE) -C curl
 - $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
+- mkdir -p out/libcurl/usr/local
+- mv out/curl/usr/local/lib out/libcurl/usr/local/lib
+- mkdir -p out/curl-man/usr/local
+- mv out/curl/usr/local/share out/curl-man/usr/local/share
+- mkdir -p out/curl-headers/usr/local
+- mv out/curl/usr/local/include out/curl-headers/usr/local/include
+- mv out/curl/usr/local/bin out/curl/usr/bin
+- rm -r out/curl/usr/local
