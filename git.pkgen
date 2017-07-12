@@ -27,6 +27,7 @@ builddependencies:
 - expat
 - asciidoc
 - openssl-dev
+- curl-dev
 sources:
 - https://www.kernel.org/pub/software/scm/git/git-{{.Version}}.tar.xz
 script:
