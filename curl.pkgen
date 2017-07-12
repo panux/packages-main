@@ -23,10 +23,10 @@ script:
 - $(MAKE) -C curl
 - $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
 - mkdir -p out/libcurl/usr/local
-- mv out/curl/usr/local/lib out/libcurl/usr/local/lib
+- mv out/curl/usr/local/lib out/libcurl/usr/local
 - mkdir -p out/curl-man/usr/local
-- mv out/curl/usr/local/share out/curl-man/usr/local/share
+- mv out/curl/usr/local/share out/curl-man/usr/local
 - mkdir -p out/curl-headers/usr/local
-- mv out/curl/usr/local/include out/curl-headers/usr/local/include
-- mv out/curl/usr/local/bin out/curl/usr/bin
+- mv out/curl/usr/local/include out/curl-headers/usr/local
+- mv out/curl/usr/local/bin out/curl/usr
 - rm -r out/curl/usr/local
