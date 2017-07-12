@@ -4,9 +4,6 @@ packages:
       - libopenssl
       - openssl-bin
       - openssl-misc
-    openssl-engines:
-      dependencies:
-      - libopenssl
     libopenssl:
       dependencies:
       - openssl-misc
@@ -39,8 +36,6 @@ script:
 - cp -r openssl /home/test/openssl
 - chown -R test /home/test/openssl
 - $(MAKE) -C openssl DESTDIR=$(shell pwd)/out/openssl install
-- mkdir -p out/openssl-engines/usr/local/lib
-- mv out/openssl/usr/local/lib/engines-* out/openssl-engines/usr/local/lib
 - mkdir -p out/libopenssl/usr/local
 - rm -f out/openssl/usr/local/lib/*.a
 - mv out/openssl/usr/local/lib out/libopenssl/usr/local/lib
