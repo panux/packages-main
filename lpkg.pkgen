@@ -9,7 +9,7 @@ builddependencies:
 - gnupg
 - expect
 sources:
-- git://github.com/panux/lpkg?checkout=17676fc
+- git://github.com/panux/lpkg?checkout=77f4dfc
 script:
 - mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/gpg
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
