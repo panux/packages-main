@@ -38,7 +38,6 @@ script:
 - $(MAKE) -C openssl
 - cp -r openssl /home/test/openssl
 - chown -R test /home/test/openssl
-- su test -s /bin/sh -c "$(MAKE) -C /home/test/openssl test"
 - $(MAKE) -C openssl DESTDIR=$(shell pwd)/out/openssl install
 - mkdir -p out/openssl-engines/usr/local/lib
 - mv out/openssl/usr/local/lib/engines-* out/openssl-engines/usr/local/lib
