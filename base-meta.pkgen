@@ -4,5 +4,4 @@ packages:
     - basefs
     - busybox
     - lpkg
-    - bash
 version: v0.1
