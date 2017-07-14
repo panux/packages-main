@@ -5,7 +5,6 @@ packages:
     - git-bin
   git-core:
     dependencies:
-    - curl
   git-gui:
   gitk:
   gitweb:
