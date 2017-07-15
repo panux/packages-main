@@ -1,0 +1,31 @@
+packages:
+  xz:
+    dependencies:
+  xz-libs:
+  xz-doc:
+  xz-dev:
+version: 5.2.3
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- g++
+sources:
+- https://fossies.org/linux/misc/xz-{{.Version}}.tar.gz
+script:
+- tar -xf src/xz-{{.Version}}.tar.gz
+- mv xz-{{.Version}} xz
+- (cd xz && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd xz && make)
+- $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
+- mkdir -p out/xz-libs/usr/local
+- mv out/xz/usr/local/lib out/xz-libs/usr/local
+- mkdir -p out/xz-doc/usr/local/share
+- mv out/xz/usr/local/share/doc out/xz-doc/usr/local/share
+- mv out/xz/usr/local/share/man out/xz-doc/usr/local/share
+- mkdir -p out/xz-dev/usr/local/share/doc/xz
+- mv out/xz-doc/usr/local/share/doc/xz/examples* out/xz-dev/usr/local/share/doc/xz
+- mv out/xz/usr/local/include out/xz-dev/usr/local
+- mkdir -p out/xz-dev/usr/local/lib
+- mv out/xz-libs/usr/local/lib/liblzma* out/xz-dev/usr/local/lib
+- mv out/xz-libs/usr/local/lib/pkgconfig out/xz-dev/usr/local/lib
