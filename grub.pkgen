@@ -10,11 +10,10 @@ builddependencies:
 - autoconf
 - gettext-dev
 - gcc
-- libc-w
+- libc-dev
 - ncurses-dev
 - bison
 - gettext-dev
-- device-mapper
 - flex
 - help2man
 - musl-dev
