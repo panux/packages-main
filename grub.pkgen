@@ -17,7 +17,6 @@ builddependencies:
 - musl-dev
 - device-mapper-libs
 - python
-- python
 - librsync-dev
 - fuse-dev
 - device-mapper
@@ -32,6 +31,7 @@ script:
 - mv grub-{{.Version}} grub
 - mkdir objdir
 - (cd grub && ./autogen.sh)
-- (cd objdir && ../grub/configure -disable-efiemu --disable-werror)
+- (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --disable-efiemu --disable-werror)
 - (cd objdir && make)
 - $(MAKE) -C objdir DESTDIR=$(shell pwd)/out/grub install
+
