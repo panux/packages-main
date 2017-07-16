@@ -1,4 +1,4 @@
-pkgs = base-meta basefs busybox gnupg libassuan libgcrypt libgpg-error libintl musl shpkg zlib readline sl bash nano wget lpkg git openssl curl grub xz dev/lua dev/ncurses
+pkgs = main/base-meta main/basefs main/busybox main/gnupg main/libassuan main/libgcrypt main/libgpg-error main/libintl main/musl testing/shpkg main/zlib main/readline extra/sl main/bash main/nano main/wget main/lpkg testing/git testing/openssl testing/curl testing/grub main/xz dev/lua dev/ncurses
 
 ifeq ($(ARCH),x86_64)
 	pkgs += kernel/linux
