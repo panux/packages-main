@@ -1,0 +1,12 @@
+packages:
+  asciiquarium:
+    dependencies:
+version: 1.1
+builddependencies:
+- git
+sources:
+script:
+- git clone https://github.com/cmatsuoka/asciiquarium.git
+- mkdir -p out/asciiquarium/usr/local/bin
+- ls asciiquarium
+- mv asciiquarium/asciiquarium out/asciiquarium/usr/local/bin
