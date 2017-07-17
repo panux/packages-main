@@ -1,12 +1,20 @@
 packages:
   asciiquarium:
     dependencies:
+  Term-Animation:
 version: 1.1
 builddependencies:
 - git
+- perl
 sources:
+- https://ftp.netbsd.org/pub/pkgsrc/distfiles/Term-Animation-2.6.tar.gz
 script:
 - git clone https://github.com/cmatsuoka/asciiquarium.git
 - mkdir -p out/asciiquarium/usr/local/bin
 - ls asciiquarium
 - mv asciiquarium/asciiquarium out/asciiquarium/usr/local/bin
+- tar -xf src/Term-Animation-2.6.tar.gz
+- mv Term-Animation-2.6 Term-Animation
+- (cd Term-Animation && perl Makefile.PL)
+- $(MAKE) -C Term-Animation
+- $(MAKE) -C Term-Animation DESTDIR=$(shell pwd)/out/Term-Animation install
