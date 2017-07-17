@@ -14,5 +14,5 @@ script:
 - tar -xf src/perl-{{.Version}}.tar.gz
 - mv perl-{{.Version}} perl
 - (cd perl && sh Configure -des -Dprefix=/usr -Dvendorprefix=/usr -Dman1dir=/usr/share/man/man1 -Dman3dir=/usr/share/man/man3 -Dpager="/usr/bin/less -isR" -Duseshrplib -Dusethreads)
-- (cd perl && make -i)
+- $(MAKE) -C perl
 - $(MAKE) -C perl DESTDIR=$(shell pwd)/out/perl install
