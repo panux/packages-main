@@ -2,14 +2,21 @@ packages:
   go-info:
   go-api:
   gc:
+    dependencies:
+    - go-profile
   godoc:
+    dependencies:
+    - go-profile
   gofmt:
+    dependencies:
+    - go-profile
   go-blog:
   go-doc:
   go-time:
   go-misc:
   go-stdlib:
   go-test:
+  go-profile:
   go-bin:
     dependencies:
     - gc
@@ -66,4 +73,6 @@ script:
   mkdir -p out/{{index $dest 1}}/usr/local/go{{if index $dest 0 }}/{{index $dest 0}}{{end}}
   mv go-out/go/{{$src}} out/{{index $dest 1}}/usr/local/go{{if index $dest 0 }}/{{index $dest 0}}{{end}}
   {{end}}
-  ls go-out
+  mkdir -p out/go-profile/etc/profile.d
+  echo 'export PATH=$PATH:/usr/local/go/bin' > out/go-profile/etc/profile.d/go.sh
+  ls go-out/go
