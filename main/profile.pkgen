@@ -14,3 +14,4 @@ script:
   mkdir -p out/profile/etc/profile.d
   echo {{printf "'%s'" .Data.profile}} > out/profile/etc/profile
   touch out/profile/etc/profile.d/nothing.sh
+  chmod 0755 out/profile/etc/profile.d/nothing.sh
