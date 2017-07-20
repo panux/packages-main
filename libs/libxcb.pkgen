@@ -1,0 +1,23 @@
+packages:
+  libxcb:
+    dependencies:
+version: 1.12
+builddependencies:
+- gcc
+- libc-dev
+- ncurses-dev
+- gawk
+- python
+- xcb-proto
+- libxau-dev
+- libpthread-stubs
+sources:
+- https://xcb.freedesktop.org/dist/libxcb-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libxcb-{{.Version}}.tar.bz2
+- mv libxcb-{{.Version}} libxcb
+- (cd libxcb && ./configure)
+- $(MAKE) -C libxcb
+- $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
+- mv out/libxcb/usr/local/* out/libxcb/usr
+- rm -r out/usr/local
