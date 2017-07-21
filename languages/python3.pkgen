@@ -1,0 +1,30 @@
+packages:
+  python3:
+    dependencies:
+  python3-dev:
+  python3-doc:
+version: 3.6.2
+builddependencies:
+- build-base
+- g++
+- zlib-dev
+- linux-headers
+- python3-dev
+- libffi-dev
+sources:
+- https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
+script:
+- tar -xf src/Python-{{.Version}}.tar.xz
+- mv Python-{{.Version}} python
+- CXX="/usr/bin/g++"
+- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=no)
+- $(MAKE) -C python
+- $(MAKE) -C python DESTDIR=$(shell pwd)/out/python3 install
+- mkidr -p out/python3-doc/usr/share
+- mv out/python3/usr/share/man out/python3-doc/usr/share
+- mkdir -p out/python3-dev/usr
+- mv out/python3/usr/include out/python3-dev/usr
+- mkdir -p out/python3-dev/usr/lib
+- mv out/python3/usr/lib/libpython3.6m.so out/python3-dev/usr/lib
+- mkdir -p out/python3-dev/usr/lib/python3.6/distutils/tests
+- mv out/python3/usr/lib/python3.6/distutils/tests/xxmodule.c out/python3-dev/usr/lib/python3.6/distutils/tests
