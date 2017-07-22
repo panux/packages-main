@@ -20,7 +20,7 @@ script:
 - (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=no)
 - $(MAKE) -C python
 - $(MAKE) -C python DESTDIR=$(shell pwd)/out/python3 install
-- mkidr -p out/python3-doc/usr/share
+- mkdir -p out/python3-doc/usr/share
 - mv out/python3/usr/share/man out/python3-doc/usr/share
 - mkdir -p out/python3-dev/usr
 - mv out/python3/usr/include out/python3-dev/usr
