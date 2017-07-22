@@ -20,7 +20,6 @@ builddependencies:
 - readline-dev
 - sqlite-libs
 - libbz2
-- alpine-sdk
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
 script:
