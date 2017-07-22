@@ -22,7 +22,7 @@ sources:
 script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python
-- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --enable-optimizations --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=no)
+- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --enable-optimizations)
 - (cd python && make -s)
 - $(MAKE) -C python DESTDIR=$(shell pwd)/out/python install
 - mkdir -p out/python-doc/usr/share
