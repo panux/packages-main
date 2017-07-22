@@ -25,7 +25,7 @@ sources:
 script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python
-- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --host=x86_64-pc-linux-gnu --enable-optimizations)
+- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --host=x86_64-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes)
 - (cd python && make)
 - $(MAKE) -C python DESTDIR=$(shell pwd)/out/python install
 - mkdir -p out/python-doc/usr/share
