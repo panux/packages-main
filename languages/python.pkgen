@@ -33,6 +33,6 @@ script:
 - mkdir -p out/python-dev/usr
 - mv out/python/usr/include out/python-dev/usr
 - mkdir -p out/python-dev/usr/lib
-- mv out/python/usr/lib/libpython2.7m.so out/python-dev/usr/lib
+- mv out/python/usr/lib/libpython2.7.so out/python-dev/usr/lib
 - mkdir -p out/python-dev/usr/lib/python2.7/distutils/tests
 - mv out/python/usr/lib/python2.7/distutils/tests/xxmodule.c out/python-dev/usr/lib/python2.7/distutils/tests
