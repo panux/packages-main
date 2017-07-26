@@ -10,6 +10,6 @@ sources:
 script:
 - tar -xf src/util-linux-{{.Version}}.tar.xz
 - mv util-linux-{{.Version}} util-linux
-- (cd util-linux && ./configure)
+- (cd util-linux && ./configure --build={{.Arch}}-pc-linux-gnu)
 - $(MAKE) -C util-linux
 - $(MAKE) -C util-linux DESTDIR=$(shell pwd)/out/util-linux install
