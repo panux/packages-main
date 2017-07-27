@@ -8,6 +8,7 @@ builddependencies:
 - libc-dev
 - ncurses-dev
 - linux-headers
+- fortify-headers
 sources:
 - https://gitweb.gentoo.org/proj/openrc.git/snapshot/openrc-{{.Version}}.tar.gz
 script:
