@@ -13,5 +13,4 @@ sources:
 script:
 - tar -xf src/openrc-{{.Version}}.tar.gz
 - mv openrc-{{.Version}} openrc
-- $(MAKE) -C openrc
 - $(MAKE) -C openrc DESTDIR=$(shell pwd)/out/openrc install
