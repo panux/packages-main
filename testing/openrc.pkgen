@@ -1,0 +1,17 @@
+packages:
+  openrc:
+    dependencies:
+version: 0.28
+builddependencies:
+- gcc
+- g++
+- libc-dev
+- ncurses-dev
+- linux-headers
+sources:
+- https://gitweb.gentoo.org/proj/openrc.git/snapshot/openrc-{{.Version}}.tar.gz
+script:
+- tar -xf src/openrc-{{.Version}}.tar.gz
+- mv openrc-{{.Version}} openrc
+- $(MAKE) -C openrc
+- $(MAKE) -C openrc DESTDIR=$(shell pwd)/out/openrc install
