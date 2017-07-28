@@ -11,5 +11,5 @@ script:
 - tar -xf src/dhcpcd-{{.Version}}.tar.xz
 - mv dhcpcd-{{.Version}} dhcpcd
 - (cd dhcpcd && ./configure --libexecdir=/lib/dhcpcd --dbdir=/var/lib/dhcpcd)
-- (cd dhcpcd && make -k)
+- $(MAKE) -C dhcpcd
 - $(MAKE) -C dhcpcd DESTDIR=$(shell pwd)/out/dhcpcd install
