@@ -1,6 +1,7 @@
 packages:
   xorg-server:
     dependencies:
+    - xinit
 version: 1.19.3
 builddependencies:
 - autoconf
