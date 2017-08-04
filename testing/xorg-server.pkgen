@@ -76,7 +76,8 @@ script:
 - export CFLAGS="-D-gid__t=gid_t -D__uid_t=uid_t"
 - export CLIBC="musl"
 - export LDFLAGS="-Wl,-z,lazy"
-- (cd xorg-server && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --with-xkb-path=/usr/share/X11/xkb --with-xkb-output=/var/lib/xkb --without-systemd-daemon --enable-aiglx --enable-composite --enable-config-udev --enable-dri --enable-dri2 --enable-glamor --enable-glx-tls --enable-ipv6 --disable-kdrive --enable-xace --enable-xcsecurity --enable-xephyr --enable-xfbdev --enable-xnest --enable-xorg --enable-xres --enable-xv --enable-xwayland --disable-config-hal --disable-dmx --disable-tslib --disable-systemd-logind --sysconfdir=/etc/X11 --localstatedir=/var)
+- (cd xorg-server && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --with-xkb-path=/usr/share/X11/xkb --with-xkb-output=/var/lib/xkb --without-systemd-daemon --enable-aiglx --enable-composite --enable-config-udev --enable-dri --enable-dri2 --enable-glamor --enable-glx-tls --enable-ipv6 --disable-kdrive --enable-xace --enable-xcsecurity --enable-xephyr --enable-xfbdev --enable-xnest --enable-xorg --enable-xres --enable-xv --enable-xwayland --disable-config-hal --disable-dmx --disable-tslib --disable-systemd-logind --sysconfdir=/etc/X11 --localstatedir=/var --with-os-name=Panux --with-os-vendor=ProjectPanux)
 - (cd xorg-server && make -j1)
 - $(MAKE) -C xorg-server DESTDIR=$(shell pwd)/out/xorg-server install
 - mv out/xorg-server/usr/local/* out/xorg-server/usr/
+- rm -r out/xorg-server/usr/local
