@@ -67,7 +67,6 @@ script:
 - tar -xf src/xorg-server-{{.Version}}.tar.bz2
 - mv xorg-server-{{.Version}} xorg-server
 - mv src/*.patch xorg-server
-- mv src/*.conf xorg-server
 - (cd xorg-server && patch -p1 autoconfig-sis.patch)
 - (cd xorg-server && patch -p1 autoconfig-nvidia.patch)
 - (cd xorg-server && patch -p1 modesetting-Set-correct-DRM-event-context-version.patch)
