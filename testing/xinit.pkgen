@@ -11,7 +11,7 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/xinit-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xinit-{{.Version}}.tar.xz
+- tar -xf src/xinit-{{.Version}}.tar.bz2
 - mv xinit-{{.Version}} xinit
 - (cd xinit && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	--localstatedir=/var --with-xinitdir=/etc/X11/xinit)
 - $(MAKE) -C xinit
