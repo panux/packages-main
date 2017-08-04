@@ -1,0 +1,81 @@
+packages:
+  xorg-server:
+    dependencies:
+version: 1.19.3
+builddependencies:
+- autoconf
+- automake
+- eudev-dev
+- libdrm-dev
+- libepoxy-dev
+- libressl-dev
+- libtool
+- libx11-dev
+- libxdamage-dev
+- libxinerama-dev
+- libxkbfile-dev
+- libxkbui-dev
+- libxv-dev
+- libxxf86dga-dev
+- libxxf86misc-dev
+- perl
+- util-macros
+- wayland-dev
+- wayland-protocols
+- xcb-util-dev
+- xcb-util-image-dev
+- xcb-util-keysyms-dev
+- xcb-util-renderutil-dev
+- xcb-util-wm-dev
+- xtrans
+- zlib-dev
+- bigreqsproto
+- compositeproto
+- damageproto
+- dri2proto
+- fixesproto
+- fontsproto
+- glproto
+- inputproto
+- kbproto
+- libepoxy-dev
+- libpciaccess-dev
+- libxfont2-dev
+- mesa-dev
+- pixman-dev
+- presentproto
+- randrproto
+- recordproto
+- renderproto
+- resourceproto
+- scrnsaverproto
+- videoproto
+- xcmiscproto
+- xextproto
+- xf86driproto
+- xineramaproto
+- xproto
+- patch
+sources:
+- https://www.x.org/releases/individual/xserver/xorg-server-{{.Version}}.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/tree/main/xorg-server/autoconfig-nvidia.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/xorg-server/autoconfig-sis.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/xorg-server/modesetting-Set-correct-DRM-event-context-version.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/xorg-server/fix-musl-arm.patch
+script:
+- tar -xf src/xorg-server-{{.Version}}.tar.bz2
+- mv xorg-server-{{.Version}} xorg-server
+- mv src/*.patch xorg-server
+- mv src/*.conf xorg-server
+- (cd xorg-server && patch -p1 autoconfig-sis.patch)
+- (cd xorg-server && patch -p1 autoconfig-nvidia.patch)
+- (cd xorg-server && patch -p1 modesetting-Set-correct-DRM-event-context-version.patch)
+- (cd xorg-server && patch -p1 fix-musl-arm.patch)
+- (cd xorg-server && sed -i -e 's/\/etc/X11\/etc/' config/Makefile.*)
+- (cd xorg-server && sed -i -e 's/termio.h/termios.h/' hw/xfree86/os-support/xf86_OSlib.h)
+- export CFLAGS="-D-gid__t=gid_t -D__uid_t=uid_t"
+- export CLIBC="musl"
+- export LDFLAGS="-Wl,-z,lazy"
+- (cd xorg-server && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --with-xkb-path=/usr/share/X11/xkb --with-xkb-output=/var/lib/xkb --without-systemd-daemon --enable-aiglx --enable-composite --enable-config-udev --enable-dri --enable-dri2 --enable-glamor --enable-glx-tls --enable-ipv6 --disable-kdrive --enable-xace --enable-xcsecurity --enable-xephyr --enable-xfbdev --enable-xnest --enable-xorg --enable-xres --enable-xv --enable-xwayland --disable-config-hal --disable-dmx --disable-tslib --disable-systemd-logind --sysconfdir=/etc/X11 --localstatedir=/var)
+- (cd xorg-server && make -j1)
+- $(MAKE) -C xorg-server DESTDIR=$(shell pwd)/out/xorg-server install
