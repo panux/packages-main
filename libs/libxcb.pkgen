@@ -16,7 +16,7 @@ sources:
 script:
 - tar -xf src/libxcb-{{.Version}}.tar.bz2
 - mv libxcb-{{.Version}} libxcb
-- (cd libxcb && ./configure)
+- (cd libxcb && ./configure --build={{.Arch}}-pc-linux-gnu)
 - $(MAKE) -C libxcb
 - $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
 - mv out/libxcb/usr/local/* out/libxcb/usr
