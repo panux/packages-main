@@ -1,0 +1,25 @@
+packages:
+  freetype:
+    dependencies:
+  freetype-doc:
+  freetype-dev:
+version: 2.8
+builddependencies:
+- zlib-dev
+- libpng-dev
+- bzip2-dev
+sources:
+- https://download-mirror.savannah.gnu.org/releases/freetype/freetype-{{.Version}}.tar.bz2
+script:
+- tar -xf src/freetype-{{.Version}}.tar.bz2
+- mv freetype-{{.Version}} freetype
+- (cd freetype && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C freetype
+- $(MAKE) -C freetype DESTDIR=$(shell pwd)/out/freetype install
+- mkdir -p out/freetype-doc/usr/share
+- mv out/freetype/usr/share/man out/freetype-doc/usr/share
+- mkdir -p out/freetype-dev/usr/share out/freetype-dev/usr/lib
+- mv out/freetype/usr/include out/freetype-dev/usr
+- mv out/freetype/usr/share/aclocal out/freetype-dev/usr/share
+- mv out/freetype/usr/lib/pkgconfig out/freetype/usr/lib/libfreetype.so out/freetype-dev/usr/lib
+- mv out/freetype/usr/bin out/freetype-dev/usr
