@@ -3,6 +3,7 @@ packages:
     dependencies:
     - zlib
     - libbz2
+    - libpng
   freetype-doc:
     - freetype
   freetype-dev:
