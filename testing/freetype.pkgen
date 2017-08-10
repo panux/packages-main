@@ -1,8 +1,13 @@
 packages:
   freetype:
     dependencies:
+    - zlib
   freetype-doc:
+    - freetype
   freetype-dev:
+    dependencies:
+    - zlib-dev
+    - freetype
 version: 2.8
 builddependencies:
 - zlib-dev
