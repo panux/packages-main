@@ -5,7 +5,6 @@ packages:
     - libbz2
     - libpng
   freetype-doc:
-    - freetype
   freetype-dev:
     dependencies:
     - zlib-dev
