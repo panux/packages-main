@@ -1,0 +1,20 @@
+packages:
+  libxdmcp:
+    dependencies:
+  libxdmcp-dev:
+    dependencies:
+    - libxdmcp
+version: 1.1.2
+builddependencies:
+- xproto
+sources:
+- https://xorg.freedesktop.org/releases/individual/lib/libXdmcp-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libXdmcp-{{.Version}}.tar.bz2
+- mv libXdmcp-{{.Version}} libxdmcp
+- (cd libxdmcp && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C libxdmcp
+- $(MAKE) -C libxdmcp DESTDIR=$(shell pwd)/out/libxdmcp install
+- mkdir -p out/libxdmcp-dev/usr/lib
+- mv out/libxdmcp/usr/include out/libxdmcp-dev/usr
+- mv out/libxdmcp/usr/lib/libXdmcp.so out/libxdmcp/usr/lib/libXdmcp.a out/libxdmcp/usr/lib/pkgconfig out/libxdmcp-dev/usr/lib
