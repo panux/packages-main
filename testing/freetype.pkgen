@@ -2,6 +2,7 @@ packages:
   freetype:
     dependencies:
     - zlib
+    - libbz2
   freetype-doc:
     - freetype
   freetype-dev:
