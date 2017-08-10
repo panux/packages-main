@@ -4,6 +4,10 @@ packages:
     - xinit
     - libpciaccess
     - libressl
+    - pixman
+    - libdrm
+    - pixman
+    - libxfont2
 version: 1.19.3
 builddependencies:
 - autoconf
