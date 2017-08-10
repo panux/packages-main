@@ -8,12 +8,12 @@ packages:
   zlib-man:
     dependencies:
     - zlib
-version: 1.2.3.9
+version: 1.2.11
 builddependencies:
 - gcc
 - libc-dev
 sources:
-- https://zlib.net/fossils/zlib-{{.Version}}.tar.gz
+- https://zlib.net/zlib-{{.Version}}.tar.gz
 script:
 - tar -xvf src/zlib-{{.Version}}.tar.gz
 - mv zlib-{{.Version}} zlib
