@@ -2,6 +2,8 @@ packages:
   pixman:
     dependencies:
   pixman-dev:
+    dependencies:
+    - pixman
 version: 0.34.0
 builddependencies:
 - linux-headers
