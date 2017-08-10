@@ -1,0 +1,17 @@
+packages:
+  libdrm:
+    dependencies:
+version: 2.4.81
+builddependencies:
+- linux-headers
+- libpthread-stubs
+- eudev-dev
+- libpciaccess-dev
+sources:
+- https://dri.freedesktop.org/libdrm/libdrm-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libdrm-{{.Version}}.tar.bz2
+- mv libdrm-{{.Version}} libdrm
+- (cd libdrm && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C libdrm
+- $(MAKE) -C libdrm DESTDIR=$(shell pwd)/out/libdrm install
