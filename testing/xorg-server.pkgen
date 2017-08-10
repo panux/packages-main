@@ -8,6 +8,8 @@ packages:
     - libdrm
     - pixman
     - libxfont2
+    - libxshmfence
+    - libxdmcp
 version: 1.19.3
 builddependencies:
 - autoconf
