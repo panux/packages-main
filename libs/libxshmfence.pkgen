@@ -1,0 +1,20 @@
+packages:
+  libxshmfence:
+    dependencies:
+  libxshmfence-dev:
+    dependencies:
+    - libxshmfence
+version: 1.2
+builddependencies:
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libxshmfence-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libxshmfence-{{.Version}}.tar.bz2
+- mv libxshmfence-{{.Version}} libxshmfence
+- (cd libxshmfence && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C libxshmfence
+- $(MAKE) -C libxshmfence DESTDIR=$(shell pwd)/out/libxshmfence install
+- mkdir -p out/libxshmfence-dev/usr/lib
+- mv out/libxshmfence/usr/include out/libxshmfence-dev/usr
+- mv out/libxshmfence/usr/lib/libxshmfence.so out/libxshmfence/usr/lib/pkgconfig out/libxshmfence-dev/usr/lib

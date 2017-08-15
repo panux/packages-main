@@ -1,0 +1,22 @@
+packages:
+  pixman:
+    dependencies:
+  pixman-dev:
+    dependencies:
+    - pixman
+version: 0.34.0
+builddependencies:
+- linux-headers
+- perl
+sources:
+- https://www.x.org/releases/individual/lib/pixman-{{.Version}}.tar.bz2
+script:
+- tar -xf src/pixman-{{.Version}}.tar.bz2
+- mv pixman-{{.Version}} pixman
+- (cd pixman && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --disable-static)
+- $(MAKE) -C pixman
+- $(MAKE) -C pixman DESTDIR=$(shell pwd)/out/pixman install
+- mkdir -p out/pixman-dev/usr/lib
+- mv out/pixman/usr/include out/pixman-dev/usr
+- mv out/pixman/usr/lib/pkgconfig out/pixman-dev/usr/lib
+- mv out/pixman/usr/lib/libpixman-1.so out/pixman-dev/usr/lib

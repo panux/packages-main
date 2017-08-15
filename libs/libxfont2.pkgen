@@ -1,0 +1,32 @@
+packages:
+  libxfont2:
+    dependencies:
+    - freetype
+    - libfontenc
+  libxfont2-dev:
+    dependencies:
+    - libxfont2
+    - freetype-dev
+    - libfontenc-dev
+version: 2.0.1
+builddependencies:
+- libxfont2-dev
+- freetype-dev
+- fontsproto
+- zlib-dev
+- xproto xtrans
+- util-macros
+- autoconf
+- automake
+- libtool
+sources:
+- https://www.x.org/archive//individual/lib/libXfont2-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libXfont2-{{.Version}}.tar.bz2
+- mv libXfont2-{{.Version}} libxfont2
+- (cd libxfont2 && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C libxfont2
+- $(MAKE) -C libxfont2 DESTDIR=$(shell pwd)/out/libxfont2 install
+- mkdir -p out/libxfont2-dev/usr/lib
+- mv out/libxfont2/usr/lib/libXfont2.so out/libxfont2/usr/lib/pkgconfig out/libxfont2-dev/usr/lib
+- mv out/libxfont2/usr/include out/libxfont2-dev/usr

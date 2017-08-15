@@ -1,0 +1,38 @@
+packages:
+  python:
+    dependencies:
+  python-dev:
+  python-doc:
+version: 2.7.13
+builddependencies:
+- build-base
+- g++
+- zlib-dev
+- linux-headers
+- python-dev
+- libffi-dev
+- expat-dev
+- gdbm-dev
+- musl
+- ncurses-dev
+- ncurses-libs
+- openssl-dev
+- readline-dev
+- sqlite-libs
+- libbz2
+sources:
+- https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
+script:
+- tar -xf src/Python-{{.Version}}.tar.xz
+- mv Python-{{.Version}} python
+- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --host=x86_64-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes)
+- (cd python && make)
+- $(MAKE) -C python DESTDIR=$(shell pwd)/out/python install
+- mkdir -p out/python-doc/usr/share
+- mv out/python/usr/share/man out/python-doc/usr/share
+- mkdir -p out/python-dev/usr
+- mv out/python/usr/include out/python-dev/usr
+- mkdir -p out/python-dev/usr/lib
+- mv out/python/usr/lib/libpython2.7.so out/python-dev/usr/lib
+- mkdir -p out/python-dev/usr/lib/python2.7/distutils/tests
+- mv out/python/usr/lib/python2.7/distutils/tests/xxmodule.c out/python-dev/usr/lib/python2.7/distutils/tests

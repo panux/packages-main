@@ -1,0 +1,28 @@
+packages:
+  bzip2:
+    dependencies:
+  libbz2:
+  bzip2-dev:
+    dependencies:
+    - libbz2
+  bzip2-doc:
+version: 1.0.6
+builddependencies:
+sources:
+- https://fossies.org/linux/misc/bzip2-{{.Version}}.tar.bz2
+script:
+- tar -xf src/bzip2-{{.Version}}.tar.bz2
+- mv bzip2-{{.Version}} bzip2
+- (cd bzip2 && sed -i -e "s:1\.0\.4:{{.Version}}:" bzip2.1 bzip2.txt Makefile-libbz2_so manual.*)
+- mkdir -p out/bzip2/usr
+- (cd bzip2 && make -f Makefile-libbz2_so all)
+- (cd bzip2 && make all)
+- $(MAKE) -C bzip2 PREFIX=$(shell pwd)/out/bzip2/usr DESTDIR=$(shell pwd)/out/bzip2 install
+- (cd bzip2 && install -D libbz2.so.{{.Version}} ../out/libbz2/usr/lib/libbz2.so.{{.Version}})
+- (cd bzip2 && ln -s libbz2.so.{{.Version}} ../out/libbz2/usr/lib/libbz2.so)
+- (cd bzip2 && ln -s libbz2.so.{{.Version}} ../out/libbz2/usr/lib/libbz2.so.1)
+- mkdir -p out/bzip2-dev/usr/lib
+- mv out/bzip2/usr/lib/libbz2.a out/libbz2/usr/lib/libbz2.so out/bzip2-dev/usr/lib
+- mv out/bzip2/usr/include out/bzip2-dev/usr
+- mkdir -p out/bzip2-doc/usr/share
+- mv out/bzip2/usr/man out/bzip2-doc/usr/share

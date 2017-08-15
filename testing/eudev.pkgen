@@ -1,0 +1,19 @@
+packages:
+  eudev:
+    dependencies:
+version: 3.2.2
+builddependencies:
+- gperf
+- glib-dev
+- linux-headers
+- kmod-dev
+- gobject-introspection-dev
+- util-linux-dev
+sources:
+- https://dev.gentoo.org/~blueness/eudev/eudev-{{.Version}}.tar.gz
+script:
+- tar -xf src/eudev-{{.Version}}.tar.gz
+- mv eudev-{{.Version}} eudev
+- (cd eudev && ./configure --build={{.Arch}}-pc-linux-gnu --sysconfdir=/etc --with-rootprefix= --with-rootrundir=/run --with-rootlibexecdir=/lib/udev --libdir=/usr/lib --enable-split-usr --enable-manpages --disable-hwdb --disable-kmod --exec-prefix=/)
+- $(MAKE) -C eudev
+- $(MAKE) -C eudev DESTDIR=$(shell pwd)/out/eudev install

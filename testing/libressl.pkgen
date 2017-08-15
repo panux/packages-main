@@ -1,0 +1,14 @@
+packages:
+  libressl:
+    dependencies:
+version: 2.5.5
+builddependencies:
+- linux-headers
+sources:
+- https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{{.Version}}.tar.gz
+script:
+- tar -xf src/libressl-{{.Version}}.tar.gz
+- mv libressl-{{.Version}} libressl
+- (cd libressl && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+- $(MAKE) -C libressl
+- $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install

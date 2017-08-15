@@ -1,0 +1,22 @@
+packages:
+  libx11:
+    dependencies:
+    - libxcb
+version: 1.6.5
+builddependencies:
+- xproto
+- libxcb-dev
+- xextproto
+- xf86bigfontproto-dev
+- xtrans
+- inputproto
+- util-macros
+- kbproto
+sources:
+- https://www.x.org/releases/individual/lib/libX11-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libX11-{{.Version}}.tar.bz2
+- mv libX11-{{.Version}} libx11
+- (cd libx11 && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C libx11
+- $(MAKE) -C libx11 DESTDIR=$(shell pwd)/out/libx11 install

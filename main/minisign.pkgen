@@ -1,0 +1,25 @@
+packages:
+  minisign:
+    dependencies:
+    - libsodium
+  minisign-man:
+    dependencies:
+    - minisign
+version: 0.7
+sources:
+- https://codeload.github.com/jedisct1/minisign/tar.gz/{{.Version}}
+builddependencies:
+- gcc
+- libc-dev
+- cmake
+- libsodium-dev
+script:
+- mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
+- tar -xvf src/minisign-{{.Version}}.tar.gz -C .
+- mv minisign-{{.Version}} minisign
+- mkdir minisign/build
+- (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18 -DCMAKE_SYSTEM_NAME=Generic)
+- make -C minisign/build
+- make -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
+- mkdir -p out/minisign-man/usr/local
+- mv out/minisign/usr/share out/minisign-man/usr/local/share

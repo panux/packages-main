@@ -4,4 +4,5 @@ packages:
     - basefs
     - busybox
     - lpkg
+    - profile
 version: v0.1

@@ -1,0 +1,43 @@
+packages:
+  grub:
+   dependencies:
+    - xz
+  grub-doc:
+  grub-bios:
+version: 2.02
+builddependencies:
+- automake
+- autoconf
+- gettext-dev
+- gcc
+- libc-dev
+- ncurses-dev
+- bison
+- gettext-dev
+- flex
+- help2man
+- musl-dev
+- device-mapper-libs
+- python
+- librsync-dev
+- fuse-dev
+- device-mapper
+- device-mapper-libs
+- xz-dev
+- freetype-dev
+- linux-headers
+sources:
+- https://ftp.gnu.org/gnu/grub/grub-{{.Version}}.tar.gz
+script:
+- tar -xf src/grub-{{.Version}}.tar.gz
+- mv grub-{{.Version}} grub
+- mkdir objdir
+- (cd grub && ./autogen.sh)
+- (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --disable-efiemu --disable-werror)
+- (cd objdir && make)
+- $(MAKE) -C objdir DESTDIR=$(shell pwd)/out/grub install
+- mkdir -p out/grub-doc/usr/local/share
+- mv out/grub/usr/local/share/info out/grub-doc/usr/local/share
+- mkdir -p out/grub-bios/usr/local/lib
+- mv out/grub/usr/local/lib/grub out/grub-bios/usr/local/lib
+

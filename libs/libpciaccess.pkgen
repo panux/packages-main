@@ -1,0 +1,13 @@
+packages:
+  libpciaccess:
+    dependencies:
+version: 0.13.5
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/lib/libpciaccess-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libpciaccess-{{.Version}}.tar.bz2
+- mv libpciaccess-{{.Version}} libpciaccess
+- (cd libpciaccess && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- $(MAKE) -C libpciaccess
+- $(MAKE) -C libpciaccess DESTDIR=$(shell pwd)/out/libpciaccess install

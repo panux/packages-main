@@ -1,0 +1,14 @@
+packages:
+  libxau:
+    dependencies:
+version: 1.0.8
+builddependencies:
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXau-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libXau-{{.Version}}.tar.bz2
+- mv libXau-{{.Version}} libxau
+- (cd libxau && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C libxau
+- $(MAKE) -C libxau DESTDIR=$(shell pwd)/out/libxau install
