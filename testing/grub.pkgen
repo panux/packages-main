@@ -37,8 +37,8 @@ script:
 - (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
 - (cd objdir && make)
 - $(MAKE) -C objdir DESTDIR=$(shell pwd)/out/grub install
-- mkdir -p out/grub-doc/usr/local/share
-- mv out/grub/usr/local/share/info out/grub-doc/usr/local/share
-- mkdir -p out/grub-bios/usr/local/lib
-- mv out/grub/usr/local/lib/grub out/grub-bios/usr/local/lib
+- mkdir -p out/grub-doc/usr/share
+- mv out/grub/usr/share/info out/grub-doc/usr/share
+- mkdir -p out/grub-bios/usr/lib
+- mv out/grub/usr/lib/grub out/grub-bios/usr/lib
 
