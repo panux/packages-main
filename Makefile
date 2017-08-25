@@ -27,4 +27,5 @@ list:
 	@echo Testing: $(tpkgs)
 
 $(pkgs) $(tpkgs):
+	@echo DEST: $(DEST)
 	bash buildpkg.sh $@ $(DEST) $(ARCH)
