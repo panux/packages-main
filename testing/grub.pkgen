@@ -34,7 +34,7 @@ script:
 - mv grub-{{.Version}} grub
 - mkdir objdir
 - (cd grub && ./autogen.sh)
-- (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror)
+- (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
 - (cd objdir && make)
 - $(MAKE) -C objdir DESTDIR=$(shell pwd)/out/grub install
 - mkdir -p out/grub-doc/usr/local/share
