@@ -8,10 +8,8 @@ version: 7.12.1
 builddependencies:
 - g++
 - ncurses-dev
-- expat-dev
 - texinfo
 - readline-dev
-- python2-dev
 - zlib-dev
 - autoconf
 - automake
@@ -23,7 +21,7 @@ sources:
 script:
 - tar -xf src/gdb-{{.Version}}.tar.xz
 - mv gdb-{{.Version}} gdb
-- (cd gdb && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-guile=no --with-python=no)
+- (cd gdb && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-expat=no --with-guile=no --with-python=no)
 - $(MAKE) -C gdb
 - $(MAKE) -C gdb DESTDIR=$(shell pwd)/out/gdb install
 - mkdir -p out/gdb-doc/usr
