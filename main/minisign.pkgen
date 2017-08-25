@@ -19,7 +19,7 @@ script:
 - tar -xvf src/minisign-{{.Version}}.tar.gz -C .
 - mv minisign-{{.Version}} minisign
 - mkdir minisign/build
-- export LDFLAGS='-ggdb3'
+- export LDFLAGS='-ggdb3 -O0'
 - (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18 -DCMAKE_SYSTEM_NAME=Generic)
 - $(MAKE) -C minisign/build
 - $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
