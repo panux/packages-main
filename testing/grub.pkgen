@@ -26,6 +26,7 @@ builddependencies:
 - xz-dev
 - freetype-dev
 - linux-headers
+- binutils
 sources:
 - https://ftp.gnu.org/gnu/grub/grub-{{.Version}}.tar.gz
 script:
