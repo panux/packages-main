@@ -2,6 +2,7 @@ packages:
   grub:
    dependencies:
     - xz
+    - xz-dev
   grub-doc:
   grub-bios:
 version: 2.02
