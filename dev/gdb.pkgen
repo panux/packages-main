@@ -1,6 +1,8 @@
 packages:
   gdb:
     dependencies:
+    - readline
+    - zlib
   gdb-doc:
 version: 7.12.1
 builddependencies:
@@ -21,7 +23,7 @@ sources:
 script:
 - tar -xf src/gdb-{{.Version}}.tar.xz
 - mv gdb-{{.Version}} gdb
-- (cd gdb && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+- (cd gdb && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-guile=no --with-python=no)
 - $(MAKE) -C gdb
 - $(MAKE) -C gdb DESTDIR=$(shell pwd)/out/gdb install
 - mkdir -p out/gdb-doc/usr
