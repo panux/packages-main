@@ -13,11 +13,10 @@ sources:
 builddependencies:
 - gcc
 - libc-dev
-- readline-dev
 script:
 - tar -xvf src/lua-{{.Version}}.tar.gz
 - mv lua-{{.Version}} lua
-- $(MAKE) -C lua linux
+- $(MAKE) -C lua posix
 - $(MAKE) -C lua local
 - mkdir -p out/lua/usr out/lua-headers/usr/local out/lua-man/usr/local
 - mv lua/install/bin out/lua/usr/bin
