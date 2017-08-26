@@ -1,45 +1,62 @@
 packages:
   grub:
    dependencies:
-    - xz
     - xz-dev
+    - freetype
   grub-doc:
   grub-bios:
+  grub-efi:
+  grub-xenhost:
+  grub-dev:
 version: 2.02
 builddependencies:
+- bison
+- flex
+- linux-headers
+- xz-dev
+- lvm2-dev
 - automake
 - autoconf
-- gettext-dev
-- gcc
-- libc-dev
-- ncurses-dev
-- bison
-- gettext-dev
-- flex
-- help2man
-- musl-dev
-- device-mapper-libs
-- python
-- librsync-dev
-- fuse-dev
-- device-mapper
-- device-mapper-libs
-- xz-dev
+- libtool
+- python2
 - freetype-dev
-- linux-headers
-- binutils
+- unifont
+- patch
 sources:
 - https://ftp.gnu.org/gnu/grub/grub-{{.Version}}.tar.gz
+- https://git.alpinelinux.org/cgit/aports/tree/main/grub/fix-gcc-no-pie-specs.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/grub/grub-xen-host_grub.cfg
+- https://git.alpinelinux.org/cgit/aports/tree/main/grub/grub2-accept-empty-module.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/grub/2.02_beta3-mkconfig-alpine.patch
 script:
 - tar -xf src/grub-{{.Version}}.tar.gz
 - mv grub-{{.Version}} grub
-- mkdir objdir
+- mv src/*.patch grub
+- (cd grub && patch -p1 ./fix-gcc-no-pie-specs.patch)
 - (cd grub && ./autogen.sh)
-- (cd objdir && ../grub/configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
-- (cd objdir && make)
-- $(MAKE) -C objdir DESTDIR=$(shell pwd)/out/grub install
+- (cd grub && autoreconf -vif)
+- mv grub tmpdir && mkdir grub
+- cp -r tmpdir grub/bios
+- cp -r tmpdir grub/efi
+- mv tmpdir grub/xen
+- (cd grub/bios && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=pc --disable-efiemu)
+- (cd grub/bios && make)
+- (cd grub/efi && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
+- (cd grub/efi && make)
+- (cd grub/xen && ./configure --build={{.Arch}}-pc-linux-gnu --host={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=xen --target={{.Arch}}-pc-linux-gnu --disable-efiemu)
+- (cd grub/xen && make)
+- $(MAKE) -C grub/bios DESTDIR=$(shell pwd)/out/grub install
+- $(MAKE) -C grub/xen DESTDIR=$(shell pwd)/out/grub install
+- $(MAKE) -C grub/efi DESTDIR=$(shell pwd)/out/grub install
 - mkdir -p out/grub-doc/usr/share
 - mv out/grub/usr/share/info out/grub-doc/usr/share
-- mkdir -p out/grub-bios/usr/lib
-- mv out/grub/usr/lib/grub out/grub-bios/usr/lib
-
+- mkdir -p out/grub-bios/usr/lib/grub
+- mv out/grub/usr/lib/grub/*-pc out/grub-bios/usr/lib/grub
+- mkdir -p out/grub-efi/usr/lib/grub
+- mv out/grub/usr/lib/grub/*-efi out/grub-efi/usr/lib/grub
+- mkdir -p out/grub-xen/usr/lib/grub
+- mv out/grub/usr/lib/grub/*-xen out/grub-xenhost/usr/lib/grub
+- mkdir -p out/grub-dev/usr/lib/grub/i386-pc out/grub-dev/lib/grub/x86_64-efi
+- mv out/grub/usr/share out/grub-dev/usr
+- mv out/grub-bios/usr/lib/grub/i386-pc/config.h out/grub-dev/usr/lib/grub/i386-pc
+- mv out/grub-efi/usr/lib/grub/x86_64-efi/config.h out/grub-dev/usr/lib/grub/x86_64-efi
