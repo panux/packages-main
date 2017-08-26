@@ -50,7 +50,7 @@ script:
 - $(MAKE) -C grub/xen DESTDIR=$(shell pwd)/out/grub install
 - mkdir -p out/grub-doc/usr/share
 - mv out/grub/usr/share/info out/grub-doc/usr/share
-- mkdir -p out/grub-xen/usr/lib/grub-xen
+- mkdir -p out/grub-xenhost/usr/lib/grub-xen
 - mv out/grub/usr/lib/grub/*-xen out/grub-xenhost/usr/lib/grub-xen
 - mkdir -p out/grub-bios/usr/lib/grub
 - mv out/grub/usr/lib/grub/*-pc out/grub-bios/usr/lib/grub
