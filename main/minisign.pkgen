@@ -12,14 +12,14 @@ builddependencies:
 - gcc
 - libc-dev
 - cmake
-- libsodium-dev
 oneshell: true
 script:
+- echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
+- apk --no-cache add libsodium-dev@edge
 - mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
 - tar -xvf src/minisign-{{.Version}}.tar.gz -C .
 - mv minisign-{{.Version}} minisign
 - mkdir minisign/build
-- export LDFLAGS='-ggdb3 -O0'
 - (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18 -DCMAKE_SYSTEM_NAME=Generic)
 - $(MAKE) -C minisign/build
 - $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
