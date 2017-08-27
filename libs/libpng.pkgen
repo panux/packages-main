@@ -12,7 +12,7 @@ version: 1.6.31
 builddependencies:
 - zlib-dev
 sources:
-- https://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-{{.Version}}.tar.gz
+- https://ftp-osl.osuosl.org/pub/libpng/src/archive/gz/libpng16/libpng-{{.Version}}.tar.gz
 script:
 - tar -xf src/libpng-{{.Version}}.tar.gz
 - mv libpng-{{.Version}} libpng
