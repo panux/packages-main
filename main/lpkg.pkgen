@@ -2,7 +2,7 @@ packages:
   lpkg:
     dependencies:
     - busybox
-    - gnupg
+    - minisign
     - lua
 version: v0.2-alpha
 sources:
