@@ -4,19 +4,9 @@ packages:
     - busybox
     - gnupg
     - lua
-version: v0.1-alpha
-builddependencies:
-- gnupg
-- expect
+version: v0.2-alpha
 sources:
-- git://github.com/panux/lpkg?checkout=77f4dfc
+- git://github.com/panux/lpkg
 script:
-- mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/gpg
+- mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/db
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
-- echo REPO=http://repo.projectpanux.com/beta/{{.Arch}}/pkgs/ > out/lpkg/etc/lpkg/lpkg.conf
-- echo GPGDIR=/etc/lpkg/gpg >> out/lpkg/etc/lpkg/lpkg.conf
-- chmod 0600 out/lpkg/etc/lpkg/lpkg.conf
-- gpg --homedir out/lpkg/etc/lpkg/gpg --keyserver keys.gnupg.net --recv-keys DD8203F5
-- expect -c "spawn gpg --homedir out/lpkg/etc/lpkg/gpg --edit-key DD8203F5 trust quit; expect \"Your decision? \" { send \"5\r\" }; expect \"Do you really want to set this key to ultimate trust? (y/N) \" { send \"y\r\" }; interact"
-- ls out/lpkg/etc/lpkg/gpg
-- cp out/lpkg/etc/lpkg/gpg/pubring.kbx out/lpkg/etc/lpkg/gpg/trustedkeys.gpg
