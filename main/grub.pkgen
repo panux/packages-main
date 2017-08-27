@@ -5,7 +5,11 @@ packages:
     - freetype
   grub-doc:
   grub-bios:
+    dependencies:
+    - grub
   grub-efi:
+    dependencies:
+    - grub
   grub-xenhost:
   grub-dev:
 version: 2.02
