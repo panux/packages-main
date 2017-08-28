@@ -23,5 +23,5 @@ data:
 script:
 - tar -xf src/gcc-{{.Version}}.tar.gz
 - mv gcc-{{.Version}} /gcc
-- (cd /gcc && export CC=gcc && export CXX=g++ && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --with-system-zlib --build={{index .Data.amap .Arch}}-unknown-linux-gnu)
-- $(MAKE) -C /gcc
+- (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-gnu)
+- $(MAKE) -C /gcc CC=gcc CXX=g++
