@@ -20,8 +20,12 @@ data:
   amap:
     x86_64: x86_64
     x86: i686
+oneshell: true
 script:
 - tar -xf src/gcc-{{.Version}}.tar.gz
 - mv gcc-{{.Version}} /gcc
+- export CC=gcc
+- export CXX=g++
 - (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-gnu)
+- sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ /g' Makefile
 - $(MAKE) -C /gcc CC=gcc CXX=g++
