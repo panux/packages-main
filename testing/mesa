@@ -1,0 +1,47 @@
+packages:
+  mesa:
+    dependencies:
+version: 17.1.4
+builddependencies:
+- libxdamage-dev
+- libxxf86vm-dev
+- libxfixes-dev
+- libxcb-dev glproto
+- dri3proto
+- presentproto
+- libxshmfence-dev
+- expat-dev
+- xextproto
+- python2
+- libxt-dev
+- makedepend
+- talloc-dev
+- py-libxml2
+- flex
+- bison
+- llvm4-dev
+- eudev-dev
+- libvdpau-dev
+- libxvmc-dev
+- gettext-dev
+- zlib-dev
+- wayland-dev
+- libelf-dev
+- py-mako
+- libtool
+- autoconf
+- automake
+- libx11-dev
+- libxext-dev
+- dri2proto
+- libdrm-dev
+- g++
+sources:
+- https://mesa.freedesktop.org/archive/mesa-{{.Version}}.tar.xz
+script:
+- tar -xf src/mesa-{{.Version}}.tar.xz
+- mv mesa-{{.Version}} mesa
+- (cd mesa && libtoolize --force && aclocal && automake --add-missing && autoreconf)
+- (cd mesa && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau --with-gallium-drivers=nouveau,virgl --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs	--with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls	--disable-nine --enable-dri --enable-glx --enable-osmesa	--enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
+- $(MAKE) -C mesa
+- $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
