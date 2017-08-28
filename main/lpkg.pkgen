@@ -9,6 +9,6 @@ sources:
 - git://github.com/panux/lpkg
 script:
 - mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/db
-- sed 's/\t//g' src/lpkg/lpkg.lua
-- sed 's/\n\n/\n/g' src/lpkg/lpkg.lua
+- sed -i 's/\t//g' src/lpkg/lpkg.lua
+- sed -i 's/\n\n/\n/g' src/lpkg/lpkg.lua
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
