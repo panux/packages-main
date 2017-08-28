@@ -1,0 +1,23 @@
+packages:
+  llvm:
+version: 4.0.0
+builddependencies:
+- xz
+- gnupg
+- cmake
+- gcc
+- g++
+sources:
+- https://releases.llvm.org/4.0.0/hans-gpg-key.asc
+script:
+- gpg --import src/hans-gpg-key.asc
+- wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
+- wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
+- gpg --verify llvm-{{.Version}}.src.tar.xz.sig
+- xz -d llvm-{{.Version}}.src.tar.xz
+- tar -xf llvm-{{.Version}}.src.tar
+- mv llvm-{{.Version}}.src llvm
+- mkdir llvm/build
+- (cd llvm/build && CC=gcc CXX=g++ cmake -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_ENABLE_FFI=ON -DCMAKE_BUILD_TYPE=Release -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_TARGETS_TO_BUILD="host;AMDGPU" -Wno-dev ..)
+- $(MAKE) -C llvm/build
+- $(MAKE) -C llvm/build DESTDIR=out/llvm
