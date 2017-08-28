@@ -6,7 +6,9 @@ packages:
 version: 2.7.13
 builddependencies:
 - build-base
+- binutils
 - g++
+- libc-dev
 - zlib-dev
 - linux-headers
 - python-dev
@@ -20,19 +22,27 @@ builddependencies:
 - readline-dev
 - sqlite-libs
 - libbz2
+- lsof
+- dos2unix
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
+- https://pastebin.com/raw/my0mZJ3f
+oneshell: true
 script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python
-- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --host=x86_64-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes)
-- (cd python && make)
-- $(MAKE) -C python DESTDIR=$(shell pwd)/out/python install
-- mkdir -p out/python-doc/usr/share
-- mv out/python/usr/share/man out/python-doc/usr/share
-- mkdir -p out/python-dev/usr
-- mv out/python/usr/include out/python-dev/usr
-- mkdir -p out/python-dev/usr/lib
-- mv out/python/usr/lib/libpython2.7.so out/python-dev/usr/lib
-- mkdir -p out/python-dev/usr/lib/python2.7/distutils/tests
-- mv out/python/usr/lib/python2.7/distutils/tests/xxmodule.c out/python-dev/usr/lib/python2.7/distutils/tests
+- mv src/my0mZJ3f ldwrap.sh
+- curl https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable > musl-find_library.patch
+- (cd python && patch -p1 -i ../musl-find_library.patch)
+- dos2unix ldwrap.sh
+- cat ldwrap.sh
+- chmod 777 ldwrap.sh
+- $(eval LD := "bash $(shell pwd)/ldwrap.sh")
+- export LDFLAGS='-lc --verbose'
+- export CFLAGS='-v'
+- export CXXFLAGS='-v'
+- if ! touch /dev/shm/python; then echo "problem"; return 1; fi
+- (cd python && ./configure LD=$(LD) LDSHARED=$(LD) --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --with-system-zlib	--enable-unicode=ucs4 --build={{.Arch}}-pc-linux-gnu --host=x86_64-pc-linux-gnu)
+- sed -i 's/plat-usage:uname\[option\]/plat-usage\\:uname\[option\]/g' python/Makefile
+- make -j100 -C python LD=$(LD) LDSHARED=$(LD)
+- cp -r python out/python
