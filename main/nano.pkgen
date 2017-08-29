@@ -1,6 +1,8 @@
 packages:
   nano:
     dependencies:
+    - ncurses
+    - musl
 version: 2.8.5
 builddependencies:
 - gcc
