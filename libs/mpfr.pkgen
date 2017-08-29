@@ -1,0 +1,39 @@
+packages:
+  libmpfr:
+    dependencies:
+    - libgmp
+    - libgmpxx
+  libmpfr-info:
+  libmpfr-doc:
+  libmpfr-include:
+  libmpfr-dev:
+    dependencies:
+    - libmpfr
+    - libmpfr-include
+version: 3.1.5
+sources:
+- https://ftp.gnu.org/gnu/mpfr/mpfr-{{.Version}}.tar.xz
+builddependencies:
+- g++
+- libc-dev
+- m4
+- texinfo
+- gmp-dev
+data:
+  amap:
+    x86_64: x86_64
+    x86: i686
+script:
+- tar -xf src/mpfr-{{.Version}}.tar.xz
+- mv mpfr-{{.Version}} mpfr
+- (cd mpfr && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/mpfr-{{.Version}} --build={{index .Data.amap .Arch}}-unknown-linux-musl)
+- $(MAKE) -C mpfr
+- $(MAKE) -C mpfr html
+- $(MAKE) -C mpfr check
+- $(MAKE) -C mpfr install DESTDIR=$(shell pwd)/out/libmpfr
+- $(MAKE) -C mpfr install-html DESTDIR=$(shell pwd)/out/libmpfr-doc
+- mkdir -p out/libmpfr-info/usr/share
+- mv out/libmpfr/usr/share/info out/libmpfr-info/usr/share/info
+- mkdir out/libmpfr-include/usr
+- mv out/libmpfr/usr/include out/libmpfr-include/usr/include
+- rm -r out/libmpfr/usr/share
