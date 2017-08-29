@@ -1,0 +1,41 @@
+packages:
+  libgmp:
+  libgmpxx:
+    dependencies:
+    - libgmp
+  libgmp-info:
+  libgmp-doc:
+  libgmp-include:
+  libgmp-dev:
+    dependencies:
+    - libgmp
+    - libgmpxx
+    - libgmp-include
+version: 6.1.2
+sources:
+- https://ftp.gnu.org/gnu/gmp/gmp-{{.Version}}.tar.xz
+builddependencies:
+- g++
+- libc-dev
+- m4
+- texinfo
+data:
+  amap:
+    x86_64: x86_64
+    x86: i686
+script:
+- tar -xf src/gmp-{{.Version}}.tar.xz
+- mv gmp-{{.Version}} gmp
+- (cd gmp && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-6.1.2 --build={{index .Data.amap .Arch}}-unknown-linux-musl)
+- $(MAKE) -C gmp
+- $(MAKE) -C gmp html
+- $(MAKE) -C gmp check
+- $(MAKE) -C gmp install DESTDIR=$(shell pwd)/out/libgmp
+- $(MAKE) -C gmp install-html DESTDIR=$(shell pwd)/out/libgmp-doc
+- mkdir -p out/libgmp-info/usr/share
+- mv out/libgmp/usr/share/info out/libgmp-info/usr/share/info
+- mkdir -p out/libgmpxx/usr/lib
+- mv out/libgmp/usr/lib/libgmpxx.* out/libgmpxx/usr/lib
+- mkdir out/libgmp-include/usr
+- mv out/libgmp/usr/include out/libgmp-include/usr/include
+- rm -r out/libgmp/usr/share
