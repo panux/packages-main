@@ -26,7 +26,7 @@ data:
 script:
 - tar -xf src/gmp-{{.Version}}.tar.xz
 - mv gmp-{{.Version}} gmp
-- (cd gmp && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-6.1.2 --build={{index .Data.amap .Arch}}-unknown-linux-musl)
+- (cd gmp && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp-{{.Version}} --build={{index .Data.amap .Arch}}-unknown-linux-musl)
 - $(MAKE) -C gmp
 - $(MAKE) -C gmp html
 - $(MAKE) -C gmp check
