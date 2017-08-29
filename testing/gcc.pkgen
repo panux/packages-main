@@ -1,9 +1,18 @@
 packages:
   gcc:
+    dependencies:
+    - gcc-libexec
+    - gcc-libcc1
   g++:
+    dependencies:
+    - gcc
   gcc-ranlib:
   gcov:
   gcc-libexec:
+    dependencies:
+    - gcc-libcc1
+    - libmpc
+    - zlib
   gcc-install-tools:
   gcc-plugin:
   gcc-include:
