@@ -1,23 +1,32 @@
 packages:
   llvm:
-version: 4.0.0
+version: 4.0.1
 builddependencies:
 - xz
 - gnupg
 - cmake
 - gcc
 - g++
+- libffi-dev
+- python
 sources:
-- https://releases.llvm.org/4.0.0/hans-gpg-key.asc
+- https://releases.llvm.org/{{.Version}}/hans-gpg-key.asc
+oneshell: true
 script:
 - gpg --import src/hans-gpg-key.asc
 - wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
 - wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
+- curl https://git.alpinelinux.org/cgit/aports/plain/main/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?id=HEAD > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
 - gpg --verify llvm-{{.Version}}.src.tar.xz.sig
 - xz -d llvm-{{.Version}}.src.tar.xz
 - tar -xf llvm-{{.Version}}.src.tar
 - mv llvm-{{.Version}}.src llvm
+- (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
 - mkdir llvm/build
-- (cd llvm/build && CC=gcc CXX=g++ cmake -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_ENABLE_FFI=ON -DCMAKE_BUILD_TYPE=Release -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_TARGETS_TO_BUILD="host;AMDGPU" -Wno-dev ..)
+- echo 'echo x86_64-unknown-linux-musl' > llvm/cmake/config.guess
+- cat llvm/cmake/config.guess
+- (cd llvm/build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_ENABLE_FFI=ON -DLLVM_BUILD_LLVM_DYLIB=ON -Wno-dev -DCMAKE_HOST_SYSTEM_NAME=Linux -DCMAKE_HOST_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 CMAKE_C_COMPILER=gcc CMAKE_CXX_COMPILER=g++ ..)
+- $(MAKE) -C llvm/build llvm-tblgen
+- $(MAKE) -C llvm/build llvm-config
 - $(MAKE) -C llvm/build
-- $(MAKE) -C llvm/build DESTDIR=out/llvm
+- cp -r llvm/* out/llvm/
