@@ -100,7 +100,7 @@ script:
   mv out/gcc/usr/bin/x86_64-pc-linux-musl-g++ out/g++/usr/bin/x86_64-pc-linux-musl-g++
   mv out/gcc/usr/bin/x86_64-pc-linux-musl-c++ out/g++/usr/bin/x86_64-pc-linux-musl-c++
   mkdir -p out/gcc-ranlib/usr/bin
-  mv out/gcc/bin/gcc-ranlib out/gcc-ranlib/bin/gcc-ranlib
+  mv out/gcc/usr/bin/gcc-ranlib out/gcc-ranlib/usr/bin/gcc-ranlib
   mv out/gcc/bin/x86_64-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/x86_64-pc-linux-musl-gcc-ranlib
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
