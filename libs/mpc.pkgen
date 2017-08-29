@@ -1,0 +1,39 @@
+packages:
+  libmpc:
+    dependencies:
+    - libmpc
+  libmpc-info:
+  libmpc-doc:
+  libmpc-include:
+  libmpc-dev:
+    dependencies:
+    - libmpc
+    - libmpc-include
+version: 1.0.3
+sources:
+- https://ftp.gnu.org/gnu/mpc/mpc-{{.Version}}.tar.gz
+builddependencies:
+- g++
+- libc-dev
+- m4
+- texinfo
+- gmp-dev
+- mpfr-dev
+data:
+  amap:
+    x86_64: x86_64
+    x86: i686
+script:
+- tar -xf src/mpc-{{.Version}}.tar.gz
+- mv mpc-{{.Version}} mpc
+- (cd mpc && ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/mpc-{{.Version}} --build={{index .Data.amap .Arch}}-unknown-linux-musl)
+- $(MAKE) -C mpc
+- $(MAKE) -C mpc html
+- $(MAKE) -C mpc check
+- $(MAKE) -C mpc install DESTDIR=$(shell pwd)/out/libmpc
+- $(MAKE) -C mpc install-html DESTDIR=$(shell pwd)/out/libmpc-doc
+- mkdir -p out/libmpc-info/usr/share
+- mv out/libmpc/usr/share/info out/libmpc-info/usr/share/info
+- mkdir out/libmpc-include/usr
+- mv out/libmpc/usr/include out/libmpc-include/usr/include
+- rm -r out/libmpc/usr/share
