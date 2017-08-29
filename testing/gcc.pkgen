@@ -1,31 +1,109 @@
 packages:
-    gcc:
+  gcc:
+  g++:
+  gcc-ranlib:
+  gcov:
+  gcc-libexec:
+  gcc-install-tools:
+  gcc-plugin:
+  gcc-include:
+  gcc-libcc1:
+  gcc-locales:
+  gcc-info:
+  gcc-man:
+  gcc-python-cxx:
+  libmpx:
+  libmpx-wrappers:
+    dependencies:
+    - libmpx
+  libquadmath:
+  libssp:
+  libgomp:
+  libatomic:
+  libgcc:
+  libitm:
+  libsupc++:
+  libstdc++:
+  libstdc++-dev:
+  libcilkrts:
 version: 7.2.0
 sources:
-- https://mirrors.concertpass.com/gcc/releases/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
+  - https://mirrors.concertpass.com/gcc/releases/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
 builddependencies:
-- gcc
-- g++
-- paxmark
-- bison
-- flex
-- texinfo
-- gawk
-- zip
-- gmp-dev
-- mpfr-dev
-- mpc1-dev
-- zlib-dev
+  - gcc
+  - g++
+  - paxmark
+  - bison
+  - flex
+  - texinfo
+  - gawk
+  - zip
+  - gmp-dev
+  - mpfr-dev
+  - mpc1-dev
+  - zlib-dev
 data:
   amap:
     x86_64: x86_64
     x86: i686
+  libs:
+    - mpx
+    - mpxwrappers
+    - quadmath
+    - gomp
+    - ssp
+    - atomic
+    - gcc_s
+    - itm
+    - supc++
+    - stdc++
+    - cilkrts
 oneshell: true
 script:
-- tar -xf src/gcc-{{.Version}}.tar.gz
-- mv gcc-{{.Version}} /gcc
-- export CC=gcc
-- export CXX=g++
-- (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-gnu)
-- sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ /g' Makefile
-- $(MAKE) -C /gcc CC=gcc CXX=g++
+- |
+  tar -xf src/gcc-{{.Version}}.tar.gz
+  mv gcc-{{.Version}} /gcc
+  export CC=gcc
+  export CXX=g++
+  sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{index .Data.amap .Arch}}-pc-linux-musl /g' Makefile
+  (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-musl)
+  $(MAKE) -C /gcc CC=gcc CXX=g++
+  $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
+  mkdir out/gcc-libexec/usr
+  mv out/gcc/usr/libexec out/gcc-libexec/usr/libexec
+  mkdir -p out/gcc-install-tools/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
+  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/install-tools out/gcc-install-tools/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/install-tools
+  mkdir -p out/gcc-plugin/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
+  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/plugin out/gcc-plugin/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/plugin
+  mkdir -p out/gcc-include/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
+  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/include out/gcc-include/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/include
+  mkdir -p out/gcc-libcc1/usr
+  mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
+  mkdir -p out/gcc-locales/usr/share
+  mv out/gcc/usr/share/locale out/gcc-locales/usr/share/locale
+  mkdir -p out/gcc-info/usr/share
+  mv out/gcc/usr/share/info out/gcc-info/usr/share/info
+  mkdir -p out/gcc-man/usr/share
+  mv out/gcc/usr/share/man out/gcc-man/usr/share/man
+  rm -f out/gcc/usr/lib64/*.a out/gcc/usr/lib64/*.la out/gcc/usr/lib64/*.spec
+  {{- range .Data.libs}}
+  mkdir -p out/lib{{.}}/usr/lib
+  mv out/gcc/usr/lib64/lib{{.}}.* out/lib{{.}}/usr/lib
+  {{- end}}
+  mv out/libgcc_s out/libgcc
+  mkdir -p out/libstdc++-dev/usr/include
+  mv out/gcc/usr/include/c++ out/libstdc++-dev/usr/include/c++
+  mkdir -p out/g++/usr/bin
+  mv out/gcc/usr/bin/g++ out/g++/usr/bin/g++
+  mv out/gcc/usr/bin/c++ out/g++/usr/bin/c++
+  mv out/gcc/usr/bin/cpp out/g++/usr/bin/cpp
+  mv out/gcc/usr/bin/x86_64-pc-linux-musl-g++ out/g++/usr/bin/x86_64-pc-linux-musl-g++
+  mv out/gcc/usr/bin/x86_64-pc-linux-musl-c++ out/g++/usr/bin/x86_64-pc-linux-musl-c++
+  mkdir -p out/gcc-ranlib/usr/bin
+  mv out/gcc/bin/gcc-ranlib out/gcc-ranlib/bin/gcc-ranlib
+  mv out/gcc/bin/x86_64-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/x86_64-pc-linux-musl-gcc-ranlib
+  mkdir -p out/gcov/usr/bin
+  mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
+  mkdir -p out/gcc-python-cxx/usr/share/gcc-7.2.0
+  mv out/gcc/usr/share/gcc-7.2.0/python out/gcc-python-cxx/usr/share/gcc-7.2.0/python
+  rm -rf out/gcc/usr/share/gcc-7.2.0 out/gcc/usr/lib64 out/gcc/usr/include
