@@ -1,0 +1,51 @@
+packages:
+  binutils:
+    dependencies:
+    - libbfd
+    - libopcodes
+    - binutils-ldscripts
+  binutils-info:
+  binutils-man:
+  binutils-locale:
+  binutils-include:
+  libbfd:
+  libopcodes:
+  binutils-ldscripts:
+version: 2.29
+sources:
+- https://ftp.gnu.org/gnu/binutils/binutils-{{.Version}}.tar.xz
+builddependencies:
+- gcc
+- g++
+- libc-dev
+- texinfo
+- zlib-dev
+- bison
+- binutils
+data:
+  amap:
+    x86_64: x86_64
+    x86: i686
+script:
+- tar -xf src/binutils-{{.Version}}.tar.xz
+- mv binutils-{{.Version}} binutils
+- (cd binutils && ./configure LD="/usr/bin/ld"--prefix=/usr --enable-ld=default --enable-plugins --enable-shared --disable-werror --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-musl)
+- $(MAKE) -C binutils tooldir=/usr
+- $(MAKE) -C binutils check
+- $(MAKE) -C binutils tooldir=/usr install DESTDIR=$(shell pwd)/out/binutils
+- mkdir -p out/binutils-info/usr/local/share
+- mv out/binutils/usr/local/share/info out/binutils-info/usr/local/share/info
+- mkdir -p out/binutils-man/usr/local/share
+- mv out/binutils/usr/local/share/man out/binutils-man/usr/local/share/man
+- mkdir -p out/binutils-locale/usr/local/share
+- mv out/binutils/usr/local/share/locale out/binutils-locale/usr/local/share/locale
+- rm -r out/binutils/usr/local/share
+- mkdir -p out/binutils-include/usr/local
+- mv out/binutils/usr/local/include out/binutils-include/usr/local/include
+- mkdir -p out/libbfd/usr/local/lib
+- mv out/binutils/usr/local/lib/libbfd.* out/libbfd/usr/local/lib
+- mkdir -p out/libopcodes/usr/local/lib
+- mv out/binutils/usr/local/lib/libopcodes.* out/libopcodes/usr/local/lib
+- mkdir -p out/binutils-ldscripts/usr/lib
+- mv out/binutils/usr/lib/ldscripts out/binutils-ldscripts/usr/lib/ldscripts
+- rm -r out/binutils/usr/lib
