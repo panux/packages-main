@@ -3,6 +3,7 @@ packages:
     dependencies:
     - gcc-libexec
     - gcc-libcc1
+    - binutils
   g++:
     dependencies:
     - gcc
