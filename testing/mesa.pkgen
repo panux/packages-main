@@ -1,6 +1,77 @@
 packages:
   mesa:
     dependencies:
+    - libgl
+  gl-headers:
+  gles-headers:
+  gles2-headers:
+  gles3-headers:
+  khr-headers:
+  egl-headers:
+  gbm-headers:
+  xa-headers:
+  mesa-headers:
+    dependencies:
+    - gl-headers
+    - gles-headers
+    - gles2-headers
+    - gles3-headers
+    - khr-headers
+    - egl-headers
+    - gbm-headers
+    - xa-headers
+  libglapi:
+    dependencies:
+    - mesa-core
+  libgles1:
+    dependencies:
+    - mesa-core
+  libgles2:
+    dependencies:
+    - mesa-core
+  nouveau-dri:
+    dependencies:
+    - mesa-core
+  radeon-dri:
+    dependencies:
+    - mesa-core
+    - libllvm
+  virtio-gpu-dri:
+    dependencies:
+    - mesa-core
+  dri-all:
+    dependencies:
+    - nouveau-dri
+    - radeon-dri
+    - virtio-gpu-dri
+  libosmesa:
+    dependencies:
+    - mesa-core
+  libgl:
+    dependencies:
+    - mesa-core
+  libgbm:
+    dependencies:
+    - mesa-core
+  libwayland-egl:
+    dependencies:
+    - mesa-core
+  libegl:
+    dependencies:
+    - mesa-core
+  vdpau-nouveau:
+    dependencies:
+    - mesa-core
+  libxatracker:
+    dependencies:
+    - mesa-core
+  mesa-core:
+    dependencies:
+    - libglapi
+    - libstdc++
+    - libdrm
+    - libexpat
+    - zlib
 version: 17.1.4
 builddependencies:
 - libxdamage-dev
@@ -38,10 +109,54 @@ builddependencies:
 - g++
 sources:
 - https://mesa.freedesktop.org/archive/mesa-{{.Version}}.tar.xz
+data:
+  headers:
+    gl-headers: GL
+    gles-headers: GLES
+    gles2-headers: GLES2
+    gles3-headers: GLES3
+    khr-headers: KHR
+    egl-headers: EGL
+    gbm-headers: gbm.h
+    xa-headers: xa_*
+  dri:
+    nouveau-dri: nouveau_*
+    radeon-dri: radeon_dri.so
+    virtio-gpu-dri: virtio_gpu_dri.so
+  libs:
+    libglapi: libglapi.*
+    libgles1: libGLESv1_CM.*
+    libgles2: libGLESv2.*
+    libosmesa: libOSMesa.*
+    libgl: libGL.*
+    libgbm: libgbm.*
+    libwayland-egl: libwayland-egl.*
+    libegl: libEGL.*
+    vdpau-nouveau: vdpau
+    libxatracker: libxatracker.*
 script:
-- tar -xf src/mesa-{{.Version}}.tar.xz
-- mv mesa-{{.Version}} mesa
-- (cd mesa && libtoolize --force && aclocal && automake --add-missing && autoreconf)
-- (cd mesa && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau --with-gallium-drivers=nouveau,virgl --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs	--with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls	--disable-nine --enable-dri --enable-glx --enable-osmesa	--enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
-- $(MAKE) -C mesa
-- $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
+- |
+  tar -xf src/mesa-{{.Version}}.tar.xz
+  mv mesa-{{.Version}} mesa
+  (cd mesa && ./autogen.sh)
+  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau --with-gallium-drivers=nouveau,virgl --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
+  $(MAKE) -C mesa
+  $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
+  {{- range $i, $v := .Data.headers}}
+  mkdir -p out/{{$i}}/usr/include
+  mv out/mesa/usr/include/{{$v}} out/{{$i}}/usr/include
+  {{- end}}
+  rm -r out/mesa/usr/include
+  rm -r out/mesa/usr/lib/pkgconfig
+  {{- range $i, $v := .Data.dri}}
+  mkdir -p out/{{$i}}/usr/lib/dri
+  mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/dri
+  {{- end}}
+  rm -r out/mesa/usr/lib/dri
+  {{- range $i, $v := .Data.libs}}
+  mkdir -p out/{{$i}}/usr/lib
+  mv out/mesa/usr/lib/{{$v}} out/{{$i}}/usr/lib
+  {{- end}}
+  rm -r out/mesa/usr/lib
+  rm -r out/mesa/usr
+  rm -r out/mesa/etc
