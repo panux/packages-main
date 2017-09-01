@@ -5,28 +5,27 @@ builddependencies:
 - xz
 - gnupg
 - cmake
-- gcc
-- g++
 - libffi-dev
 - python
+- libstdc++
+- g++
 sources:
 - https://releases.llvm.org/{{.Version}}/hans-gpg-key.asc
 oneshell: true
 script:
+- apk update
 - gpg --import src/hans-gpg-key.asc
 - wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
 - wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
 - curl https://git.alpinelinux.org/cgit/aports/plain/main/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?id=HEAD > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+- curl https://reviews.llvm.org/file/data/n35uo3zj7ecmkxghkgnd/PHID-FILE-g62ekzl6tmu4lryqmweq/D34943.id105061.diff > redef.patch
 - gpg --verify llvm-{{.Version}}.src.tar.xz.sig
 - xz -d llvm-{{.Version}}.src.tar.xz
 - tar -xf llvm-{{.Version}}.src.tar
 - mv llvm-{{.Version}}.src llvm
 - (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
+- (cd llvm/include && patch -p1 -i ../../redef.patch)
 - mkdir llvm/build
-- echo 'echo x86_64-unknown-linux-musl' > llvm/cmake/config.guess
-- cat llvm/cmake/config.guess
-- (cd llvm/build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_ENABLE_FFI=ON -DLLVM_BUILD_LLVM_DYLIB=ON -Wno-dev -DCMAKE_HOST_SYSTEM_NAME=Linux -DCMAKE_HOST_SYSTEM_PROCESSOR=x86_64 -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=x86_64 CMAKE_C_COMPILER=gcc CMAKE_CXX_COMPILER=g++ ..)
-- $(MAKE) -C llvm/build llvm-tblgen
-- $(MAKE) -C llvm/build llvm-config
+- (cd llvm/build && cmake CC=clang CXX=clang++ -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_DOXYGEN=OFF -DSPHINX_WARNINGS_AS_ERRORS=OFF ..)
 - $(MAKE) -C llvm/build
-- cp -r llvm/* out/llvm/
+- $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm
