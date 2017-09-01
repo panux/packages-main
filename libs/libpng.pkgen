@@ -8,7 +8,7 @@ packages:
   libpng-utils:
     dependencies:
     - libpng
-version: 1.6.31
+version: 1.6.25
 builddependencies:
 - zlib-dev
 sources:
