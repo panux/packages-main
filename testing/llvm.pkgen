@@ -1,5 +1,13 @@
 packages:
   llvm:
+    dependencies:
+      - llvm-bin
+      - libllvm
+  llvm-headers:
+  libllvm:
+  llvm-bin:
+    dependencies:
+      - libllvm
 version: 4.0.1
 builddependencies:
 - xz
@@ -9,23 +17,52 @@ builddependencies:
 - python
 - libstdc++
 - g++
+- zlib-dev
 sources:
 - https://releases.llvm.org/{{.Version}}/hans-gpg-key.asc
 oneshell: true
+data:
+  cmake:
+    - DCMAKE_BUILD_TYPE=Release
+    - DSPHINX_WARNINGS_AS_ERRORS=OFF
+    - DLLVM_BUILD_TESTS=YES
+    - DLLVM_BUILD_LLVM_DYLIB:BOOL=ON
+    - DLLVM_LINK_LLVM_DYLIB:BOOL=ON
+    - DLLVM_DYLIB_EXPORT_ALL:BOOL=ON
+    - DLLVM_ENABLE_ASSERTIONS=NO
+    - DLLVM_ENABLE_CXX1Y=YES
+    - DLLVM_ENABLE_FFI=YES
+    - DLLVM_ENABLE_LIBCXX=NO
+    - DLLVM_ENABLE_PIC=YES
+    - DLLVM_ENABLE_RTTI=YES
+    - DLLVM_ENABLE_TERMINFO=YES
+    - DLLVM_ENABLE_ZLIB=YES
+    - DLLVM_BUILD_EXAMPLES=NO
+    - DLLVM_INCLUDE_EXAMPLES=NO
 script:
-- apk update
-- gpg --import src/hans-gpg-key.asc
-- wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
-- wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
-- curl https://git.alpinelinux.org/cgit/aports/plain/main/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?id=HEAD > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
-- curl https://reviews.llvm.org/file/data/n35uo3zj7ecmkxghkgnd/PHID-FILE-g62ekzl6tmu4lryqmweq/D34943.id105061.diff > redef.patch
-- gpg --verify llvm-{{.Version}}.src.tar.xz.sig
-- xz -d llvm-{{.Version}}.src.tar.xz
-- tar -xf llvm-{{.Version}}.src.tar
-- mv llvm-{{.Version}}.src llvm
-- (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
-- (cd llvm/include && patch -p1 -i ../../redef.patch)
-- mkdir llvm/build
-- (cd llvm/build && cmake CC=clang CXX=clang++ -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_DOXYGEN=OFF -DSPHINX_WARNINGS_AS_ERRORS=OFF ..)
-- $(MAKE) -C llvm/build
-- $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm
+- |
+  apk update
+  gpg --import src/hans-gpg-key.asc
+  wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
+  wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
+  curl https://git.alpinelinux.org/cgit/aports/plain/main/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?id=HEAD > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+  curl https://reviews.llvm.org/file/data/n35uo3zj7ecmkxghkgnd/PHID-FILE-g62ekzl6tmu4lryqmweq/D34943.id105061.diff > redef.patch
+  gpg --verify llvm-{{.Version}}.src.tar.xz.sig
+  xz -d llvm-{{.Version}}.src.tar.xz
+  tar -xf llvm-{{.Version}}.src.tar
+  mv llvm-{{.Version}}.src llvm
+  (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
+  (cd llvm/include && patch -p1 -i ../../redef.patch)
+  mkdir llvm/build
+  (cd llvm/build && cmake {{range .Data.cmake}} -{{.}}{{end}} ..)
+  $(MAKE) -C llvm/build
+  $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm
+  mv out/llvm/usr/local/* out/llvm/usr
+  rm -r out/llvm/usr/local
+  mkdir out/llvm-headers/usr
+  mv out/llvm/usr/include out/llvm-headers/usr/include
+  mkdir out/libllvm/usr
+  mv out/llvm/usr/lib out/libllvm/usr/lib
+  mkdir out/llvm-bin/usr
+  mv out/llvm/usr/bin out/llvm-bin/usr/bin
+  rm -r out/llvm/usr
