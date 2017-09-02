@@ -12,6 +12,9 @@ packages:
     - libxdmcp
     - eudev
     - libxau
+    - libgbm
+    - mesa
+    - eudev
 version: 1.19.3
 builddependencies:
 - autoconf
