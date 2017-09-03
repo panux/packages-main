@@ -16,6 +16,6 @@ sources:
 script:
 - tar -xf src/wget-{{.Version}}.tar.xz
 - mv wget-{{.Version}} wget
-- (cd wget && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd wget && ./configure)
 - $(MAKE) -C wget
 - $(MAKE) -C wget DESTDIR=$(shell pwd)/out/wget install
