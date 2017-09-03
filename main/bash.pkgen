@@ -21,7 +21,7 @@ sources:
 script:
 - tar -xf src/bash-{{.Version}}.tar.gz
 - mv bash-{{.Version}} bash
-- (cd bash && ./configure --build={{.Arch}}-pc-linux-gnu --without-bash-malloc)
+- (cd bash && ./configure --without-bash-malloc)
 - $(MAKE) -C bash
 - $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
 - mkdir -p out/bash-headers/usr/local
