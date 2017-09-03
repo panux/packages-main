@@ -1,9 +1,16 @@
 packages:
   busybox:
-version: 1.21.1
+version: 1.27.2
 sources:
-- https://www.busybox.net/downloads/binaries/{{.Version}}/busybox-{{if eq .Arch "x86"}}i686{{else}}{{.Arch}}{{end}}
+- https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
+builddependencies:
+- linux-headers
+- binutils
 script:
+- tar -xf src/busybox-{{.Version}}.tar.bz2
+- mv busybox-{{.Version}} busybox
+- $(MAKE) -C busybox defconfig
+- $(MAKE) -C busybox
 - mkdir -p out/busybox/usr/bin
-- install -m 0700 src/busybox-{{if eq .Arch "x86"}}i686{{else}}{{.Arch}}{{end}} out/busybox/usr/bin/busybox
-- chroot out/busybox /usr/bin/busybox --install -s /usr/bin
+- mv busybox/busybox out/busybox/usr/bin
+- (cd out/busybox && usr/bin/busybox --install -s usr/bin)
