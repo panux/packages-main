@@ -13,4 +13,4 @@ script:
 - $(MAKE) -C busybox
 - mkdir -p out/busybox/usr/bin
 - mv busybox/busybox out/busybox/usr/bin
-- (cd out/busybox && usr/bin/busybox --install -s usr/bin)
+- chroot out/busybox busybox --install -s usr/bin
