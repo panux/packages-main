@@ -23,18 +23,22 @@ builddependencies:
 - g++
 sources:
 - https://ftp.gnu.org/gnu/binutils/binutils-{{.Version}}.tar.bz2
+data:
+  amap:
+    x86: i686
+    x86_64: x86_64
 script:
 - tar -xf src/binutils-{{.Version}}.tar.bz2
 - mv binutils-{{.Version}} binutils
-- (cd binutils && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-build-sysroot=$(shell pwd)/binutils --with-sysroot=/ --disable-multilib --enable-shared --enable-ld=default --enable-gold=yes --enable-64-bit-bfd --enable-plugins --enable-relro --enable-deterministic-archives --enable-install-libiberty --enable-targets={{.Arch}}-pep --disable-werror --disable-nls --with-system-zlib)
+- (cd binutils && ./configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-build-sysroot=$(shell pwd)/binutils --with-sysroot=/ --disable-multilib --enable-shared --enable-ld=default --enable-gold=yes --enable-64-bit-bfd --enable-plugins --enable-relro --enable-deterministic-archives --enable-install-libiberty --disable-werror --disable-nls --with-system-zlib)
 - $(MAKE) -C binutils
 - $(MAKE) -C binutils DESTDIR=$(shell pwd)/out/binutils install
 - mkdir -p out/binutils-dev/usr
 - mv out/binutils/usr/include out/binutils/usr/lib out/binutils-dev/usr
 - mkdir -p out/binutils-doc/usr
 - mv out/binutils/usr/share out/binutils-doc/usr
-- mkdir -p out/binutils-gold/usr/x86_64-pc-linux-gnu/bin out/binutils-gold/usr/bin
-- mv out/binutils/usr/x86_64-*/bin/ld.gold out/binutils-gold/usr/x86_64-pc-linux-gnu/bin
+- mkdir -p out/binutils-gold/usr/{{index .Data.amap .Arch}}-pc-linux-gnu/bin out/binutils-gold/usr/bin
+- mv out/binutils/usr/{{index .Data.amap .Arch}}-*/bin/ld.gold out/binutils-gold/usr/{{index .Data.amap .Arch}}-pc-linux-gnu/bin
 - mv out/binutils/usr/bin/ld.gold out/binutils-gold/usr/bin
 - mkdir -p out/binutils-libs/usr/lib
-- mv out/binutils-dev/usr/lib/libbfd-2.28.so out/binutils-dev/usr/lib/libopcodes-2.28.so out/binutils-libs/usr/lib
+- mv out/binutils-dev/usr/lib/libbfd-{{.Version}}.so out/binutils-dev/usr/lib/libopcodes-{{.Version}}.so out/binutils-libs/usr/lib
