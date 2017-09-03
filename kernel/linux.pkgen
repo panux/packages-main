@@ -15,7 +15,7 @@ version: 4.9.35
 oneshell: true
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
-- https://raw.githubusercontent.com/panux/packages-main/beta/kernel/kernel.conf
+- file://kernel-{{.Arch}}.conf
 builddependencies:
 - gcc
 - libc-dev
@@ -30,7 +30,7 @@ builddependencies:
 script:
 - tar -xf src/linux-{{.Version}}.tar.xz
 - mv linux-{{.Version}} linux
-- mv src/kernel.conf linux/.config
+- mv src/kernel-{{.Arch}}.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux oldconfig
 - $(MAKE) -C linux
