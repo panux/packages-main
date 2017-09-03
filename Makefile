@@ -1,4 +1,4 @@
-dirs = main dev extra languages libs
+dirs = main dev extra languages libs graphics
 
 pkgs = $(foreach dir,$(dirs),$(basename $(shell ls $(dir)/*.pkgen)))
 tpkgs = $(basename $(shell ls testing/*.pkgen))
