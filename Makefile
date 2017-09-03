@@ -29,3 +29,6 @@ list:
 $(pkgs) $(tpkgs):
 	@echo DEST: $(DEST)
 	bash buildpkg.sh $@ $(DEST) $(ARCH)
+
+kconf:
+	bash tools/kconf.sh
