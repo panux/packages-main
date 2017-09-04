@@ -20,7 +20,7 @@ builddependencies:
 - ncurses-libs
 - openssl-dev
 - readline-dev
-- sqlite-libs
+- sqlite-dev
 - bzip2-dev
 - tcl-dev
 sources:
@@ -34,7 +34,7 @@ script:
 - curl https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable > musl-find_library.patch
 - (cd python && patch -p1 -i ../musl-find_library.patch)
 - if ! touch /dev/shm/python; then echo "problem"; return 1; fi
-- (cd python && ./configure --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --with-system-zlib	--enable-unicode=ucs4)
+- (cd python && ./configure --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --enable-unicode=ucs4)
 - sed -i 's/plat-usage:uname\[option\]/plat-usage\\:uname\[option\]/g' python/Makefile
 - $(MAKE) -C python
 - $(MAKE) -C python install DESTDIR=$(shell pwd)/out/python
