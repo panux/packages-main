@@ -1,0 +1,32 @@
+packages:
+  lvm2:
+    dependencies:
+    - libdevmapper
+  lvm2-man:
+  libdevmapper:
+  libdevmapper-headers:
+version: 2.02.173
+sources:
+- https://mirrors.kernel.org/sourceware/lvm2/LVM2.{{.Version}}.tgz
+- https://git.alpinelinux.org/cgit/aports/plain/main/lvm2/mallinfo.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/lvm2/fix-stdio-usage.patch
+builddependencies:
+- linux-headers
+- eudev-dev
+- util-linux-dev
+- coreutils
+script:
+- tar -xf src/LVM2.{{.Version}}.tgz
+- mv LVM2.{{.Version}} lvm
+- (cd lvm && ./configure --prefix=/usr)
+- (cd lvm && patch -p1 -i ../src/mallinfo.patch)
+- (cd lvm && patch -p1 -i ../src/fix-stdio-usage.patch)
+- $(MAKE) -C lvm
+- $(MAKE) -C lvm install DESTDIR=$(shell pwd)/out/lvm2
+- mkdir out/lvm2-man/usr
+- mv out/lvm2/usr/share out/lvm2-man/usr/share
+- mkdir out/libdevmapper/usr
+- mv out/lvm2/usr/lib out/libdevmapper/usr/lib
+- mkdir out/libdevmapper-headers/usr
+- mv out/lvm2/usr/include out/libdevmapper-headers/usr/include
+- mv out/lvm2/usr/sbin out/lvm2/usr/bin
