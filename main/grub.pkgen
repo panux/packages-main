@@ -3,6 +3,7 @@ packages:
    dependencies:
     - xz-dev
     - freetype
+    - libdevmapper
   grub-doc:
   grub-bios:
     dependencies:
