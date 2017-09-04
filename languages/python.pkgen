@@ -21,7 +21,7 @@ builddependencies:
 - openssl-dev
 - readline-dev
 - sqlite-libs
-- libbz2-dev
+- bzip2-dev
 - tcl-dev
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
