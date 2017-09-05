@@ -18,7 +18,6 @@ script:
 - mv src/efivar efivar
 - $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
 - $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
-- rm -r out/efivar/usr/lib/pkgconfig
 - mkdir -p out/libefivar/usr/lib
 - mv out/efivar/usr/lib/libefivar.* out/libefivar/usr/lib
 - mkdir -p out/libefiboot/usr/lib
