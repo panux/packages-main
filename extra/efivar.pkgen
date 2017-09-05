@@ -26,4 +26,4 @@ script:
 - mv out/efivar/usr/include out/efivar-include/usr/include
 - mkdir -p out/efivar-man/usr/share
 - mv out/efivar/usr/share/man out/efivar-man/usr/share/man
-- rm -r out/efivar/usr/share out/efivar/usr/lib
+- rm -r out/efivar/usr/share
