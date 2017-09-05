@@ -1,0 +1,30 @@
+packages:
+  efivar:
+    dependencies:
+    - libefiboot
+  libefivar:
+  libefiboot:
+    dependencies:
+    - libefivar
+  efivar-man:
+  efivar-include:
+version: 31
+sources:
+- git://github.com/AdelieLinux/efivar
+builddependencies:
+- popt-dev
+- linux-headers
+script:
+- mv src/efivar efivar
+- $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
+- $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
+- rm -r out/efivar/usr/lib/pkgconfig
+- mkdir -p out/libefivar/usr/lib
+- mv out/efivar/usr/lib/libefivar.* out/libefivar/usr/lib
+- mkdir -p out/libefiboot/usr/lib
+- mv out/efivar/usr/lib/libefiboot.* out/libefiboot/usr/lib
+- mkdir -p out/efivar-include/usr
+- mv out/efivar/usr/include out/efivar-include/usr/include
+- mkdir -p out/efivar-man/usr/share
+- mv out/efivar/usr/share/man out/efivar-man/usr/share/man
+- rm -r out/efivar/usr/share out/efivar/usr/lib
