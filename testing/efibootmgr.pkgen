@@ -1,0 +1,35 @@
+packages:
+  efibootmgr:
+    dependencies:
+    - efivar
+  efibootmgr-man:
+  efibootmgr-include:
+version: 14
+sources:
+- git://github.com/rhboot/efibootmgr?target={{.Version}}
+- https://repo.projectpanux.com/beta/x86_64/pkgs/efivar-include.tar.gz
+- https://repo.projectpanux.com/beta/x86_64/pkgs/efivar.tar.gz
+- https://repo.projectpanux.com/beta/x86_64/pkgs/libefiboot.tar.gz
+- https://repo.projectpanux.com/beta/x86_64/pkgs/libefivar.tar.gz
+builddependencies:
+- popt-dev
+- linux-headers
+- zlib-dev
+- gettext-dev
+- gettext-static
+- pkgconfig
+- binutils
+oneshell:
+script:
+- for i in src/*.tar.gz; do tar -xf $$i -C /; echo $$i; done
+- mv src/efibootmgr efibootmgr
+- $(MAKE) -C efibootmgr EFIDIR=/boot/efi
+- $(MAKE) -C efibootmgr libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efibootmgr install
+- rm -r out/efibootmgr/usr/lib/pkgconfig
+- mkdir -p out/libefibootmgr/usr/lib
+- mv out/efibootmgr/usr/lib/libefibootmgr.* out/libefibootmgr/usr/lib
+- mkdir -p out/efibootmgr-include/usr
+- mv out/efibootmgr/usr/include out/efibootmgr-include/usr/include
+- mkdir -p out/efibootmgr-man/usr/share
+- mv out/efibootmgr/usr/share/man out/efibootmgr-man/usr/share/man
+- rm -r out/efibootmgr/usr/share out/efibootmgr/usr/lib
