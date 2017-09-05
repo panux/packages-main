@@ -1,0 +1,20 @@
+packages:
+  popt:
+    dependencies:
+    - musl
+  popt-man:
+  popt-headers:
+version: 1.16
+sources:
+- https://fossies.org/linux/misc/popt-{{.Version}}.tar.gz
+script:
+- tar -xf src/popt-{{.Version}}.tar.gz
+- mv popt-{{.Version}} popt
+- (cd popt && ./configure --prefix=/usr --disable-static)
+- $(MAKE) -C popt
+- $(MAKE) -C popt install DESTDIR=$(shell pwd)/out/popt
+- rm -r out/popt/usr/lib/pkgconfig
+- mkdir out/popt-headers/usr
+- mv out/popt/usr/include out/popt-headers/usr/include
+- mkdir -p out/popt-man/usr/share
+- mv out/popt/usr/share/man out/popt-man/usr/share/man
