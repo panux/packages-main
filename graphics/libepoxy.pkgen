@@ -20,7 +20,7 @@ sources:
 script:
 - tar -xJf src/libepoxy-{{.Version}}.tar.xz
 - mv libepoxy-{{.Version}} libepoxy
-- (cd libepoxy&& ./configure --prefix=/usr)
+- (cd libepoxy && ./configure --prefix=/usr)
 - $(MAKE) -C libepoxy
 - $(MAKE) -C libepoxy DESTDIR=$(shell pwd)/out/libepoxy install
 - mkdir -p out/libepoxy-dev/usr/lib
