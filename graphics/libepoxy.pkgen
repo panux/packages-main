@@ -1,0 +1,28 @@
+packages:
+  libepoxy:
+    dependencies:
+  libepoxy-dev:
+    dependencies:
+    - libepoxy
+    - libx11-dev
+    - mesa-dev
+version: 1.4.3
+builddependencies:
+- libx11-dev
+- mesa-dev
+- autoconf
+- automake
+- libtool
+- util-macros
+- python2
+sources:
+- https://ftp.osuosl.org/pub/blfs/conglomeration/libepoxy/libepoxy-{{.Version}}.tar.xz
+script:
+- tar -xJf src/libepoxy-{{.Version}}.tar.xz
+- mv libepoxy-{{.Version}} libepoxy
+- (cd libepoxy&& ./configure --prefix=/usr)
+- $(MAKE) -C libepoxy
+- $(MAKE) -C libepoxy DESTDIR=$(shell pwd)/out/libepoxy install
+- mkdir -p out/libepoxy-dev/usr/lib
+- mv out/libepoxy/usr/include out/libepoxy-dev/usr
+- mv out/libepoxy/usr/lib/pkgconfig out/libepoxy/usr/lib/libepoxy.so out/libepoxy-dev/usr/lib
