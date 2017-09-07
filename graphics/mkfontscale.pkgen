@@ -16,7 +16,7 @@ sources:
 script:
 - tar -xf src/mkfontscale-{{.Version}}.tar.bz2
 - mv mkfontscale-{{.Version}} mkfontscale
-- (cd mkfontscale&& ./configure --prefix=/usr)
+- (cd mkfontscale && ./configure --prefix=/usr)
 - $(MAKE) -C mkfontscale
 - $(MAKE) -C mkfontscale DESTDIR=$(shell pwd)/out/mkfontscale install
 - mkdir -p out/mkfontscale-doc/usr
