@@ -16,6 +16,6 @@ sources:
 script:
 - tar -xf src/font-cursor-misc-{{.Version}}.tar.bz2
 - mv font-cursor-misc-{{.Version}} font-cursor-misc
-- (cd font-cursor-misc&& ./configure --prefix=/usr)
+- (cd font-cursor-misc && ./configure --prefix=/usr)
 - $(MAKE) -C font-cursor-misc
 - $(MAKE) -C font-cursor-misc DESTDIR=$(shell pwd)/out/font-cursor-misc install
