@@ -13,8 +13,14 @@ packages:
     - eudev
     - libxau
     - libgbm
-    - mesa
-    - eudev
+    - mesa-gl
+    - mesa-gbm
+    - eudev-libs
+    - font-misc-misc
+    - font-cursor-misc
+    - libepoxy
+    - xkbcomp
+    - xkeyboardconfig
 version: 1.19.3
 builddependencies:
 - autoconf
