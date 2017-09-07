@@ -8,6 +8,7 @@ packages:
     - expat-dev
     - fontconfig
     - freetype-dev
+  fontconfig-doc:
 version: 2.12.4
 builddependencies:
 - freetype-dev
