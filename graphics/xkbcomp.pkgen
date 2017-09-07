@@ -1,0 +1,27 @@
+packages:
+  xkbcomp:
+    dependencies:
+    - libx11
+    - libxkbfile
+  xkbcomp-dev:
+    dependencies:
+    - xproto
+    - libx11-dev
+  xkbcomp-doc:
+version: 1.4.0
+builddependencies:
+- libx11-dev
+- libxkbfile-dev
+- bison
+sources:
+- https://www.x.org/releases/individual/app/xkbcomp-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xkbcomp-{{.Version}}.tar.bz2
+- mv xkbcomp-{{.Version}} xkbcomp
+- (cd xkbcomp && ./configure --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C xkbcomp
+- $(MAKE) -C xkbcomp DESTDIR=$(shell pwd)/out/xkbcomp install
+- mkdir -p out/xkbcomp-dev/usr/lib
+- mv out/xkbcomp/usr/lib/pkgconfig out/xkbcomp-dev/usr/lib
+- mkdir -p out/xkbcomp-dev/usr
+- mv out/xkbcomp/usr/share out/xkbcomp-dev/usr
