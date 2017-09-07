@@ -16,6 +16,6 @@ sources:
 script:
 - tar -xf src/font-misc-misc-{{.Version}}.tar.bz2
 - mv font-misc-misc-{{.Version}} font-misc-misc
-- (cd font-misc-misc&& ./configure --prefix=/usr)
+- (cd font-misc-misc && ./configure --prefix=/usr)
 - $(MAKE) -C font-misc-misc
 - $(MAKE) -C font-misc-misc DESTDIR=$(shell pwd)/out/font-misc-misc install
