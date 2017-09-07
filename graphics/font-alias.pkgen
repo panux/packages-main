@@ -1,0 +1,14 @@
+packages:
+  font-alias:
+    dependencies:
+version: 1.0.3
+builddependencies:
+- util-macros
+sources:
+- https://www.x.org/releases/individual/font/font-alias-{{.Version}}.tar.bz2
+script:
+- tar -xf src/font-alias-{{.Version}}.tar.bz2
+- mv font-alias-{{.Version}} font-alias
+- (cd font-alias&& ./configure --prefix=/usr --with-font-aliasdir=/usr/share/fonts/font-alias)
+- $(MAKE) -C font-alias
+- $(MAKE) -C font-alias DESTDIR=$(shell pwd)/out/font-alias install
