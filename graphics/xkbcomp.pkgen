@@ -23,5 +23,5 @@ script:
 - $(MAKE) -C xkbcomp DESTDIR=$(shell pwd)/out/xkbcomp install
 - mkdir -p out/xkbcomp-dev/usr/lib
 - mv out/xkbcomp/usr/lib/pkgconfig out/xkbcomp-dev/usr/lib
-- mkdir -p out/xkbcomp-dev/usr
-- mv out/xkbcomp/usr/share out/xkbcomp-dev/usr
+- mkdir -p out/xkbcomp-doc/usr
+- mv out/xkbcomp/usr/share out/xkbcomp-doc/usr
