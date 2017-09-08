@@ -68,7 +68,7 @@ packages:
   mesa-core:
     dependencies:
     - libglapi
-    - libstdc++
+    - libstdcpp
     - libdrm
     - libexpat
     - zlib
