@@ -1,0 +1,32 @@
+packages:
+  kmod:
+    dependencies:
+    - xz-libs
+    - zlib
+  kmod-bash-completion:
+  kmod-dev:
+    dependencies:
+    - kmod
+  kmod-doc:
+version: 24
+builddependencies:
+- sed
+- libxslt
+- zlib-dev
+- xz-libs
+- xz-dev
+sources:
+- https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-{{.Version}}.tar.xz
+script:
+- tar -xf src/kmod-{{.Version}}.tar.xz
+- mv kmod-{{.Version}} kmod
+- (cd kmod && ./configure --prefix=/usr --sysconfdir=/etc --with-xz)
+- $(MAKE) -C kmod
+- $(MAKE) -C kmod DESTDIR=$(shell pwd)/out/kmod install
+- mkdir -p out/kmod-bash-completion/usr/share
+- mv out/kmod/usr/share/bash-completion out/kmod-bash-completion/usr/share
+- mkdir -p out/kmod-dev/usr/lib
+- mv out/kmod/usr/include out/kmod-dev/usr
+- mv out/kmod/usr/lib/libkmod.so out/kmod/usr/lib/pkgconfig out/kmod-dev/usr/lib
+- mkdir -p out/kmod-doc/usr
+- mv out/kmod/usr/share out/kmod-doc/usr
