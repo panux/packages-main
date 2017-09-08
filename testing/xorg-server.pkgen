@@ -10,7 +10,7 @@ packages:
     - libxfont2
     - libxshmfence
     - libxdmcp
-    - eudev
+    - eudev-libs
     - libxau
     - libgbm
     - mesa-gl
