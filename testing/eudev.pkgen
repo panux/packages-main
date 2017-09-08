@@ -2,6 +2,9 @@ packages:
   eudev:
     dependencies:
     - eudev-libs
+    - libblkid
+    - udev-init-scripts
+    - kmod
   eudev-dev:
     dependencies:
     - eudev
@@ -32,3 +35,4 @@ script:
 - cp out/eudev/usr/lib/libudev.so.1.6.3 out/eudev/lib
 - mkdir -p out/eudev-libs/lib
 - mv out/eudev/lib/libudev.so.1 out/eudev/lib/libudev.so.1.6.3 out/eudev-libs/lib
+
