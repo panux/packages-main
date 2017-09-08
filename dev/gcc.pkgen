@@ -32,9 +32,9 @@ packages:
   libatomic:
   libgcc:
   libitm:
-  libsupc++:
-  libstdc++:
-  libstdc++-dev:
+  libsupcpp:
+  libstdcpp:
+  libstdcpp-dev:
   libcilkrts:
 version: 7.2.0
 sources:
