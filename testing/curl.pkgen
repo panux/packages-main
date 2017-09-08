@@ -4,7 +4,7 @@ packages:
     - libcurl
   libcurl:
     dependencies:
-    - libopenssl
+    - libressl
   curl-man:
   curl-headers:
 version: 7.54.1
@@ -13,7 +13,7 @@ builddependencies:
 - libc-dev
 - ncurses-dev
 - zlib-dev
-- openssl-dev
+- libressl-dev
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
 script:
