@@ -100,7 +100,7 @@ script:
   mkdir -p out/lib{{.}}/usr/lib
   mv out/gcc/usr/lib64/lib{{.}}.* out/lib{{.}}/usr/lib
   {{- end}}
-  mv out/libgcc_s out/libgcc
+  mv out/libgcc_s/* out/libgcc
   mkdir -p out/libstdc++-dev/usr/include
   mv out/gcc/usr/include/c++ out/libstdc++-dev/usr/include/c++
   mkdir -p out/g++/usr/bin
