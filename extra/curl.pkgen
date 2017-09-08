@@ -5,6 +5,7 @@ packages:
   libcurl:
     dependencies:
     - libressl
+    - zlib
   curl-man:
   curl-headers:
 version: 7.54.1
