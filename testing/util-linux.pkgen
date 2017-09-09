@@ -66,7 +66,6 @@ data:
     blkid: blkid
     cfdisk: cfdisk
     sfdisk: sfdisk
-    findmnt: findmnt
   libs:
     libblkid: libblkid.*
     libfdisk: libfdisk.*
@@ -93,6 +92,8 @@ script:
   mkdir -p out/{{$i}}/sbin
   mv out/util-linux/sbin/{{$v}} out/{{$i}}/sbin
   {{- end}}
+  mkdir -p out/findmnt/bin
+  mv out/util-linux/bin/findmnt out/findmnt/bin
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/lib
   mv out/util-linux/lib/{{$v}} out/{{$i}}/lib
