@@ -1,0 +1,14 @@
+packages:
+  resourceproto:
+    dependencies:
+    - pkgconf
+version: 1.2.0
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/resourceproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/resourceproto-{{.Version}}.tar.bz2
+- mv resourceproto-{{.Version}} resourceproto
+- (cd resourceproto && ./configure --prefix=/usr)
+- $(MAKE) -C resourceproto
+- (cd resourceproto && make -j1 DESTDIR=$(shell pwd)/out/resourceproto install)
