@@ -1,6 +1,10 @@
 packages:
   libpciaccess:
     dependencies:
+  libpciaccess-dev:
+    dependencies:
+    - libpciaccess
+  libpciaccess-doc:
 version: 0.13.5
 builddependencies:
 sources:
@@ -8,6 +12,11 @@ sources:
 script:
 - tar -xf src/libpciaccess-{{.Version}}.tar.bz2
 - mv libpciaccess-{{.Version}} libpciaccess
-- (cd libpciaccess && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- (cd libpciaccess && ./configure --prefix=/usr)
 - $(MAKE) -C libpciaccess
 - $(MAKE) -C libpciaccess DESTDIR=$(shell pwd)/out/libpciaccess install
+- mkdir -p out/libpciaccess-dev/usr/lib
+- mv out/libpciaccess/usr/include out/libpciaccess-dev/usr
+- mv out/libpciaccess/usr/lib/*.a out/libpciaccess/usr/lib/*.so out/libpciaccess/usr/lib/pkgconfig out/libpciaccess-dev/usr/lib
+- mkdir -p out/libpciaccess-doc/usr
+- mv out/libpciaccess/usr/share out/libpciaccess-doc/usr
