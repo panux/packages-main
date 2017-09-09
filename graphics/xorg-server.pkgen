@@ -13,8 +13,8 @@ packages:
     - eudev-libs
     - libxau
     - libgbm
-    - mesa-gl
-    - mesa-gbm
+    - libgl
+    - libgbm
     - eudev-libs
     - font-misc-misc
     - font-cursor-misc
