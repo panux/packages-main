@@ -1,0 +1,13 @@
+packages:
+  xextproto:
+    dependencies:
+version: 7.3.0
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/xextproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xextproto-{{.Version}}.tar.bz2
+- mv xextproto-{{.Version}} xextproto
+- (cd xextproto && ./configure --prefix=/usr)
+- $(MAKE) -C xextproto
+- (cd xextproto && make -j1 DESTDIR=$(shell pwd)/out/xextproto install)
