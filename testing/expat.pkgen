@@ -1,0 +1,22 @@
+packages:
+  expat:
+  expat-dev:
+    dependencies:
+    - expat
+    - pkgconf
+  expat-doc:
+version: 2.2.4
+builddependencies:
+sources:
+script:
+- wget https://sourceforge.net/projects/expat/files/expat/{{.Version}}/expat-{{.Version}}.tar.bz2
+- tar -xf expat-{{.Version}}.tar.bz2
+- mv expat-{{.Version}} expat
+- (cd expat && ./configure --prefix=/usr --mandir=/usr/share/man)
+- $(MAKE) -C expat
+- $(MAKE) -C expat DESTDIR=$(shell pwd)/out/expat install
+- mkdir -p out/expat-dev/usr/lib
+- mv out/expat/usr/include out/expat-dev/usr
+- mv out/expat/usr/lib/*.a out/expat/usr/lib/*.so out/expat/usr/lib/pkgconfig out/expat-dev/usr/lib
+- mkdir -p out/expat-doc/usr
+- mv out/expat/usr/share out/expat-doc/usr
