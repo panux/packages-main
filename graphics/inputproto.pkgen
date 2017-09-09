@@ -1,0 +1,14 @@
+packages:
+  inputproto:
+    dependencies:
+    - pkgconf
+version: 2.3.2
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/inputproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/inputproto-{{.Version}}.tar.bz2
+- mv inputproto-{{.Version}} inputproto
+- (cd inputproto && ./configure --prefix=/usr)
+- $(MAKE) -C inputproto
+- (cd inputproto && make -j1 DESTDIR=$(shell pwd)/out/inputproto install)
