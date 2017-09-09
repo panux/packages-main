@@ -1,0 +1,24 @@
+packages:
+  mcpp:
+    dependencies:
+    - mcpp-libs
+  mcpp-dev:
+    dependencies:
+    - mcpp-libs
+  mcpp-doc:
+version: 2.7.2
+builddependencies:
+sources:
+- git://github.com/h8liu/mcpp
+script:
+- mv src/mcpp mcpp
+- (cd mcpp && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var --enable-mcpplib)
+- $(MAKE) -C mcpp
+- $(MAKE) -C mcpp DESTDIR=$(shell pwd)/out/mcpp install
+- mkdir -p out/mcpp-dev/usr/lib
+- mv out/mcpp/usr/include out/mcpp-dev/usr
+- mv out/mcpp/usr/lib/libmcpp.so out/mcpp-dev/usr/lib
+- mkdir -p out/mcpp-doc/usr
+- mv out/mcpp/usr/share out/mcpp-doc/usr
+- mkdir -p out/mcpp-libs/usr/lib
+- mv out/mcpp/usr/lib/libmcpp.so.0* out/mcpp-libs/usr/lib
