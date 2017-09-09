@@ -8,6 +8,7 @@ packages:
     - libxau-dev
     - libxext
     - xextproto
+  libxext-doc:
 version: 1.3.3
 builddependencies:
 - libx11-dev
