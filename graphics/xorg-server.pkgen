@@ -14,12 +14,11 @@ packages:
     - libgbm
     - libgl
     - libgbm
-    - eudev-libs
     - font-misc-misc
     - font-cursor-misc
     - libepoxy
     - xkbcomp
-    - xkeyboardconfig
+    - xkeyboard-config
   xorg-server-dev:
     dependencies:
       - bigreqsproto
