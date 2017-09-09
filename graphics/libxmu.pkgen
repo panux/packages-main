@@ -38,4 +38,5 @@ script:
 - mkdir -p out/libxmu-dev/usr/lib
 - mv out/libxmu/usr/include out/libxmu-dev/usr
 - mv out/libxmu/usr/lib/*.a out/libxmu/usr/lib/*.so out/libxmu/usr/lib/pkgconfig out/libxmu-dev/usr/lib
-- mkdir -p out/libxmu/usr/share out/libxmu-doc/usr
+- mkdir -p out/libxmu-doc/usr
+- mv out/libxmu/usr/share out/libxmu-doc/usr
