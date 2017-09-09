@@ -1,0 +1,17 @@
+packages:
+  libxext:
+    dependencies:
+    - libx11
+version: 1.3.3
+builddependencies:
+- libx11-dev
+- libxau-dev
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXext-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libXext-{{.Version}}.tar.bz2
+- mv libXext-{{.Version}} libxext
+- (cd libxext && ./configure --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C libxext
+- $(MAKE) -C libxext DESTDIR=$(shell pwd)/out/libxext install
