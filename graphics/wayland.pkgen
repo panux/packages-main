@@ -1,0 +1,66 @@
+packages:
+  wayland:
+    dependencies:
+    - wayland-libs-client
+    - wayland-libs-server
+    - wayland-libs-cursor
+  wayland-dev:
+    dependencies:
+    - expat
+    - expat-dev
+    - libffi-dev
+    - libxml2
+    - pkgconf
+    - wayland-libs-client
+    - wayland-libs-server
+    - wayland-libs-cursor
+  wayland-doc:
+  wayland-libs-client:
+    dependencies:
+    - libffi
+    - wayland-libs-server
+    - wayland-libs-cursor
+  wayland-libs-server:
+    dependencies:
+    - libffi
+    - wayland-libs-client
+    - wayland-libs-cursor
+  wayland-libs-cursor:
+    dependencies:
+    - wayland-libs-client
+    - wayland-libs-server
+version: 1.14.0
+builddependencies:
+- libffi-dev
+- expat-dev
+- doxygen
+- xmlto
+- graphviz
+- grep
+- libxml2-dev
+- bash
+sources:
+- https://wayland.freedesktop.org/releases/wayland-{{.Version}}.tar.xz
+data:
+  libs:
+    wayland-libs-client: libwayland-client.so.0*
+    wayland-libs-server: libwayland-server.so.0*
+    wayland-libs-cursor: libwayland-cursor.so.0*
+script:
+- |
+  tar -xf src/wayland-{{.Version}}.tar.xz
+  mv wayland-{{.Version}} wayland
+  (cd wayland && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var)
+  $(MAKE) -C wayland
+  $(MAKE) -C wayland DESTDIR=$(shell pwd)/out/wayland install
+  {{- range $i, $v := .Data.libs}}
+  mkdir -p out/{{$i}}/usr/lib
+  mv out/wayland/usr/lib/{{$v}} out/{{$i}}/usr/lib
+  {{- end}}
+  mkdir -p out/wayland-dev/usr/lib out/wayland-dev/usr/bin out/wayland-dev/usr/share
+  mv out/wayland/usr/include out/wayland-dev/usr
+  mv out/wayland/usr/lib/*.a out/wayland/usr/lib/*.so out/wayland/usr/lib/pkgconfig out/wayland-dev/usr/lib
+  mv out/wayland/usr/bin/wayland-scanner out/wayland-dev/usr/bin
+  mv out/wayland/usr/share/aclocal out/wayland/usr/share/wayland out/wayland-dev/usr/share
+  mkdir -p out/wayland-doc/usr
+  mv out/wayland/usr/share out/wayland-doc/usr
