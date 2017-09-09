@@ -6,6 +6,7 @@ packages:
     dependencies:
     - mcpp-libs
   mcpp-doc:
+  mcpp-libs:
 version: 2.7.2
 builddependencies:
 sources:
