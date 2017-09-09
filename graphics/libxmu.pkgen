@@ -1,0 +1,24 @@
+packages:
+  libxmu:
+    dependencies:
+    - libx11
+version: 1.1.2
+builddependencies:
+- libxext-dev
+- libxt-dev
+- libx11-dev
+- libsm-dev
+- util-linux-dev
+- xproto
+- libx11-dev
+- libxt-dev
+- libxext-dev
+- util-linux-dev
+sources:
+- https://www.x.org/releases/individual/lib/libXmu-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libXmu-{{.Version}}.tar.bz2
+- mv libXmu-{{.Version}} libxmu
+- (cd libxmu && ./configure --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C libxmu
+- $(MAKE) -C libxmu DESTDIR=$(shell pwd)/out/libxmu install
