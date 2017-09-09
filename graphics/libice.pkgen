@@ -21,4 +21,5 @@ script:
 - mkdir -p out/libice-dev/usr/lib
 - mv out/libice/usr/include out/libice-dev/usr
 - mv out/libice/usr/lib/*.a out/libice/usr/lib/*.so out/libice/usr/lib/pkgconfig out/libice-dev/usr/lib
-- mkdir -p out/libice/usr/share out/libice-doc/usr
+- mkdir -p out/libice-doc/usr
+- mv out/libice/usr/share out/libice-doc/usr
