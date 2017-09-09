@@ -1,0 +1,25 @@
+packages:
+  pkgconf:
+    dependencies:
+    - musl
+  pkgconf-dev:
+    dependencies:
+    - pkgconf
+  pkgconf-doc:
+version: 1.3.8
+builddependencies:
+- kyua
+- atf
+sources:
+- https://distfiles.dereferenced.org/pkgconf/pkgconf-{{.Version}}.tar.xz
+script:
+- tar -xf src/pkgconf-{{.Version}}.tar.xz
+- mv pkgconf-{{.Version}} pkgconf
+- (cd pkgconf && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var --with-pkg-config-dir=/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig)
+- $(MAKE) -C pkgconf
+- $(MAKE) -C pkgconf DESTDIR=$(shell pwd)/out/pkgconf install
+- mkdir -p out/pkgconf-dev/usr/lib
+- mv out/pkgconf/usr/include out/pkgconf-dev/usr
+- mv out/pkgconf/usr/lib/*.a out/pkgconf/usr/lib/*.so out/pkgconf/usr/lib/pkgconfig out/pkgconf-dev/usr/lib
+- mkdir -p out/pkgconf-doc/usr
+- mv out/pkgconf/usr/share out/pkgconf-doc/usr
