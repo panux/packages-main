@@ -33,7 +33,7 @@ script:
 - mv out/libxml2/usr/include out/libxml2-dev/usr
 - mv out/libxml2/usr/lib/*.a out/libxml2/usr/lib/*.so out/libxml2/usr/lib/pkgconfig out/libxml2/usr/lib/xml2Conf.sh out/libxml2/usr/lib/cmake out/libxml2-dev/usr/lib
 - mv out/libxml2/usr/bin/xml2-config out/libxml2-dev/usr/bin
-- mv out/libxml2/usr/share/alocal out/libxml2-dev/usr/share
+- mv out/libxml2/usr/share/aclocal out/libxml2-dev/usr/share
 - mkdir -p out/libxml2-doc/usr
 - mv out/libxml2/usr/share out/libxml2-doc/usr
 - mkdir -p out/libxml2-utils/usr
