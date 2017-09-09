@@ -20,4 +20,5 @@ script:
 - mkdir -p out/libxau-dev/usr/lib
 - mv out/libxau/usr/include out/libxau-dev/usr
 - mv out/libxau/usr/lib/*.a out/libxau/usr/lib/*.so out/libxau/usr/lib/pkgconfig out/libxau-dev/usr/lib
-- mkdir -p out/libxau/usr/share out/libxau-doc/usr
+- mkdir -p out/libxau/usr/share 
+- mv out/libxau/usr/share out/libxau-doc/usr
