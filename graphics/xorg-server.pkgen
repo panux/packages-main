@@ -6,7 +6,6 @@ packages:
     - libressl
     - pixman
     - libdrm
-    - pixman
     - libxfont2
     - libxshmfence
     - libxdmcp
