@@ -1,0 +1,14 @@
+packages:
+  damageproto:
+    dependencies:
+    - pkgconf
+version: 1.2.1
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/damageproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/damageproto-{{.Version}}.tar.bz2
+- mv damageproto-{{.Version}} damageproto
+- (cd damageproto && ./configure --prefix=/usr)
+- $(MAKE) -C damageproto
+- (cd damageproto && make -j1 DESTDIR=$(shell pwd)/out/damageproto install)
