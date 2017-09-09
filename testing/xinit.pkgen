@@ -2,9 +2,12 @@ packages:
   xinit:
     dependencies:
     - libx11
-    - libxau
-    - libxcb
-    - xorg-server
+    - mcookie
+    - musl
+    - xauth
+    - xmodmap
+    - xrdb
+  xinit-doc:
 version: 1.3.4
 builddependencies:
 - xauth
@@ -17,6 +20,8 @@ sources:
 script:
 - tar -xf src/xinit-{{.Version}}.tar.bz2
 - mv xinit-{{.Version}} xinit
-- (cd xinit && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	--localstatedir=/var --with-xinitdir=/etc/X11/xinit)
+- (cd xinit && ./configure --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	-with-xinitdir=/etc/X11/xinit)
 - $(MAKE) -C xinit
 - $(MAKE) -C xinit DESTDIR=$(shell pwd)/out/xinit install
+- mkdir -p out/xinit-doc/usr
+- mv out/xinit/usr/share out/xinit-doc/usr
