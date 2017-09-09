@@ -37,6 +37,6 @@ script:
 - mkdir -p out/libxml2-doc/usr
 - mv out/libxml2/usr/share out/libxml2-doc/usr
 - mkdir -p out/libxml2-utils/usr
-- mv out/libxml2/usr/bin out/libxml-utils/usr
+- mv out/libxml2/usr/bin out/libxml2-utils/usr
 - mkdir -p out/py-libxml2/usr/lib
 - mv out/libxml/usr/lib/python2.7 out/py-libxml2/usr/lib
