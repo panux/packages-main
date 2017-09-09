@@ -29,4 +29,5 @@ script:
 - mkdir -p out/libxt-dev/usr/lib
 - mv out/libxt/usr/include out/libxt-dev/usr
 - mv out/libxt/usr/lib/*.a out/libxt/usr/lib/*.so out/libxt/usr/lib/pkgconfig out/libxt-dev/usr/lib
-- mkdir -p out/libxt/usr/share out/libxt-doc/usr
+- mkdir -p out/libxt-doc/usr
+- mv out/libxt/usr/share out/libxt-doc/usr
