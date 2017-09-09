@@ -1,0 +1,14 @@
+packages:
+  dri2proto:
+    dependencies:
+    - pkgconf
+version: 2.8
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/dri2proto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/dri2proto-{{.Version}}.tar.bz2
+- mv dri2proto-{{.Version}} dri2proto
+- (cd dri2proto && ./configure --prefix=/usr)
+- $(MAKE) -C dri2proto
+- (cd dri2proto && make -j1 DESTDIR=$(shell pwd)/out/dri2proto install)
