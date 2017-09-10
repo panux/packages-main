@@ -6,8 +6,8 @@ packages:
     - wayland-libs-cursor
   wayland-dev:
     dependencies:
-    - expat
-    - expat-dev
+    - libexpat
+    - libexpat-headers
     - libffi-dev
     - libxml2
     - pkgconf
