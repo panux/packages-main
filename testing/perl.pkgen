@@ -9,6 +9,7 @@ builddependencies:
 - gdbm-dev
 - db-dev
 - perl-utils
+- binutils
 sources:
 - https://www.cpan.org/src/5.0/perl-{{.Version}}.tar.gz
 script:
