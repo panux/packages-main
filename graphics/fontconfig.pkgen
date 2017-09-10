@@ -1,11 +1,11 @@
 packages:
   fontconfig:
     dependencies:
-    - expat
+    - libexpat
     - freetype
   fontconfig-dev:
     dependencies:
-    - expat-dev
+    - libexpat-headers
     - fontconfig
     - freetype-dev
   fontconfig-doc:
