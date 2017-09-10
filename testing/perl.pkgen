@@ -8,6 +8,7 @@ builddependencies:
 - ncurses-dev
 - gdbm-dev
 - db-dev
+- perl-utils
 sources:
 - https://www.cpan.org/src/5.0/perl-{{.Version}}.tar.gz
 script:
