@@ -1,0 +1,57 @@
+packages:
+  glib:
+    dependencies:
+    - libffi
+    - libintl
+    - libmount
+    - pcre
+    - zlib
+  glib-doc:
+  glib-bash-completion:
+  glib-lang:
+  glib-dev:
+    dependencies:
+    - bzip2-dev
+    - gettext-dev
+    - glib
+    - libffi-dev
+    - libintl
+    - pcre-headers
+    - pcre
+    - perl
+    - python
+    - util-linux-dev
+    - zlib-dev
+version: 2.54.0
+builddependencies:
+- perl
+- python2
+- gettext-dev
+- zlib-dev
+- bzip2-dev
+- libffi-dev
+- util-linux-dev
+- pcre-dev
+sources:
+- https://gemmei.ftp.acc.umu.se/pub/gnome/sources/glib/2.54/glib-{{.Version}}.tar.xz
+script:
+- |
+  tar -xf src/glib-{{.Version}}.tar.xz
+  mv glib-{{.Version}} glib
+  (cd glib && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C glib
+  $(MAKE) -C glib DESTDIR=$(shell pwd)/out/glib install
+  mkdir -p out/glib-doc/usr/share
+  {{pkmv "usr/share/gtk-doc" "glib" "glib-doc"}}
+  mkdir -p out/glib-bash-completion/usr/share
+  {{pkmv "usr/share/bash-completion" "glib" "glib-bash-completion"}}
+  mkdir -p out/glib-lang/usr/share
+  {{pkmv "usr/share/locale" "glib" "glib-lang"}}
+  mkdir -p out/glib-dev/usr/lib out/glib-dev/usr/bin
+  {{pkmv "usr/share" "glib" "glib-dev"}}
+  {{pkmv "usr/include" "glib" "glib-dev"}}
+  {{pkmv "usr/lib/*.so" "glib" "glib-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "glib" "glib-dev"}}
+  {{pkmv "usr/lib/glib-2.0" "glib" "glib-dev"}}
+  {{pkmv "usr/bin/*" "glib" "glib-dev"}}
+  mv out/glib-dev/usr/bin/gsettings out/glib-dev/usr/bin/gapplication out/glib-dev/usr/bin/gdbus out/glib-dev/usr/bin/gio out/glib-dev/usr/bin/gio-querymodules out/glib-dev/usr/bin/glib-compile-schemas out/glib/usr/bin
