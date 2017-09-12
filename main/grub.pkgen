@@ -11,6 +11,7 @@ packages:
   grub-efi:
     dependencies:
     - grub
+    - efibootmgr
   grub-xenhost:
   grub-dev:
 version: 2.02
