@@ -1,21 +1,47 @@
 packages:
   perl:
     dependencies:
-version: 5.26.0
+    - musl
+  perl-dev:
+    dependencies:
+    - perl-utils
+  perl-man:
+  perl-utils:
+    dependencies:
+    - perl
+version: 5.24.2
 builddependencies:
-- gcc
-- libc-dev
-- ncurses-dev
-- gdbm-dev
-- db-dev
 - perl-utils
+- ncurses-dev
+- libc6-compat
 - binutils
+- musl-dev
+- openssh
 sources:
 - https://www.cpan.org/src/5.0/perl-{{.Version}}.tar.gz
+oneshell: true
 script:
-- tar -xf src/perl-{{.Version}}.tar.gz
-- mv perl-{{.Version}} perl
-- (cd perl && sh Configure -des -Dprefix=/usr -Dvendorprefix=/usr -Dman1dir=/usr/share/man/man1 -Dman3dir=/usr/share/man/man3 -Dpager="/usr/bin/less -isR" -Duseshrplib -Dusethreads)
-- $(MAKE) -C perl libperl.so
-- $(MAKE) -C perl
-- $(MAKE) -C perl DESTDIR=$(shell pwd)/out/perl install
+- |
+  tar -xf src/perl-{{.Version}}.tar.gz
+  mv perl-{{.Version}} perl
+  (cd perl && ./Configure -des -Dtargetarch=linux -Dcc=gcc -Uusenm -Dcccdlflags='-fPIC' -Dcccdlflags='-fPIC' -Dccdlflags='-rdynamic'	-Dprefix=/usr	-Dprivlib=/usr/share/perl5/core_perl -Darchlib=/usr/lib/perl5/core_perl	-Dvendorprefix=/usr -Dvendorlib=/usr/share/perl5/vendor_perl -Dvendorarch=/usr/lib/perl5/vendor_perl -Dsiteprefix=/usr/local -Dsitelib=/usr/local/share/perl5/site_perl -Dsitearch=/usr/local/lib/perl5/site_perl	-Dlocincpth=' ' -Duselargefiles	-Dusethreads -Duseshrplib -Dd_semctl_semun -Dman1dir=/usr/share/man/man1 -Dman3dir=/usr/share/man/man3 -Dinstallman1dir=/usr/share/man/man1 -Dinstallman3dir=/usr/share/man/man3 -Dman1ext='1' -Dman3ext='3pm' -Dcf_by='Panux' -Ud_csh)
+  $(MAKE) -C perl
+  $(MAKE) -C perl DESTDIR=$(shell pwd)/out/perl install
+  mv out/perl/usr/local/* out/perl/usr
+  rm -r out/perl/usr/local
+  mkdir -p out/perl-dev/usr/share/perl5/core_perl out/perl-dev/usr/lib/perl5/core_perl out/perl-dev/usr/bin
+  {{pkmv "usr/share/perl5/core_perl/Encode" "perl" "perl-dev"}}
+  {{pkmv "usr/lib/perl5/core_perl/CORE" "perl" "perl-dev"}}
+  {{pkmv "usr/lib/perl5/core_perl/Devel" "perl" "perl-dev"}}
+  {{pkmv "usr/bin/enc2xs" "perl" "perl-dev"}}
+  {{pkmv "usr/bin/xsubpp" "perl" "perl-dev"}}
+  {{pkmv "usr/bin/h2xs" "perl" "perl-dev"}}
+  {{pkmv "usr/bin/perlivp" "perl" "perl-dev"}}
+  mkdir -p out/perl-utils/usr
+  {{pkmv "usr/bin" "perl" "perl-utils"}}
+  {{pkmv "usr/bin/perl*" "perl-utils" "perl"}}
+  {{pkmv "usr/bin/pod*" "perl-utils" "perl"}}
+  {{pkmv "usr/bin/perlbug" "perl" "perl-utils"}}
+  {{pkmv "usr/bin/perlthanks" "perl" "perl-utils"}}
+  mkdir -p out/perl-man/usr/share
+  {{pkmv "usr/share/man" "perl" "perl-man"}}
