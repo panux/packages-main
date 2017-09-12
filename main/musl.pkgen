@@ -8,12 +8,13 @@ builddependencies:
 sources:
   - git://git.musl-libc.org/musl?checkout={{.Version}}
 script:
-  - (cd src/musl && ./configure --build={{.Arch}}-pc-linux-gnu)
-  - $(MAKE) -C src/musl
-  - $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl install-libs
-  - $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
-  - mkdir -p out/musl/usr/lib out/musl-a/usr/local/musl/lib out/musl/usr/bin
-  - mv out/musl/usr/local/musl/lib/*.a out/musl-a/usr/local/musl/lib/
-  - rm -r out/musl/lib
-  - (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{if eq .Arch "x86"}}i386{{else}}{{.Arch}}{{end}}.so.1)
-  - (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/bin/ldd)
+  - |
+    (cd src/musl && ./configure)
+    $(MAKE) -C src/musl
+    $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl install-libs
+    $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
+    mkdir -p out/musl/usr/lib out/musl/usr/bin
+    {{pkmv "usr/local/musl/lib/*.a" "musl" "musl-a"}}
+    rm -r out/musl/lib
+    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{if eq .Arch "x86"}}i386{{else}}{{.Arch}}{{end}}.so.1)
+    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/bin/ldd)
