@@ -29,9 +29,9 @@ script:
   $(MAKE) -C perl DESTDIR=$(shell pwd)/out/perl install
   cp -r out/perl/usr/local/* out/perl/usr
   rm -r out/perl/usr/local
-  mkdir -p out/perl-dev/usr/share/perl5/core_perl out/perl-dev/usr/lib/perl5/core_perl out/perl-dev/usr/bin
+  mkdir -p out/perl-dev/usr/share/perl5/core_perl out/perl-dev/usr/lib/perl5/core_perl/CORE out/perl-dev/usr/bin
   {{pkmv "usr/share/perl5/core_perl/Encode" "perl" "perl-dev"}}
-  {{pkmv "usr/lib/perl5/core_perl/CORE" "perl" "perl-dev"}}
+  {{pkmv "usr/lib/perl5/core_perl/CORE/*.h" "perl" "perl-dev"}}
   {{pkmv "usr/lib/perl5/core_perl/Devel" "perl" "perl-dev"}}
   {{pkmv "usr/bin/enc2xs" "perl" "perl-dev"}}
   {{pkmv "usr/bin/xsubpp" "perl" "perl-dev"}}
