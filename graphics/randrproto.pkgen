@@ -1,0 +1,14 @@
+packages:
+  randrproto:
+    dependencies:
+    - pkgconf
+version: 1.5.0
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/randrproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/randrproto-{{.Version}}.tar.bz2
+- mv randrproto-{{.Version}} randrproto
+- (cd randrproto && ./configure --prefix=/usr)
+- $(MAKE) -C randrproto
+- (cd randrproto && make -j1 DESTDIR=$(shell pwd)/out/randrproto install)

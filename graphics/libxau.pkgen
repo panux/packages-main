@@ -1,6 +1,11 @@
 packages:
   libxau:
     dependencies:
+  libxau-dev:
+    dependencies:
+    - libxau
+    - xproto
+  libxau-doc:
 version: 1.0.8
 builddependencies:
 - xproto
@@ -12,3 +17,8 @@ script:
 - (cd libxau && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
 - $(MAKE) -C libxau
 - $(MAKE) -C libxau DESTDIR=$(shell pwd)/out/libxau install
+- mkdir -p out/libxau-dev/usr/lib
+- mv out/libxau/usr/include out/libxau-dev/usr
+- mv out/libxau/usr/lib/*.a out/libxau/usr/lib/*.so out/libxau/usr/lib/pkgconfig out/libxau-dev/usr/lib
+- mkdir -p out/libxau-doc/usr 
+- mv out/libxau/usr/share out/libxau-doc/usr

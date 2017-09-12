@@ -1,0 +1,44 @@
+packages:
+  dbus:
+    dependencies:
+    - libdbus
+    - libexpat
+    - musl
+  dbus-dev:
+    dependencies:
+    - libdbus
+    - util-linux-dev
+  libdbus:
+  dbus-x11:
+    dependencies:
+    - dbus
+    - libdbus
+    - libx11
+  dbus-doc:
+version: 1.10.18
+builddependencies:
+- util-linux-dev
+- expat-dev
+- libx11-dev
+- autoconf
+- automake
+- libtool
+sources:
+- https://dbus.freedesktop.org/releases/dbus/dbus-{{.Version}}.tar.gz
+script:
+- |
+  tar -xf src/dbus-{{.Version}}.tar.gz
+  mv dbus-{{.Version}} dbus
+  (cd dbus && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-x --with-xml=expat --with-dbus-user=messagebus --with-system-pid-file=/var/run/dbus.pid)
+  $(MAKE) -C dbus
+  $(MAKE) -C dbus DESTDIR=$(shell pwd)/out/dbus install
+  mkdir -p out/dbus-dev/usr/lib/dbus-1.0
+  mv out/dbus/usr/include out/dbus-dev/usr
+  mv out/dbus/usr/lib/pkgconfig out/dbus/usr/lib/*.so out/dbus-dev/usr/lib
+  mv out/dbus/usr/lib/dbus-1.0/include out/dbus-dev/usr/lib/dbus-1.0
+  mkdir -p out/libdbus/usr/lib
+  mv out/dbus/usr/lib/libdbus-1.so* out/libdbus/usr/lib
+  mkdir -p out/dbus-x11/usr/bin
+  mv out/dbus/usr/bin/dbus-launch out/dbus-x11/usr/bin
+  mkdir -p out/dbus-doc/usr
+  mv out/dbus/usr/share out/dbus-doc/usr

@@ -1,0 +1,14 @@
+packages:
+  glproto:
+    dependencies:
+    - pkgconf
+version: 1.4.17
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/glproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/glproto-{{.Version}}.tar.bz2
+- mv glproto-{{.Version}} glproto
+- (cd glproto && ./configure --prefix=/usr)
+- $(MAKE) -C glproto
+- (cd glproto && make -j1 DESTDIR=$(shell pwd)/out/glproto install)

@@ -1,0 +1,14 @@
+packages:
+  renderproto:
+    dependencies:
+    - pkgconf
+version: 0.11.1
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/renderproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/renderproto-{{.Version}}.tar.bz2
+- mv renderproto-{{.Version}} renderproto
+- (cd renderproto && ./configure --prefix=/usr)
+- $(MAKE) -C renderproto
+- (cd renderproto && make -j1 DESTDIR=$(shell pwd)/out/renderproto install)

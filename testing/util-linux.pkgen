@@ -1,6 +1,57 @@
 packages:
   util-linux:
     dependencies:
+    - findmnt
+    - libblkid
+    - libfdisk
+    - libmount
+    - libsmartcols
+    - libuuid
+    - ncurses-libs
+    - zlib
+  util-linux-bash-completion:
+  util-linux-dev:
+    dependencies:
+    - libblkid
+    - libfdisk
+    - libmount
+    - libsmartcols
+    - libuuid
+  util-linux-doc:
+  blkid:
+    dependencies:
+    - libblkid
+  cfdisk:
+    dependencies:
+    - libfdisk
+    - libmount
+    - libsmartcols
+    - ncurses-libs
+  sfdisk:
+    dependencies:
+    - libfdisk
+    - libsmartcols
+    - ncurses-libs
+  findmnt:
+    dependencies:
+    - libblkid
+    - libmount
+    - libsmartcols
+  mcookie:
+    dependencies:
+    - findmnt
+  libblkid:
+    dependencies:
+    - libuuid
+  libfdisk:
+    dependencies:
+    - libblkid
+    - libuuid
+  libmount:
+    dependencies:
+    - libblkid
+  libsmartcols:
+  libuuid:
 version: 2.30
 builddependencies:
 - gcc
@@ -10,9 +61,40 @@ builddependencies:
 - linux-headers
 sources:
 - https://www.kernel.org/pub/linux/utils/util-linux/v{{.Version}}/util-linux-{{.Version}}.tar.xz
+data:
+  bins:
+    blkid: blkid
+    cfdisk: cfdisk
+    sfdisk: sfdisk
+  libs:
+    libblkid: libblkid.*
+    libfdisk: libfdisk.*
+    libmount: libmount.*
+    libsmartcols: libsmartcols.*
+    libuuid: libuuid.*
 script:
-- tar -xf src/util-linux-{{.Version}}.tar.xz
-- mv util-linux-{{.Version}} util-linux
-- (cd util-linux && ./configure --build={{.Arch}}-pc-linux-gnu)
-- $(MAKE) -C util-linux
-- $(MAKE) -C util-linux DESTDIR=$(shell pwd)/out/util-linux install
+- |
+  tar -xf src/util-linux-{{.Version}}.tar.xz
+  mv util-linux-{{.Version}} util-linux
+  (cd util-linux && ./configure --prefix=/usr)
+  $(MAKE) -C util-linux
+  $(MAKE) -C util-linux DESTDIR=$(shell pwd)/out/util-linux install
+  mkdir -p out/mcookie/usr/bin
+  mv out/util-linux/usr/bin/mcookie out/mcookie/usr/bin
+  mkdir -p out/util-linux-bash-completion/usr/share
+  mv out/util-linux/usr/share/bash-completion out/util-linux-bash-completion/usr/share
+  mkdir -p out/util-linux-dev/usr/lib
+  mv out/util-linux/usr/include out/util-linux-dev/usr
+  mv out/util-linux/usr/lib/*.a out/util-linux/usr/lib/*.so out/util-linux/usr/lib/pkgconfig out/util-linux-dev/usr/lib
+  mkdir -p out/util-linux-doc/usr
+  mv out/util-linux/usr/share out/util-linux-doc/usr
+  {{- range $i, $v := .Data.bins}}
+  mkdir -p out/{{$i}}/sbin
+  mv out/util-linux/sbin/{{$v}} out/{{$i}}/sbin
+  {{- end}}
+  mkdir -p out/findmnt/bin
+  mv out/util-linux/bin/findmnt out/findmnt/bin
+  {{- range $i, $v := .Data.libs}}
+  mkdir -p out/{{$i}}/lib
+  mv out/util-linux/lib/{{$v}} out/{{$i}}/lib
+  {{- end}}

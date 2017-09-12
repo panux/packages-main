@@ -1,0 +1,18 @@
+packages:
+  xproto:
+    dependencies:
+    - libx11
+    - libxkbfile
+  xproto-doc:
+version: 7.0.31
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/xproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xproto-{{.Version}}.tar.bz2
+- mv xproto-{{.Version}} xproto
+- (cd xproto && ./configure --prefix=/usr)
+- $(MAKE) -C xproto
+- (cd xproto && make -j1 DESTDIR=$(shell pwd)/out/xproto install)
+- mkdir -p out/xproto-doc/usr
+- mv out/xproto/usr/share out/xproto-doc/usr

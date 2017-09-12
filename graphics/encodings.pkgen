@@ -1,0 +1,14 @@
+packages:
+  encodings:
+    dependencies:
+version: 1.0.4
+builddependencies:
+- mkfontscale
+sources:
+- https://www.x.org/releases/individual/font/encodings-{{.Version}}.tar.bz2
+script:
+- tar -xf src/encodings-{{.Version}}.tar.bz2
+- mv encodings-{{.Version}} encodings
+- (cd encodings && ./configure --prefix=/usr --with-encodingsdir=/usr/share/fonts/encodings)
+- $(MAKE) -C encodings
+- $(MAKE) -C encodings DESTDIR=$(shell pwd)/out/encodings install

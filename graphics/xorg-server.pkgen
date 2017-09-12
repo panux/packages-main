@@ -1,0 +1,208 @@
+packages:
+  xorg-server:
+    dependencies:
+    - xinit
+    - libpciaccess
+    - libressl
+    - pixman
+    - libdrm
+    - libxfont2
+    - libxshmfence
+    - libxdmcp
+    - eudev-libs
+    - libxau
+    - libgbm
+    - libgl
+    - libgbm
+    - font-misc-misc
+    - font-cursor-misc
+    - libepoxy
+    - xkbcomp
+    - xkeyboard-config
+  xorg-server-dev:
+    dependencies:
+      - bigreqsproto
+      - compositeproto
+      - damageproto
+      - dri2proto
+      - dri3proto
+      - fixesproto
+      - fontsproto
+      - glproto
+      - inputproto
+      - kbproto
+      - libepoxy-dev
+      - libpciaccess-dev
+      - libxfont2-dev
+      - mesa-dev
+      - pixman-dev
+      - presentproto
+      - randrproto
+      - recordproto
+      - renderproto
+      - resourceproto
+      - scrnsaverproto
+      - videoproto
+      - xcmiscproto
+      - xextproto
+      - xf86driproto
+      - xineramaproto
+      - xproto
+  xorg-server-dbg:
+    dependencies:
+    - font-cursor-misc
+    - font-misc-misc
+    - xinit
+    - xkbcomp
+    - xkeyboardconfig
+  xorg-server-doc:
+  xorg-server-xnest:
+    dependencies:
+    - libressl
+    - libx11
+    - libxau
+    - libxdmcp
+    - libxext
+    - libxfont2
+    - pixman
+  xorg-server-xephyr:
+    dependencies:
+    - eudev-libs
+    - libepoxy
+    - libressl
+    - libxau
+    - libx11
+    - libxcb
+    - libxdmcp
+    - libxfont2
+    - libxshmfence
+    - mesa-gl
+    - pixman
+    - xcb-util
+    - xcb-util-image
+    - xcb-util-keysyms
+    - xcb-util-renderutil
+    - xcb-util-wm
+  xorg-server-xwayland:
+    dependencies:
+    - font-cursor-misc
+    - font-misc-misc
+    - libdrm
+    - libepoxy
+    - libressl
+    - libxau
+    - libxdmcp
+    - libxfont2
+    - libxshmfence
+    - mesa-gbm
+    - mesa-gl
+    - pixman
+    - wayland-libs-client
+    - xinit
+    - xkbcomp
+    - xkeyboard-config
+  xfbdev:
+    dependencies:
+    - eudev-libs
+    - libressl
+    - libxau
+    - libxdmcp
+    - libxfont2
+    - pixman
+  xvfb:
+    dependencies:
+    - font-cursor-misc
+    - font-misc-misc
+    - libressl
+    - libxau
+    - libxdmcp
+    - libxfont2
+    - mesa-gl
+    - pixman
+    - xinit
+    - xkbcomp
+    - xkeyboard-config
+version: 1.19.3
+builddependencies:
+- bigreqsproto
+- compositeproto
+- damageproto
+- dri2proto
+- fixesproto
+- fontsproto
+- glproto
+- inputproto
+- kbproto
+- libepoxy-dev
+- libpciaccess-dev
+- libxfont2-dev
+- mesa-dev
+- pixman-dev
+- presentproto
+- randrproto
+- recordproto
+- renderproto
+- resourceproto
+- scrnsaverproto
+- videoproto
+- xcmiscproto
+- xextproto
+- xf86driproto
+- xineramaproto
+- xproto
+- autoconf
+- automake
+- eudev-dev
+- libdrm-dev
+- libepoxy-dev
+- libressl-dev
+- libtool
+- libx11-dev
+- libxdamage-dev
+- libxinerama-dev
+- libxkbfile-dev
+- libxkbui-dev
+- libxv-dev
+- libxxf86dga-dev
+- libxxf86misc-dev
+- perl
+- util-macros
+- wayland-dev
+- wayland-protocols
+- xcb-util-dev
+- xcb-util-image-dev
+- xcb-util-keysyms-dev
+- xcb-util-renderutil-dev
+- xcb-util-wm-dev
+- xtrans
+- zlib-dev
+sources:
+- https://www.x.org/releases/individual/xserver/xorg-server-{{.Version}}.tar.bz2
+data:
+  bins:
+    xfbdev: xfbdev
+    xvfb: xvfb
+    xorg-server-xnest: Xnest
+    xorg-server-xephyr: Xephyr
+    xorg-server-xwayland: Xwayland
+oneshell: true
+script:
+- |
+  tar -xf src/xorg-server-{{.Version}}.tar.bz2
+  mv xorg-server-{{.Version}} xorg-server
+  export CFLAGS="-D__gid_t=gid_t -D__uid_t=uid_t"
+  (cd xorg-server && ./configure --prefix=/usr --with-xkb-path=/usr/share/X11/xkb --with-xkb-output=/var/lib/xkb --without-systemd-daemon --enable-aiglx --enable-composite --enable-config-udev --enable-dri --enable-dri2 --enable-glamor --enable-glx-tls --enable-ipv6 --enable-kdrive --enable-xace --enable-xcsecurity --enable-xephyr --enable-xfbdev --enable-xnest --enable-xorg --enable-xres --enable-xv --enable-xwayland --disable-config-hal --disable-dmx --disable-tslib --disable-systemd-logind --sysconfdir=/etc/X11  --localstatedir=/var)
+  (cd xorg-server && make -j1)
+  (cd xorg-server && make -j1 DESTDIR=$(shell pwd)/out/xorg-server install)
+  {{- range $i, $v := .Data.bins}}
+  mkdir -p out/{{$i}}/usr/bin
+  mv out/xorg-server/usr/bin/{{$v}} out/{{$i}}/usr/bin
+  {{- end}}
+  mkdir -p out/xorg-server-dev/usr/lib out/xorg-server-dev/usr/share
+  mv out/xorg-server/usr/include out/xorg-server-dev/usr
+  mv out/xorg-server/usr/share/alocal out/xorg-server-dev/usr/share
+  mv out/xorg-server/usr/lib/pkgconfig out/xorg-server-dev/usr/lib
+  mkdir -p out/xorg-server-dbg/usr/lib
+  mv out/xorg-server/usr/lib/debug out/xorg-server-dbg/usr/lib
+  mkdir -p out/xorg-server-doc/usr
+  mv out/xorg-server/usr/share out/xorg-server-doc/usr

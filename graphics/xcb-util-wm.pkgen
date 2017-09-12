@@ -1,0 +1,26 @@
+packages:
+  xcb-util-wm:
+    dependencies:
+    - libgcc
+    - libxcb
+    - xcb-util
+  xcb-util-wm-dev:
+    dependencies:
+    - xcb-util-dev
+    - xcb-util-wm
+    - pkgconf
+version: 0.4.1
+builddependencies:
+- xcb-util-dev
+- m4
+sources:
+- https://xcb.freedesktop.org/dist/xcb-util-wm-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xcb-util-wm-{{.Version}}.tar.bz2
+- mv xcb-util-wm-{{.Version}} xcb-util-wm
+- (cd xcb-util-wm && ./configure --prefix=/usr)
+- $(MAKE) -C xcb-util-wm
+- $(MAKE) -C xcb-util-wm DESTDIR=$(shell pwd)/out/xcb-util-wm install
+- mkdir -p out/xcb-util-wm-dev/usr/lib
+- mv out/xcb-util-wm/usr/include out/xcb-util-wm-dev/usr
+- mv out/xcb-util-wm/usr/lib/*.a out/xcb-util-wm/usr/lib/*.so out/xcb-util-wm/usr/lib/pkgconfig out/xcb-util-wm-dev/usr/lib

@@ -1,0 +1,14 @@
+packages:
+  scrnsaverproto:
+    dependencies:
+    - pkgconf
+version: 1.2.2
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/scrnsaverproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/scrnsaverproto-{{.Version}}.tar.bz2
+- mv scrnsaverproto-{{.Version}} scrnsaverproto
+- (cd scrnsaverproto && ./configure --prefix=/usr)
+- $(MAKE) -C scrnsaverproto
+- (cd scrnsaverproto && make -j1 DESTDIR=$(shell pwd)/out/scrnsaverproto install)

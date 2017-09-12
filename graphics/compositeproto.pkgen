@@ -1,0 +1,15 @@
+packages:
+  compositeproto:
+    dependencies:
+    - fixesproto
+    - pkgconf
+version: 0.4.2
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/compositeproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/compositeproto-{{.Version}}.tar.bz2
+- mv compositeproto-{{.Version}} compositeproto
+- (cd compositeproto && ./configure --prefix=/usr)
+- $(MAKE) -C compositeproto
+- (cd compositeproto && make -j1 DESTDIR=$(shell pwd)/out/compositeproto install)

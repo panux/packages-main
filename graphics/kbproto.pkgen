@@ -1,0 +1,14 @@
+packages:
+  kbproto:
+    dependencies:
+    - pkgconf
+version: 1.0.7
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/kbproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/kbproto-{{.Version}}.tar.bz2
+- mv kbproto-{{.Version}} kbproto
+- (cd kbproto && ./configure --prefix=/usr)
+- $(MAKE) -C kbproto
+- (cd kbproto && make -j1 DESTDIR=$(shell pwd)/out/kbproto install)

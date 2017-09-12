@@ -1,0 +1,14 @@
+packages:
+  dri3proto:
+    dependencies:
+    - pkgconf
+version: 1.0
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/dri3proto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/dri3proto-{{.Version}}.tar.bz2
+- mv dri3proto-{{.Version}} dri3proto
+- (cd dri3proto && ./configure --prefix=/usr)
+- $(MAKE) -C dri3proto
+- (cd dri3proto && make -j1 DESTDIR=$(shell pwd)/out/dri3proto install)

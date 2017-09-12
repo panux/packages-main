@@ -1,0 +1,24 @@
+packages:
+  xauth:
+    dependencies:
+    - libx11
+    - libxau
+    - libxext
+    - libxmu
+  xauth-doc:
+version: 1.0.10
+builddependencies:
+- libx11-dev
+- libxmu-dev
+- libxau-dev
+- libxext-dev
+sources:
+- https://www.x.org/releases/individual/app/xauth-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xauth-{{.Version}}.tar.bz2
+- mv xauth-{{.Version}} xauth
+- (cd xauth && ./configure --prefix=/usr)
+- $(MAKE) -C xauth
+- $(MAKE) -C xauth DESTDIR=$(shell pwd)/out/xauth install
+- mkdir -p out/xauth-doc/usr
+- mv out/xauth/usr/share out/xauth-doc/usr

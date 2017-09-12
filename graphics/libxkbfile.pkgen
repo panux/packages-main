@@ -1,0 +1,24 @@
+packages:
+  libxkbfile:
+    dependencies:
+  libxkbfile-dev:
+    dependencies:
+    - kbproto
+    - libx11-dev
+    - libxkbfile
+version: 1.0.9
+builddependencies:
+- xkbcomp
+- intltool
+- libx11-dev
+sources:
+- https://www.x.org/releases/individual/lib/libxkbfile-{{.Version}}.tar.bz2
+script:
+- tar -xf src/libxkbfile-{{.Version}}.tar.bz2
+- mv libxkbfile-{{.Version}} libxkbfile
+- (cd libxkbfile && ./configure --prefix=/usr --sysconfdir=/etc)
+- $(MAKE) -C libxkbfile
+- $(MAKE) -C libxkbfile DESTDIR=$(shell pwd)/out/libxkbfile install
+- mkdir -p out/libxkbfile-dev/usr/lib
+- mv out/libxkbfile/usr/include out/libxkbfile-dev/usr
+- mv out/libxkbfile/usr/lib/libxkbfile.a out/libxkbfile/usr/lib/libxkbfile.so out/libxkbfile/usr/lib/pkgconfig out/libxkbfile-dev/usr/lib

@@ -1,0 +1,25 @@
+packages:
+  xcb-util-keysyms:
+    dependencies:
+    - libxcb
+    - xcb-util
+  xcb-util-keysyms-dev:
+    dependencies:
+    - xcb-util-dev
+    - xcb-util-keysyms
+    - pkgconf
+version: 0.4.0
+builddependencies:
+- xcb-util-dev
+- m4
+sources:
+- https://xcb.freedesktop.org/dist/xcb-util-keysyms-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xcb-util-keysyms-{{.Version}}.tar.bz2
+- mv xcb-util-keysyms-{{.Version}} xcb-util-keysyms
+- (cd xcb-util-keysyms && ./configure --prefix=/usr)
+- $(MAKE) -C xcb-util-keysyms
+- $(MAKE) -C xcb-util-keysyms DESTDIR=$(shell pwd)/out/xcb-util-keysyms install
+- mkdir -p out/xcb-util-keysyms-dev/usr/lib
+- mv out/xcb-util-keysyms/usr/include out/xcb-util-keysyms-dev/usr
+- mv out/xcb-util-keysyms/usr/lib/*.a out/xcb-util-keysyms/usr/lib/*.so out/xcb-util-keysyms/usr/lib/pkgconfig out/xcb-util-keysyms-dev/usr/lib

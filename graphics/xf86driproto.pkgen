@@ -1,0 +1,14 @@
+packages:
+  xf86driproto:
+    dependencies:
+    - pkgconf
+version: 2.1.1
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/xf86driproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/xf86driproto-{{.Version}}.tar.bz2
+- mv xf86driproto-{{.Version}} xf86driproto
+- (cd xf86driproto && ./configure --prefix=/usr)
+- $(MAKE) -C xf86driproto
+- (cd xf86driproto && make -j1 DESTDIR=$(shell pwd)/out/xf86driproto install)

@@ -1,0 +1,23 @@
+packages:
+  mkfontscale:
+    dependencies:
+    - freetype
+    - libfontenc
+    - zlib
+  mkfontscale-doc:
+version: 1.1.2
+builddependencies:
+- libfontenc-dev
+- freetype-dev
+- xproto
+- zlib-dev
+sources:
+- https://www.x.org/releases/individual/app/mkfontscale-{{.Version}}.tar.bz2
+script:
+- tar -xf src/mkfontscale-{{.Version}}.tar.bz2
+- mv mkfontscale-{{.Version}} mkfontscale
+- (cd mkfontscale && ./configure --prefix=/usr)
+- $(MAKE) -C mkfontscale
+- $(MAKE) -C mkfontscale DESTDIR=$(shell pwd)/out/mkfontscale install
+- mkdir -p out/mkfontscale-doc/usr
+- mv out/mkfontscale/usr/share out/mkfontscale-doc/usr

@@ -1,0 +1,14 @@
+packages:
+  bigreqsproto:
+    dependencies:
+    - pkgconf
+version: 1.1.2
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/bigreqsproto-{{.Version}}.tar.bz2
+script:
+- tar -xf src/bigreqsproto-{{.Version}}.tar.bz2
+- mv bigreqsproto-{{.Version}} bigreqsproto
+- (cd bigreqsproto && ./configure --prefix=/usr)
+- $(MAKE) -C bigreqsproto
+- (cd bigreqsproto && make -j1 DESTDIR=$(shell pwd)/out/bigreqsproto install)

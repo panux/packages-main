@@ -1,0 +1,42 @@
+packages:
+  libxml2:
+    dependencies:
+    - zlib
+  libxml2-dev:
+    dependencies:
+    - libxml2
+    - pkgconf
+    - zlib-dev
+  libxml2-doc:
+  libxml2-utils:
+    dependencies:
+    - libxml2
+  py-libxml2:
+    dependencies:
+    - python
+    - libxml2
+version: 2.9.5
+builddependencies:
+- zlib-dev
+- perl
+- tar
+- python2-dev
+sources:
+- https://ftp.osuosl.org/pub/blfs/conglomeration/libxml2/libxml2-{{.Version}}.tar.gz
+script:
+- tar -xf src/libxml2-{{.Version}}.tar.gz
+- mv libxml2-{{.Version}} libxml2
+- (cd libxml2 && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info)
+- $(MAKE) -C libxml2
+- $(MAKE) -C libxml2 DESTDIR=$(shell pwd)/out/libxml2 install
+- mkdir -p out/libxml2-dev/usr/lib out/libxml2-dev/usr/bin out/libxml2-dev/usr/share
+- mv out/libxml2/usr/include out/libxml2-dev/usr
+- mv out/libxml2/usr/lib/*.a out/libxml2/usr/lib/*.so out/libxml2/usr/lib/pkgconfig out/libxml2/usr/lib/xml2Conf.sh out/libxml2/usr/lib/cmake out/libxml2-dev/usr/lib
+- mv out/libxml2/usr/bin/xml2-config out/libxml2-dev/usr/bin
+- mv out/libxml2/usr/share/aclocal out/libxml2-dev/usr/share
+- mkdir -p out/libxml2-doc/usr
+- mv out/libxml2/usr/share out/libxml2-doc/usr
+- mkdir -p out/libxml2-utils/usr
+- mv out/libxml2/usr/bin out/libxml2-utils/usr
+- mkdir -p out/py-libxml2/usr/lib
+- mv out/libxml2/usr/lib/python2.7 out/py-libxml2/usr/lib
