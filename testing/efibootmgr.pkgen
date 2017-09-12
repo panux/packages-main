@@ -2,8 +2,6 @@ packages:
   efibootmgr:
     dependencies:
     - efivar
-  efibootmgr-man:
-  efibootmgr-include:
 version: 14
 sources:
 - git://github.com/rhboot/efibootmgr?target={{.Version}}
@@ -27,12 +25,4 @@ script:
   sed -i -e s/-Werror// Make.defaults
   $(MAKE) -C efibootmgr EFIDIR=/boot/efi LDLIBS="-lefivar -lefiboot -lintl -lpopt"
   $(MAKE) -C efibootmgr libdir="/usr/lib" EFIDIR=/boot/efi DESTDIR=$(shell pwd)/out/efibootmgr install
-  rm -r out/efibootmgr/usr/lib/pkgconfig
-  mkdir -p out/libefibootmgr/usr/lib
-  mv out/efibootmgr/usr/lib/libefibootmgr.* out/libefibootmgr/usr/lib
-  mkdir -p out/efibootmgr-include/usr
-  mv out/efibootmgr/usr/include out/efibootmgr-include/usr/include
-  mkdir -p out/efibootmgr-man/usr/share
-  mv out/efibootmgr/usr/share/man out/efibootmgr-man/usr/share/man
-  rm -r out/efibootmgr/usr/share out/efibootmgr/usr/lib
-
+  mv out/efibootmgr/usr/sbin out/efibootmgr/usr/bin
