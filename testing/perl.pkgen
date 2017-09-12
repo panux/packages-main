@@ -27,7 +27,7 @@ script:
   (cd perl && ./Configure -des -Dtargetarch=linux -Dcc=gcc -Uusenm -Dcccdlflags='-fPIC' -Dcccdlflags='-fPIC' -Dccdlflags='-rdynamic'	-Dprefix=/usr	-Dprivlib=/usr/share/perl5/core_perl -Darchlib=/usr/lib/perl5/core_perl	-Dvendorprefix=/usr -Dvendorlib=/usr/share/perl5/vendor_perl -Dvendorarch=/usr/lib/perl5/vendor_perl -Dsiteprefix=/usr/local -Dsitelib=/usr/local/share/perl5/site_perl -Dsitearch=/usr/local/lib/perl5/site_perl	-Dlocincpth=' ' -Duselargefiles	-Dusethreads -Duseshrplib -Dd_semctl_semun -Dman1dir=/usr/share/man/man1 -Dman3dir=/usr/share/man/man3 -Dinstallman1dir=/usr/share/man/man1 -Dinstallman3dir=/usr/share/man/man3 -Dman1ext='1' -Dman3ext='3pm' -Dcf_by='Panux' -Ud_csh)
   $(MAKE) -C perl
   $(MAKE) -C perl DESTDIR=$(shell pwd)/out/perl install
-  mv out/perl/usr/local/* out/perl/usr
+  cp -r out/perl/usr/local/* out/perl/usr
   rm -r out/perl/usr/local
   mkdir -p out/perl-dev/usr/share/perl5/core_perl out/perl-dev/usr/lib/perl5/core_perl out/perl-dev/usr/bin
   {{pkmv "usr/share/perl5/core_perl/Encode" "perl" "perl-dev"}}
