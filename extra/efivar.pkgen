@@ -10,7 +10,7 @@ packages:
   efivar-include:
 version: 31
 sources:
-- git://github.com/AdelieLinux/efivar
+- git://github.com/AdelieLinux/efivar?target={{.Version}}
 - file://haxe.h
 builddependencies:
 - popt-dev

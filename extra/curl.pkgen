@@ -18,16 +18,16 @@ builddependencies:
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
 script:
-- tar -xf src/curl-{{.Version}}.tar.gz
-- mv curl-{{.Version}} curl
-- (cd curl && ./configure --build={{.Arch}}-pc-linux-gnu --with-ssl --disable-static)
-- $(MAKE) -C curl
-- $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
-- mkdir -p out/libcurl/usr/local
-- mv out/curl/usr/local/lib out/libcurl/usr/local
-- mkdir -p out/curl-man/usr/local
-- mv out/curl/usr/local/share out/curl-man/usr/local
-- mkdir -p out/curl-headers/usr/local
-- mv out/curl/usr/local/include out/curl-headers/usr/local
-- mv out/curl/usr/local/bin out/curl/usr
-- rm -r out/curl/usr/local
+- |
+  {{extract "curl" "xz"}}
+  (cd curl && ./configure --build={{confarch}}-pc-linux-gnu --with-ssl --disable-static)
+  $(MAKE) -C curl
+  $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
+  mkdir -p out/libcurl/usr/local
+  mv out/curl/usr/local/lib out/libcurl/usr/local
+  mkdir -p out/curl-man/usr/local
+  mv out/curl/usr/local/share out/curl-man/usr/local
+  mkdir -p out/curl-headers/usr/local
+  mv out/curl/usr/local/include out/curl-headers/usr/local
+  mv out/curl/usr/local/bin out/curl/usr
+  rm -r out/curl/usr/local
