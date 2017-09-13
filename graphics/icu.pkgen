@@ -30,5 +30,5 @@ script:
   $(MAKE) -C icu/source
   (cd icu/source && make -j1 DESTDIR=$(shell pwd)/out/icu install)
   {{pkmv "usr/lib/*.so.59" "icu" "icu-libs"}}
-  {{mvhdr "icu"}}
+  {{pkmv "usr/include" "icu" "icu-headers"}}
   {{pkmv "usr/share" "icu" "icu-doc"}}
