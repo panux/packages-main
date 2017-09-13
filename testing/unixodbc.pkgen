@@ -1,0 +1,23 @@
+packages:
+  unixodbc:
+    dependencies:
+    - readline
+  unixodbc-dev:
+    dependencies:
+    - unixodbc
+  unixodbc-doc:
+version: 2.3.4
+builddependencies:
+sources:
+script:
+- |
+  mkdir src
+  (cd src && wget ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-{{.Version}}.tar.gz)
+  {{extract "unixODBC" "gz"}}
+  mv unixODBC unixodbc
+  (cd unixodbc && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C unixodbc
+  $(MAKE) -C unixodbc DESTDIR=$(shell pwd)/out/unixodbc install
+  {{pkmv "usr/lib/*.so" "unixodbc" "unixodbc-dev"}}
+  {{pkmv "usr/include" "unixodbc" "unixodbc-dev"}}
+  {{pkmv "usr/share" "unixodbc" "unixodbc-doc"}}
