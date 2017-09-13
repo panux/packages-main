@@ -14,10 +14,10 @@ builddependencies:
 sources:
 - https://xcb.freedesktop.org/dist/libxcb-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libxcb-{{.Version}}.tar.bz2
-- mv libxcb-{{.Version}} libxcb
-- (cd libxcb && ./configure --build={{.Arch}}-pc-linux-gnu)
-- $(MAKE) -C libxcb
-- $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
-- mv out/libxcb/usr/local/* out/libxcb/usr
-- rm -r out/libxcb/usr/local
+- |
+  {{extract "libxcb" "bz2"}}
+  (cd libxcb && ./configure --build={{confarch}}-pc-linux-gnu)
+  $(MAKE) -C libxcb
+  $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
+  mv out/libxcb/usr/local/* out/libxcb/usr
+  rm -r out/libxcb/usr/local

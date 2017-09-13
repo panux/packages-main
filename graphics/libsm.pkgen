@@ -20,12 +20,12 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libSM-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libSM-{{.Version}}.tar.bz2
-- mv libSM-{{.Version}} libsm
-- (cd libsm && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libsm
-- $(MAKE) -C libsm DESTDIR=$(shell pwd)/out/libsm install
-- mkdir -p out/libsm-dev/usr/lib
-- mv out/libsm/usr/include out/libsm-dev/usr
-- mv out/libsm/usr/lib/*.a out/libsm/usr/lib/*.so out/libsm/usr/lib/pkgconfig out/libsm-dev/usr/lib
-- mkdir -p out/libsm/usr/share out/libsm-doc/usr
+- |
+  {{extract "libSM" "bz2"}}
+  (cd libSM && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libSM
+  $(MAKE) -C libSM DESTDIR=$(shell pwd)/out/libsm install
+  mkdir -p out/libsm-dev/usr/lib
+  mv out/libsm/usr/include out/libsm-dev/usr
+  mv out/libsm/usr/lib/*.a out/libsm/usr/lib/*.so out/libsm/usr/lib/pkgconfig out/libsm-dev/usr/lib
+  mkdir -p out/libsm/usr/share out/libsm-doc/usr

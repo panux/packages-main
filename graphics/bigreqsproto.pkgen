@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/bigreqsproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/bigreqsproto-{{.Version}}.tar.bz2
-- mv bigreqsproto-{{.Version}} bigreqsproto
-- (cd bigreqsproto && ./configure --prefix=/usr)
-- $(MAKE) -C bigreqsproto
-- (cd bigreqsproto && make -j1 DESTDIR=$(shell pwd)/out/bigreqsproto install)
+- |
+  {{extract "bigreqsproto" "bz2"}}
+  (cd bigreqsproto && ./configure --prefix=/usr)
+  $(MAKE) -C bigreqsproto
+  (cd bigreqsproto && make -j1 DESTDIR=$(shell pwd)/out/bigreqsproto install)

@@ -14,8 +14,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/font/font-misc-misc-{{.Version}}.tar.bz2
 script:
-- tar -xf src/font-misc-misc-{{.Version}}.tar.bz2
-- mv font-misc-misc-{{.Version}} font-misc-misc
-- (cd font-misc-misc && ./configure --prefix=/usr)
-- $(MAKE) -C font-misc-misc
-- $(MAKE) -C font-misc-misc DESTDIR=$(shell pwd)/out/font-misc-misc install
+- |
+  {{extract "font-misc-misc" "bz2"}}
+  (cd font-misc-misc && ./configure --prefix=/usr)
+  $(MAKE) -C font-misc-misc
+  $(MAKE) -C font-misc-misc DESTDIR=$(shell pwd)/out/font-misc-misc install

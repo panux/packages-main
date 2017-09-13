@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/fontsproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/fontsproto-{{.Version}}.tar.bz2
-- mv fontsproto-{{.Version}} fontsproto
-- (cd fontsproto && ./configure --prefix=/usr)
-- $(MAKE) -C fontsproto
-- (cd fontsproto && make -j1 DESTDIR=$(shell pwd)/out/fontsproto install)
+- |
+  {{extract "fontsproto" "bz2"}}
+  (cd fontsproto && ./configure --prefix=/usr)
+  $(MAKE) -C fontsproto
+  (cd fontsproto && make -j1 DESTDIR=$(shell pwd)/out/fontsproto install)

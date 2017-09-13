@@ -13,13 +13,13 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libICE-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libICE-{{.Version}}.tar.bz2
-- mv libICE-{{.Version}} libice
-- (cd libice && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libice
-- $(MAKE) -C libice DESTDIR=$(shell pwd)/out/libice install
-- mkdir -p out/libice-dev/usr/lib
-- mv out/libice/usr/include out/libice-dev/usr
-- mv out/libice/usr/lib/*.a out/libice/usr/lib/*.so out/libice/usr/lib/pkgconfig out/libice-dev/usr/lib
-- mkdir -p out/libice-doc/usr
-- mv out/libice/usr/share out/libice-doc/usr
+- |
+  {{extract "libICE" "bz2"}}
+  (cd libICE && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libICE
+  $(MAKE) -C libICE DESTDIR=$(shell pwd)/out/libice install
+  mkdir -p out/libice-dev/usr/lib
+  mv out/libice/usr/include out/libice-dev/usr
+  mv out/libice/usr/lib/*.a out/libice/usr/lib/*.so out/libice/usr/lib/pkgconfig out/libice-dev/usr/lib
+  mkdir -p out/libice-doc/usr
+  mv out/libice/usr/share out/libice-doc/usr

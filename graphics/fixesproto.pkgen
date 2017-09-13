@@ -8,8 +8,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/fixesproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/fixesproto-{{.Version}}.tar.bz2
-- mv fixesproto-{{.Version}} fixesproto
-- (cd fixesproto && ./configure --prefix=/usr)
-- $(MAKE) -C fixesproto
-- (cd fixesproto && make -j1 DESTDIR=$(shell pwd)/out/fixesproto install)
+- |
+  {{extract "fixesproto" "bz2"}}
+  (cd fixesproto && ./configure --prefix=/usr)
+  $(MAKE) -C fixesproto
+  (cd fixesproto && make -j1 DESTDIR=$(shell pwd)/out/fixesproto install)

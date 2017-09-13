@@ -11,11 +11,11 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libfontenc-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libfontenc-{{.Version}}.tar.bz2
-- mv libfontenc-{{.Version}} libfontenc
-- (cd libfontenc && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
-- $(MAKE) -C libfontenc
-- $(MAKE) -C libfontenc DESTDIR=$(shell pwd)/out/libfontenc install
-- mkdir -p out/libfontenc-dev/usr/lib
-- mv out/libfontenc/usr/lib/libfontenc.so out/libfontenc/usr/lib/pkgconfig out/libfontenc-dev/usr/lib
-- mv out/libfontenc/usr/include out/libfontenc-dev/usr
+- |
+  {{extract "libfontenc" "bz2"}}
+  (cd libfontenc && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  $(MAKE) -C libfontenc
+  $(MAKE) -C libfontenc DESTDIR=$(shell pwd)/out/libfontenc install
+  mkdir -p out/libfontenc-dev/usr/lib
+  mv out/libfontenc/usr/lib/libfontenc.so out/libfontenc/usr/lib/pkgconfig out/libfontenc-dev/usr/lib
+  mv out/libfontenc/usr/include out/libfontenc-dev/usr

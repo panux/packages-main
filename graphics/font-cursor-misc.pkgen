@@ -14,8 +14,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/font/font-cursor-misc-{{.Version}}.tar.bz2
 script:
-- tar -xf src/font-cursor-misc-{{.Version}}.tar.bz2
-- mv font-cursor-misc-{{.Version}} font-cursor-misc
-- (cd font-cursor-misc && ./configure --prefix=/usr)
-- $(MAKE) -C font-cursor-misc
-- $(MAKE) -C font-cursor-misc DESTDIR=$(shell pwd)/out/font-cursor-misc install
+- |
+  {{extract "font-cursor-misc" "bz2"}}
+  (cd font-cursor-misc && ./configure --prefix=/usr)
+  $(MAKE) -C font-cursor-misc
+  $(MAKE) -C font-cursor-misc DESTDIR=$(shell pwd)/out/font-cursor-misc install

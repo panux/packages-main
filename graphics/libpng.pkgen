@@ -14,16 +14,16 @@ builddependencies:
 sources:
 - https://ftp-osl.osuosl.org/pub/libpng/src/archive/gz/libpng16/libpng-{{.Version}}.tar.gz
 script:
-- tar -xf src/libpng-{{.Version}}.tar.gz
-- mv libpng-{{.Version}} libpng
-- (cd libpng && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc --localstatedir=/var)
-- $(MAKE) -C libpng
-- $(MAKE) -C libpng DESTDIR=$(shell pwd)/out/libpng install
-- mkdir -p out/libpng-dev/usr/lib out/libpng-dev/usr/bin
-- mv out/libpng/usr/include out/libpng-dev/usr
-- mv out/libpng/usr/lib/pkgconfig out/libpng/usr/lib/libpng.a out/libpng/usr/lib/libpng16.a out/libpng/usr/lib/libpng.so out/libpng-dev/usr/lib
-- mv out/libpng/usr/bin/libpng-config out/libpng/usr/bin/libpng16-config out/libpng-dev/usr/bin
-- mkdir -p out/libpng-doc/usr
-- mv out/libpng/usr/share out/libpng-doc/usr
-- mkdir -p out/libpng-utils/usr
-- mv out/libpng/usr/bin out/libpng-utils/usr
+- |
+  {{extract "libpng" "gz"}}
+  (cd libpng && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C libpng
+  $(MAKE) -C libpng DESTDIR=$(shell pwd)/out/libpng install
+  mkdir -p out/libpng-dev/usr/lib out/libpng-dev/usr/bin
+  mv out/libpng/usr/include out/libpng-dev/usr
+  mv out/libpng/usr/lib/pkgconfig out/libpng/usr/lib/libpng.a out/libpng/usr/lib/libpng16.a out/libpng/usr/lib/libpng.so out/libpng-dev/usr/lib
+  mv out/libpng/usr/bin/libpng-config out/libpng/usr/bin/libpng16-config out/libpng-dev/usr/bin
+  mkdir -p out/libpng-doc/usr
+  mv out/libpng/usr/share out/libpng-doc/usr
+  mkdir -p out/libpng-utils/usr
+  mv out/libpng/usr/bin out/libpng-utils/usr

@@ -18,13 +18,13 @@ builddependencies:
 sources:
 - https://www.freedesktop.org/software/fontconfig/release/fontconfig-{{.Version}}.tar.gz
 script:
-- tar -xf src/fontconfig-{{.Version}}.tar.gz
-- mv fontconfig-{{.Version}} fontconfig
-- (cd fontconfig&& ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
-- $(MAKE) -C fontconfig
-- $(MAKE) -C fontconfig DESTDIR=$(shell pwd)/out/fontconfig install
-- mkdir -p out/fontconfig-dev/usr/lib
-- mv out/fontconfig/usr/include out/fontconfig-dev/usr
-- mv out/fontconfig/usr/lib/libfontconfig.so out/fontconfig/usr/lib/pkgconfig out/fontconfig-dev/usr/lib
-- mkdir -p out/fontconfig-doc/usr
-- mv out/fontconfig/usr/share out/fontconfig-doc/usr
+- |
+  {{extract "fontconfig" "bz2"}}
+  (cd fontconfig && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C fontconfig
+  $(MAKE) -C fontconfig DESTDIR=$(shell pwd)/out/fontconfig install
+  mkdir -p out/fontconfig-dev/usr/lib
+  mv out/fontconfig/usr/include out/fontconfig-dev/usr
+  mv out/fontconfig/usr/lib/libfontconfig.so out/fontconfig/usr/lib/pkgconfig out/fontconfig-dev/usr/lib
+  mkdir -p out/fontconfig-doc/usr
+  mv out/fontconfig/usr/share out/fontconfig-doc/usr

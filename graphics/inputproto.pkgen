@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/inputproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/inputproto-{{.Version}}.tar.bz2
-- mv inputproto-{{.Version}} inputproto
-- (cd inputproto && ./configure --prefix=/usr)
-- $(MAKE) -C inputproto
-- (cd inputproto && make -j1 DESTDIR=$(shell pwd)/out/inputproto install)
+- |
+  {{extract "inputproto" "bz2"}}
+  (cd inputproto && ./configure --prefix=/usr)
+  $(MAKE) -C inputproto
+  (cd inputproto && make -j1 DESTDIR=$(shell pwd)/out/inputproto install)

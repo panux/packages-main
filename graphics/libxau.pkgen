@@ -12,13 +12,13 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libXau-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libXau-{{.Version}}.tar.bz2
-- mv libXau-{{.Version}} libxau
-- (cd libxau && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libxau
-- $(MAKE) -C libxau DESTDIR=$(shell pwd)/out/libxau install
-- mkdir -p out/libxau-dev/usr/lib
-- mv out/libxau/usr/include out/libxau-dev/usr
-- mv out/libxau/usr/lib/*.a out/libxau/usr/lib/*.so out/libxau/usr/lib/pkgconfig out/libxau-dev/usr/lib
-- mkdir -p out/libxau-doc/usr 
-- mv out/libxau/usr/share out/libxau-doc/usr
+- |
+  {{extract "libXau" "bz2"}}
+  (cd libXau && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXau
+  $(MAKE) -C libXau DESTDIR=$(shell pwd)/out/libxau install
+  mkdir -p out/libxau-dev/usr/lib
+  mv out/libxau/usr/include out/libxau-dev/usr
+  mv out/libxau/usr/lib/*.a out/libxau/usr/lib/*.so out/libxau/usr/lib/pkgconfig out/libxau-dev/usr/lib
+  mkdir -p out/libxau-doc/usr
+  mv out/libxau/usr/share out/libxau-doc/usr
