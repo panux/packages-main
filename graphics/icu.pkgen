@@ -1,0 +1,34 @@
+packages:
+  icu:
+    dependencies:
+    - lcu-libs
+    - libgcc
+    - libstdcpp
+  icu-libs:
+    dependencies:
+    - libgcc
+    - libstdcpp
+  icu-headers:
+  icu-doc:
+builddependencies:
+- diffutils
+- g++
+version: 59.1
+sources:
+data:
+  realversion:
+    59.1: "59_1"
+script:
+- |
+  {{- range $i, $v := .Data.realversion}}
+  wget https://downloads.sourceforge.net/project/icu/ICU4C/{{$i}}/icu4c-{{$v}}-src.tgz
+  tar -xf icu4c-{{$v}}-src.tgz
+  {{- end}}
+  ln -s /usr/include/locale.h /usr/include/xlocale.h
+  (cd icu/source && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --with-data-packaging=library --disable-samples)
+  {{make "icu/source"}}
+  $(MAKE) -C icu/source
+  (cd icu/source && make -j1 DESTDIR=$(shell pwd)/out/icu install)
+  {{pkmv "usr/lib/*.so.59" "icu" "icu-libs"}}
+  {{mvhdr "icu"}}
+  {{pkmv "usr/share" "icu" "icu-doc"}}
