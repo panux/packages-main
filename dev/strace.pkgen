@@ -10,10 +10,10 @@ builddependencies:
 sources:
 - https://fossies.org/linux/misc/strace-{{.Version}}.tar.xz
 script:
-- tar -xf src/strace-{{.Version}}.tar.xz
-- mv strace-{{.Version}} strace
-- (cd strace && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
-- $(MAKE) -C strace
-- $(MAKE) -C strace DESTDIR=$(shell pwd)/out/strace install
-- mkdir -p out/strace-doc/usr
-- mv out/strace/usr/share out/strace-doc/usr
+- |
+  {{extract "strace" "xz"}}
+  (cd strace && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  $(MAKE) -C strace
+  $(MAKE) -C strace DESTDIR=$(shell pwd)/out/strace install
+  mkdir -p out/strace-doc/usr
+  mv out/strace/usr/share out/strace-doc/usr
