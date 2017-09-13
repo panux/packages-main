@@ -13,7 +13,7 @@ sources:
 script:
 - tar -xf src/make-{{.Version}}.tar.gz
 - mv make-{{.Version}} make
-- (cd make && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd make && ./configure)
 - $(MAKE) -C make
 - $(MAKE) -C make DESTDIR=$(shell pwd)/out/make install
 - mkdir -p out/make-doc/usr/share
