@@ -1,0 +1,26 @@
+packages:
+  sqlite:
+    dependencies:
+    - readline
+  sqlite-libs:
+  sqlite-dev:
+    dependencies:
+    - sqlite-libs
+  sqlite-doc:
+version: 3200100
+builddependencies:
+- readline-dev
+sources:
+- https://www.sqlite.org/2017/sqlite-autoconf-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "sqlite-autoconf" "gz"}}
+  mv sqlite-autoconf sqlite
+  (cd sqlite && ./configure --prefix=/usr --enable-dynamic-extensions --enable-readline)
+  $(MAKE) -C sqlite DESTDIR=$(shell pwd)/out/sqlite install
+  $(MAKE) -C sqlite
+  {{pkmv "usr/include" "sqlite" "sqlite-dev"}}
+  {{pkmv "usr/lib/*so.0*" "sqlite" "sqlite-libs"}}
+  {{pkmv "usr/lib/*.so" "sqlite" "sqlite-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "sqlite" "sqlite-dev"}}
+  {{pkmv "usr/share" "sqlite" "sqlite-doc"}}
