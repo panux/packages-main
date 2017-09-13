@@ -15,15 +15,15 @@ builddependencies:
 sources:
 - https://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{.Version}}.tar.gz
 script:
-- tar -xf src/ncurses-{{.Version}}.tar.gz
-- mv ncurses-{{.Version}} ncurses
-- (cd ncurses && ./configure --build={{.Arch}}-pc-linux-gnu --with-shared --enable-widec --disable-static)
-- make -C ncurses
-- make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
-- mkdir -p out/ncurses-man/usr/share
-- mv out/ncurses/usr/share/man out/ncurses-man/usr/share/man
-- mkdir -p out/ncurses-terminfo/usr/share
-- mv out/ncurses/usr/share/terminfo out/ncurses-terminfo/usr/share/terminfo
-- mkdir out/ncurses-headers/usr
-- mv out/ncurses/usr/include out/ncurses-headers/usr/include
-- rm -rf out/ncurses/usr/share
+- |
+  {{extract "ncurses" "gz"}}
+  (cd ncurses && ./configure --with-shared --enable-widec --disable-static)
+  make -C ncurses
+  make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
+  mkdir -p out/ncurses-man/usr/share
+  mv out/ncurses/usr/share/man out/ncurses-man/usr/share/man
+  mkdir -p out/ncurses-terminfo/usr/share
+  mv out/ncurses/usr/share/terminfo out/ncurses-terminfo/usr/share/terminfo
+  mkdir out/ncurses-headers/usr
+  mv out/ncurses/usr/include out/ncurses-headers/usr/include
+  rm -rf out/ncurses/usr/share
