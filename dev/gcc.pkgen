@@ -71,49 +71,50 @@ data:
 oneshell: true
 script:
 - |
-  tar -xf src/gcc-{{.Version}}.tar.gz
-  mv gcc-{{.Version}} /gcc
+  {{extract "gcc" "gz"}}
+  mv gcc /gcc
   export CC=gcc
   export CXX=g++
-  sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{index .Data.amap .Arch}}-pc-linux-musl /g' Makefile
+  sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{confarch}}-pc-linux-musl /g' Makefile
   (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-musl)
   $(MAKE) -C /gcc CC=gcc CXX=g++
   $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
   mkdir out/gcc-libexec/usr
   mv out/gcc/usr/libexec out/gcc-libexec/usr/libexec
-  mkdir -p out/gcc-install-tools/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
-  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/install-tools out/gcc-install-tools/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/install-tools
-  mkdir -p out/gcc-plugin/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
-  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/plugin out/gcc-plugin/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/plugin
-  mkdir -p out/gcc-include/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0
-  mv out/gcc/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/include out/gcc-include/usr/lib/gcc/x86_64-pc-linux-musl/7.2.0/include
+  mkdir -p out/gcc-install-tools/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}
+  mv out/gcc/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/install-tools out/gcc-install-tools/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/install-tools
+  mkdir -p out/gcc-plugin/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}
+  mv out/gcc/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/plugin out/gcc-plugin/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/plugin
+  mkdir -p out/gcc-include/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}
+  mv out/gcc/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/include out/gcc-include/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/include
   mkdir -p out/gcc-libcc1/usr
   mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
   mkdir -p out/gcc-locales/usr/share
   mv out/gcc/usr/share/locale out/gcc-locales/usr/share/locale
   mkdir -p out/gcc-info/usr/share
   mv out/gcc/usr/share/info out/gcc-info/usr/share/info
-  mkdir -p out/gcc-man/usr/share
-  mv out/gcc/usr/share/man out/gcc-man/usr/share/man
-  rm -f out/gcc/usr/lib64/*.a out/gcc/usr/lib64/*.la out/gcc/usr/lib64/*.spec
-  {{- range .Data.libs}}
+  {{mvman "gcc"}}
+  rm -f out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.a out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.la out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.spec
+  {{$arch := .Arch}}{{- range .Data.libs}}
   mkdir -p out/lib{{.}}/usr/lib
-  mv out/gcc/usr/lib64/lib{{.}}.* out/lib{{.}}/usr/lib
+  mv out/gcc/usr/{{if eq $arch "x86_64"}}lib64{{else}}lib{{end}}/lib{{.}}.* out/lib{{.}}/usr/lib
   {{- end}}
+  {{pkmv "usr/lib" "libstdc++" "libstdcpp"}}
+  {{pkmv "usr/lib" "libsupc++" "libsupcpp"}}
   mv out/libgcc_s/* out/libgcc
-  mkdir -p out/libstdc++-dev/usr/include
-  mv out/gcc/usr/include/c++ out/libstdc++-dev/usr/include/c++
+  mkdir -p out/libstdcpp-dev/usr/include
+  mv out/gcc/usr/include/c++ out/libstdcpp-dev/usr/include/c++
   mkdir -p out/g++/usr/bin
   mv out/gcc/usr/bin/g++ out/g++/usr/bin/g++
   mv out/gcc/usr/bin/c++ out/g++/usr/bin/c++
   mv out/gcc/usr/bin/cpp out/g++/usr/bin/cpp
-  mv out/gcc/usr/bin/x86_64-pc-linux-musl-g++ out/g++/usr/bin/x86_64-pc-linux-musl-g++
-  mv out/gcc/usr/bin/x86_64-pc-linux-musl-c++ out/g++/usr/bin/x86_64-pc-linux-musl-c++
+  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-g++ out/g++/usr/bin/{{confarch}}-pc-linux-musl-g++
+  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-c++ out/g++/usr/bin/{{confarch}}-pc-linux-musl-c++
   mkdir -p out/gcc-ranlib/usr/bin
   mv out/gcc/usr/bin/gcc-ranlib out/gcc-ranlib/usr/bin/gcc-ranlib
-  mv out/gcc/bin/x86_64-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/x86_64-pc-linux-musl-gcc-ranlib
+  mv out/gcc/bin/{{confarch}}-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/{{confarch}}-pc-linux-musl-gcc-ranlib
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
-  mkdir -p out/gcc-python-cxx/usr/share/gcc-7.2.0
-  mv out/gcc/usr/share/gcc-7.2.0/python out/gcc-python-cxx/usr/share/gcc-7.2.0/python
-  rm -rf out/gcc/usr/share/gcc-7.2.0 out/gcc/usr/lib64 out/gcc/usr/include
+  mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
+  mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
+  rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}} out/gcc/usr/include
