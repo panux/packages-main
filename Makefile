@@ -1,5 +1,7 @@
 dirs = main dev extra languages libs graphics
 
+.PHONY: $(dirs)
+
 pkgs = $(foreach dir,$(dirs),$(basename $(shell ls $(dir)/*.pkgen)))
 tpkgs = $(basename $(shell ls testing/*.pkgen))
 
@@ -20,7 +22,7 @@ ifeq ($(ARCH),x86_64)
 	pkgs += kernel/linux
 endif
 
-all: $(pkgs)
+all: $(dirs)
 
 list:
 	@echo Main: $(pkgs)
@@ -38,3 +40,9 @@ $(pkgs) $(tpkgs):
 
 kconf:
 	bash tools/kconf.sh
+
+define make-dir-target
+  $1: $(basename $(shell ls $1/*.pkgen))
+endef
+
+$(foreach dir,$(dirs),$(eval $(call make-dir-target,$(dir))))
