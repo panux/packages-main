@@ -26,6 +26,12 @@ list:
 	@echo Main: $(pkgs)
 	@echo Testing: $(tpkgs)
 
+listraw:
+	@echo $(pkgs)
+
+listrawtesting:
+	@echo $(tpkgs)
+
 $(pkgs) $(tpkgs):
 	@echo DEST: $(DEST)
 	bash buildpkg.sh $@ $(DEST) $(ARCH)
