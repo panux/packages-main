@@ -10,7 +10,7 @@ packages:
     - libx11-dev
     - libxt
     - libxt-doc
-    - xtproto
+    - xproto
   libxt-doc:
 version: 1.1.5
 builddependencies:
