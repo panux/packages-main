@@ -21,13 +21,13 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libXt-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libXt-{{.Version}}.tar.bz2
-- mv libXt-{{.Version}} libxt
-- (cd libxt && ./configure --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libxt
-- $(MAKE) -C libxt DESTDIR=$(shell pwd)/out/libxt install
-- mkdir -p out/libxt-dev/usr/lib
-- mv out/libxt/usr/include out/libxt-dev/usr
-- mv out/libxt/usr/lib/*.a out/libxt/usr/lib/*.so out/libxt/usr/lib/pkgconfig out/libxt-dev/usr/lib
-- mkdir -p out/libxt-doc/usr
-- mv out/libxt/usr/share out/libxt-doc/usr
+- |
+  {{extract "libXt" "bz2"}}
+  (cd libXt && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXt
+  $(MAKE) -C libXt DESTDIR=$(shell pwd)/out/libxt install
+  mkdir -p out/libxt-dev/usr/lib
+  mv out/libxt/usr/include out/libxt-dev/usr
+  mv out/libxt/usr/lib/*.a out/libxt/usr/lib/*.so out/libxt/usr/lib/pkgconfig out/libxt-dev/usr/lib
+  mkdir -p out/libxt-doc/usr
+  mv out/libxt/usr/share out/libxt-doc/usr

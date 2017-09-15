@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/xineramaproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xineramaproto-{{.Version}}.tar.bz2
-- mv xineramaproto-{{.Version}} xineramaproto
-- (cd xineramaproto && ./configure --prefix=/usr)
-- $(MAKE) -C xineramaproto
-- (cd xineramaproto && make -j1 DESTDIR=$(shell pwd)/out/xineramaproto install)
+- |
+  {{extract "xineramaproto" "bz2"}}
+  (cd xineramaproto && ./configure --prefix=/usr)
+  $(MAKE) -C xineramaproto
+  (cd xineramaproto && make -j1 DESTDIR=$(shell pwd)/out/xineramaproto install)

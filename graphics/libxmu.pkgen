@@ -30,13 +30,13 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libXmu-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libXmu-{{.Version}}.tar.bz2
-- mv libXmu-{{.Version}} libxmu
-- (cd libxmu && ./configure --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libxmu
-- $(MAKE) -C libxmu DESTDIR=$(shell pwd)/out/libxmu install
-- mkdir -p out/libxmu-dev/usr/lib
-- mv out/libxmu/usr/include out/libxmu-dev/usr
-- mv out/libxmu/usr/lib/*.a out/libxmu/usr/lib/*.so out/libxmu/usr/lib/pkgconfig out/libxmu-dev/usr/lib
-- mkdir -p out/libxmu-doc/usr
-- mv out/libxmu/usr/share out/libxmu-doc/usr
+- |
+  {{extract "libXmu" "bz2"}}
+  (cd libXmu && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXmu
+  $(MAKE) -C libXmu DESTDIR=$(shell pwd)/out/libxmu install
+  mkdir -p out/libxmu-dev/usr/lib
+  mv out/libxmu/usr/include out/libxmu-dev/usr
+  mv out/libxmu/usr/lib/*.a out/libxmu/usr/lib/*.so out/libxmu/usr/lib/pkgconfig out/libxmu-dev/usr/lib
+  mkdir -p out/libxmu-doc/usr
+  mv out/libxmu/usr/share out/libxmu-doc/usr

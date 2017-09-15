@@ -14,11 +14,11 @@ builddependencies:
 sources:
 - https://xcb.freedesktop.org/dist/xcb-util-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xcb-util-{{.Version}}.tar.bz2
-- mv xcb-util-{{.Version}} xcb-util
-- (cd xcb-util && ./configure --prefix=/usr)
-- $(MAKE) -C xcb-util
-- $(MAKE) -C xcb-util DESTDIR=$(shell pwd)/out/xcb-util install
-- mkdir -p out/xcb-util-dev/usr/lib
-- mv out/xcb-util/usr/include out/xcb-util-dev/usr
-- mv out/xcb-util/usr/lib/*.a out/xcb-util/usr/lib/*.so out/xcb-util/usr/lib/pkgconfig out/xcb-util-dev/usr/lib
+- |
+  {{extract "xcb-util" "bz2"}}
+  (cd xcb-util && ./configure --prefix=/usr)
+  $(MAKE) -C xcb-util
+  $(MAKE) -C xcb-util DESTDIR=$(shell pwd)/out/xcb-util install
+  mkdir -p out/xcb-util-dev/usr/lib
+  mv out/xcb-util/usr/include out/xcb-util-dev/usr
+  mv out/xcb-util/usr/lib/*.a out/xcb-util/usr/lib/*.so out/xcb-util/usr/lib/pkgconfig out/xcb-util-dev/usr/lib

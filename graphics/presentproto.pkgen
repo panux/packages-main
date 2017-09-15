@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/presentproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/presentproto-{{.Version}}.tar.bz2
-- mv presentproto-{{.Version}} presentproto
-- (cd presentproto && ./configure --prefix=/usr)
-- $(MAKE) -C presentproto
-- (cd presentproto && make -j1 DESTDIR=$(shell pwd)/out/presentproto install)
+- |
+  {{extract "presentproto" "bz2"}}
+  (cd presentproto && ./configure --prefix=/usr)
+  $(MAKE) -C presentproto
+  (cd presentproto && make -j1 DESTDIR=$(shell pwd)/out/presentproto install)

@@ -18,10 +18,10 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/xinit-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xinit-{{.Version}}.tar.bz2
-- mv xinit-{{.Version}} xinit
-- (cd xinit && ./configure --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	-with-xinitdir=/etc/X11/xinit)
-- $(MAKE) -C xinit
-- $(MAKE) -C xinit DESTDIR=$(shell pwd)/out/xinit install
-- mkdir -p out/xinit-doc/usr
-- mv out/xinit/usr/share out/xinit-doc/usr
+- |
+  {{extract "xinit" "bz2"}}
+  (cd xinit && ./configure --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	-with-xinitdir=/etc/X11/xinit)
+  $(MAKE) -C xinit
+  $(MAKE) -C xinit DESTDIR=$(shell pwd)/out/xinit install
+  mkdir -p out/xinit-doc/usr
+  mv out/xinit/usr/share out/xinit-doc/usr

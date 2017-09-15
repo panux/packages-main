@@ -43,19 +43,18 @@ sources:
 - https://wayland.freedesktop.org/releases/wayland-{{.Version}}.tar.xz
 data:
   libs:
-    wayland-libs-client: libwayland-client.so.0*
-    wayland-libs-server: libwayland-server.so.0*
-    wayland-libs-cursor: libwayland-cursor.so.0*
+    - client
+    - server
+    - cursor
 script:
 - |
-  tar -xf src/wayland-{{.Version}}.tar.xz
-  mv wayland-{{.Version}} wayland
+  {{extract "wayland" "bz2"}}
   (cd wayland && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var)
   $(MAKE) -C wayland
   $(MAKE) -C wayland DESTDIR=$(shell pwd)/out/wayland install
   {{- range $i, $v := .Data.libs}}
-  mkdir -p out/{{$i}}/usr/lib
-  mv out/wayland/usr/lib/{{$v}} out/{{$i}}/usr/lib
+  mkdir -p out/wayland-libs-{{$v}}/usr/lib
+  mv out/wayland/usr/lib/libwayland-{{$v}}.so.0* out/wayland-libs-{{$v}}/usr/lib
   {{- end}}
   mkdir -p out/wayland-dev/usr/lib out/wayland-dev/usr/bin out/wayland-dev/usr/share
   mv out/wayland/usr/include out/wayland-dev/usr

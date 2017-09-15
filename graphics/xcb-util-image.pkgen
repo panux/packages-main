@@ -15,11 +15,11 @@ builddependencies:
 sources:
 - https://xcb.freedesktop.org/dist/xcb-util-image-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xcb-util-image-{{.Version}}.tar.bz2
-- mv xcb-util-image-{{.Version}} xcb-util-image
-- (cd xcb-util-image && ./configure --prefix=/usr)
-- $(MAKE) -C xcb-util-image
-- $(MAKE) -C xcb-util-image DESTDIR=$(shell pwd)/out/xcb-util-image install
-- mkdir -p out/xcb-util-image-dev/usr/lib
-- mv out/xcb-util-image/usr/include out/xcb-util-image-dev/usr
-- mv out/xcb-util-image/usr/lib/*.a out/xcb-util-image/usr/lib/*.so out/xcb-util-image/usr/lib/pkgconfig out/xcb-util-image-dev/usr/lib
+- |
+  {{extract "xcb-util-image" "bz2"}}
+  (cd xcb-util-image && ./configure --prefix=/usr)
+  $(MAKE) -C xcb-util-image
+  $(MAKE) -C xcb-util-image DESTDIR=$(shell pwd)/out/xcb-util-image install
+  mkdir -p out/xcb-util-image-dev/usr/lib
+  mv out/xcb-util-image/usr/include out/xcb-util-image-dev/usr
+  mv out/xcb-util-image/usr/lib/*.a out/xcb-util-image/usr/lib/*.so out/xcb-util-image/usr/lib/pkgconfig out/xcb-util-image-dev/usr/lib

@@ -9,10 +9,10 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/xmodmap-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xmodmap-{{.Version}}.tar.bz2
-- mv xmodmap-{{.Version}} xmodmap
-- (cd xmodmap && ./configure --prefix=/usr)
-- $(MAKE) -C xmodmap
-- $(MAKE) -C xmodmap DESTDIR=$(shell pwd)/out/xmodmap install
-- mkdir -p out/xmodmap-doc/usr
-- mv out/xmodmap/usr/share out/xmodmap-doc/usr
+- |
+  {{extract "xmodmap" "bz2"}}
+  (cd xmodmap && ./configure --prefix=/usr)
+  $(MAKE) -C xmodmap
+  $(MAKE) -C xmodmap DESTDIR=$(shell pwd)/out/xmodmap install
+  mkdir -p out/xmodmap-doc/usr
+  mv out/xmodmap/usr/share out/xmodmap-doc/usr

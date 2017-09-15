@@ -15,11 +15,11 @@ builddependencies:
 sources:
 - https://xcb.freedesktop.org/dist/xcb-util-renderutil-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xcb-util-renderutil-{{.Version}}.tar.bz2
-- mv xcb-util-renderutil-{{.Version}} xcb-util-renderutil
-- (cd xcb-util-renderutil && ./configure --prefix=/usr)
-- $(MAKE) -C xcb-util-renderutil
-- $(MAKE) -C xcb-util-renderutil DESTDIR=$(shell pwd)/out/xcb-util-renderutil install
-- mkdir -p out/xcb-util-renderutil-dev/usr/lib
-- mv out/xcb-util-renderutil/usr/include out/xcb-util-renderutil-dev/usr
-- mv out/xcb-util-renderutil/usr/lib/*.a out/xcb-util-renderutil/usr/lib/*.so out/xcb-util-renderutil/usr/lib/pkgconfig out/xcb-util-renderutil-dev/usr/lib
+- |
+  {{extract "xcb-util-renderutil" "bz2"}}
+  (cd xcb-util-renderutil && ./configure --prefix=/usr)
+  $(MAKE) -C xcb-util-renderutil
+  $(MAKE) -C xcb-util-renderutil DESTDIR=$(shell pwd)/out/xcb-util-renderutil install
+  mkdir -p out/xcb-util-renderutil-dev/usr/lib
+  mv out/xcb-util-renderutil/usr/include out/xcb-util-renderutil-dev/usr
+  mv out/xcb-util-renderutil/usr/lib/*.a out/xcb-util-renderutil/usr/lib/*.so out/xcb-util-renderutil/usr/lib/pkgconfig out/xcb-util-renderutil-dev/usr/lib

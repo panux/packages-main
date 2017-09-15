@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/recordproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/recordproto-{{.Version}}.tar.bz2
-- mv recordproto-{{.Version}} recordproto
-- (cd recordproto && ./configure --prefix=/usr)
-- $(MAKE) -C recordproto
-- (cd recordproto && make -j1 DESTDIR=$(shell pwd)/out/recordproto install)
+- |
+  {{extract "recordproto" "bz2"}}
+  (cd recordproto && ./configure --prefix=/usr)
+  $(MAKE) -C recordproto
+  (cd recordproto && make -j1 DESTDIR=$(shell pwd)/out/recordproto install)

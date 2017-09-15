@@ -8,10 +8,10 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/mkfontdir-{{.Version}}.tar.bz2
 script:
-- tar -xf src/mkfontdir-{{.Version}}.tar.bz2
-- mv mkfontdir-{{.Version}} mkfontdir
-- (cd mkfontdir && ./configure --prefix=/usr)
-- $(MAKE) -C mkfontdir
-- $(MAKE) -C mkfontdir DESTDIR=$(shell pwd)/out/mkfontdir install
-- mkdir -p out/mkfontdir-doc/usr
-- mv out/mkfontdir/usr/share out/mkfontdir-doc/usr
+- |
+  {{extract "mkfontdir" "bz2"}}
+  (cd mkfontdir && ./configure --prefix=/usr)
+  $(MAKE) -C mkfontdir
+  $(MAKE) -C mkfontdir DESTDIR=$(shell pwd)/out/mkfontdir install
+  mkdir -p out/mkfontdir-doc/usr
+  mv out/mkfontdir/usr/share out/mkfontdir-doc/usr

@@ -12,10 +12,10 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/xrdb-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xrdb-{{.Version}}.tar.bz2
-- mv xrdb-{{.Version}} xrdb
-- (cd xrdb && ./configure --prefix=/usr)
-- $(MAKE) -C xrdb
-- $(MAKE) -C xrdb DESTDIR=$(shell pwd)/out/xrdb install
-- mkdir -p out/xrdb-doc/usr
-- mv out/xrdb/usr/share out/xrdb-doc/usr
+- |
+  {{extract "xrdb" "bz2"}}
+  (cd xrdb && ./configure --prefix=/usr)
+  $(MAKE) -C xrdb
+  $(MAKE) -C xrdb DESTDIR=$(shell pwd)/out/xrdb install
+  mkdir -p out/xrdb-doc/usr
+  mv out/xrdb/usr/share out/xrdb-doc/usr

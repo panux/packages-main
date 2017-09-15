@@ -7,8 +7,8 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/proto/xcmiscproto-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xcmiscproto-{{.Version}}.tar.bz2
-- mv xcmiscproto-{{.Version}} xcmiscproto
-- (cd xcmiscproto && ./configure --prefix=/usr)
-- $(MAKE) -C xcmiscproto
-- (cd xcmiscproto && make -j1 DESTDIR=$(shell pwd)/out/xcmiscproto install)
+- |
+  {{extract "xcmiscproto" "bz2"}}
+  (cd xcmiscproto && ./configure --prefix=/usr)
+  $(MAKE) -C xcmiscproto
+  (cd xcmiscproto && make -j1 DESTDIR=$(shell pwd)/out/xcmiscproto install)

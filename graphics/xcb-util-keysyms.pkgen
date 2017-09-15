@@ -15,11 +15,11 @@ builddependencies:
 sources:
 - https://xcb.freedesktop.org/dist/xcb-util-keysyms-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xcb-util-keysyms-{{.Version}}.tar.bz2
-- mv xcb-util-keysyms-{{.Version}} xcb-util-keysyms
-- (cd xcb-util-keysyms && ./configure --prefix=/usr)
-- $(MAKE) -C xcb-util-keysyms
-- $(MAKE) -C xcb-util-keysyms DESTDIR=$(shell pwd)/out/xcb-util-keysyms install
-- mkdir -p out/xcb-util-keysyms-dev/usr/lib
-- mv out/xcb-util-keysyms/usr/include out/xcb-util-keysyms-dev/usr
-- mv out/xcb-util-keysyms/usr/lib/*.a out/xcb-util-keysyms/usr/lib/*.so out/xcb-util-keysyms/usr/lib/pkgconfig out/xcb-util-keysyms-dev/usr/lib
+- |
+  {{extract "xcb-util-keysyms" "bz2"}}
+  (cd xcb-util-keysyms && ./configure --prefix=/usr)
+  $(MAKE) -C xcb-util-keysyms
+  $(MAKE) -C xcb-util-keysyms DESTDIR=$(shell pwd)/out/xcb-util-keysyms install
+  mkdir -p out/xcb-util-keysyms-dev/usr/lib
+  mv out/xcb-util-keysyms/usr/include out/xcb-util-keysyms-dev/usr
+  mv out/xcb-util-keysyms/usr/lib/*.a out/xcb-util-keysyms/usr/lib/*.so out/xcb-util-keysyms/usr/lib/pkgconfig out/xcb-util-keysyms-dev/usr/lib

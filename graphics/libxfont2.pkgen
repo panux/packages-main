@@ -22,11 +22,11 @@ builddependencies:
 sources:
 - https://www.x.org/archive//individual/lib/libXfont2-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libXfont2-{{.Version}}.tar.bz2
-- mv libXfont2-{{.Version}} libxfont2
-- (cd libxfont2 && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
-- $(MAKE) -C libxfont2
-- $(MAKE) -C libxfont2 DESTDIR=$(shell pwd)/out/libxfont2 install
-- mkdir -p out/libxfont2-dev/usr/lib
-- mv out/libxfont2/usr/lib/libXfont2.so out/libxfont2/usr/lib/pkgconfig out/libxfont2-dev/usr/lib
-- mv out/libxfont2/usr/include out/libxfont2-dev/usr
+- |
+  {{extract "libXfont2" "bz2"}}
+  (cd libXfont2 && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  $(MAKE) -C libXfont2
+  $(MAKE) -C libXfont2 DESTDIR=$(shell pwd)/out/libxfont2 install
+  mkdir -p out/libxfont2-dev/usr/lib
+  mv out/libxfont2/usr/lib/libXfont2.so out/libxfont2/usr/lib/pkgconfig out/libxfont2-dev/usr/lib
+  mv out/libxfont2/usr/include out/libxfont2-dev/usr

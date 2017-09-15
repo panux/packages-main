@@ -17,13 +17,13 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/lib/libXext-{{.Version}}.tar.bz2
 script:
-- tar -xf src/libXext-{{.Version}}.tar.bz2
-- mv libXext-{{.Version}} libxext
-- (cd libxext && ./configure --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C libxext
-- $(MAKE) -C libxext DESTDIR=$(shell pwd)/out/libxext install
-- mkdir -p out/libxext-dev/usr/lib
-- mv out/libxext/usr/include out/libxext-dev/usr
-- mv out/libxext/usr/lib/*.a out/libxext/usr/lib/*.so out/libxext/usr/lib/pkgconfig out/libxext-dev/usr/lib
-- mkdir -p out/libxext-doc/usr
-- mv out/libxext/usr/share out/libxext-doc/usr
+- |
+  {{extract "libXext" "bz2"}}
+  (cd libxext && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXext
+  $(MAKE) -C libXext DESTDIR=$(shell pwd)/out/libxext install
+  mkdir -p out/libxext-dev/usr/lib
+  mv out/libxext/usr/include out/libxext-dev/usr
+  mv out/libxext/usr/lib/*.a out/libxext/usr/lib/*.so out/libxext/usr/lib/pkgconfig out/libxext-dev/usr/lib
+  mkdir -p out/libxext-doc/usr
+  mv out/libxext/usr/share out/libxext-doc/usr

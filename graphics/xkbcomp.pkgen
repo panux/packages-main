@@ -16,12 +16,12 @@ builddependencies:
 sources:
 - https://www.x.org/releases/individual/app/xkbcomp-{{.Version}}.tar.bz2
 script:
-- tar -xf src/xkbcomp-{{.Version}}.tar.bz2
-- mv xkbcomp-{{.Version}} xkbcomp
-- (cd xkbcomp && ./configure --prefix=/usr --sysconfdir=/etc)
-- $(MAKE) -C xkbcomp
-- $(MAKE) -C xkbcomp DESTDIR=$(shell pwd)/out/xkbcomp install
-- mkdir -p out/xkbcomp-dev/usr/lib
-- mv out/xkbcomp/usr/lib/pkgconfig out/xkbcomp-dev/usr/lib
-- mkdir -p out/xkbcomp-doc/usr
-- mv out/xkbcomp/usr/share out/xkbcomp-doc/usr
+- |
+  {{extract "xkbcomp" "bz2"}}
+  (cd xkbcomp && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C xkbcomp
+  $(MAKE) -C xkbcomp DESTDIR=$(shell pwd)/out/xkbcomp install
+  mkdir -p out/xkbcomp-dev/usr/lib
+  mv out/xkbcomp/usr/lib/pkgconfig out/xkbcomp-dev/usr/lib
+  mkdir -p out/xkbcomp-doc/usr
+  mv out/xkbcomp/usr/share out/xkbcomp-doc/usr

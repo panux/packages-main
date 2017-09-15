@@ -188,8 +188,7 @@ data:
 oneshell: true
 script:
 - |
-  tar -xf src/xorg-server-{{.Version}}.tar.bz2
-  mv xorg-server-{{.Version}} xorg-server
+  {{extract "xorg-server" "bz2"}}
   export CFLAGS="-D__gid_t=gid_t -D__uid_t=uid_t"
   (cd xorg-server && ./configure --prefix=/usr --with-xkb-path=/usr/share/X11/xkb --with-xkb-output=/var/lib/xkb --without-systemd-daemon --enable-aiglx --enable-composite --enable-config-udev --enable-dri --enable-dri2 --enable-glamor --enable-glx-tls --enable-ipv6 --enable-kdrive --enable-xace --enable-xcsecurity --enable-xephyr --enable-xfbdev --enable-xnest --enable-xorg --enable-xres --enable-xv --enable-xwayland --disable-config-hal --disable-dmx --disable-tslib --disable-systemd-logind --sysconfdir=/etc/X11  --localstatedir=/var)
   (cd xorg-server && make -j1)
