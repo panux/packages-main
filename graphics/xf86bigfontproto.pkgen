@@ -15,5 +15,5 @@ script:
   (cd xf86bigfontproto && ./configure --prefix=/usr)
   $(MAKE) -C xf86bigfontproto
   $(MAKE) -C xf86bigfontproto DESTDIR=$(shell pwd)/out/xf86bigfontproto install
-  {{pkmv "usr/lib/pkgconfig" "xf86bigfont" "xf86bigfont-dev"}}
-  {{pkmv "usr/include" "xf86bigfont" "xf86bigfont-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "xf86bigfontproto" "xf86bigfontproto-dev"}}
+  {{pkmv "usr/include" "xf86bigfontproto" "xf86bigfontproto-dev"}}
