@@ -1,0 +1,14 @@
+packages:
+  libpthread-stubs:
+    dependencies:
+    - pkgconf
+version: 0.3
+builddependencies:
+sources:
+- https://xcb.freedesktop.org/dist/libpthread-stubs-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libpthread-stubs" "bz2"}}
+  (cd libpthread-stubs && ./configure --prefix=/usr)
+  $(MAKE) -C libpthread-stubs
+  $(MAKE) -C libpthread-stubs DESTDIR=$(shell pwd)/out/libpthread-stubs install
