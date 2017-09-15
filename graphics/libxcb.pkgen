@@ -1,6 +1,16 @@
 packages:
   libxcb:
     dependencies:
+    - libxau
+    - libxdmcp
+  libxcb-dev:
+    dependencies:
+    - libpthread-stubs
+    - libxau-dev
+    - libxcb
+    - libxdmcp-dev
+    - xcb-proto
+  libxcb-doc:
 version: 1.12
 builddependencies:
 - gcc
@@ -16,8 +26,11 @@ sources:
 script:
 - |
   {{extract "libxcb" "bz2"}}
-  (cd libxcb && ./configure --build={{confarch}}-pc-linux-gnu)
+  (cd libxcb && ./configure --prefix=/usr)
   $(MAKE) -C libxcb
   $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
-  mv out/libxcb/usr/local/* out/libxcb/usr
-  rm -r out/libxcb/usr/local
+  {{pkmv "usr/include" "libxcb" "libxcb-dev"}}
+  {{pkmv "usr/lib/*.a" "libxcb" "libxcb-dev"}}
+  {{pkmv "usr/lib/*.so" "libxcb" "libxcb-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "libxcb" "libxcb-dev"}}
+  {{pkmv "usr/share" "libxcb" "libxcb-doc"}}
