@@ -1,0 +1,19 @@
+packages:
+  libaio:
+  libaio-dev:
+    dependencies:
+    - libaio
+version: 0.3.110
+builddependencies:
+- linux-headers
+sources:
+script:
+- |
+  mkdir src
+  (cd src && wget http://ftp.debian.org/debian/pool/main/liba/libaio/libaio_{{.Version}}.orig.tar.gz)
+  mv src/libaio_{{.Version}}.orig.tar.gz src/libaio-{{.Version}}.tar.gz
+  {{extract "libaio" "gz"}}
+  (cd libaio && make prefix="$(shell pwd)/out/libaio/usr" install)
+  {{pkmv "usr/include" "libaio" "libaio-dev"}}
+  {{pkmv "usr/lib/*.a" "libaio" "libaio-dev"}}
+  {{pkmv "usr/lib/*.so" "libaio" "libaio-dev"}}
