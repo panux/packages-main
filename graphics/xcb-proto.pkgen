@@ -1,0 +1,16 @@
+packages:
+  xcb-proto:
+    dependencies:
+    - pkgconf
+version: 1.12
+builddependencies:
+- python3
+- python2
+sources:
+- https://xcb.freedesktop.org/dist/xcb-proto-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xcb-proto" "bz2"}}
+  (cd xcb-proto && ./configure --prefix=/usr)
+  $(MAKE) -C xcb-proto
+  $(MAKE) -C xcb-proto DESTDIR=$(shell pwd)/out/xcb-proto install
