@@ -40,3 +40,5 @@ script:
   {{configure "nginx"}}
   $(MAKE) -C nginx
   $(MAKE) -C nginx install DESTDIR=$(shell pwd)/out/nginx
+  echo "#!/bin/sh" > $(shell pwd)/out/nginx/.oninstall
+  echo "adduser -D nobody" >> $(shell pwd)/out/nginx/.oninstall
