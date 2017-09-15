@@ -2,6 +2,17 @@ packages:
   libx11:
     dependencies:
     - libxcb
+  libx11-dev:
+    dependencies:
+    - inputproto
+    - kbproto
+    - libx11
+    - libxcb-dev
+    - xextproto
+    - xf86bigfontproto-dev
+    - xproto
+    - xtrans
+  libx11-doc:
 version: 1.6.5
 builddependencies:
 - xproto
@@ -20,3 +31,8 @@ script:
   (cd libX11 && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
   $(MAKE) -C libX11
   $(MAKE) -C libX11 DESTDIR=$(shell pwd)/out/libx11 install
+  {{pkmv "usr/include" "libx11" "libx11-dev"}}
+  {{pkmv "usr/lib/*.a" "libx11" "libx11-dev"}}
+  {{pkmv "usr/lib/*.so" "libx11" "libx11-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "libx11" "libx11-dev"}}
+  {{pkmv "usr/share" "libx11" "libx11-doc"}}
