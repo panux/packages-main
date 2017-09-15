@@ -1,6 +1,10 @@
 packages:
   xf86bigfontproto:
+    dependencies:
+    - pkgconf
   xf86bigfontproto-dev:
+    dependencies:
+    - pkgconf
 version: 1.2.0
 builddependencies:
 sources:
@@ -11,4 +15,5 @@ script:
   (cd xf86bigfontproto && ./configure --prefix=/usr)
   $(MAKE) -C xf86bigfontproto
   $(MAKE) -C xf86bigfontproto DESTDIR=$(shell pwd)/out/xf86bigfontproto install
-  {{pkmv "usr/include" "libx11" "libx11-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "xf86bigfont" "xf86bigfont-dev"}}
+  {{pkmv "usr/include" "xf86bigfont" "xf86bigfont-dev"}}
