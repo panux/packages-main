@@ -2,8 +2,13 @@ dirs = main dev extra languages libs graphics
 
 .PHONY: $(dirs)
 
-pkgs = $(foreach dir,$(dirs),$(basename $(shell ls $(dir)/*.pkgen)))
-tpkgs = $(basename $(shell ls testing/*.pkgen))
+rpkgs = $(foreach dir,$(dirs),$(shell ls $(dir)/*.pkgen))
+rtpkgs = $(shell ls testing/*.pkgen)
+
+.PHONY: $(rpkgs) $(rtpkgs)
+
+pkgs = $(basename $(rpkgs))
+tpkgs = $(basename $(rtpkgs))
 
 ifeq ($(DEST),)
 	DEST := $(shell mkdir -p out && realpath out)
@@ -34,9 +39,8 @@ listraw:
 listrawtesting:
 	@echo $(tpkgs)
 
-$(pkgs) $(tpkgs):
-	@echo DEST: $(DEST)
-	bash buildpkg.sh $@ $(DEST) $(ARCH)
+$(pkgs) $(tpkgs) $(rpkgs) $(rtpkgs):
+	bash buildpkg.sh $(basename $@) $(DEST) $(ARCH)
 
 kconf:
 	bash tools/kconf.sh
