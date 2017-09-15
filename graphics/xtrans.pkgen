@@ -1,0 +1,13 @@
+packages:
+  xtrans:
+    dependencies:
+version: 1.3.5
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/lib/xtrans-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xtrans" "bz2"}}
+  (cd xtrans && ./configure --prefix=/usr)
+  $(MAKE) -C xtrans
+  $(MAKE) -C xtrans DESTDIR=$(shell pwd)/out/xtrans install
