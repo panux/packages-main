@@ -1,0 +1,14 @@
+packages:
+  videoproto:
+    dependencies:
+    - pkgconf
+version: 2.3.3
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/proto/videoproto-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "videoproto" "bz2"}}
+  (cd videoproto && ./configure --prefix=/usr)
+  $(MAKE) -C videoproto
+  (cd videoproto && make -j1 DESTDIR=$(shell pwd)/out/videoproto install)
