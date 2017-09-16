@@ -13,7 +13,6 @@ packages:
     - grub
     - efibootmgr
   grub-xenhost:
-  grub-dev:
 version: 2.02
 builddependencies:
 - bison
@@ -62,7 +61,3 @@ script:
 - mv out/grub/usr/lib/grub/*-pc out/grub-bios/usr/lib/grub
 - mkdir -p out/grub-efi/usr/lib/grub
 - mv out/grub/usr/lib/grub/*-efi out/grub-efi/usr/lib/grub
-- mkdir -p out/grub-dev/usr/lib/grub/i386-pc out/grub-dev/lib/grub/x86_64-efi
-- mv out/grub/usr/share out/grub-dev/usr
-- mv out/grub-bios/usr/lib/grub/i386-pc/config.h out/grub-dev/usr/lib/grub/i386-pc
-- mv out/grub-efi/usr/lib/grub/x86_64-efi/config.h out/grub-dev/usr/lib/grub/x86_64-efi
