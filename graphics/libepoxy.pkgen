@@ -5,7 +5,9 @@ packages:
     dependencies:
     - libepoxy
     - libx11-dev
-    - mesa-dev
+    - mesa-core
+    - mesa-headers
+    - mesa
 version: 1.4.3
 builddependencies:
 - libx11-dev
