@@ -11,9 +11,9 @@ builddependencies:
 sources:
 - https://codeload.github.com/mtoyoda/sl/tar.gz/{{.Version}}
 script:
-- mv src/{{.Version}} sl.tar.gz
-- tar -xf sl.tar.gz
-- mv sl-{{.Version}} sl
-- $(MAKE) -C sl
-- mkdir -p out/sl/usr/bin
-- mv sl/sl out/sl/usr/bin/sl
+- |
+  mv src/{{.Version}} src/sl-{{.Version}}.tar.gz
+  {{extract "sl" "gz"}}
+  $(MAKE) -C sl
+  mkdir -p out/sl/usr/bin
+  mv sl/sl out/sl/usr/bin
