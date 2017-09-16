@@ -1,0 +1,19 @@
+packages:
+  libpciaccess:
+    dependencies:
+  libpciaccess-dev:
+    dependencies:
+    - libpciaccess
+version: 0.13.5
+builddependencies:
+sources:
+- https://www.x.org/releases/individual/lib/libpciaccess-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libpciaccess" "bz2"}}
+  (cd libpciaccess && ./configure --prefix=/usr)
+  $(MAKE) -C libpciaccess
+  $(MAKE) -C libpciaccess DESTDIR=$(shell pwd)/out/libpciaccess install
+  mkdir -p out/libpciaccess-dev/usr/lib
+  mv out/libpciaccess/usr/include out/libpciaccess-dev/usr
+  mv out/libpciaccess/usr/lib/*.a out/libpciaccess/usr/lib/*.so out/libpciaccess/usr/lib/pkgconfig out/libpciaccess-dev/usr/lib
