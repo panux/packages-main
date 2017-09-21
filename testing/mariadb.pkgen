@@ -1,0 +1,104 @@
+packages:
+  mariadb:
+    dependencies:
+    - busybox
+    - libaio
+    - libressl
+    - libstdcpp
+    - mariadb-common
+    - ncurses
+    - zlib
+  sql-bench:
+    dependencies:
+    - mariadb-common
+  libmysqlclient:
+    dependencies:
+    - libressl
+    - mariadb-common
+    - zlib
+  libmysql:
+    dependencies:
+    - libaio
+    - libressl
+    - libstdcpp
+    - mariadb-common
+    - zlib
+  mariadb-client:
+    dependencies:
+    - libressl
+    - mariadb-common
+    - ncurses
+    - zlib
+  mariadb-common:
+  mariadb-dev:
+    dependencies:
+    - libressl-dev
+    - libmysqlclient
+    - libmysql
+    - zlib-dev
+  mariadb-doc:
+  mariadb-test:
+    dependencies:
+    - libressl
+    - mariadb-common
+    - zlib
+  mysql:
+    dependencies:
+    - mariadb
+  mysql-client:
+    dependencies:
+    - mariadb-client
+  mysql-bench:
+    dependencies:
+    - sql-bench
+version: 10.1.26
+builddependencies:
+- cmake
+- libressl-dev
+- zlib-dev
+- readline-dev
+- libaio-dev
+- ncurses-dev
+- linux-headers
+- libressl-dev
+- zlib-dev
+- libexecinfo-dev
+- xz-dev
+- pcre-dev
+- g++
+sources:
+- https://mirrors.syringanetworks.net/mariadb//mariadb-{{.Version}}/source/mariadb-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "mariadb" "gz"}}
+  (cd mariadb && cmake . -DBUILD_CONFIG=mysql_release -DCMAKE_INSTALL_PREFIX=/usr	-DSYSCONFDIR=/etc/mysql	-DMYSQL_DATADIR=/var/lib/mysql -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock -DDEFAULT_CHARSET=utf8	-DDEFAULT_COLLATION=utf8_general_ci -DENABLED_LOCAL_INFILE=ON	-DINSTALL_INFODIR=share/mysql/docs -DINSTALL_MANDIR=share/man	-DINSTALL_PLUGINDIR=lib/mysql/plugin -DINSTALL_SCRIPTDIR=bin -DINSTALL_INCLUDEDIR=include/mysql	-DINSTALL_DOCREADMEDIR=share/mysql -DINSTALL_SUPPORTFILESDIR=share/mysql -DINSTALL_MYSQLSHAREDIR=share/mysql -DINSTALL_DOCDIR=share/mysql/docs -DINSTALL_SHAREDIR=share/mysql -DWITH_READLINE=ON -DWITH_ZLIB=system -DWITH_SSL=system -DWITH_LIBWRAP=OFF -DWITH_JEMALLOC=no -DWITH_EXTRA_CHARSETS=complex	-DWITH_EMBEDDED_SERVER=ON -DWITH_ARCHIVE_STORAGE_ENGINE=1 -DWITH_BLACKHOLE_STORAGE_ENGINE=1 -DWITH_INNOBASE_STORAGE_ENGINE=1 -DWITH_PARTITION_STORAGE_ENGINE=1 -DPLUGIN_TOKUDB=NO -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 -DWITHOUT_PBXT_STORAGE_ENGINE=1)
+  $(MAKE) -C mariadb
+  $(MAKE) -C mariadb DESTDIR=$(shell pwd)/out/mariadb install
+  mv out/mariadb/usr/sql-bench out/mariadb/usr/share
+  mv out/mariadb/usr/mysql-test out/mariadb/usr/share
+  mv out/mariadb/usr/data out/mariadb/usr/share
+  {{pkmv "usr/share/sql-bench" "mariadb" "sql-bench"}}
+  {{pkmv "usr/lib/libmysqlclient.so.18*" "mariadb" "libmysqlclient"}}
+  {{pkmv "usr/share/mysql-test" "mariadb" "mariadb-test"}}
+  {{pkmv "usr/share/data" "mariadb" "mariadb-test"}}
+  {{pkmv "usr/share/mysql" "mariadb" "mariadb-common"}}
+  {{pkmv "usr/share/mysql/*.sql" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/*.cnf" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/*.txt" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/policy" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/*.server" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/C*" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/E*" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/I*" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/wsrep*" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/magic" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql/README*" "mariadb-common" "mariadb"}}
+  {{pkmv "usr/share/mysql-test/include" "mariadb-test" "mariadb-dev"}}
+  {{pkmv "usr/include" "mariadb" "mariadb-dev"}}
+  {{pkmv "usr/lib/*.so" "mariadb" "mariadb-dev"}}
+  {{pkmv "usr/lib/*.a" "mariadb" "mariadb-dev"}}
+  {{pkmv "usr/bin/mysql_config" "mariadb" "mariadb-dev"}}
+  {{pkmv "usr/share/man" "mariadb" "mariadb-doc"}}
+  mkdir -p out/mariadb-client/usr/bin
+  mv out/mariadb/usr/bin/mysqldump out/mariadb/usr/bin/mysqldumpslow out/mariadb/usr/bin/mysql_fix_extensions out/mariadb/usr/bin/mysqlcheck out/mariadb/usr/bin/mysql_waitpid out/mariadb/usr/bin/mysqladmin out/mariadb/usr/bin/mysqlbug out/mariadb/usr/bin/mysqlshow out/mariadb/usr/bin/mysql out/mariadb/usr/bin/mysqlaccess out/mariadb/usr/bin/myisam_ftdump out/mariadb/usr/bin/mysqlimport out/mariadb/usr/bin/mysql_find_rows out/mariadb-client/usr/bin
+  {{pkmv "usr/lib/libmysqld.so.18" "mariadb" "libmysqld"}}
