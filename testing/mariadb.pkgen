@@ -8,6 +8,7 @@ packages:
     - mariadb-common
     - ncurses
     - zlib
+    - libmysql
   sql-bench:
     dependencies:
     - mariadb-common
@@ -29,6 +30,7 @@ packages:
     - mariadb-common
     - ncurses
     - zlib
+    - libmysqlclient
   mariadb-common:
   mariadb-dev:
     dependencies:
