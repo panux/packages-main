@@ -1,0 +1,33 @@
+packages:
+  db:
+  db-utils:
+    dependencies:
+    - db
+  db-headers:
+  db-cpp:
+    dependencies:
+    - libstdcpp
+    - libgcc
+  db-doc:
+  db-dev:
+    dependencies:
+    - db
+    - db-cpp
+    - db-headers
+version: 5.3.28
+builddependencies:
+- g++
+sources:
+script:
+- |
+  mkdir src
+  (cd src && wget http://download.oracle.com/berkeley-db/db-{{.Version}}.tar.gz)
+  {{extract "db" "gz"}}
+  (cd db/build_unix && ../dist/configure --prefix=/usr --mandir=/usr/share/man --enable-compat185	--enable-shared	--enable-cxx)
+  $(MAKE) -C db/build_unix
+  $(MAKE) -C db/build_unix DESTDIR=$(shell pwd)/out/db install
+  mkdir -p out/db-doc/usr/share/doc
+  mv out/db/usr/docs out/db-doc/usr/share/doc/db
+  {{pkmv "usr/bin" "db" "db-utils"}}
+  {{pkmv "usr/include" "db" "db-headers"}}
+  {{pkmv "usr/lib/libdb_cxx*.so" "db" "db-cpp"}}
