@@ -97,7 +97,6 @@ script:
   {{pkmv "usr/share/mysql/README*" "mariadb-common" "mariadb"}}
   {{pkmv "usr/share/mysql-test/include" "mariadb-test" "mariadb-dev"}}
   {{pkmv "usr/include" "mariadb" "mariadb-dev"}}
-  {{pkmv "usr/lib/*.so" "mariadb" "mariadb-dev"}}
   {{pkmv "usr/lib/*.a" "mariadb" "mariadb-dev"}}
   {{pkmv "usr/bin/mysql_config" "mariadb" "mariadb-dev"}}
   {{pkmv "usr/share/man" "mariadb" "mariadb-doc"}}
