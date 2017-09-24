@@ -1,0 +1,29 @@
+packages:
+  libxrender:
+    dependencies:
+    - libx11
+  libxrender-dev:
+    dependencies:
+    - libx11-dev
+    - libxrender
+    - renderproto
+    - xproto
+    - libxrender-headers
+    - libxrender
+  libxrender-headers:
+  libxrender-doc:
+version: 0.9.10
+builddependencies:
+- libx11-dev
+- renderproto
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXrender-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXrender" "bz2"}}
+  (cd libXrender && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libXrender
+  $(MAKE) -C libXrender DESTDIR=$(shell pwd)/out/libxrender install
+  {{pkmv "usr/include" "libxrender" "libxrender-headers"}}
+  {{pkmv "usr/share" "libxrender" "libxrender-doc"}}
