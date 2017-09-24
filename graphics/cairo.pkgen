@@ -1,0 +1,70 @@
+packages:
+  cairo:
+    dependencies:
+    - fontconfig
+    - freetype
+    - libpng
+    - libx11
+    - libxcb
+    - libxext
+    - libxrender
+    - pixman
+    - zlib
+  cairo-dev:
+    dependencies:
+    - cairo
+    - cairo-gobject
+    - cairo-utils
+    - cairo-headers
+    - fontconfig-dev
+    - freetype-dev
+    - glib-dev
+    - libpng-dev
+    - libx11-dev
+    - libxcb-dev
+    - libxext-dev
+    - libxrender-dev
+    - pixman-dev
+    - xcb-util-dev
+  cairo-headers:
+  cairo-doc:
+  cairo-utils:
+    dependencies:
+    - cairo
+    - glib
+    - libx11
+    - libxcb
+    - libxrender
+    - pixman
+    - zlib
+  cairo-gobject:
+    dependencies:
+    - cairo
+    - glib
+version: 1.14.8
+builddependencies:
+- fontconfig-dev
+- freetype-dev
+- libxrender-dev
+- pixman-dev
+- xcb-util-dev
+- libxext-dev
+- zlib-dev
+- expat-dev
+- glib-dev
+- libpng-dev
+- autoconf
+- automake
+- libtool
+sources:
+- https://cairographics.org/releases/cairo-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "cairo" "xz"}}
+  (cd cairo && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --enable-ft	--enable-gobject --enable-pdf --enable-png --enable-ps --enable-tee --enable-xcb --enable-xlib-xrender)
+  $(MAKE) -C cairo
+  $(MAKE) -C cairo DESTDIR=$(shell pwd)/out/cairo install
+  {{pkmv "usr/include" "cairo" "cairo-headers"}}
+  {{pkmv "usr/share" "cairo" "cairo-doc"}}
+  {{pkmv "usr/bin" "cairo" "cairo-utils"}}
+  {{pkmv "usr/lib/libcairo-gobject*" "cairo" "cairo-gobject"}}
