@@ -1,0 +1,18 @@
+packages:
+  7z:
+    dependencies:
+    - p7zip
+  p7zip:
+    dependencies:
+    - libstdcpp
+version: 16.02
+sources:
+- https://downloads.sourceforge.net/sourceforge/p7zip/p7zip_{{.Version}}_src_all.tar.bz2
+builddependencies:
+- g++
+script:
+- |
+  tar -xf src/p7zip_{{.Version}}_src_all.tar.bz2
+  mv p7zip_{{.Version}} p7zip
+  $(MAKE) -C p7zip all3
+  $(MAKE) -C p7zip install DEST_DIR=$(shell pwd)/out/p7zip
