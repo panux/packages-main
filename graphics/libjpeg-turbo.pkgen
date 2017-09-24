@@ -1,0 +1,26 @@
+packages:
+  libjpeg-turbo:
+  libjpeg-turbo-dev:
+    dependencies:
+    - libjpeg-turbo
+    - libjpeg-turbo-headers
+    - libjpeg-turbo-utils
+  libjpeg-turbo-headers:
+  libjpeg-turbo-doc:
+  libjpeg-turbo-utils:
+    dependencies:
+    - libjpeg-turbo
+version: 1.5.2
+builddependencies:
+- nasm
+sources:
+- https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "libjpeg-turbo" "gz"}}
+  (cd libjpeg-turbo && ./configure --prefix=/usr --mandir=/usr/share/man --with-jpeg8)
+  $(MAKE) -C libjpeg-turbo
+  $(MAKE) -C libjpeg-turbo DESTDIR=$(shell pwd)/out/libjpeg-turbo install
+  {{pkmv "usr/include" "libjpeg-turbo" "libjpeg-turbo-headers"}}
+  {{pkmv "usr/share" "libjpeg-turbo" "libjpeg-turbo-doc"}}
+  {{pkmv "usr/bin" "libjpeg-turbo" "libjpeg-turbo-utils"}}
