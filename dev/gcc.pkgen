@@ -33,7 +33,11 @@ packages:
   libgcc:
   libitm:
   libsupcpp:
+    dependencies:
+    - libstdcpp
   libstdcpp:
+    dependencies:
+    - libgcc
   libstdcpp-dev:
   libcilkrts:
 version: 7.2.0
