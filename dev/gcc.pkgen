@@ -38,7 +38,7 @@ packages:
   libcilkrts:
 version: 7.2.0
 sources:
-  - https://mirrors.concertpass.com/gcc/releases/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
+  - https://ftp.gnu.org/gnu/gcc/gcc-{{.Version}}.tar.gz
 builddependencies:
   - gcc
   - g++
