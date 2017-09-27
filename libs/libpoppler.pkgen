@@ -1,0 +1,59 @@
+packages:
+  libpoppler:
+    dependencies:
+    - fontconfig
+    - freetype
+    - lcms2
+    - libjpeg-turbo
+    - libpng
+    - libstdcpp
+    - musl
+    - openjpeg
+    - libtiff
+    - zlib
+  libpoppler-dev:
+    dependencies:
+    - cairo-dev
+    - glib-dev
+    - libpoppler
+    - libpoppler-glib
+    - libpoppler-headers
+  libpoppler-headers:
+  libpoppler-utils:
+    dependencies:
+    - cairo
+    - freetype
+    - lcms2
+    - libstdcpp
+    - libpoppler
+  libpoppler-doc:
+  libpoppler-glib:
+    dependencies:
+    - cairo
+    - freetype
+    - glib
+    - libstdcpp
+version: 0.56.0
+builddependencies:
+- cairo-dev
+- glib-dev
+- libjpeg-turbo-dev
+- cairo-dev
+- libxml2-dev
+- fontconfig-dev
+- lcms2-dev
+- gobject-introspection-dev
+- openjpeg-dev
+- g++
+sources:
+- https://poppler.freedesktop.org/poppler-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "poppler" "xz"}}
+  (cd poppler && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --enable-cairo-output	--enable-xpdf-headers --enable-libjpeg --enable-zlib --enable-poppler-glib)
+  $(MAKE) -C poppler
+  $(MAKE) -C poppler DESTDIR=$(shell pwd)/out/libpoppler install
+  {{pkmv "usr/include" "libpoppler" "libpoppler-headers"}}
+  {{pkmv "usr/share" "libpoppler" "libpoppler-doc"}}
+  {{pkmv "usr/bin" "libpoppler" "libpoppler-utils"}}
+  {{pkmv "usr/lib/libpoppler-glib*" "libpoppler" "libpoppler-glib"}}
