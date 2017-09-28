@@ -1,0 +1,21 @@
+packages:
+  libtasn1:
+  libtasn1-dev:
+    dependencies:
+    - libtasn1
+    - libtasn1-headers
+  libtasn1-headers:
+  libtasn1-doc:
+version: 4.12
+builddependencies:
+- texinfo
+sources:
+- https://ftp.gnu.org/gnu/libtasn1/libtasn1-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "libtasn1" "gz"}}
+  (cd libtasn1 && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libtasn1
+  $(MAKE) -C libtasn1 DESTDIR=$(shell pwd)/out/libtasn1 install
+  {{pkmv "usr/include" "libtasn1" "libtasn1-headers"}}
+  {{pkmv "usr/share" "libtasn1" "libtasn1-doc"}}
