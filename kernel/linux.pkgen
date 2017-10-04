@@ -27,6 +27,7 @@ builddependencies:
 - bc
 - linux-headers
 - elfutils-dev
+- xz
 script:
 - tar -xf src/linux-{{.Version}}.tar.xz
 - mv linux-{{.Version}} linux
