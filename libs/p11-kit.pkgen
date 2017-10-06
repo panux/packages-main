@@ -1,0 +1,29 @@
+packages:
+  p11-kit:
+    dependencies:
+    - libffi
+    - libtasn1
+  p11-kit-dev:
+    dependencies:
+    - p11-kit
+    - p11-kit-headers
+  p11-kit-headers:
+  p11-kit-doc:
+  p11-kit-trust:
+version: 0.23.2
+builddependencies:
+- libtasn1-dev
+- libffi-dev
+sources:
+- https://p11-glue.freedesktop.org/releases/p11-kit-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "p11-kit" "gz"}}
+  (cd p11-kit && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C p11-kit
+  $(MAKE) -C p11-kit DESTDIR=$(shell pwd)/out/p11-kit install
+  {{pkmv "usr/include" "p11-kit" "p11-kit-headers"}}
+  {{pkmv "usr/share/p11-kit" "p11-kit" "p11-kit-trust"}}
+  {{pkmv "usr/lib/pkcs11" "p11-kit" "p11-kit-trust"}}
+  {{pkmv "usr/lib/p11-kit/trust-extract-compat" "p11-kit" "p11-kit-trust"}}
+  {{pkmv "usr/share" "p11-kit" "p11-kit-doc"}}
