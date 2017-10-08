@@ -1,0 +1,20 @@
+packages:
+  gdbm:
+  gdbm-dev:
+    dependencies:
+    - gdbm-headers
+    - gdbm
+  gdbm-headers:
+  gdbm-doc:
+version: 1.13
+builddependencies:
+sources:
+- https://ftp.gnu.org/pub/gnu/gdbm/gdbm-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "gdbm" "gz"}}
+  (cd gdbm && ./configure --prefix=/usr --enable-libgdbm-compat)
+  $(MAKE) -C gdbm
+  $(MAKE) -C gdbm DESTDIR=$(shell pwd)/out/gdbm install
+  {{pkmv "usr/include" "gdbm" "gdbm-headers"}}
+  {{pkmv "usr/share" "gdbm" "gdbm-doc"}}
