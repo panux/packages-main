@@ -1,0 +1,35 @@
+packages:
+  nettle:
+    dependencies:
+    - gmp
+    - libnettle
+    - libhogweed
+  nettle-dev:
+    dependencies:
+    - nettle
+    - nettle-headers
+    - gmp-dev
+  nettle-headers:
+  nettle-utils:
+    dependencies:
+    - gmp
+    - nettle
+  libnettle:
+  libhogweed:
+version: 3.3
+builddependencies:
+- gmp-dev
+- m4
+sources:
+- https://ftp.gnu.org/gnu/nettle/nettle-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "nettle" "gz"}}
+  (cd nettle && ./configure --prefix=/usr--enable-shared)
+  $(MAKE) -C nettle
+  $(MAKE) -C nettle DESTDIR=$(shell pwd)/out/nettle install
+  {{pkmv "usr/include" "nettle" "nettle-headers"}}
+  {{pkmv "usr/bin" "nettle" "nettle-utils"}}
+  {{pkmv "usr/lib/libnettle*" "nettle" "libnettle"}}
+  {{pkmv "usr/lib/libhogweed*" "nettle" "libhogweed"}}
+  rm -r out/nettle/usr
