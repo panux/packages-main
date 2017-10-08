@@ -1,0 +1,20 @@
+packages:
+  libunistring:
+  libunistring-dev:
+    dependencies:
+    - libunistring
+    - libunistring-headers
+  libunistring-doc:
+  libunistring-headers:
+version: 0.9.7
+builddependencies:
+sources:
+- https://ftp.gnu.org/gnu/libunistring/libunistring-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libunistring" "xz"}}
+  (cd libunistring && ./configure --prefix=/usr)
+  $(MAKE) -C libunistring
+  $(MAKE) -C libunistring DESTDIR=$(shell pwd)/out/libunistring install
+  {{pkmv "usr/include" "libunistring" "libunistring-headers"}}
+  {{pkmv "usr/share" "libunistring" "libunistring-doc"}}
