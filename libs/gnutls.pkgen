@@ -1,0 +1,46 @@
+packages:
+  gnutls:
+    dependencies:
+    - libgnutls
+    - gmp
+    - libtasn1
+    - libunistring
+    - nettle
+    - p11-kit
+    - zlib
+  gnutls-dev:
+    dependencies:
+    - gnutls-headers
+    - libgcc
+    - libstdc++
+    - libtasn1-dev
+    - nettle-dev
+    - p11-kit-dev
+    - zlib-dev
+  gnutls-utils:
+    dependencies:
+    - gnutls
+    - libtasn1
+  gnutls-doc:
+  gnutls-headers:
+  libgnutls:
+version: 3.5.15
+builddependencies:
+- nettle-dev
+- zlib-dev
+- libtasn1-dev
+- p11-kit-dev
+- libunistring-dev
+- texinfo
+sources:
+- https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gnutls" "xz"}}
+  (cd gnutls && ./configure --prefix=/usr --mandir=/usr/share/man)
+  $(MAKE) -C gnutls
+  $(MAKE) -C gnutls DESTDIR=$(shell pwd)/out/gnutls install
+  {{pkmv "usr/include" "gnutls" "gnutls-headers"}}
+  {{pkmv "usr/bin" "gnutls" "gnutls-utils"}}
+  {{pkmv "usr/share" "gnutls" "gnutls-doc"}}
+  {{pkmv "usr/lib" "gnutls" "libgnutls"}}
