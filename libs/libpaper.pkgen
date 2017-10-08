@@ -1,0 +1,26 @@
+packages:
+  libpaper:
+  libpaper-dev:
+    dependencies:
+    - libpaper
+    - libpaper-headers
+  libpaper-doc:
+  libpaper-headers:
+version: 1.1.24
+builddependencies:
+- automake
+- autoconf
+- libtool
+sources:
+- https://mirror.sucs.swan.ac.uk/pub/linux/debian/pool/main/libp/libpaper/libpaper_{{.Version}}+nmu5.tar.gz
+script:
+- |
+  tar xf src/libpaper_{{.Version}}+nmu5.tar.gz
+  mv libpaper-{{.Version}}+nmu5 libpaper
+  mv libpaper/debian/* libpaper
+  (cd libpaper && ./autogen.sh)
+  (cd libpaper && ./configure --prefix=/usr)
+  $(MAKE) -C libpaper
+  $(MAKE) -C libpaper DESTDIR=$(shell pwd)/out/libpaper install
+  {{pkmv "usr/include" "libpaper" "libpaper-headers"}}
+  {{pkmv "usr/share" "libpaper" "libpaper-doc"}}
