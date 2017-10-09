@@ -27,6 +27,8 @@ script:
 - mkdir out/eudev/usr/bin
 - mv out/eudev/sbin/udevd out/eudev/bin/udevadm out/eudev/usr/bin
 - rm -r out/eudev/sbin out/eudev/bin
+- echo '#!/bin/sh' > out/eudev/.oninstall
+- echo 'for g in tty dialout kmem input video audio lp disk cdrom tape; do addgroup -S $$g; done' >> out/eudev/.oninstall
 - mkdir -p out/eudev-dev/usr/lib
 - mv out/eudev/usr/include out/eudev-dev/usr
 - mv out/eudev/usr/lib/pkgconfig out/eudev/usr/lib/libudev.a out/eudev-dev/usr/lib
