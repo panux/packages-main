@@ -10,7 +10,7 @@ packages:
     - libpaper
     - libressl
     - libstdcpp
-    - poppler-utils
+    - libpoppler-utils
   cups-dev:
     dependencies:
     - cups
@@ -43,7 +43,7 @@ packages:
     - cups-client
     - dbus
     - libressl
-    - poppler-utils
+    - libpoppler-utils
   ipptool:
     dependencies:
     - cups-libs
