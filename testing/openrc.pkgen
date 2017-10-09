@@ -20,8 +20,8 @@ sources:
 script:
 - tar -xf src/openrc-{{.Version}}.tar.gz
 - mv openrc-{{.Version}} openrc
-- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no LIBEXECDIR=/usr/libexec/openrc
-- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no LIBEXECDIR=/usr/libexec/openrc DESTDIR=$(shell pwd)/out/openrc install
+- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no CONFIG_BB_SYSCTL=true LIBEXECDIR=/usr/libexec/openrc
+- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no CONFIG_BB_SYSCTL=true LIBEXECDIR=/usr/libexec/openrc DESTDIR=$(shell pwd)/out/openrc install
 - mv out/openrc/lib out/openrc/usr/lib
 - mv out/openrc/sbin out/openrc/usr/bin
 - mv out/openrc/bin/* out/openrc/usr/bin
