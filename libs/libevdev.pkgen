@@ -1,0 +1,26 @@
+packages:
+  libevdev:
+    dependencies:
+  libevdev-dev:
+    dependencies:
+    - libevdev
+    - libevdev-headers
+  libevdev-doc:
+    dependencies:
+    - libevdev-man
+  libevdev-man:
+  libevdev-headers:
+version: 1.5.7
+builddependencies:
+- python2
+- linux-headers
+sources:
+- https://freedesktop.org/software/libevdev/libevdev-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libevdev" "xz"}}
+  (cd libevdev && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libevdev
+  $(MAKE) -C libevdev DESTDIR=$(shell pwd)/out/libevdev install
+  {{pkmv "usr/include" "libevdev" "libevdev-headers"}}
+  {{pkmv "usr/share" "libevdev" "libevdev-man"}}
