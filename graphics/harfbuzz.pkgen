@@ -15,7 +15,7 @@ packages:
     - harfbuzz
     - libharfbuzz-icu
     - harfbuzz-headers
-    - icu-dev
+    - icu-headers
   libharfbuzz-icu:
     dependencies:
     - harfbuzz
