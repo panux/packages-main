@@ -1,0 +1,45 @@
+packages:
+  harfbuzz:
+    dependencies:
+    - libharfbuzz
+    - freetype
+    - glib
+    - libgraphite2
+  harfbuzz-dev:
+    dependencies:
+    - cairo
+    - freetype
+    - glib
+    - glib-dev
+    - libgraphite2-dev
+    - harfbuzz
+    - libharfbuzz-icu
+    - harfbuzz-headers
+    - icu-dev
+  libharfbuzz-icu:
+    dependencies:
+    - harfbuzz
+    - icu-libs
+  libharfbuzz:
+    dependencies:
+    - harfbuzz
+  harfbuzz-headers:
+version: 1.4.8
+builddependencies:
+- freetype-dev
+- glib-dev
+- cairo-dev
+- icu-dev
+- graphite2-dev
+- g++
+sources:
+- https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "harfbuzz" "bz2"}}
+  (cd harfbuzz && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-static --with-graphite2)
+  $(MAKE) -C harfbuzz
+  $(MAKE) -C harfbuzz DESTDIR=$(shell pwd)/out/harfbuzz install
+  {{pkmv "usr/include" "harfbuzz" "harfbuzz-headers"}}
+  {{pkmv "usr/lib/libharfbuzz-icu*" "harfbuzz" "libharfbuzz-icu"}}
+  {{pkmv "usr/lib/libharfbuzz.*" "harfbuzz" "libharfbuzz"}}
