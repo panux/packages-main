@@ -1,0 +1,12 @@
+packages:
+  sinit:
+    dependencies:
+    - busybox
+sources:
+- git://github.com/panux/sinit
+version: 0.01-alpha
+script:
+- mv src/sinit sinit
+- $(MAKE) -C sinit install DESTDIR=$(shell pwd)/out/sinit
+- echo '#!/bin/sh' > out/sinit/.oninstall
+- echo 'for i in devtmpfs proc sysfs tmpfs earlymount; do sinit enable $i; done' >> out/sinit/.oninstall
