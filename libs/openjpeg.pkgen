@@ -1,0 +1,31 @@
+packages:
+  openjpeg:
+  openjpeg-dev:
+    dependencies:
+    - openjpeg
+    - openjpeg-headers
+  openjpeg-tools:
+    dependencies:
+    - lcms2
+    - libpng
+    - openjpeg
+    - tiff
+  openjpeg-headers:
+version: 2.2.0
+builddependencies:
+- libpng-dev
+- tiff-dev
+- lcms2-dev
+- doxygen
+- cmake
+- g++
+sources:
+- git://github.com/uclouvain/openjpeg?target={{.Version}}
+script:
+- |
+  mv src/openjpeg openjpeg
+  (cd openjpeg && cmake . -DCMAKE_INSTALL_PREFIX=/usr)
+  $(MAKE) -C openjpeg
+  $(MAKE) -C openjpeg DESTDIR=$(shell pwd)/out/openjpeg install
+  {{pkmv "usr/include" "openjpeg" "openjpeg-headers"}}
+  {{pkmv "usr/bin" "openjpeg" "openjpeg-tools"}}
