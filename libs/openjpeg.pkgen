@@ -9,7 +9,7 @@ packages:
     - lcms2
     - libpng
     - openjpeg
-    - tiff
+    - libtiff
   openjpeg-headers:
 version: 2.2.0
 builddependencies:
