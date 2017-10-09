@@ -1,0 +1,76 @@
+packages:
+  avahi:
+    dependencies:
+    - avahi-libs
+    - libdbus
+    - expat
+    - libcap
+    - libdaemon
+  avahi-libs:
+    dependencies:
+    - libdbus
+    - libintl
+  avahi-dev:
+    dependencies:
+    - avahi-headers
+    - avahi
+    - libdns_sd
+    - libhowl
+    - avahi-glib
+    - avahi-libs
+    - gdbm-dev
+    - glib-dev
+  avahi-lang:
+  avahi-doc:
+  avahi-tools:
+    dependencies:
+    - avahi-libs
+    - gdbm
+    - libintl
+  avahi-glib:
+    dependencies:
+    - avahi-libs
+    - glib
+  libhowl:
+    dependencies:
+    - avahi-libs
+  libdns_sd:
+    dependencies:
+    - avahi-libs
+  avahi-headers:
+version: 0.7
+builddependencies:
+- gdbm-dev
+- py-dbus-dev
+- intltool
+- gobject-introspection-dev
+- expat-dev
+- libdaemon-dev
+- glib-dev
+- dbus-dev
+- libcap-dev
+- py-gdbm
+- gettext-dev
+- autoconf
+- automake
+- libtool
+- g++
+sources:
+- https://avahi.org/download/avahi-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "avahi" "gz"}}
+  (cd avahi && autoreconf -vif)
+  (cd avahi && ./configure --prefix=/usr --sysconfdir=/etc --disable-autoipd --localstatedir=/var --disable-python --with-distro=none --disable-qt3 --disable-qt4 --disable-gtk --disable-gtk3 --disable-mono --disable-monodoc --disable-doxygen-doc --disable-pygtk --disable-xmltoman --enable-compat-libdns_sd --enable-compat-howl)
+  $(MAKE) -C avahi
+  $(MAKE) -C avahi DESTDIR=$(shell pwd)/out/avahi install
+  {{pkmv "usr/lib/libavahi-client*" "avahi" "avahi-libs"}}
+  {{pkmv "usr/lib/libavahi-common*" "avahi" "avahi-libs"}}
+  {{pkmv "usr/share/locale" "avahi" "avahi-lang"}}
+  {{pkmv "usr/lib/libavahi-g*" "avahi" "avahi-glib"}}
+  {{pkmv "usr/share/man" "avahi" "avahi-doc"}}
+  {{pkmv "usr/include" "avahi" "avahi-headers"}}
+  {{pkmv "usr/lib/libdns_sd*" "avahi" "libdns_sd"}}
+  {{pkmv "usr/lib/libhowl*" "avahi" "libhowl"}}
+  {{pkmv "usr/bin" "avahi" "avahi-tools"}}
+  rm -r out/avahi/run
