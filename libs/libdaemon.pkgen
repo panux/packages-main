@@ -1,0 +1,26 @@
+packages:
+  libdaemon:
+  libdaemon-dev:
+    dependencies:
+    - libdaemon
+    - libdaemon-headers
+  libdaemon-doc:
+  libdaemon-headers:
+version: 0.14
+builddependencies:
+- automake
+- autoconf
+- libtool
+- musl-dev
+sources:
+- git://git.0pointer.de/libdaemon
+script:
+- |
+  mv src/libdaemon libdaemon
+  cp /usr/include/unistd.h /usr/include/sys/unistd.h
+  (cd libdaemon && ./bootstrap.sh)
+  (cd libdaemon && ./configure --prefix=/usr)
+  $(MAKE) -C libdaemon
+  $(MAKE) -C libdaemon DESTDIR=$(shell pwd)/out/libdaemon install
+  {{pkmv "usr/include" "libdaemon" "libdaemon-headers"}}
+  {{pkmv "usr/share" "libdaemon" "libdaemon-doc"}}
