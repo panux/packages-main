@@ -10,3 +10,4 @@ script:
 - $(MAKE) -C sinit install DESTDIR=$(shell pwd)/out/sinit
 - echo '#!/bin/sh' > out/sinit/.oninstall
 - echo 'for i in devtmpfs proc sysfs tmpfs earlymount; do sinit enable $i; done' >> out/sinit/.oninstall
+- chmod 700 out/sinit/.oninstall
