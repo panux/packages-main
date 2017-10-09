@@ -1,0 +1,23 @@
+packages:
+  libcap:
+  libcap-dev:
+    dependencies:
+    - libcap
+    - libcap-headers
+    - linux-headers
+  libcap-doc:
+  libcap-headers:
+version: 2.25
+builddependencies:
+- linux-headers
+- perl
+- attr-dev
+sources:
+- https://kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libcap" "xz"}}
+  $(MAKE) -C libcap BUILD_CC=gcc CC=gcc lib=lib prefix=/usr DESTDIR=$(shell pwd)/out/libcap
+  $(MAKE) -C libcap lib=/lib prefix=/usr RAISE_SETFCAP=no DESTDIR=$(shell pwd)/out/libcap install
+  {{pkmv "usr/include" "libcap" "libcap-headers"}}
+  {{pkmv "usr/share" "libcap" "libcap-doc"}}
