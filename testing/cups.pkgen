@@ -1,0 +1,80 @@
+packages:
+  cups:
+    dependencies:
+    - avahi-libs
+    - cups-client
+    - cups-libs
+    - dbus
+    - libdbus
+    - libgcc
+    - libpaper
+    - libressl
+    - libstdcpp
+    - poppler-utils
+  cups-dev:
+    dependencies:
+    - cups
+    - cups-headers
+    - cups-client
+    - cups-libs
+    - gnutls-dev
+    - libgcrypt-dev
+    - zlib-dev
+  cups-client:
+    dependencies:
+    - avahi-libs
+    - cups-libs
+    - libgcc
+    - libstdcpp
+  cups-libs:
+    dependencies:
+    - avahi-libs
+    - gnutls
+    - libgcc
+    - libstdcpp
+    - zlib
+  cups-doc:
+    dependencies:
+    - cups-man
+  cups-man:
+  cups-headers:
+  cups-lang:
+    dependencies:
+    - cups-client
+    - dbus
+    - libressl
+    - poppler-utils
+  ipptool:
+    dependencies:
+    - cups-libs
+version: 2.2.4
+builddependencies:
+- libgcrypt-dev
+- gnutls-dev
+- zlib-dev
+- libpaper-dev
+- dbus-dev
+- libjpeg-turbo-dev
+- avahi-dev
+- linux-headers
+- cups-client
+- poppler-utils
+- libressl
+- dbus
+- g++
+sources:
+- git://github.com/apple/cups?target={{.Version}}
+script:
+- |
+  mv src/cups cups
+  (cd cups && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-libpaper --enable-ssl=yes --enable-gnutl)
+  $(MAKE) -C cups
+  $(MAKE) -C cups BUILDROOT=$(shell pwd)/out/cups install
+  {{pkmv "usr/share/cups/ipptool" "cups" "ipptool"}}
+  {{pkmv "usr/bin/ipptool" "cups" "ipptool"}}
+  {{pkmv "usr/share/locale" "cups" "cups-lang"}}
+  {{pkmv "usr/share/man" "cups" "cups-man"}}
+  {{pkmv "usr/include" "cups" "cups-headers"}}
+  {{pkmv "usr/bin" "cups" "cups-client"}}
+  {{pkmv "usr/sbin" "cups" "cups-client"}}
+  {{pkmv "usr/lib" "cups" "cups-libs"}}
