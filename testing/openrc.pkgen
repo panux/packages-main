@@ -1,10 +1,17 @@
 packages:
   openrc:
     dependencies:
+    - ncurses
+  openrc-headers:
+    depencendies:
+    - ncurses-headers
+    - libc-headers
+    - linux-headers
+  openrc-man:
+  openrc-doc:
 version: 0.28
 builddependencies:
 - gcc
-- g++
 - libc-dev
 - ncurses-dev
 - linux-headers
@@ -13,5 +20,15 @@ sources:
 script:
 - tar -xf src/openrc-{{.Version}}.tar.gz
 - mv openrc-{{.Version}} openrc
-- $(MAKE) -C openrc
-- $(MAKE) -C openrc DESTDIR=$(shell pwd)/out/openrc install
+- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no LIBEXECDIR=/usr/libexec/openrc
+- $(MAKE) -C openrc MKSTATICLIBS=no MKPKGCONFIG=no LIBEXECDIR=/usr/libexec/openrc DESTDIR=$(shell pwd)/out/openrc install
+- mv out/openrc/lib out/openrc/usr/lib
+- mv out/openrc/sbin out/openrc/usr/bin
+- mv out/openrc/bin/* out/openrc/usr/bin
+- rm -r out/openrc/bin
+- mkdir -p out/openrc-man/usr/share
+- mv out/openrc/usr/share/man out/openrc-man/usr/share/man
+- mkdir out/openrc-doc/usr
+- mv out/openrc/usr/share out/openrc-doc/usr/share
+- mkdir out/openrc-headers/usr
+- mv out/openrc/usr/include out/openrc-headers/usr/include
