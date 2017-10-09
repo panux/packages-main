@@ -1,0 +1,11 @@
+packages:
+  hicolor-icon-theme:
+version: 0.17
+sources:
+- https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "hicolor-icon-theme" "xz"}}
+  (cd hicolor-icon-theme && ./configure --prefix=/usr)
+  $(MAKE) -C hicolor-icon-theme
+  $(MAKE) -C hicolor-icon-theme DESTDIR=$(shell pwd)/out/hicolor-icon-theme install
