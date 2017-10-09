@@ -1,7 +1,6 @@
 packages:
   eudev:
     dependencies:
-    - eudev-libs
     - libblkid
     - udev-init-scripts
     - kmod
@@ -9,7 +8,6 @@ packages:
     dependencies:
     - eudev
   eudev-doc:
-  eudev-libs:
 version: 3.2.2
 builddependencies:
 - gperf
@@ -23,16 +21,14 @@ sources:
 script:
 - tar -xf src/eudev-{{.Version}}.tar.gz
 - mv eudev-{{.Version}} eudev
-- (cd eudev && ./configure --build={{.Arch}}-pc-linux-gnu --sysconfdir=/etc --with-rootprefix= --with-rootrundir=/run --with-rootlibexecdir=/lib/udev --libdir=/usr/lib --enable-split-usr --enable-manpages --disable-hwdb --disable-kmod --exec-prefix=/)
+- (cd eudev && ./configure --build={{confarch}}-pc-linux-gnu --sysconfdir=/etc --with-rootprefix= --with-rootrundir=/run --with-rootlibexecdir=/usr/libexec/udev --libdir=/usr/lib --enable-split-usr --enable-manpages --disable-hwdb --disable-kmod --exec-prefix=/)
 - $(MAKE) -C eudev
 - $(MAKE) -C eudev DESTDIR=$(shell pwd)/out/eudev install
+- mkdir out/eudev/usr/bin
+- mv out/eudev/sbin/udevd out/eudev/bin/udevadm out/eudev/usr/bin
+- rm -r out/eudev/sbin out/eudev/bin
 - mkdir -p out/eudev-dev/usr/lib
 - mv out/eudev/usr/include out/eudev-dev/usr
-- mv out/eudev/usr/lib/pkgconfig out/eudev/usr/lib/libudev.so out/eudev/usr/lib/libudev.a out/eudev-dev/usr/lib
+- mv out/eudev/usr/lib/pkgconfig out/eudev/usr/lib/libudev.a out/eudev-dev/usr/lib
 - mkdir -p out/eudev-doc/usr
 - mv out/eudev/usr/share out/eudev-doc/usr
-- cp out/eudev/usr/lib/libudev.so.1 out/eudev/lib
-- cp out/eudev/usr/lib/libudev.so.1.6.3 out/eudev/lib
-- mkdir -p out/eudev-libs/lib
-- mv out/eudev/lib/libudev.so.1 out/eudev/lib/libudev.so.1.6.3 out/eudev-libs/lib
-
