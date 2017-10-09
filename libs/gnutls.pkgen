@@ -2,7 +2,7 @@ packages:
   gnutls:
     dependencies:
     - libgnutls
-    - gmp
+    - libgmp
     - libtasn1
     - libunistring
     - nettle
