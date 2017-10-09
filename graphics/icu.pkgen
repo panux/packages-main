@@ -1,7 +1,7 @@
 packages:
   icu:
     dependencies:
-    - lcu-libs
+    - icu-libs
     - libgcc
     - libstdcpp
   icu-libs:
