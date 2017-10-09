@@ -1,0 +1,41 @@
+packages:
+  libtiff:
+    dependencies:
+    - libjpeg-turbo
+    - zlib
+  libtiff-dev:
+    dependencies:
+    - libjpeg-turbo-dev
+    - libtiff
+    - libtiff-headers
+    - zlib-dev
+  libtiff-tools:
+    dependencies:
+    - libtiff
+  libtiffxx:
+    dependencies:
+    - libtiff
+    - libstdcpp
+    - libgcc
+  libtiff-headers:
+  libtiff-doc:
+version: 4.0.8
+builddependencies:
+- zlib-dev
+- libjpeg-turbo-dev
+- libtool
+- autoconf
+- automake
+- g++
+sources:
+- git://github.com/vadz/libtiff?target={{.Version}}
+script:
+- |
+  mv src/libtiff libtiff
+  (cd libtiff && ./configure --prefix=/usr)
+  $(MAKE) -C libtiff
+  $(MAKE) -C libtiff DESTDIR=$(shell pwd)/out/libtiff install
+  {{pkmv "usr/bin" "libtiff" "libtiff-tools"}}
+  {{pkmv "usr/share" "libtiff" "libtiff-doc"}}
+  {{pkmv "usr/include" "libtiff" "libtiff-headers"}}
+  {{pkmv "usr/lib/libtiffxx*" "libtiff" "libtiffxx"}}

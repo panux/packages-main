@@ -2,7 +2,7 @@ packages:
   gnutls:
     dependencies:
     - libgnutls
-    - gmp
+    - libgmp
     - libtasn1
     - libunistring
     - nettle
@@ -12,7 +12,7 @@ packages:
     dependencies:
     - gnutls-headers
     - libgcc
-    - libstdc++
+    - libstdcpp
     - libtasn1-dev
     - nettle-dev
     - p11-kit-dev
