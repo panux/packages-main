@@ -1,18 +1,18 @@
 packages:
   nettle:
     dependencies:
-    - gmp
+    - libgmp
     - libnettle
     - libhogweed
   nettle-dev:
     dependencies:
     - nettle
     - nettle-headers
-    - gmp-dev
+    - libgmp-dev
   nettle-headers:
   nettle-utils:
     dependencies:
-    - gmp
+    - libgmp
     - nettle
   libnettle:
   libhogweed:
