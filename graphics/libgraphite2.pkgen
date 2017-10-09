@@ -1,0 +1,23 @@
+packages:
+  libgraphite2:
+  libgraphite2-dev:
+    dependencies:
+    - libgraphite2
+    - libgraphite2-headers
+    - freetype-dev
+  libgraphite2-headers:
+version: 1.3.10
+builddependencies:
+- python2
+- cmake
+- g++
+sources:
+- git://github.com/silnrsi/graphite?target={{.Version}}
+script:
+- |
+  mv src/graphite libgraphite2
+  mkdir -p libgraphite2/build
+  (cd libgraphite2/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr)
+  $(MAKE) -C libgraphite2/build
+  $(MAKE) -C libgraphite2/build DESTDIR=$(shell pwd)/out/libgraphite2 install
+  {{pkmv "usr/include" "libgraphite2" "libgraphite2-headers"}}
