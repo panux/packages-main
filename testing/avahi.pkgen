@@ -3,7 +3,7 @@ packages:
     dependencies:
     - avahi-libs
     - libdbus
-    - expat
+    - libexpat
     - libcap
     - libdaemon
   avahi-libs:
