@@ -1,0 +1,39 @@
+packages:
+  libxi:
+    dependencies:
+    - libx11
+    - libxext
+  libxi-dev:
+    dependencies:
+    - inputproto
+    - libx11-dev
+    - libxfixes-dev
+    - libxi
+    - libxi-headers
+  libxi-headers:
+  libxi-doc:
+    dependencies:
+    - libxi-man
+  libxi-man:
+version: 1.7.9
+builddependencies:
+- inputproto
+- libx11-dev
+- libxext-dev
+- libxfixes-dev
+- pkgconfig
+- util-macros
+- xextproto
+- xmlto
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXi-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXi" "bz2"}}
+  (cd libXi && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libXi
+  $(MAKE) -C libXi DESTDIR=$(shell pwd)/out/libxi install
+  {{pkmv "usr/include" "libxi" "libxi-headers"}}
+  {{pkmv "usr/share/man" "libxi" "libxi-man"}}
+  {{pkmv "usr/share/doc" "libxi" "libxi-doc"}}
