@@ -1,0 +1,172 @@
+packages:
+  qt5:
+    dependencies:
+    - qt5-base
+  qt5-base:
+    dependencies:
+    - libdbus
+    - glib
+    - icu-libs
+    - libgcc
+    - pcre
+    - libressl
+    - libstdcpp
+    - zlib
+  qt5-dev:
+    dependencies:
+    - dbus-dev
+    - fontconfig-dev
+    - freetype-dev
+    - glib-dev
+    - libgcc
+    - libice-dev
+    - libpng-dev
+    - libressl-dev
+    - libsm-dev
+    - libstdcpp
+    - libx11-dev
+    - libxext-dev
+    - mesa-core
+    - mesa-headers
+    - perl
+    - pkgconf
+    - qt5-base
+    - qt5-mysql
+    - qt5-odbc
+    - qt5-postgresql
+    - qt5-sqlite
+    - qt5-tds
+    - qt5-x11
+    - qt5-headers
+    - sqlite-dev
+    - zlib-dev
+  qt5-headers:
+  qt5-doc:
+  qt5-tds:
+    dependencies:
+    - freetds
+    - libstdcpp
+    - qt5-base
+  qt5-odbc:
+    dependencies:
+    - libstdcpp
+    - qt5-base
+    - unixodbc
+  qt5-mysql:
+    dependencies:
+    - libstdcpp
+    - libmysqlclient
+    - qt5-base
+  qt5-sqlite:
+    dependencies:
+    - libstdcpp
+    - qt5-base
+    - sqlite-libs
+  qt5-postgresql: #probably won't work due to missing dependency (libpq), but if you want the lib, feel free to install
+    dependencies:
+    - libstdcpp
+    - qt5-base
+  qt5-x11:
+    dependencies:
+    - cups-libs
+    - eudev-dev
+    - fontconfig
+    - freetype
+    - glib
+    - harfbuzz
+    - hicolor-icon-theme
+    - libdrm
+    - libgcc
+    - libice
+    - libinput
+    - libjpeg-turbo
+    - libpng
+    - libsm
+    - libstdcpp
+    - libx11
+    - libxcb
+    - libxi
+    - libxkbcommon
+    - libegl
+    - libgbm
+    - libgl
+    - mtdev
+    - qt5-base
+    - xcb-util-image
+    - xcb-util-keysyms
+    - xcb-util-renderutil
+    - xcb-util-wm
+    - zlib
+version: 5.9.1
+builddependencies:
+- mesa-dev
+- libice-dev
+- libsm-dev
+- libx11-dev
+- libxext-dev
+- libressl-dev
+- fontconfig-dev
+- freetype-dev
+- glib-dev
+- libpng-dev
+- zlib-dev
+- sqlite-dev
+- dbus-dev
+- perl
+- bison
+- cups-dev
+- eudev-dev
+- flex
+- freetds-dev
+- gawk
+- gperf
+- gtk+2.0-dev
+- hicolor-icon-theme
+- icu-dev
+- libinput-dev
+- libjpeg-turbo-dev
+- libxkbcommon-dev
+- libxi-dev
+- libxrandr-dev
+- libxrender-dev
+- libxslt-dev
+- libxv-dev
+- mariadb-dev
+- mtdev-dev
+- pcre2-dev
+- postgresql-dev
+- unixodbc-dev
+- xcb-util-dev
+- xcb-util-image-dev
+- xcb-util-keysyms-dev
+- xcb-util-wm-dev
+- xcb-util-renderutil-dev
+- g++
+sources:
+- https://download.qt.io/official_releases/qt/5.9/{{.Version}}/submodules/qtbase-opensource-src-{{.Version}}.tar.xz
+data:
+  sqldrivers:
+    qt5-mysql: libqsqlmysql.so
+    qt5-odbc: libqsqlodbc.so
+    qt5-postgresql: libqsqlpsql.so
+    qt5-sqlite: libqsqlite.so
+    qt5-tds: libqsqltds.so
+script:
+- |
+  tar xf src/qtbase-opensource-src-{{.Version}}.tar.xz
+  mv qtbase-opensource-src-{{.Version}} qt5-base
+  (cd qt5-base && ./configure -docdir /usr/share/doc/qt5 -datadir /usr/share/qt5 -plugindir /usr/lib/qt5/plugins -archdatadir /usr/lib/qt5 -translationdir /usr/share/qt5/translations -confirm-license -opensource -glib -icu	-no-rpath	-no-separate-debug-info	-no-pch	-nomake examples -opengl -openssl-linked -optimized-qmake	-plugin-sql-mysql	-plugin-sql-odbc -plugin-sql-psql	-plugin-sql-sqlite -plugin-sql-tds -prefix /usr	-silent	-system-libjpeg	-system-libpng -system-pcre	-system-sqlite -system-xcb -system-zlib -no-reduce-relocations)
+  $(MAKE) -C qt5-base
+  $(MAKE) -C qt5-base INSTALL_ROOT=$(shell pwd)/out/qt5-base install
+  {{- range $i, $v := .Data.sqldrivers}}
+  mkdir -p out/{{$i}}/usr/lib/qt5/plugins/sqldrivers
+  mv out/qt5-base/usr/lib/qt5/plugins/sqldrivers/{{$v}} out/{{$i}}/usr/lib/qt5/plugins/sqldrivers
+  {{- end}}
+  rm -r out/qt5-base/usr/lib/qt5/plugins/sqldrivers
+  mkdir -p out/qt5-dev/usr out/qt5-dev/usr/lib/qt5
+  {{pkmv "usr/include" "qt5-base" "qt5-headers"}}
+  mkdir -p out/qt5-x11/usr/lib/qt5/plugins
+  mv out/qt5-base/usr/lib/libQt5Egl* out/qt5-base/usr/lib/libQt5Xcb* out/qt5-base/usr/lib/libQt5OpenGL* out/qt5-base/usr/lib/libQt5Gui* out/qt5-base/usr/lib/libQt5Widgets* out/qt5-base/usr/lib/libQt5Print* out/qt5-x11/usr/lib
+  mv out/qt5-base/usr/lib/qt5/plugins/* out/qt5-x11/usr/lib/qt5/plugins
+  mv out/qt5-x11/usr/lib/qt5/plugins/bearer out/qt5-base/usr/lib/qt5/plugins
+  {{pkmv "usr/share" "qt5-base" "qt5-doc"}}
