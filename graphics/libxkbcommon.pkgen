@@ -1,0 +1,27 @@
+packages:
+  libxkbcommon:
+    dependencies:
+    - libxcb
+  libxkbcommon-dev:
+    dependencies:
+    - libxcb-dev
+    - libxkbcommon
+    - libxkbcommon-headers
+  libxkbcommon-headers:
+version: 0.7.1
+builddependencies:
+- bison
+- flex
+- libxcb-dev
+- xproto
+- kbproto
+- util-macros
+sources:
+- https://xkbcommon.org/download/libxkbcommon-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libxkbcommon" "xz"}}
+  (cd libxkbcommon && ./configure --prefix=/usr)
+  $(MAKE) -C libxkbcommon
+  $(MAKE) -C libxkbcommon DESTDIR=$(shell pwd)/out/libxkbcommon install
+  {{pkmv "usr/include" "libxkbcommon" "libxkbcommon-headers"}}
