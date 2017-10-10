@@ -52,7 +52,7 @@ listrawtesting:
 
 $(pkgs) $(tpkgs) $(rpkgs) $(rtpkgs): precheck
 	@echo Building $(basename $(notdir $@)). . .
-	bash buildpkg.sh $(basename $@) $(DEST) $(ARCH) &> $(LOGS)/$(basename $(notdir $@)).log
+	@bash buildpkg.sh $(basename $@) $(DEST) $(ARCH) &> $(LOGS)/$(basename $(notdir $@)).log
 	@echo Done building $(basename $(notdir $@))
 
 kconf:
