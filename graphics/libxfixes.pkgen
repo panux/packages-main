@@ -1,0 +1,33 @@
+packages:
+  libxfixes:
+    dependencies:
+    - libx11
+  libxfixes-dev:
+    dependencies:
+    - libxfixes
+    - libxfixes-headers
+    - fixesproto
+    - libx11-dev
+    - xproto
+  libxfixes-headers:
+  libxfixes-doc:
+    dependencies:
+    - libxfixes-man
+  libxfixes-man:
+version: 5.0.3
+builddependencies:
+- fixesproto
+- libx11-dev
+- util-macros
+- xextproto
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXfixes-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXfixes" "bz2"}}
+  (cd libXfixes && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libXfixes
+  $(MAKE) -C libXfixes DESTDIR=$(shell pwd)/out/libxfixes install
+  {{pkmv "usr/include" "libxfixes" "libxfixes-headers"}}
+  {{pkmv "usr/share" "libxfixes" "libxfixes-man"}}
