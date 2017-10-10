@@ -14,7 +14,7 @@ sources:
 script:
 - |
   {{extract "libXau" "bz2"}}
-  (cd libXau && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+  (cd libXau && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
   $(MAKE) -C libXau
   $(MAKE) -C libXau DESTDIR=$(shell pwd)/out/libxau install
   mkdir -p out/libxau-dev/usr/lib

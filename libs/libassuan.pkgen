@@ -15,7 +15,7 @@ sources:
 script:
   - tar -xvf src/libassuan-{{.Version}}.tar.bz2 -C .
   - mv libassuan-{{.Version}} libassuan
-  - (cd libassuan && ./configure --build={{.Arch}}-pc-linux-gnu)
+  - (cd libassuan && ./configure --build={{confarch}}-pc-linux-gnu)
   - $(MAKE) -C libassuan
   - $(MAKE) -C libassuan DESTDIR=$(shell pwd)/out/libassuan install
   - mv out/libassuan/usr/local/lib out/libassuan/lib

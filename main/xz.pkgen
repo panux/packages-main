@@ -15,7 +15,7 @@ sources:
 script:
 - tar -xf src/xz-{{.Version}}.tar.gz
 - mv xz-{{.Version}} xz
-- (cd xz && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd xz && ./configure --build={{confarch}}-pc-linux-gnu)
 - (cd xz && make)
 - $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
 - mkdir -p out/xz-libs/usr/local

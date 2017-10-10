@@ -23,10 +23,6 @@ builddependencies:
 - g++
 sources:
 - https://ftp.gnu.org/gnu/binutils/binutils-{{.Version}}.tar.bz2
-data:
-  amap:
-    x86: i686
-    x86_64: x86_64
 script:
 - tar -xf src/binutils-{{.Version}}.tar.bz2
 - mv binutils-{{.Version}} binutils
@@ -37,8 +33,8 @@ script:
 - mv out/binutils/usr/include out/binutils/usr/lib out/binutils-dev/usr
 - mkdir -p out/binutils-doc/usr
 - mv out/binutils/usr/share out/binutils-doc/usr
-- mkdir -p out/binutils-gold/usr/{{index .Data.amap .Arch}}-pc-linux-gnu/bin out/binutils-gold/usr/bin
-- mv out/binutils/usr/{{index .Data.amap .Arch}}-*/bin/ld.gold out/binutils-gold/usr/{{index .Data.amap .Arch}}-pc-linux-gnu/bin
+- mkdir -p out/binutils-gold/usr/{{confarch}}-pc-linux-gnu/bin out/binutils-gold/usr/bin
+- mv out/binutils/usr/{{confarch}}-*/bin/ld.gold out/binutils-gold/usr/{{confarch}}-pc-linux-gnu/bin
 - mv out/binutils/usr/bin/ld.gold out/binutils-gold/usr/bin
 - mkdir -p out/binutils-libs/usr/lib
 - mv out/binutils-dev/usr/lib/libbfd-{{.Version}}.so out/binutils-dev/usr/lib/libopcodes-{{.Version}}.so out/binutils-libs/usr/lib

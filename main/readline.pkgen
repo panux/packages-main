@@ -23,7 +23,7 @@ sources:
 script:
 - tar -xf src/readline-{{.Version}}.tar.gz
 - mv readline-{{.Version}} readline
-- (cd readline && ./configure --build={{.Arch}}-pc-linux-gnu --enable-shared --disable-static)
+- (cd readline && ./configure --build={{confarch}}-pc-linux-gnu --enable-shared --disable-static)
 - make -C readline SHLIB_LIBS="-L/tools/lib -lncurses"
 - mkdir -p out/readline/usr/local/lib
 - make -C readline SHLIB_LIBS="-L/tools/lib -lncurses" DESTDIR=$(shell pwd)/out/readline install

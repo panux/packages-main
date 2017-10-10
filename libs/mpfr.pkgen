@@ -19,14 +19,10 @@ builddependencies:
 - m4
 - texinfo
 - gmp-dev
-data:
-  amap:
-    x86_64: x86_64
-    x86: i686
 script:
 - tar -xf src/mpfr-{{.Version}}.tar.xz
 - mv mpfr-{{.Version}} mpfr
-- (cd mpfr && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/mpfr-{{.Version}} --build={{index .Data.amap .Arch}}-unknown-linux-musl)
+- (cd mpfr && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/mpfr-{{.Version}} --build={{confarch}}-unknown-linux-musl)
 - $(MAKE) -C mpfr
 - $(MAKE) -C mpfr html
 - $(MAKE) -C mpfr check

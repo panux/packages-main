@@ -12,7 +12,7 @@ sources:
 script:
 - |
   {{extract "libxshmfence" "bz2"}}
-  (cd libxshmfence && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+  (cd libxshmfence && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
   $(MAKE) -C libxshmfence
   $(MAKE) -C libxshmfence DESTDIR=$(shell pwd)/out/libxshmfence install
   mkdir -p out/libxshmfence-dev/usr/lib

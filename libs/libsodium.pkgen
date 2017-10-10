@@ -1,27 +1,25 @@
 packages:
   libsodium:
-  - musl
+    dependencies:
+    - musl
   libsodium-dev:
-  - musl-dev
+    dependencies:
+    - musl-dev
 version: 1.0.13
 sources:
   - https://download.libsodium.org/libsodium/releases/libsodium-{{.Version}}.tar.gz
 builddependencies:
   - gcc
   - libc-dev
-data:
-  amap:
-    x86_64: x86_64
-    x86: i686
 script:
-  - tar -xvf src/libsodium-{{.Version}}.tar.gz -C .
-  - mv libsodium-{{.Version}} libsodium
-  - (cd libsodium && ./configure CFLAGS="-Os" --build={{index .Data.amap .Arch}}-unknown-linux-gnu --prefix=$(shell pwd)/out/libsodium/usr)
-  - make -C libsodium
-  - make -C libsodium check
-  - make -C libsodium install
-  - mkdir out/libsodium-dev/usr
-  - mv out/libsodium/usr/include out/libsodium-dev/usr/include
-  - rm out/libsodium/usr/lib/libsodium.la
-  - rm out/libsodium/usr/lib/libsodium.a
-  - rm -r out/libsodium/usr/lib/pkgconfig
+- |
+  {{extract "libsodium" "gz"}}
+  (cd libsodium && ./configure CFLAGS="-Os" --build={{confarch}}-unknown-linux-gnu --prefix=$(shell pwd)/out/libsodium/usr)
+  make -C libsodium
+  make -C libsodium check
+  make -C libsodium install
+  mkdir out/libsodium-dev/usr
+  mv out/libsodium/usr/include out/libsodium-dev/usr/include
+  rm out/libsodium/usr/lib/libsodium.la
+  rm out/libsodium/usr/lib/libsodium.a
+  rm -r out/libsodium/usr/lib/pkgconfig

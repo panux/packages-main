@@ -35,7 +35,7 @@ script:
   - tar -xvf src/gnupg-{{.Version}}.tar.bz2 -C src
   - mv src/gnupg-{{.Version}} src/gnupg
   - ls src
-  - (cd src/gnupg && ./configure --build={{.Arch}}-pc-linux-gnu)
+  - (cd src/gnupg && ./configure --build={{confarch}}-pc-linux-gnu)
   - $(MAKE) -C src/gnupg
   - $(MAKE) -C src/gnupg DESTDIR=$(shell pwd)/out/gnupg install
   - mkdir -p out/gnupg-doc/usr/local/share out/gnupg-help/usr/local/share out/gnupg-libexec/usr/local out/gnupg-man/usr/local/share out/gnupg-locale/usr/local/share out/gnupg/usr/bin
