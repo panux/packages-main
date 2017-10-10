@@ -30,6 +30,9 @@ endif
 ifeq ($(ARCH),x86_64)
 	pkgs += kernel/linux
 endif
+ifneq ($(shell readlink /bin/sh),bash)
+$(error Default shell is not bash)
+endif
 
 all: $(dirs)
 
