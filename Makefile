@@ -16,6 +16,7 @@ endif
 ifeq ($(LOGS),)
 	LOGS := $(shell mkdir -p logs && realpath logs)
 endif
+
 ifeq ($(ARCH),)
 	ARCH := $(shell file /bin/ls | cut -d ',' -f2 | xargs)
 	ifeq ($(ARCH),x86-64)
@@ -32,6 +33,10 @@ endif
 
 all: $(dirs)
 
+precheck:
+	test -d $(LOGS)
+	test -d $(DEST)
+
 list:
 	@echo Main: $(pkgs)
 	@echo Testing: $(tpkgs)
@@ -42,9 +47,9 @@ listraw:
 listrawtesting:
 	@echo $(tpkgs)
 
-$(pkgs) $(tpkgs) $(rpkgs) $(rtpkgs):
+$(pkgs) $(tpkgs) $(rpkgs) $(rtpkgs): precheck
 	@echo Building $(basename $(notdir $@)). . .
-	@bash buildpkg.sh $(basename $@) $(DEST) $(ARCH) &> $(LOGS)/$(basename $(notdir $@)).log
+	bash buildpkg.sh $(basename $@) $(DEST) $(ARCH) &> $(LOGS)/$(basename $(notdir $@)).log
 	@echo Done building $(basename $(notdir $@))
 
 kconf:
