@@ -44,11 +44,11 @@ script:
 - cp -r tmpdir grub/bios
 - cp -r tmpdir grub/efi
 - mv tmpdir grub/xen
-- (cd grub/bios && ./configure --build={{.Arch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=pc --disable-efiemu)
+- (cd grub/bios && ./configure --build={{confarch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=pc --disable-efiemu)
 - (cd grub/bios && make)
-- (cd grub/efi && ./configure --build={{.Arch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
+- (cd grub/efi && ./configure --build={{confarch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=efi --disable-efiemu)
 - (cd grub/efi && make)
-- (cd grub/xen && ./configure --build={{.Arch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=xen --target={{.Arch}}-pc-linux-gnu --disable-efiemu)
+- (cd grub/xen && ./configure --build={{confarch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-nls --disable-werror --with-platform=xen --target={{confarch}}-pc-linux-gnu --disable-efiemu)
 - (cd grub/xen && make)
 - $(MAKE) -C grub/bios DESTDIR=$(shell pwd)/out/grub install
 - $(MAKE) -C grub/efi DESTDIR=$(shell pwd)/out/grub install
