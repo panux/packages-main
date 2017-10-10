@@ -13,7 +13,7 @@ sources:
 script:
   - tar -xvf src/libgcrypt-{{.Version}}.tar.bz2 -C .
   - mv libgcrypt-{{.Version}} libgcrypt
-  - (cd libgcrypt && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+  - (cd libgcrypt && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
   - $(MAKE) -C libgcrypt
   - $(MAKE) -C libgcrypt DESTDIR=$(shell pwd)/out/libgcrypt install
   - mkdir -p out/libgcrypt-doc/usr/local/share out/libgcrypt-dev/usr/local/share out/libgcrypt-man/usr/local/share out/libgcrypt-dev/usr/local/libgcrypt

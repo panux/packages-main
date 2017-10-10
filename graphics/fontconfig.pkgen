@@ -19,7 +19,7 @@ sources:
 - https://www.freedesktop.org/software/fontconfig/release/fontconfig-{{.Version}}.tar.gz
 script:
 - |
-  {{extract "fontconfig" "bz2"}}
+  {{extract "fontconfig" "gz"}}
   (cd fontconfig && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
   $(MAKE) -C fontconfig
   $(MAKE) -C fontconfig DESTDIR=$(shell pwd)/out/fontconfig install
