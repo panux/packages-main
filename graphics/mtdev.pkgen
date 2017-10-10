@@ -1,0 +1,20 @@
+packages:
+  mtdev:
+  mtdev-dev:
+    dependencies:
+    - mtdev
+    - mtdev-headers
+    - linux-headers
+  mtdev-headers:
+version: 1.1.5
+builddependencies:
+- linux-headers
+sources:
+- https://launchpad.net/mtdev/trunk/{{.Version}}/+download/mtdev-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "mtdev" "gz"}}
+  (cd mtdev && ./configure --prefix=/usr)
+  $(MAKE) -C mtdev
+  $(MAKE) -C mtdev DESTDIR=$(shell pwd)/out/mtdev install
+  {{pkmv "usr/include" "mtdev" "mtdev-headers"}}
