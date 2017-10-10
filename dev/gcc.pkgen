@@ -91,8 +91,6 @@ script:
   mv out/gcc/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/plugin out/gcc-plugin/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/plugin
   mkdir -p out/gcc-include/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}
   mv out/gcc/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/include out/gcc-include/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}/include
-  mkdir -p out/gcc-libcc1/usr
-  mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
   mkdir -p out/gcc-locales/usr/share
   mv out/gcc/usr/share/locale out/gcc-locales/usr/share/locale
   mkdir -p out/gcc-info/usr/share
@@ -103,6 +101,8 @@ script:
   mkdir -p out/lib{{.}}/usr/lib
   mv out/gcc/usr/{{if eq $arch "x86_64"}}lib64{{else}}lib{{end}}/lib{{.}}.* out/lib{{.}}/usr/lib
   {{- end}}
+  mkdir -p out/gcc-libcc1/usr
+  mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
   {{pkmv "usr/lib" "libstdc++" "libstdcpp"}}
   {{pkmv "usr/lib" "libsupc++" "libsupcpp"}}
   mv out/libgcc_s/* out/libgcc
