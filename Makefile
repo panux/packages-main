@@ -1,4 +1,4 @@
-dirs = main dev extra languages libs graphics
+dirs = main dev extra languages libs graphics server
 
 .PHONY: $(dirs)
 
