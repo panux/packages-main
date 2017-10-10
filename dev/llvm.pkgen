@@ -19,7 +19,7 @@ builddependencies:
 - g++
 - zlib-dev
 sources:
-- https://releases.llvm.org/{{.Version}}/hans-gpg-key.asc
+- https://releases.llvm.org/{{.Version}}/llvm-{{.Version}}.src.tar.xz
 oneshell: true
 data:
   cmake:
@@ -41,15 +41,9 @@ data:
     - DLLVM_INCLUDE_EXAMPLES=NO
 script:
 - |
-  apk update
-  gpg --import src/hans-gpg-key.asc
-  wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz.sig
-  wget http://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
   curl https://git.alpinelinux.org/cgit/aports/plain/main/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?id=HEAD > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
   curl https://reviews.llvm.org/file/data/n35uo3zj7ecmkxghkgnd/PHID-FILE-g62ekzl6tmu4lryqmweq/D34943.id105061.diff > redef.patch
-  gpg --verify llvm-{{.Version}}.src.tar.xz.sig
-  xz -d llvm-{{.Version}}.src.tar.xz
-  tar -xf llvm-{{.Version}}.src.tar
+  tar -xf src/llvm-{{.Version}}.src.tar.xz
   mv llvm-{{.Version}}.src llvm
   (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
   (cd llvm/include && patch -p1 -i ../../redef.patch)
