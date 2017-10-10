@@ -19,7 +19,7 @@ sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
 script:
 - |
-  {{extract "curl" "xz"}}
+  {{extract "curl" "gz"}}
   (cd curl && ./configure --build={{confarch}}-pc-linux-gnu --with-ssl --disable-static)
   $(MAKE) -C curl
   $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
