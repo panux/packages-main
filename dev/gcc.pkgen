@@ -57,9 +57,6 @@ builddependencies:
   - mpc1-dev
   - zlib-dev
 data:
-  amap:
-    x86_64: x86_64
-    x86: i686
   libs:
     - mpx
     - mpxwrappers
@@ -80,7 +77,7 @@ script:
   export CC=gcc
   export CXX=g++
   sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{confarch}}-pc-linux-musl /g' Makefile
-  (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --build={{index .Data.amap .Arch}}-pc-linux-musl)
+  (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --build={{confarch}}-pc-linux-musl)
   $(MAKE) -C /gcc CC=gcc CXX=g++
   $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
   mkdir out/gcc-libexec/usr
