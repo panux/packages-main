@@ -6,7 +6,7 @@ packages:
   popt-headers:
 version: 1.16
 sources:
-- https://fossies.org/linux/misc/popt-{{.Version}}.tar.gz
+- https://transfer.sh/k7f9u/popt-{{.Version}}.tar.gz
 script:
 - tar -xf src/popt-{{.Version}}.tar.gz
 - mv popt-{{.Version}} popt
