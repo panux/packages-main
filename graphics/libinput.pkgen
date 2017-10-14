@@ -23,15 +23,18 @@ builddependencies:
 - cairo-dev
 - gtk+3.0-dev
 - check-dev
-- libunwind-dev
 - g++
+- ninja
 sources:
 - https://freedesktop.org/software/libinput/libinput-{{.Version}}.tar.xz
 script:
 - |
   {{extract "libinput" "xz"}}
-  (cd libinput && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --libexecdir=/usr/lib --disable-documentation --disable-libwacom)
-  $(MAKE) -C libinput
-  $(MAKE) -C libinput DESTDIR=$(shell pwd)/out/libinput install
+  sed -i -e 's/v3\.6/edge/g' /etc/apk/repositories
+  apk add --no-cache meson valgrind
+  mkdir libinput/builddir
+  (cd libinput && meson --prefix=/usr -Ddocumentation=false -Dlibwacom=false builddir/)
+  ninja -C libinput/builddir
+  env DESTDIR=$(shell pwd)/out/libinput ninja -C libinput/builddir install
   {{pkmv "usr/include" "libinput" "libinput-headers"}}
   {{pkmv "usr/share/man" "libinput" "libinput-man"}}
