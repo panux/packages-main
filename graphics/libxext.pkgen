@@ -19,7 +19,7 @@ sources:
 script:
 - |
   {{extract "libXext" "bz2"}}
-  (cd libxext && ./configure --prefix=/usr --sysconfdir=/etc)
+  (cd libXext && ./configure --prefix=/usr --sysconfdir=/etc)
   $(MAKE) -C libXext
   $(MAKE) -C libXext DESTDIR=$(shell pwd)/out/libxext install
   mkdir -p out/libxext-dev/usr/lib
