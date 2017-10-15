@@ -1,5 +1,27 @@
 packages:
   openbox:
+    dependencies:
+    - glib
+    - libxml2
+    - libintl
+  openbox-locale:
+  openbox-themes:
+  openbox-doc:
+    dependencies:
+    - openbox-man
+  openbox-gnome:
+    dependencies:
+    - openbox
+  openbox-kde:
+    dependencies:
+    - openbox
+  openbox-man:
+  openbox-pkgconfig:
+  openbox-headers:
+  openbox-dev:
+    dependencies:
+    - openbox-pkgconfig
+    - openbox-headers
 version: 3.6.1
 builddependencies:
 - pango-dev
