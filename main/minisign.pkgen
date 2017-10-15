@@ -8,19 +8,24 @@ packages:
 version: 0.7
 sources:
 - https://codeload.github.com/jedisct1/minisign/tar.gz/{{.Version}}
+- https://repo.projectpanux.com/beta/{{.Arch}}/pkgs/libsodium-dev.tar.gz
+- https://repo.projectpanux.com/beta/{{.Arch}}/pkgs/libsodium.tar.gz
 builddependencies:
 - gcc
 - libc-dev
 - cmake
 oneshell: true
 script:
+- tar -xvf src/libsodium.tar.gz -C /
+- tar -xvf src/libsodium-dev.tar.gz -C /
 - echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
 - apk --no-cache add libsodium-dev@edge
 - mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
 - tar -xvf src/minisign-{{.Version}}.tar.gz -C .
 - mv minisign-{{.Version}} minisign
 - mkdir minisign/build
-- (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18 -DCMAKE_SYSTEM_NAME=Generic)
+- ls /usr/lib/libsodium.so*
+- (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18.3.0 -DCMAKE_SYSTEM_NAME=Generic)
 - $(MAKE) -C minisign/build
 - $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
 - mkdir -p out/minisign-man/usr/local
