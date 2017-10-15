@@ -1,0 +1,23 @@
+packages:
+  openbox:
+version: 3.6.1
+builddependencies:
+- pango-dev
+- libxml2-dev
+- imlib2-dev
+- librsvg-dev
+- gettext-dev
+- libtool
+- gcc
+- m4
+- automake
+- autoconf
+sources:
+- https://github.com/Mikachu/openbox/archive/release-{{.Version}}.tar.gz
+script:
+- |
+  tar -xf src/release-{{.Version}}.tar.gz
+  mv openbox-release-{{.Version}} openbox
+  (cd openbox && ./bootstrap && ./configure --prefix=/usr --sysconfdir=/etc --disable-static --docdir=/usr/share/doc/openbox-{{.Version}})
+  $(MAKE) -C openbox
+  make -j1 -C openbox install DESTDIR=$(shell pwd)/out/openbox
