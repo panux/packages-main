@@ -2,6 +2,7 @@ packages:
   basefs:
 version: v0.1
 oneshell: true
+builder: panux
 script:
 - cd out/basefs
 - mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
