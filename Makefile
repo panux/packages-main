@@ -1,22 +1,3 @@
-dirs = main dev extra languages libs graphics server
-
-.PHONY: $(dirs)
-
-rpkgs = $(foreach dir,$(dirs),$(shell ls $(dir)/*.pkgen))
-rtpkgs = $(shell ls testing/*.pkgen)
-
-.PHONY: $(rpkgs) $(rtpkgs)
-
-pkgs = $(basename $(rpkgs))
-tpkgs = $(basename $(rtpkgs))
-
-ifeq ($(DEST),)
-	DEST := $(shell mkdir -p out && realpath out)
-endif
-ifeq ($(LOGS),)
-	LOGS := $(shell mkdir -p logs && realpath logs)
-endif
-
 ifeq ($(ARCH),)
 	ARCH := $(shell file /bin/ls | cut -d ',' -f2 | xargs)
 	ifeq ($(ARCH),x86-64)
@@ -26,40 +7,15 @@ ifeq ($(ARCH),)
 		ARCH=x86
 	endif
 endif
+export ARCH
 
-ifeq ($(ARCH),x86_64)
-	pkgs += kernel/linux
-endif
-ifneq ($(shell readlink /bin/sh),bash)
-$(error Default shell is not bash)
-endif
+all:
+	echo "Not allowed"
+	return 1
 
-all: $(dirs)
-
-precheck:
-	test -d $(LOGS)
-	test -d $(DEST)
-
-list:
-	@echo Main: $(pkgs)
-	@echo Testing: $(tpkgs)
-
-listraw:
-	@echo $(pkgs)
-
-listrawtesting:
-	@echo $(tpkgs)
-
-$(pkgs) $(tpkgs) $(rpkgs) $(rtpkgs): precheck
-	@echo Building $(basename $(notdir $@)). . .
-	@bash buildpkg.sh $(basename $@) $(DEST) $(ARCH) &> $(LOGS)/$(basename $(notdir $@)).log
-	@echo Done building $(basename $(notdir $@))
-
-kconf:
-	bash tools/kconf.sh
-
-define make-dir-target
-  $1: $(basename $(shell ls $1/*.pkgen))
+define mkalias
+$(1):
+	$(MAKE) -C build $(1).build
 endef
 
-$(foreach dir,$(dirs),$(eval $(call make-dir-target,$(dir))))
+$(foreach p,$(shell dirname $(shell realpath $(shell find pkgs -name "pkgen.yaml"))),$(eval $(call mkalias,$(shell basename $(p)))))
