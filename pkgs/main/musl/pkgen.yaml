@@ -16,5 +16,5 @@ script:
     mkdir -p out/musl/usr/lib out/musl/usr/bin
     {{pkmv "usr/local/musl/lib/*.a" "musl" "musl-a"}}
     rm -r out/musl/lib
-    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{if eq .Arch "x86"}}i386{{else}}{{.Arch}}{{end}}.so.1)
+    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-$(if $(filter x86,$(ARCH)),i386,$(ARCH)).so.1)
     (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/bin/ldd)

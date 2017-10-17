@@ -4,7 +4,7 @@ packages:
     - efivar
 version: 14
 sources:
-- git://github.com/rhboot/efibootmgr?target={{.Version}}
+- git://github.com/rhboot/efibootmgr?checkout={{.Version}}
 - https://repo.projectpanux.com/beta/x86_64/pkgs/efivar-include.tar.gz
 - https://repo.projectpanux.com/beta/x86_64/pkgs/efivar.tar.gz
 - https://repo.projectpanux.com/beta/x86_64/pkgs/libefiboot.tar.gz

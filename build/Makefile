@@ -14,6 +14,8 @@ $(1)/pkgs.list:
 	pkgen -i $(1)/pkgen.yaml -t pkglist -o $(1)/pkgs.list
 $(1).build: $(1).files $(1)/Makefile $(1)/pkgs.list
 	$(MAKE) -C $(1) build
+$(1).prep: $(1).files $(1)/Makefile $(1)/pkgs.list
+	$(MAKE) -C $(1) prep
 pkgs += $(1)
 endef
 

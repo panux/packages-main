@@ -12,7 +12,7 @@ builddependencies:
 - cmake
 - g++
 sources:
-- git://github.com/silnrsi/graphite?target={{.Version}}
+- git://github.com/silnrsi/graphite?checkout={{.Version}}
 script:
 - |
   mv src/graphite libgraphite2

@@ -63,7 +63,7 @@ builddependencies:
 - dbus
 - g++
 sources:
-- git://github.com/apple/cups?target={{.Version}}
+- git://github.com/apple/cups?checkout={{.Version}}
 script:
 - |
   mv src/cups cups

@@ -28,7 +28,7 @@ builddependencies:
 - automake
 - g++
 sources:
-- git://github.com/vadz/libtiff?target={{.Version}}
+- git://github.com/vadz/libtiff?checkout={{.Version}}
 script:
 - |
   mv src/libtiff libtiff

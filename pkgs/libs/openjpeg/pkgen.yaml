@@ -11,7 +11,7 @@ packages:
     - openjpeg
     - libtiff
   openjpeg-headers:
-version: 2.2.0
+version: v2.2.0
 builddependencies:
 - libpng-dev
 - tiff-dev
@@ -20,7 +20,7 @@ builddependencies:
 - cmake
 - g++
 sources:
-- git://github.com/uclouvain/openjpeg?target={{.Version}}
+- git://github.com/uclouvain/openjpeg?checkout={{.Version}}
 script:
 - |
   mv src/openjpeg openjpeg

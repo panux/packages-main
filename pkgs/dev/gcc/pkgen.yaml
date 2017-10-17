@@ -93,10 +93,10 @@ script:
   mkdir -p out/gcc-info/usr/share
   mv out/gcc/usr/share/info out/gcc-info/usr/share/info
   {{mvman "gcc"}}
-  rm -f out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.a out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.la out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}}/*.spec
-  {{$arch := .Arch}}{{- range .Data.libs}}
+  rm -f out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.a out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.la out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.spec
+  {{range .Data.libs}}
   mkdir -p out/lib{{.}}/usr/lib
-  mv out/gcc/usr/{{if eq $arch "x86_64"}}lib64{{else}}lib{{end}}/lib{{.}}.* out/lib{{.}}/usr/lib
+  mv out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/lib{{.}}.* out/lib{{.}}/usr/lib
   {{- end}}
   mkdir -p out/gcc-libcc1/usr
   mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
@@ -118,4 +118,4 @@ script:
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
   mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
-  rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/{{if eq .Arch "x86_64"}}lib64{{else}}lib{{end}} out/gcc/usr/include
+  rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib) out/gcc/usr/include

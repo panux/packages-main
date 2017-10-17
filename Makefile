@@ -16,6 +16,9 @@ all:
 define mkalias
 $(1):
 	$(MAKE) -C build $(1).build
+$(1).prep:
+	$(MAKE) -C build $(1).prep
+all.prep:: $(1).prep
 endef
 
 $(foreach p,$(shell dirname $(shell realpath $(shell find pkgs -name "pkgen.yaml"))),$(eval $(call mkalias,$(shell basename $(p)))))

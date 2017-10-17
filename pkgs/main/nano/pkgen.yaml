@@ -14,6 +14,6 @@ sources:
 script:
 - tar -xf src/nano-{{.Version}}.tar.xz
 - mv nano-{{.Version}} nano
-- (cd nano && ./configure --build={{.Arch}}-pc-linux-gnu)
+- (cd nano && ./configure --build={{confarch}}-pc-linux-gnu)
 - $(MAKE) -C nano
 - $(MAKE) -C nano DESTDIR=$(shell pwd)/out/nano install
