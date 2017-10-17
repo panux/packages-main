@@ -4,6 +4,9 @@ packages:
     - glib
     - libxml2
     - libintl
+    - openbox-themes
+    - libobt
+    - libobrender
   openbox-locale:
   openbox-themes:
   openbox-doc:
@@ -22,6 +25,8 @@ packages:
     dependencies:
     - openbox-pkgconfig
     - openbox-headers
+  libobt:
+  libobrender:
 version: 3.6.1
 builddependencies:
 - pango-dev
@@ -43,3 +48,18 @@ script:
   (cd openbox && ./bootstrap && ./configure --prefix=/usr --sysconfdir=/etc --disable-static --docdir=/usr/share/doc/openbox-{{.Version}})
   $(MAKE) -C openbox
   make -j1 -C openbox install DESTDIR=$(shell pwd)/out/openbox
+  {{pkmv "usr/include" "openbox" "openbox-headers"}}
+  {{pkmv "usr/bin/openbox-gnome-session" "openbox" "openbox-gnome"}}
+  {{pkmv "usr/bin/gdm-control" "openbox" "openbox-gnome"}}
+  {{pkmv "usr/bin/gnome-panel-control" "openbox" "openbox-gnome"}}
+  {{pkmv "usr/share/xsessions/openbox-gnome.desktop" "openbox" "openbox-gnome"}}
+  {{pkmv "usr/share/gnome*" "openbox" "openbox-gnome"}}
+  {{pkmv "usr/bin/openbox-kde-session" "openbox" "openbox-kde"}}
+  {{pkmv "usr/share/xsessions/openbox-kde.desktop" "openbox" "openbox-kde"}}
+  {{pkmv "usr/share/locale" "openbox" "openbox-locale"}}
+  {{pkmv "usr/lib/pkgconfig" "openbox" "openbox-pkgconfig"}}
+  {{pkmv "usr/share/man" "openbox" "openbox-man"}}
+  {{pkmv "usr/share/doc" "openbox" "openbox-doc"}}
+  {{pkmv "usr/share/themes" "openbox" "openbox-themes"}}
+  {{pkmv "usr/lib/libobt*" "openbox" "libobt"}}
+  {{pkmv "usr/lib/libobrender*" "openbox" "libobrender"}}
