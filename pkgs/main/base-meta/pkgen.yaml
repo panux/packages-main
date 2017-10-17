@@ -6,3 +6,4 @@ packages:
     - lpkg
     - profile
 version: v0.1
+builder: panux
