@@ -18,6 +18,3 @@ pkgs += $(1)
 endef
 
 $(foreach p,$(shell dirname $(shell realpath $(shell find ../pkgs -name "pkgen.yaml"))),$(eval $(call genpktarg,$(shell basename $(p)),$(p))))
-
-dbg:
-	@echo pkgs: $(pkgs)
