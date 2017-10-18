@@ -12,6 +12,6 @@ sources:
 script:
 - |
   {{extract "libdrm" "bz2"}}
-  (cd libdrm && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+  (cd libdrm && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
   $(MAKE) -C libdrm
   $(MAKE) -C libdrm DESTDIR=$(shell pwd)/out/libdrm install

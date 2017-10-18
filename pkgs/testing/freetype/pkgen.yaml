@@ -19,7 +19,7 @@ sources:
 script:
 - tar -xf src/freetype-{{.Version}}.tar.bz2
 - mv freetype-{{.Version}} freetype
-- (cd freetype && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr)
+- (cd freetype && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
 - $(MAKE) -C freetype
 - $(MAKE) -C freetype DESTDIR=$(shell pwd)/out/freetype install
 - mkdir -p out/freetype-doc/usr/share

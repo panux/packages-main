@@ -10,12 +10,12 @@ $(1):
 $(foreach f,$(shell ls $(2)),$(eval $(call genpkftarg,$(1),$(shell basename $(f)),$(2))))
 $(1)/Makefile: $(1)
 	if [ ! -e $(1)/Makefile ]; then (cd $(1) && ln -s ../build.mk Makefile); fi
-$(1)/pkgs.list:
+$(1)/pkgs.list: $(1)/pkgen.yaml
 	pkgen -i $(1)/pkgen.yaml -t pkglist -o $(1)/pkgs.list
 $(1).build: $(1).files $(1)/Makefile $(1)/pkgs.list
-	$(MAKE) -C $(1) build
+	+$(MAKE) -C $(1) build
 $(1).prep: $(1).files $(1)/Makefile $(1)/pkgs.list
-	$(MAKE) -C $(1) prep
+	+$(MAKE) -C $(1) prep
 pkgs += $(1)
 endef
 

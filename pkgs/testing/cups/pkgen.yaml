@@ -47,7 +47,7 @@ packages:
   ipptool:
     dependencies:
     - cups-libs
-version: 2.2.4
+version: v2.2.4
 builddependencies:
 - libgcrypt-dev
 - gnutls-dev

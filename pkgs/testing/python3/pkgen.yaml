@@ -17,7 +17,7 @@ script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python
 - CXX="/usr/bin/g++"
-- (cd python && ./configure --build={{.Arch}}-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=no)
+- (cd python && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=no)
 - $(MAKE) -C python
 - $(MAKE) -C python DESTDIR=$(shell pwd)/out/python3 install
 - mkdir -p out/python3-doc/usr/share
