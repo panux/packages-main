@@ -19,7 +19,7 @@ packages:
     - libgcc
   libtiff-headers:
   libtiff-doc:
-version: 4.0.8
+version: v4.0.8
 builddependencies:
 - zlib-dev
 - libjpeg-turbo-dev
@@ -28,7 +28,7 @@ builddependencies:
 - automake
 - g++
 sources:
-- git://github.com/vadz/libtiff?checkout={{.Version}}
+- git://github.com/vadz/libtiff?checkout=Release-v4-0-8
 script:
 - |
   mv src/libtiff libtiff
