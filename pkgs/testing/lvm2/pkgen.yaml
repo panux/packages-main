@@ -7,7 +7,7 @@ packages:
   libdevmapper-headers:
 version: 2.02.173
 sources:
-- https://mirrors.kernel.org/sourceware/lvm2/LVM2.{{.Version}}.tgz
+- https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.{{.Version}}.tgz
 - https://git.alpinelinux.org/cgit/aports/plain/main/lvm2/mallinfo.patch
 - https://git.alpinelinux.org/cgit/aports/plain/main/lvm2/fix-stdio-usage.patch
 builddependencies:
