@@ -16,6 +16,9 @@ $(1).build: $(1).files $(1)/Makefile $(1)/pkgs.list
 	+$(MAKE) -C $(1) build
 $(1).prep: $(1).files $(1)/Makefile $(1)/pkgs.list
 	+$(MAKE) -C $(1) prep
+$(1).clean:
+	if [ -d $(1) ]; then rm -r $(1); fi
+clean:: $(1).clean
 pkgs += $(1)
 endef
 

@@ -25,3 +25,6 @@ $(foreach p,$(shell dirname $(shell realpath $(shell find pkgs -name "pkgen.yaml
 
 all.prep:
 	+$(MAKE) -C build $(PREPS)
+
+clean:
+	+$(MAKE) -C build clean

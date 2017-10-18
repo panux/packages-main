@@ -6,6 +6,8 @@ sources:
 builddependencies:
 - linux-headers
 - binutils
+- gcc
+- musl-dev
 script:
 - tar -xf src/busybox-{{.Version}}.tar.bz2
 - mv busybox-{{.Version}} busybox
