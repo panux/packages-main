@@ -1,6 +1,9 @@
 packages:
   wget:
     dependencies:
+    - gnutls
+    - nettle
+    - libressl
 version: 1.19.1
 builddependencies:
 - gcc
