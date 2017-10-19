@@ -10,11 +10,20 @@ endif
 define targ
 $(2): $(1)
 	cp -f $(1) $(2)
-tars:: $(2)
-tlst += $(2)
+$(basename $(basename $(2))).pkginfo: $(2)
+	(tar -xOf $(2) ./.pkginfo; echo SHA256SUM=\"$(shell sha256sum $(2) | cut -d' ' -f1)\") > $(basename $(basename $(2))).pkginfo
+files:: $(2)
+files:: $(basename $(basename $(2))).pkginfo
+tlst += $(2) $(basename $(basename $(2))).pkginfo
+ifeq ($(minisign),1)
+$(basename $(basename $(2))).pkginfo.minisig: $(basename $(basename $(2))).pkginfo
+	echo | minisign -SHm $(basename $(basename $(2))).pkginfo
+files:: $(basename $(basename $(2))).pkginfo.minisig
+tlst += $(basename $(basename $(2))).pkginfo.minisig
+endif
 endef
 
-all: tars delold out
+all: files delold
 
 $(foreach t,$(shell find ../build -name '*.tar.gz'),$(eval $(call targ,$(t),$(odir)/$(shell basename $(t)))))
 
@@ -26,5 +35,7 @@ old += $(1).del
 endif
 endef
 $(foreach f,$(shell ls $(odir)/*.tar.gz),$(eval $(call chkold,$(f))))
+$(foreach f,$(shell ls $(odir)/*.pkginfo),$(eval $(call chkold,$(f))))
+$(foreach f,$(shell ls $(odir)/*.minisig),$(eval $(call chkold,$(f))))
 
 delold: $(old)
