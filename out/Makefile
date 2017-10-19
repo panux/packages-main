@@ -11,7 +11,7 @@ define targ
 $(2): $(1)
 	cp -f $(1) $(2)
 $(basename $(basename $(2))).pkginfo: $(2)
-	(tar -xOf $(2) ./.pkginfo; echo SHA256SUM=\"$(shell sha256sum $(2) | cut -d' ' -f1)\") > $(basename $(basename $(2))).pkginfo
+	(tar -xOf $(2) ./.pkginfo; echo -n SHA256SUM=\"; sha256sum $(2) | cut -d' ' -f1 | head -c -1; echo \") > $(basename $(basename $(2))).pkginfo
 files:: $(2)
 files:: $(basename $(basename $(2))).pkginfo
 tlst += $(2) $(basename $(basename $(2))).pkginfo
