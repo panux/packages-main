@@ -12,14 +12,13 @@ builddependencies:
 - gcc
 - libc-dev
 - cmake
+- wget
 oneshell: true
 script:
 - wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
 - wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium.tar.gz
-- tar -xvf src/libsodium.tar.gz -C /
-- tar -xvf src/libsodium-dev.tar.gz -C /
-- echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
-- apk --no-cache add libsodium-dev@edge
+- tar -xvf libsodium.tar.gz -C /
+- tar -xvf libsodium-dev.tar.gz -C /
 - mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
 - tar -xvf src/minisign-{{.Version}}.tar.gz -C .
 - mv minisign-{{.Version}} minisign
