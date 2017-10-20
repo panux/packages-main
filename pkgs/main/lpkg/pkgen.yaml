@@ -4,9 +4,9 @@ packages:
     - busybox
     - minisign
     - lua
-version: v0.2-alpha
+version: v0.3-alpha
 sources:
 - git://github.com/panux/lpkg
 script:
-- mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg/db
+- mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg.d
 - install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
