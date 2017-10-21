@@ -3,8 +3,17 @@ extra = out
 odir = out
 $(shell if [ ! -d out ]; then mkdir $(odir); fi)
 endif
-ifneq ($(shell if [ -d $(odir) ]; then echo good; exit 1; fi),good)
+ifneq ($(shell if [ -d $(odir) ]; then echo good; else exit 1; fi),good)
 $(error $(odir) does not exist)
+endif
+ifeq ($(ARCH),)
+	ARCH := $(shell file /bin/ls | cut -d ',' -f2 | xargs)
+	ifeq ($(ARCH),x86-64)
+		ARCH=x86_64
+	endif
+	ifeq ($(ARCH),Intel 80386)
+		ARCH=x86
+	endif
 endif
 
 define targ
@@ -22,10 +31,16 @@ files:: $(basename $(basename $(2))).pkginfo.minisig
 tlst += $(basename $(basename $(2))).pkginfo.minisig
 endif
 endef
+define targpkg
+ifeq ($(shell if [ -d ../build/$(1)/out/$(ARCH) ]; then echo good; else exit 1; fi),good)
+$(foreach t,$(wildcard ../build/$(1)/out/$(ARCH)/*.tar.gz),$(eval $(call targ,$(t),$(odir)/$(shell basename $(t)))))
+endif
+endef
+
 
 all: files delold
 
-$(foreach t,$(shell find ../build -name '*.tar.gz'),$(eval $(call targ,$(t),$(odir)/$(shell basename $(t)))))
+$(foreach p,$(shell find ../pkgs -name "pkgen.yaml"),$(eval $(call	targpkg,$(shell basename $(dir $(p))))))
 
 define chkold
 ifeq ($(filter $(1),$(tlst)),)
