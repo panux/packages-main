@@ -13,7 +13,7 @@ all: all.pkgs
 
 define mkalias
 $(1):
-	+$(MAKE) -C build $(1).build
+	+$(MAKE) -C build $(1)/.build
 $(1).prep:
 	+$(MAKE) -C build $(1).prep
 PREPS += $(1).prep
