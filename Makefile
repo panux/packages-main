@@ -30,3 +30,6 @@ all.prep:
 
 clean:
 	+$(MAKE) -C build clean
+
+kernel.conf:
+	sh tools/kconf.sh $(ARCH)

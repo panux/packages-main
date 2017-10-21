@@ -13,7 +13,7 @@ builddependencies:
 - libtool
 - musl-dev
 sources:
-- git://git.0pointer.de/libdaemon
+- git://git.0pointer.de/libdaemon?proto=git
 script:
 - |
   mv src/libdaemon libdaemon
