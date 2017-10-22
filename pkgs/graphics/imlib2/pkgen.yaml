@@ -1,0 +1,45 @@
+packages:
+  imlib2:
+    dependencies:
+    - freetype
+    - libgif
+    - libbz2
+    - libid3tag
+    - libjpeg-turbo
+    - libpng
+    - libx11
+    - libxext
+    - libtiff
+    - zlib
+  imlib2-dev:
+    dependencies:
+    - imlib2
+    - imlib2-headers
+    - freetype-dev
+    - libsm-dev
+    - libxext-dev
+  imlib2-headers:
+version: 1.4.10
+builddependencies:
+- gcc
+- g++
+- freetype-dev
+- libxext-dev
+- libsm-dev
+- tiff-dev
+- giflib-dev
+- bzip2-dev
+- libpng-dev
+- libid3tag-dev
+- libjpeg-turbo-dev
+- zlib-dev
+- util-linux-dev
+sources:
+- https://sourceforge.net/projects/enlightenment/files/imlib2-src/{{.Version}}/imlib2-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "imlib2" "bz2"}}
+  (cd imlib2 && ./configure --prefix=/usr --sysconfdir=/etc/imlib2)
+  $(MAKE) -C imlib2
+  $(MAKE) -C imlib2 DESTDIR=$(shell pwd)/out/imlib2 install
+  {{pkmv "usr/include" "imlib2" "imlib2-headers"}}
