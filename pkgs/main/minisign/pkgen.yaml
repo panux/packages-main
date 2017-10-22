@@ -13,6 +13,7 @@ builddependencies:
 - libc-dev
 - cmake
 - wget
+- libsoduim-dev
 oneshell: true
 script:
 - wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
