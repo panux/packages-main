@@ -11,7 +11,7 @@ packages:
 version: 31
 sources:
 - git://github.com/AdelieLinux/efivar?checkout={{.Version}}
-- file://haxe.h
+- file://./haxe.h
 builddependencies:
 - popt-dev
 - linux-headers
