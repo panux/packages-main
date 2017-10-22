@@ -22,10 +22,12 @@ buildenv-$(ARCH): Dockerfile.$(ARCH)
 	docker build -f Dockerfile.$(ARCH) -t panux/buildenv:$(shell basename $(shell pwd))-$(ARCH) .
 	touch buildenv-$(ARCH)
 
-src:
-	mkdir src
+src/.dir:
+	mkdir -p src
+	touch src/.dir
 
-src/Makefile: src pkgen.yaml $(PKGEN)
+src/Makefile: src/.dir pkgen.yaml $(PKGEN)
+	if [ -e src/Makefile ]; then rm -f src/Makefile; fi
 	pkgen -i pkgen.yaml -t srcmk -o src/Makefile
 
 srcbuild: src/Makefile
