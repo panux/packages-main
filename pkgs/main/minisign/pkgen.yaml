@@ -13,20 +13,19 @@ builddependencies:
 - libc-dev
 - cmake
 - wget
-- libsodium-dev
-oneshell: true
 script:
-- wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
-- wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium.tar.gz
-- tar -xvf libsodium.tar.gz -C /
-- tar -xvf libsodium-dev.tar.gz -C /
-- mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
-- tar -xvf src/minisign-{{.Version}}.tar.gz -C .
-- mv minisign-{{.Version}} minisign
-- mkdir minisign/build
-- ls /usr/lib/libsodium.so*
-- (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18.3.0 -DCMAKE_SYSTEM_NAME=Generic)
-- $(MAKE) -C minisign/build
-- $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
-- mkdir -p out/minisign-man/usr/local
-- mv out/minisign/usr/share out/minisign-man/usr/local/share
+- |
+  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
+  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium.tar.gz
+  tar -xvf libsodium.tar.gz -C /
+  tar -xvf libsodium-dev.tar.gz -C /
+  mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
+  {{extract "minisign" "gz"}}
+  mkdir minisign/build
+  ls /usr/lib/libsodium.so*
+  (cd minisign/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB_SODIUM=/usr/lib/libsodium.so.18.3.0 -DCMAKE_SYSTEM_NAME=Generic)
+  $(MAKE) -C minisign/build
+  $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
+  mkdir -p out/minisign-man/usr/local
+  mv out/minisign/usr/share out/minisign-man/usr/local/share
+
