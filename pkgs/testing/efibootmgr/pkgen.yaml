@@ -5,10 +5,6 @@ packages:
 version: 14
 sources:
 - git://github.com/rhboot/efibootmgr?checkout={{.Version}}
-- https://repo.projectpanux.com/beta/x86_64/pkgs/efivar-include.tar.gz
-- https://repo.projectpanux.com/beta/x86_64/pkgs/efivar.tar.gz
-- https://repo.projectpanux.com/beta/x86_64/pkgs/libefiboot.tar.gz
-- https://repo.projectpanux.com/beta/x86_64/pkgs/libefivar.tar.gz
 builddependencies:
 - popt-dev
 - linux-headers
@@ -18,8 +14,17 @@ builddependencies:
 - pkgconfig
 - binutils
 oneshell: true
+data:
+  deps:
+    - efivar-include.tar.gz
+    - efivar.tar.gz
+    - libefiboot.tar.gz
+    - libefivar.tar.gz
 script:
 - |
+  {{- range $i, $v := .Data.deps}}
+  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/{{$v}} -O src/{{$v}}
+  {{- end}}
   for i in src/*.tar.gz; do tar -xf $$i -C /; echo $$i; done
   mv src/efibootmgr efibootmgr
   sed -i -e s/-Werror// Make.defaults
