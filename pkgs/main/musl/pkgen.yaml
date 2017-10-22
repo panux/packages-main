@@ -2,6 +2,11 @@ packages:
   musl:
   musl-a:
   musl-headers:
+  musl-dev:
+    dependencies:
+    - musl-headers
+    - musl-a
+    - musl
 version: v1.1.16
 builddependencies:
   - gcc
