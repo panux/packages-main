@@ -16,6 +16,7 @@ build: tars
 	touch build
 
 Dockerfile.$(ARCH): pkgen.yaml $(PKGEN)
+	if [ -e Dockerfile.$(ARCH) ]; then rm -f Dockerfile.$(ARCH); fi
 	pkgen -i pkgen.yaml -t dockerfile -arch $(ARCH) -o Dockerfile.$(ARCH)
 
 buildenv-$(ARCH): Dockerfile.$(ARCH)

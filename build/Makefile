@@ -10,6 +10,7 @@ $(foreach f,$(shell ls $(2)),$(eval $(call genpkftarg,$(1),$(shell basename $(f)
 $(1)/Makefile: $(1)/.dir build.mk
 	cp -f build.mk $(1)/Makefile
 $(1)/pkgs.list: $(1)/pkgen.yaml
+	if [ -e $(1)/pkgs.list ]; then rm -f $(1)/pkgs.list; fi
 	pkgen -i $(1)/pkgen.yaml -t pkglist -o $(1)/pkgs.list
 $(1)/.build.$(ARCH): $(1)/.files $(1)/Makefile $(1)/pkgs.list
 	+$(MAKE) -C $(1) build
