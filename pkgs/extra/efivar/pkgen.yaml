@@ -15,6 +15,8 @@ sources:
 builddependencies:
 - popt-dev
 - linux-headers
+- gcc
+- musl-dev
 script:
 - cat src/haxe.h >> /usr/include/strings.h
 - mv src/efivar efivar
