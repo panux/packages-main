@@ -17,7 +17,7 @@ builddependencies:
 - kbproto
 - util-macros
 sources:
-- https://xkbcommon.org/download/libxkbcommon-{{.Version}}.tar.xz
+- https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-{{.Version}}.tar.gz
 script:
 - |
   {{extract "libxkbcommon" "xz"}}
