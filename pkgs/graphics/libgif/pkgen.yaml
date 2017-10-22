@@ -1,0 +1,33 @@
+packages:
+  libgif:
+  libgif-dev:
+    dependencies:
+    - libgif
+    - libgif-headers
+  libgif-headers:
+  libgif-doc:
+    dependencies:
+    - libgif-man
+  libgif-man:
+  libgif-utils:
+    dependencies:
+    - libgif
+version: 5.1.4
+builddependencies:
+- gcc
+- g++
+- libx11-dev
+- libsm-dev
+- util-linux-dev
+- xmlto
+sources:
+- https://downloads.sourceforge.net/sourceforge/giflib/giflib-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "giflib" "bz2"}}
+  (cd giflib && ./configure --prefix=/usr)
+  $(MAKE) -C giflib
+  $(MAKE) -C giflib DESTDIR=$(shell pwd)/out/libgif install
+  {{pkmv "usr/include" "libgif" "libgif-headers"}}
+  {{pkmv "usr/share" "libgif" "libgif-man"}}
+  {{pkmv "usr/bin" "libgif" "libgif-utils"}}

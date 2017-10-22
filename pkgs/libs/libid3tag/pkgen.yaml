@@ -1,0 +1,23 @@
+packages:
+  libid3tag:
+    dependencies:
+    - zlib
+  libid3tag-dev:
+    dependencies:
+    - libid3tag
+    - libid3tag-headers
+  libid3tag-headers:
+version: 0.15.1b
+builddependencies:
+- gcc
+- g++
+- zlib-dev
+sources:
+- https://sourceforge.net/projects/mad/files/libid3tag/0.15.1b/libid3tag-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "libid3tag" "gz"}}
+  (cd libid3tag && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info)
+  $(MAKE) -C libid3tag
+  $(MAKE) -C libid3tag DESTDIR=$(shell pwd)/out/libid3tag install
+  {{pkmv "usr/include" "libid3tag" "libid3tag-headers"}}
