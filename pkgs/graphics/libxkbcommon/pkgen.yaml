@@ -22,7 +22,7 @@ script:
 - |
   tar -xf src/xkbcommon-{{.Version}}.tar.gz
   mv libxkbcommon-xkbcommon-{{.Version}} libxkbcommon
-  (cd libxkbcommon && ./configure --prefix=/usr)
+  (cd libxkbcommon && ./autogen.sh --prefix=/usr)
   $(MAKE) -C libxkbcommon
   $(MAKE) -C libxkbcommon DESTDIR=$(shell pwd)/out/libxkbcommon install
   {{pkmv "usr/include" "libxkbcommon" "libxkbcommon-headers"}}
