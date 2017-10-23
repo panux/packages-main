@@ -1,3 +1,5 @@
+PKGEN = $(shell which pkgen)
+
 define genpkftarg
 $(1)/$(2): $(3)/$(2) $(1)/.dir
 	if [ -e $(1)/$(2) ]; then rm -r $(1)/$(2); cp -r $(3)/$(2) $(1)/$(2); else cp -r $(3)/$(2) $(1)/$(2); fi
@@ -12,7 +14,7 @@ $(1)/Makefile: $(1)/.dir build.mk
 $(1)/pkgs.list: $(1)/pkgen.yaml
 	if [ -e $(1)/pkgs.list ]; then rm -f $(1)/pkgs.list; fi
 	pkgen -i $(1)/pkgen.yaml -t pkglist -o $(1)/pkgs.list
-$(1)/.build.$(ARCH): $(1)/.files $(1)/Makefile $(1)/pkgs.list
+$(1)/.build.$(ARCH): $(1)/.files $(1)/Makefile $(1)/pkgs.list $(PKGEN)
 	+$(MAKE) -C $(1) build
 	touch $(1)/.build.$(ARCH)
 $(1).prep: $(1)/.files $(1)/Makefile $(1)/pkgs.list
