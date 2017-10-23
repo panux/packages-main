@@ -18,6 +18,7 @@ builddependencies:
 - util-macros
 - autoconf
 - automake
+- libtool
 sources:
 - https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-{{.Version}}.tar.gz
 script:
