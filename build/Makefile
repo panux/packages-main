@@ -17,7 +17,7 @@ $(1)/pkgs.list: $(1)/pkgen.yaml
 $(1)/.build.$(ARCH): $(1)/.files $(1)/Makefile $(1)/pkgs.list $(PKGEN)
 	+$(MAKE) -C $(1) build
 	touch $(1)/.build.$(ARCH)
-$(1).prep: $(1)/.files $(1)/Makefile $(1)/pkgs.list
+$(1).prep: $(1)/.files $(1)/Makefile $(1)/pkgs.list $(PKGEN)
 	+$(MAKE) -C $(1) prep
 $(1).clean:
 	if [ -d $(1) ]; then rm -r $(1); fi
