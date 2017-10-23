@@ -39,6 +39,7 @@ pkg-$(ARCH).mk: pkgen.yaml $(PKGEN)
 	pkgen -i pkgen.yaml -t mk -arch $(ARCH) -o pkg-$(ARCH).mk
 
 run.$(ARCH): buildenv-$(ARCH) srcbuild pkg-$(ARCH).mk out/$(ARCH)
+	docker build -f Dockerfile.$(ARCH) -t panux/buildenv:$(shell basename $(shell pwd))-$(ARCH) .
 	docker run --rm -v $(shell realpath src):/build/src -v $(shell realpath pkg-$(ARCH).mk):/build/Makefile -v $(shell realpath out/$(ARCH)):/build/out -e ARCH=$(ARCH) panux/buildenv:$(shell basename $(shell pwd))-$(ARCH) /build/src /build/Makefile /build/out
 	touch run.$(ARCH)
 
