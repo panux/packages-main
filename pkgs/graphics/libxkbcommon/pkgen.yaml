@@ -17,6 +17,7 @@ builddependencies:
 - kbproto
 - util-macros
 - autoconf
+- automake
 sources:
 - https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-{{.Version}}.tar.gz
 script:
