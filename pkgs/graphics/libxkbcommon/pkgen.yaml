@@ -20,7 +20,8 @@ sources:
 - https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-{{.Version}}.tar.gz
 script:
 - |
-  {{extract "libxkbcommon" "gz"}}
+  tar -xf src/xkbcommon-{{.Version}}.tar.gz
+  mv libxkbcommon-xkbcommon-{{.Version}} libxkbcommon
   (cd libxkbcommon && ./configure --prefix=/usr)
   $(MAKE) -C libxkbcommon
   $(MAKE) -C libxkbcommon DESTDIR=$(shell pwd)/out/libxkbcommon install
