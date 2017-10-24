@@ -4,7 +4,7 @@ packages:
     - gcc-libexec
     - gcc-libcc1
     - binutils
-  g++:
+  gpp:
     dependencies:
     - gcc
   gcc-ranlib:
@@ -107,9 +107,9 @@ script:
   mkdir -p out/libstdcpp-dev/usr/include
   mv out/gcc/usr/include/c++ out/libstdcpp-dev/usr/include/c++
   mkdir -p out/g++/usr/bin
-  mv out/gcc/usr/bin/g++ out/g++/usr/bin/g++
-  mv out/gcc/usr/bin/c++ out/g++/usr/bin/c++
-  mv out/gcc/usr/bin/cpp out/g++/usr/bin/cpp
+  mv out/gcc/usr/bin/g++ out/gpp/usr/bin/g++
+  mv out/gcc/usr/bin/c++ out/gpp/usr/bin/c++
+  mv out/gcc/usr/bin/cpp out/gpp/usr/bin/cpp
   mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-g++ out/g++/usr/bin/{{confarch}}-pc-linux-musl-g++
   mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-c++ out/g++/usr/bin/{{confarch}}-pc-linux-musl-c++
   mkdir -p out/gcc-ranlib/usr/bin
