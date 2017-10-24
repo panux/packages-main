@@ -14,6 +14,7 @@ packages:
     - gcc-libcc1
     - libmpc
     - zlib
+    - libmpfr
   gcc-install-tools:
   gcc-plugin:
   gcc-include:
