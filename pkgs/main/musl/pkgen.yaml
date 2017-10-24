@@ -7,19 +7,26 @@ packages:
     - musl-headers
     - musl-a
     - musl
-version: v1.1.16
+version: 1.1.16
 builddependencies:
   - gcc
 sources:
-  - git://git.musl-libc.org/musl?checkout={{.Version}}&proto=git
+  - https://git.musl-libc.org/cgit/musl/snapshot/musl-{{.Version}}.tar.gz
 script:
   - |
-    (cd src/musl && ./configure)
-    $(MAKE) -C src/musl
-    $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl install-libs
-    $(MAKE) -C src/musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
+    {{extract "musl" "gz"}}
+    (cd musl && ./configure)
+    $(MAKE) -C musl
+    $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl install-libs
+    $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
     mkdir -p out/musl/usr/lib out/musl/usr/bin
     {{pkmv "usr/local/musl/lib/*.a" "musl" "musl-a"}}
     rm -r out/musl/lib
     (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-$(if $(filter x86,$(ARCH)),i386,$(ARCH)).so.1)
     (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/bin/ldd)
+    mkdir -p out/musl/usr/lib
+    (cd out/musl/usr/lib && for i in $$(ls ../local/musl/lib/); do ln -s /usr/local/musl/lib/$$i $$i; done)
+    mkdir -p out/musl-a/usr/lib
+    (cd out/musl-a/usr/lib && for i in $$(ls ../local/musl/lib/); do ln -s /usr/local/musl/lib/$$i $$i; done)
+    mkdir -p out/musl-headers/usr/include
+    (cd out/musl-headers/usr/include && for i in $$(ls ../local/musl/include/); do ln -s /usr/local/musl/include/$$i $$i; done)
