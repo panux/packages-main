@@ -11,7 +11,7 @@ packages:
     dependencies:
     - linux-kernel
   linux-headers:
-version: 4.9.35
+version: 4.13.10
 oneshell: true
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
