@@ -1,0 +1,27 @@
+packages:
+  shared-mime-info:
+    dependencies:
+    - busybox
+    - glib
+    - libxml2
+  shared-mime-info-doc:
+    dependencies:
+    - shared-mime-info-man
+  shared-mime-info-lang:
+version: 1.9
+builddependencies:
+- g++
+- libxml2-dev
+- libxml2-utils
+- glib-dev
+- intltool
+sources:
+- https://freedesktop.org/~hadess/shared-mime-info-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "shared-mime-info" "xz"}}
+  (cd shared-mime-info && ./configure --prefix=/usr)
+  $(MAKE) -C shared-mime-info
+  $(MAKE) -C shared-mime-info DESTDIR=$(shell pwd)/out/shared-mime-info install
+  {{pkmv "usr/share/man" "shared-mime-info" "shared-mime-info-man"}}
+  {{pkmv "usr/share/locale" "shared-mime-info" "shared-mime-info-lang"}}

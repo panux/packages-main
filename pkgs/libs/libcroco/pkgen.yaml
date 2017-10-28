@@ -1,0 +1,28 @@
+packages:
+  libcroco:
+    dependencies:
+    - glib
+    - libxml2
+  libcroco-dev:
+    dependencies:
+    - glib-dev
+    - libcroco
+    - libcroco-headers
+    - libxml2-dev
+  libcroco-headers:
+  libcroco-doc:
+version: 0.6.12
+builddependencies:
+- g++
+- glib-dev
+- libxml2-dev
+sources:
+- https://ftp.gnome.org/pub/gnome/sources/libcroco/0.6/libcroco-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libcroco" "xz"}}
+  (cd libcroco && ./configure --prefix=/usr)
+  $(MAKE) -C libcroco
+  $(MAKE) -C libcroco DESTDIR=$(shell pwd)/out/libcroco install
+  {{pkmv "usr/include" "libcroco" "libcroco-headers"}}
+  {{pkmv "usr/share" "libcroco" "libcroco-doc"}}
