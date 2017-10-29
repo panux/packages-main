@@ -2,9 +2,12 @@ packages:
   bzip2:
     dependencies:
   libbz2:
-  bzip2-dev:
+  libbz2-headers:
     dependencies:
     - libbz2
+  bzip2-dev:
+    dependencies:
+    - libbz2-headers
   bzip2-doc:
 version: 1.0.6
 builddependencies:
@@ -23,6 +26,6 @@ script:
 - (cd bzip2 && ln -s libbz2.so.{{.Version}} ../out/libbz2/usr/lib/libbz2.so.1)
 - mkdir -p out/bzip2-dev/usr/lib
 - mv out/bzip2/usr/lib/libbz2.a out/libbz2/usr/lib/libbz2.so out/bzip2-dev/usr/lib
-- mv out/bzip2/usr/include out/bzip2-dev/usr
+- mv out/bzip2/usr/include out/libbz2-headers/usr
 - mkdir -p out/bzip2-doc/usr/share
 - mv out/bzip2/usr/man out/bzip2-doc/usr/share
