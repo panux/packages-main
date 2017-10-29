@@ -1,0 +1,17 @@
+packages:
+  ca-certificates:
+    dependencies:
+    - libressl
+  ca-certificates-doc:
+version: 20170801
+builddependencies:
+- python3
+- libressl-dev
+sources:
+- https://git.alpinelinux.org/cgit/ca-certificates/snapshot/ca-certificates-{{.Version}}.tar.bz2
+script:
+- |
+  tar xf src/ca-certificates-{{.Version}}.tar.bz2
+  (cd ca-certificates-{{.Version}} && make)
+  (cd ca-certificates-{{.Version}} && make DESTDIR=$(shell pwd)/out/ca-certificates install)
+  {{pkmv "usr/share/man" "ca-certificates" "ca-certificates-doc"}}
