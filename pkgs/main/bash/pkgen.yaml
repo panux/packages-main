@@ -12,15 +12,12 @@ packages:
 version: 4.4
 builddependencies:
 - gcc
-- musl-dev
+- libc-dev
 - ncurses
 - ncurses-headers
 - readline-dev
 - gettext-dev
 - make
-- gnutls
-- nettle
-- wget
 sources:
 - https://ftp.gnu.org/gnu/bash/bash-{{.Version}}.tar.gz
 builder: panux
