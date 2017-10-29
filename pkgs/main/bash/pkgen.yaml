@@ -12,7 +12,7 @@ packages:
 version: 4.4
 builddependencies:
 - gcc
-- libc-dev
+- musl-dev
 - ncurses
 - ncurses-headers
 - readline-dev
