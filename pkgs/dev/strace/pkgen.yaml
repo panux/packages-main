@@ -1,9 +1,11 @@
 packages:
   strace:
     dependencies:
+    - libc
   strace-doc:
 version: 4.18
 builddependencies:
+- libc-dev
 - linux-headers
 - autoconf
 - automake
