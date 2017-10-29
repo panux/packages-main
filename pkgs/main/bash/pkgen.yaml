@@ -18,6 +18,7 @@ builddependencies:
 - readline-dev
 - gettext-dev
 - make
+- libressl
 sources:
 - https://git.savannah.gnu.org/cgit/bash.git/snapshot/bash-{{.Version}}.tar.gz
 builder: panux
