@@ -8,6 +8,11 @@ packages:
     - ncurses
   ncurses-terminfo:
   ncurses-headers:
+    dependencies:
+    - musl-headers
+  ncurses-dev:
+    dependencies:
+    - musl-dev
 version: 6.0
 builddependencies:
 - gcc
