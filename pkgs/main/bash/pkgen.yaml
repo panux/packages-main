@@ -12,26 +12,22 @@ packages:
 version: 4.4
 builddependencies:
 - gcc
-- libc-dev
-- ncurses-dev
+- musl-dev
+- ncurses
+- ncurses-headers
 - readline-dev
 - gettext-dev
+- make
 sources:
 - https://git.savannah.gnu.org/cgit/bash.git/snapshot/bash-{{.Version}}.tar.gz
+builder: panux
 script:
-- tar -xf src/bash-{{.Version}}.tar.gz
-- mv bash-{{.Version}} bash
-- (cd bash && ./configure --without-bash-malloc)
-- $(MAKE) -C bash
-- $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
-- mkdir -p out/bash-headers/usr/local
-- mv out/bash/usr/local/include out/bash-headers/usr/local
-- mkdir -p out/bash-locale/usr/local/share
-- mv out/bash/usr/local/share/locale out/bash-locale/usr/local/share
-- rm out/bash/usr/local/lib/bash/Makefile.inc
-- mv out/bash/usr/local/lib/bash out/bash/usr/bin
-- mv out/bash/usr/local/bin/* out/bash/usr/bin
-- mkdir -p out/bash-doc/usr/local/share
-- mv out/bash/usr/local/share/doc out/bash-doc/usr/local/share
-- mv out/bash/usr/local/share/info out/bash-doc/usr/local/share
-- rm -rf out/bash/usr/local/share
+- |
+  {{extract "bash" "gz"}}
+  (cd bash && ./configure --without-bash-malloc --prefix=/usr)
+  $(MAKE) -C bash
+  $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
+  {{pkmv "usr/include" "bash" "bash-headers"}}
+  {{pkmv "usr/share/locale" "bash" "bash-locale"}}
+  {{pkmv "usr/share" "bash" "bash-doc"}}
+  rm out/bash/usr/lib/bash/Makefile.inc
