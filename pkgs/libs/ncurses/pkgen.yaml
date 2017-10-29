@@ -13,6 +13,8 @@ packages:
   ncurses-dev:
     dependencies:
     - musl-dev
+    - ncurses-headers
+    - ncurses
 version: 6.0
 builddependencies:
 - gcc
