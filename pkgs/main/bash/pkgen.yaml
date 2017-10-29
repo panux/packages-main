@@ -18,9 +18,11 @@ builddependencies:
 - readline-dev
 - gettext-dev
 - make
-- libressl
+- gnutls
+- nettle
+- wget
 sources:
-- https://git.savannah.gnu.org/cgit/bash.git/snapshot/bash-{{.Version}}.tar.gz
+- https://ftp.gnu.org/gnu/bash/bash-{{.Version}}.tar.gz
 builder: panux
 script:
 - |
