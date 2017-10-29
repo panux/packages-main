@@ -2,6 +2,7 @@ packages:
   curl:
     dependencies:
     - libcurl
+    - ca-certificates
   libcurl:
     dependencies:
     - libressl
