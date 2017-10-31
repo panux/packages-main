@@ -88,7 +88,6 @@ script:
   mkdir -p out/gcc-info/usr/share
   mv out/gcc/usr/share/info out/gcc-info/usr/share/info
   {{mvman "gcc"}}
-  rm -f out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.a out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.la out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/*.spec
   {{range .Data.libs}}
   mkdir -p out/lib{{.}}/usr/lib
   mv out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/lib{{.}}.* out/lib{{.}}/usr/lib
