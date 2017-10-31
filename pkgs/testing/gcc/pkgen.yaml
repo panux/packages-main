@@ -23,10 +23,6 @@ packages:
   gcc-info:
   gcc-man:
   gcc-python-cxx:
-  libmpx:
-  libmpx-wrappers:
-    dependencies:
-    - libmpx
   libquadmath:
   libssp:
   libgomp:
@@ -59,8 +55,6 @@ builddependencies:
   - zlib-dev
 data:
   libs:
-    - mpx
-    - mpxwrappers
     - quadmath
     - gomp
     - ssp
@@ -78,7 +72,7 @@ script:
   export CC=gcc
   export CXX=g++
   sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{confarch}}-pc-linux-musl /g' Makefile
-  (cd /gcc && ./configure CC=gcc CXX=g++ --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --build={{confarch}}-pc-linux-musl)
+  (cd /gcc && ./configure CC=gcc CXX=g++ --disable-static --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --disable-libmpx --build={{confarch}}-pc-linux-musl)
   $(MAKE) -C /gcc CC=gcc CXX=g++
   $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
   mkdir out/gcc-libexec/usr
