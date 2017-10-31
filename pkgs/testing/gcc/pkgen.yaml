@@ -99,7 +99,7 @@ script:
   mv out/libgcc_s/* out/libgcc
   mkdir -p out/libstdcpp-dev/usr/include
   mv out/gcc/usr/include/c++ out/libstdcpp-dev/usr/include/c++
-  mkdir -p out/g++/usr/bin
+  mkdir -p out/gpp/usr/bin
   mv out/gcc/usr/bin/g++ out/gpp/usr/bin/g++
   mv out/gcc/usr/bin/c++ out/gpp/usr/bin/c++
   mv out/gcc/usr/bin/cpp out/gpp/usr/bin/cpp
@@ -107,7 +107,7 @@ script:
   mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-c++ out/gpp/usr/bin/{{confarch}}-pc-linux-musl-c++
   mkdir -p out/gcc-ranlib/usr/bin
   mv out/gcc/usr/bin/gcc-ranlib out/gcc-ranlib/usr/bin/gcc-ranlib
-  mv out/gcc/bin/{{confarch}}-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/{{confarch}}-pc-linux-musl-gcc-ranlib
+  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/{{confarch}}-pc-linux-musl-gcc-ranlib
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
