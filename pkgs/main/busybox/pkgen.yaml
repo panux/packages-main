@@ -3,6 +3,7 @@ packages:
 version: 1.27.2
 sources:
 - https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
+builder: panux
 builddependencies:
 - linux-headers
 - binutils
