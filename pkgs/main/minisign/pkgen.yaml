@@ -28,4 +28,4 @@ script:
   $(MAKE) -C minisign/build install DESTDIR=$(shell pwd)/out/minisign
   mkdir -p out/minisign-man/usr/local
   mv out/minisign/usr/share out/minisign-man/usr/local/share
-
+  strip out/minisign/usr/bin/minisign
