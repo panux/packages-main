@@ -9,6 +9,7 @@ packages:
 version: 5.3.4
 sources:
 - https://www.lua.org/ftp/lua-{{.Version}}.tar.gz
+builder: panux
 builddependencies:
 - gcc
 - libc-dev
@@ -19,6 +20,7 @@ script:
 - $(MAKE) -C lua local
 - mkdir -p out/lua/usr out/lua-headers/usr/local out/lua-man/usr/local
 - mv lua/install/bin out/lua/usr/bin
+- strip out/lua/usr/bin/*
 - mv lua/install/lib out/lua/usr/lib
 - mv lua/install/include out/lua-headers/usr/local/include
 - mv lua/install/man out/lua-man/usr/local/man
