@@ -26,6 +26,7 @@ script:
     $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl install-libs
     $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
     mkdir -p out/musl/usr/lib out/musl/usr/bin
+    strip --strip-unneeded out/musl/usr/local/musl/lib/*
     {{pkmv "usr/local/musl/lib/*.a" "musl" "musl-a"}}
     rm -r out/musl/lib
     (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-$(if $(filter x86,$(ARCH)),i386,$(ARCH)).so.1)
