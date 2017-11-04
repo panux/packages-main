@@ -1,0 +1,40 @@
+packages:
+  gdk-pixbuf:
+    dependencies:
+    - glib
+    - libintl
+    - libjpeg-turbo
+    - libpng
+    - libx11
+    - shared-mime-info
+  gdk-pixbuf-dev:
+    dependencies:
+    - gdk-pixbuf
+    - gdk-pixbuf-headers
+    - glib-dev
+    - libpng-dev
+  gdk-pixbuf-headers:
+  gdk-pixbuf-doc:
+    dependencies:
+    - gdk-pixbuf-man
+  gdk-pixbuf-man:
+version: 2.36.11
+builddependencies:
+- tiff-dev
+- libjpeg-turbo-dev
+- gobject-introspection-dev
+- libpng-dev
+- glib-dev
+- shared-mime-info
+sources:
+- https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gdk-pixbuf" "xz"}}
+  (cd gdk-pixbuf && ./configure --prefix=/usr --sysconfdir=/etc --with-x11)
+  $(MAKE) -C gdk-pixbuf
+  $(MAKE) -C gdk-pixbuf DESTDIR=$(shell pwd)/out/gdk-pixbuf install
+  {{pkmv "usr/include" "gdk-pixbuf" "gdk-pixbuf-headers"}}
+  {{pkmv "usr/share/man" "gdk-pixbuf" "gdk-pixbuf-man"}}
+  {{pkmv "usr/share/locale" "gdk-pixbuf" "gdk-pixbuf-locale"}}
+  {{pkmv "usr/share" "gdk-pixbuf" "gdk-pixbuf-doc"}}
