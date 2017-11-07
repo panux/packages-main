@@ -15,3 +15,4 @@ script:
   (cd ca-certificates-{{.Version}} && make)
   (cd ca-certificates-{{.Version}} && make DESTDIR=$(shell pwd)/out/ca-certificates install)
   {{pkmv "usr/share/man" "ca-certificates" "ca-certificates-doc"}}
+  (cd out/ca-certificates/usr/share/ca-certificates && find . -name '*.crt' | sort | cut -b3-) > out/ca-certificates/etc/ca-certificates.conf
