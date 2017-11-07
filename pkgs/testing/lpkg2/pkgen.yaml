@@ -1,0 +1,15 @@
+packages:
+  lpkg2:
+    dependencies:
+    - busybox
+    - musl
+    - minisign
+version: v0.10
+builddependencies:
+- gcc
+- make
+- musl-dev
+sources:
+- git://github.com/panux/lpkg?checkout=v2
+script:
+- $(MAKE) -C src/lpkg DESTDIR=$(shell pwd)/out/lpkg2 install
