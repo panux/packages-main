@@ -9,6 +9,7 @@ builddependencies:
 - libressl-dev
 sources:
 - https://git.alpinelinux.org/cgit/ca-certificates/snapshot/ca-certificates-{{.Version}}.tar.bz2
+- file://./oninstall.sh
 script:
 - |
   tar xf src/ca-certificates-{{.Version}}.tar.bz2
@@ -16,3 +17,5 @@ script:
   (cd ca-certificates-{{.Version}} && make DESTDIR=$(shell pwd)/out/ca-certificates install)
   {{pkmv "usr/share/man" "ca-certificates" "ca-certificates-doc"}}
   (cd out/ca-certificates/usr/share/ca-certificates && find . -name '*.crt' | sort | cut -b3-) > out/ca-certificates/etc/ca-certificates.conf
+  cp src/oninstall.sh out/ca-certificates/.oninstall
+  chmod 700 out/ca-certificates/.oninstall
