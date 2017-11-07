@@ -4,6 +4,10 @@ packages:
     - busybox
     - musl
     - minisign
+  lpkg2-https:
+    dependencies:
+    - lpkg2
+    - curl
 version: v0.10
 builddependencies:
 - gcc
@@ -13,3 +17,5 @@ sources:
 - git://github.com/panux/lpkg?checkout=v2
 script:
 - $(MAKE) -C src/lpkg DESTDIR=$(shell pwd)/out/lpkg2 install
+- mkdir -p out/lpkg2-https/etc/lpkg.d/fetchers
+- mv out/lpkg2/etc/lpkg.d/fetchers/02_https.sh out/lpkg2-https/etc/lpkg.d/fetchers/02_https.sh
