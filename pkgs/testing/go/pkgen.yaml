@@ -1,0 +1,27 @@
+packages:
+  go:
+    dependencies:
+    - musl
+    - git
+    - gcc
+version: 1.9.2
+sources:
+- https://golang.org/dl/go{{.Version}}.src.tar.gz
+- https://git.alpinelinux.org/cgit/aports/plain/community/go/default-buildmode-pie.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/go/set-external-linker.patch
+builddependencies:
+- gcc
+- go-bootstrap
+oneshell: true
+script:
+- tar -xf src/go{{.Version}}.src.tar.gz
+- patch src/default-buildmode-pie.patch
+- patch src/set-external-linker.patch
+- export GOROOT_BOOTSTRAP=/usr/lib/go
+- (cd go/src && bash ./make.bash)
+- mkdir -p out/go/usr/lib/go out/go/usr/bin out/go/usr/share/doc/go
+- (cd go && cp -r bin pkg src lib misc ../out/go/usr/lib/go)
+- mv go/doc/* out/go/usr/share/doc/go
+- ln -s /usr/lib/go/bin/go out/go/usr/bin/go
+- ln -s /usr/lib/go/bin/go out/go/usr/bin/gofmt
+- ln -s /usr/share/doc/go out/go/usr/lib/go/doc
