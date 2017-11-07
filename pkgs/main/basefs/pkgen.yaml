@@ -13,5 +13,6 @@ script:
 - ln -s usr/lib lib
 - (cd var && mkdir cache db games lib local log opt spool tmp)
 - ln -s run var/run
+- mkdir run/lock
 - ln -s run/lock var/lock
 - rm -rf out/basefs/build
