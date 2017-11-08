@@ -8,7 +8,7 @@ packages:
     dependencies:
     - lpkg
     - curl
-version: 0.10
+version: 0.10.1
 builddependencies:
 - gcc
 - make
