@@ -14,7 +14,7 @@ packages:
     - libxau
     - libgbm
     - libgl
-    - eudev-libs
+    - eudev
     - font-misc-misc
     - font-cursor-misc
     - libepoxy
