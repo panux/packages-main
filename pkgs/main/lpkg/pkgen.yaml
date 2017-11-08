@@ -2,11 +2,23 @@ packages:
   lpkg:
     dependencies:
     - busybox
+    - musl
     - minisign
-    - lua
-version: v0.3-alpha
+  lpkg-https:
+    dependencies:
+    - lpkg
+    - curl
+version: 0.10
+builddependencies:
+- gcc
+- make
+- musl-dev
 sources:
-- git://github.com/panux/lpkg?checkout=df435cfcacf7c0ee1ccfc8480cc9e8282f2b2665
+- https://github.com/panux/lpkg/archive/v{{.Version}}.tar.gz
 script:
-- mkdir -p out/lpkg/usr/bin out/lpkg/etc/lpkg
-- install -m 0700 src/lpkg/lpkg.lua out/lpkg/usr/bin/lpkg
+- |
+  mv src/v{{.Version}}.tar.gz src/lpkg-{{.Version}}.tar.gz
+  {{extract "lpkg" "gz"}}
+  $(MAKE) -C lpkg DESTDIR=$(shell pwd)/out/lpkg install
+  mkdir -p out/lpkg-https/etc/lpkg.d/fetchers
+  mv out/lpkg/etc/lpkg.d/fetchers/02_https.sh out/lpkg-https/etc/lpkg.d/fetchers/02_https.sh
