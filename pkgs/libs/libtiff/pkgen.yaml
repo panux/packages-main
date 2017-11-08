@@ -28,10 +28,11 @@ builddependencies:
 - automake
 - g++
 sources:
-- git://github.com/vadz/libtiff?checkout=Release-v4-0-8
+- https://github.com/vadz/libtiff/archive/Release-v4-0-8.tar.gz
 script:
 - |
-  mv src/libtiff libtiff
+  tar -xf src/Release-v4-0-8.tar.gz
+  mv libtiff-Release-v4-0-8 libtiff
   (cd libtiff && ./configure --prefix=/usr)
   $(MAKE) -C libtiff
   $(MAKE) -C libtiff DESTDIR=$(shell pwd)/out/libtiff install
