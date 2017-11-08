@@ -19,3 +19,4 @@ script:
 - strip out/busybox/usr/bin/busybox
 - chmod 0755 out/busybox/usr/bin/busybox
 - chroot out/busybox /usr/bin/busybox --install -s usr/bin
+- chmod u+s our/busybox/usr/bin/busybox
