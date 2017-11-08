@@ -12,10 +12,11 @@ builddependencies:
 - cmake
 - g++
 sources:
-- git://github.com/silnrsi/graphite?checkout={{.Version}}
+- https://github.com/silnrsi/graphite/archive/{{.Version}}.tar.gz
 script:
 - |
-  mv src/graphite libgraphite2
+  tar -xf src/{{.Version}}.tar.gz
+  mv graphite-{{.Version}} libgraphite2
   mkdir -p libgraphite2/build
   (cd libgraphite2/build && cmake .. -DCMAKE_INSTALL_PREFIX=/usr)
   $(MAKE) -C libgraphite2/build
