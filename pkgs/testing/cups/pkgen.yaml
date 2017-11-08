@@ -47,7 +47,7 @@ packages:
   ipptool:
     dependencies:
     - cups-libs
-version: v2.2.4
+version: 2.2.4
 builddependencies:
 - libgcrypt-dev
 - gnutls-dev
@@ -63,10 +63,11 @@ builddependencies:
 - dbus
 - g++
 sources:
-- git://github.com/apple/cups?checkout={{.Version}}
+- https://github.com/apple/cups/archive/v{{.Version}}.tar.gz
 script:
 - |
-  mv src/cups cups
+  tar -xf src/v{{.Version}}.tar.gz
+  mv cups-{{.Version}} cups
   (cd cups && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-libpaper --enable-ssl=yes --enable-gnutl)
   $(MAKE) -C cups
   $(MAKE) -C cups BUILDROOT=$(shell pwd)/out/cups install
