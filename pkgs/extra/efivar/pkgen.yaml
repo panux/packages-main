@@ -10,7 +10,7 @@ packages:
   efivar-include:
 version: 31
 sources:
-- git://github.com/AdelieLinux/efivar?checkout={{.Version}}
+- https://github.com/AdelieLinux/efivar/archive/{{.Version}}.tar.gz
 - file://./haxe.h
 builddependencies:
 - popt-dev
@@ -18,8 +18,9 @@ builddependencies:
 - gcc
 - musl-dev
 script:
+- tar -xf src/{{.Version}}.tar.gz
 - cat src/haxe.h >> /usr/include/strings.h
-- mv src/efivar efivar
+- mv efivar-{{.Version}} efivar
 - $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
 - $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
 - mkdir -p out/libefivar/usr/lib
