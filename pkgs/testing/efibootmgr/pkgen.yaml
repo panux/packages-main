@@ -4,7 +4,7 @@ packages:
     - efivar
 version: 14
 sources:
-- git://github.com/rhboot/efibootmgr?checkout={{.Version}}
+- https://github.com/rhboot/efibootmgr/archive/{{.Version}}.tar.gz
 builddependencies:
 - popt-dev
 - linux-headers
@@ -26,7 +26,8 @@ script:
   wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/{{$v}} -O src/{{$v}}
   {{- end}}
   for i in src/*.tar.gz; do tar -xf $$i -C /; echo $$i; done
-  mv src/efibootmgr efibootmgr
+  tar -xf src/{{.Version}}.tar.gz
+  mv efibootmgr-{{.Version}} efibootmgr
   sed -i -e s/-Werror// Make.defaults
   $(MAKE) -C efibootmgr EFIDIR=/boot/efi LDLIBS="-lefivar -lefiboot -lintl -lpopt"
   $(MAKE) -C efibootmgr libdir="/usr/lib" EFIDIR=/boot/efi DESTDIR=$(shell pwd)/out/efibootmgr install
