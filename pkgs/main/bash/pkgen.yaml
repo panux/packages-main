@@ -4,6 +4,7 @@ packages:
     - musl
     - ncurses
     - readline
+    - libintl
   bash-doc:
   bash-headers:
   bash-locale:
