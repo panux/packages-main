@@ -17,5 +17,5 @@ script:
 - mv busybox/busybox out/busybox/usr/bin/busybox
 - find out
 - chmod 0755 out/busybox/usr/bin/busybox
-- chroot out/busybox usr/bin/busybox --install -s usr/bin
+- chroot out/busybox /usr/bin/busybox --install -s /usr/bin
 - chmod u+s out/busybox/usr/bin/busybox
