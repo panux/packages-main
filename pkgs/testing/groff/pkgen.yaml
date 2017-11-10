@@ -1,5 +1,7 @@
 packages:
   groff:
+    dependencies:
+    - libstdcpp
 version: 1.22.3
 sources:
 - https://ftp.gnu.org/gnu/groff/groff-{{.Version}}.tar.gz
