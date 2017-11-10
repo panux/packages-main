@@ -1,0 +1,14 @@
+packages:
+  groff:
+version: 1.22.3
+sources:
+- https://ftp.gnu.org/gnu/groff/groff-{{.Version}}.tar.gz
+builddependencies:
+- g++
+- perl
+script:
+- |
+  {{extract "groff" "gz"}}
+  (cd groff && PAGE=letter ./configure --prefix=/usr --without-x)
+  make -j1 -C groff
+  make -j1 -C groff install DESTDIR=$(shell pwd)/out/groff
