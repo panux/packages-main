@@ -3,6 +3,8 @@ packages:
 version: 1.27.2
 sources:
 - https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
+- file://./oninstall.sh
+- file://./addalt.sh
 builddependencies:
 - linux-headers
 - binutils
@@ -16,4 +18,7 @@ script:
 - mkdir -p out/busybox/usr/bin
 - mv busybox/busybox out/busybox/usr/bin/busybox
 - chmod 4755 out/busybox/usr/bin/busybox
-- chroot out/busybox /usr/bin/busybox --install -s /usr/bin
+- mkdir -p out/busybox/etc/lpkg.d/alt.d
+- sh src/addalt.sh
+- mv src/oninstall.sh out/busybox/.oninstall
+- chmod 700 out/busybox/.oninstall
