@@ -16,9 +16,17 @@ builddependencies:
 - gnutls-dev
 sources:
 - https://ftp.gnu.org/gnu/wget/wget-{{.Version}}.tar.xz
+- file://./oninstall.sh
 script:
 - tar -xf src/wget-{{.Version}}.tar.xz
 - mv wget-{{.Version}} wget
 - (cd wget && ./configure)
 - $(MAKE) -C wget
 - $(MAKE) -C wget DESTDIR=$(shell pwd)/out/wget install
+- mkdir -p out/wget/etc/lpkg.d/alt.d/wget
+- mv out/wget/usr/local/bin out/wget/usr/bin
+- mv out/wget/usr/bin/wget out/wget/usr/bin/wget-real
+- ln -s /usr/bin/wget-real out/wget/etc/lpkg.d/alt.d/wget/05_wget.provider
+- echo /usr/bin/wget > out/wget/etc/lpkg.d/alt.d/wget/.target
+- mv src/oninstall.sh out/wget/.oninstall
+- chmod 700 out/wget/.oninstall
