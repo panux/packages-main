@@ -21,6 +21,7 @@ builddependencies:
 - make
 sources:
 - https://ftp.gnu.org/gnu/bash/bash-{{.Version}}.tar.gz
+- file://./oninstall.sh
 builder: panux
 script:
 - |
@@ -32,3 +33,8 @@ script:
   {{pkmv "usr/share/locale" "bash" "bash-locale"}}
   {{pkmv "usr/share" "bash" "bash-doc"}}
   rm out/bash/usr/lib/bash/Makefile.inc
+  mkdir -p out/bash/etc/lpkg.d/alt.d/sh
+  ln -s /usr/bin/bash out/bash/etc/lpkg.d/alt.d/sh/00_bash.provider
+  echo /usr/bin/sh > out/bash/etc/lpkg.d/alt.d/sh/.target
+  mv src/oninstall.sh out/bash/.oninstall
+  chmod 700 out/bash/.oninstall
