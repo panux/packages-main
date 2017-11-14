@@ -9,6 +9,7 @@ packages:
 version: 1.12.1
 sources:
 - https://nginx.org/download/nginx-{{.Version}}.tar.gz
+- file://./oninstall.sh
 builddependencies:
 - linux-headers
 - libressl-dev
@@ -40,6 +41,5 @@ script:
   {{configure "nginx"}}
   $(MAKE) -C nginx
   $(MAKE) -C nginx install DESTDIR=$(shell pwd)/out/nginx
-  echo "#!/bin/sh" > out/nginx/.oninstall
-  echo "adduser -D nobody" >> out/nginx/.oninstall
+  mv src/oninstall.sh out/nginx/.oninstall
   chmod 700 out/nginx/.oninstall
