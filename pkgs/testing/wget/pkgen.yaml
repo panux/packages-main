@@ -1,7 +1,6 @@
 packages:
   wget:
     dependencies:
-    - gnutls
     - nettle
     - libressl
 version: 1.19.1
@@ -10,10 +9,8 @@ builddependencies:
 - gawk
 - libc-dev
 - ncurses-dev
-- gnutls
 - zlib-dev
-- gnutls-utils
-- gnutls-dev
+- libressl-dev
 sources:
 - https://ftp.gnu.org/gnu/wget/wget-{{.Version}}.tar.xz
 - file://./oninstall.sh
