@@ -17,7 +17,7 @@ sources:
 script:
 - tar -xf src/wget-{{.Version}}.tar.xz
 - mv wget-{{.Version}} wget
-- (cd wget && ./configure)
+- (cd wget && ./configure --with-ssl=openssl)
 - $(MAKE) -C wget
 - $(MAKE) -C wget DESTDIR=$(shell pwd)/out/wget install
 - mkdir -p out/wget/etc/lpkg.d/alt.d/wget
