@@ -1,0 +1,42 @@
+packages:
+  libgsf:
+    dependencies:
+    - glib
+    - libbz2
+    - libintl
+    - libxml2
+    - zlib
+  libgsf-dev:
+    dependencies:
+    - bzip2-dev
+    - glib-dev
+    - libgsf
+    - libgsf-headers
+    - libxml2-dev
+  libgsf-headers:
+  libgsf-doc:
+    dependencies:
+    - libgsf-man
+  libgsf-man:
+  libgsf-locale:
+version: 1.14.41
+builddependencies:
+- bzip2-dev
+- libxml2-dev
+- glib-dev
+- bzip2-dev
+- intltool
+- python2
+- zlib-dev
+sources:
+- https://download.gnome.org/sources/libgsf/1.14/libgsf-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libgsf" "xz"}}
+  (cd libgsf && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libgsf
+  $(MAKE) -C libgsf DESTDIR=$(shell pwd)/out/libgsf install
+  {{pkmv "usr/include" "libgsf" "libgsf-headers"}}
+  {{pkmv "usr/share/locale" "libgsf" "libgsf-locale"}}
+  {{pkmv "usr/share/man" "libgsf" "libgsf-man"}}
+  {{pkmv "usr/share" "libgsf" "libgsf-doc"}}
