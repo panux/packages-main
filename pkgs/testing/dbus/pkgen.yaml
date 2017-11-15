@@ -6,8 +6,10 @@ packages:
     - musl
   dbus-dev:
     dependencies:
-    - libdbus
+    - dbus
+    - dbus-headers
     - util-linux-dev
+  dbus-headers:
   libdbus:
   dbus-x11:
     dependencies:
@@ -27,18 +29,12 @@ sources:
 - https://dbus.freedesktop.org/releases/dbus/dbus-{{.Version}}.tar.gz
 script:
 - |
-  tar -xf src/dbus-{{.Version}}.tar.gz
-  mv dbus-{{.Version}} dbus
+  {{extract "dbus" "gz"}}
   (cd dbus && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-x --with-xml=expat --with-dbus-user=messagebus --with-system-pid-file=/var/run/dbus.pid)
   $(MAKE) -C dbus
   $(MAKE) -C dbus DESTDIR=$(shell pwd)/out/dbus install
-  mkdir -p out/dbus-dev/usr/lib/dbus-1.0
-  mv out/dbus/usr/include out/dbus-dev/usr
-  mv out/dbus/usr/lib/pkgconfig out/dbus/usr/lib/*.so out/dbus-dev/usr/lib
-  mv out/dbus/usr/lib/dbus-1.0/include out/dbus-dev/usr/lib/dbus-1.0
-  mkdir -p out/libdbus/usr/lib
-  mv out/dbus/usr/lib/libdbus-1.so* out/libdbus/usr/lib
-  mkdir -p out/dbus-x11/usr/bin
-  mv out/dbus/usr/bin/dbus-launch out/dbus-x11/usr/bin
-  mkdir -p out/dbus-doc/usr
-  mv out/dbus/usr/share out/dbus-doc/usr
+  {{pkmv "usr/include" "dbus" "dbus-headers"}}
+  {{pkmv "usr/lib/dbus-1.0/include" "dbus" "dbus-headers"}}
+  {{pkmv "usr/lib/libdbus-1.so*" "dbus" "libdbus"}}
+  {{pkmv "usr/bin/dbus-launch" "dbus" "dbus-x11"}}
+  {{pkmv "usr/share" "dbus" "dbus-doc"}}
