@@ -1,0 +1,28 @@
+packages:
+  atk:
+    dependencies:
+    - glib
+    - libintl
+  atk-dev:
+    dependencies:
+    - atk
+    - atk-headers
+    - glib-dev
+  atk-headers:
+  atk-doc:
+  atk-locale:
+version: 2.26.1
+builddependencies:
+- glib-dev
+- gobject-introspection-dev
+sources:
+-  https://download.gnome.org/sources/atk/2.26/atk-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "atk" "xz"}}
+  (cd atk && ./configure --prefix=/usr --enable-introspection)
+  $(MAKE) -C atk
+  $(MAKE) -C atk DESTDIR=$(shell pwd)/out/atk install
+  {{pkmv "usr/include" "atk" "atk-headers"}}
+  {{pkmv "usr/share/locale" "atk" "atk-locale"}}
+  {{pkmv "usr/share" "atk" "atk-doc"}}
