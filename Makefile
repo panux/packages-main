@@ -18,12 +18,14 @@ $(1).prep:
 	+$(MAKE) -C build $(1).prep
 PREPS += $(1).prep
 ifneq ($(2),testing)
-all.pkgs:: $(1)
+ALLPKGS += $(1)/.build
 endif
 endef
 
 $(foreach p,$(shell find pkgs -name "pkgen.yaml"),$(eval $(call	mkalias,$(shell basename $(dir $(p))),$(shell basename $(shell dirname $(dir $(p)))))))
 
+all.pkgs:
+	+$(MAKE) -C build $(ALLPKGS)
 
 all.prep:
 	+$(MAKE) -C build $(PREPS)
