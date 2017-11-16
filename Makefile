@@ -33,3 +33,6 @@ clean:
 
 kernel.conf:
 	sh tools/kconf.sh $(ARCH)
+
+busybox.conf: busybox.prep
+	sh tools/conf-busybox.sh $(ARCH)
