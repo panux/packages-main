@@ -16,6 +16,8 @@ $(1):
 	+$(MAKE) -C build $(1)/.build
 $(1).prep:
 	+$(MAKE) -C build $(1).prep
+$(1).clean:
+	+$(MAKE) -C build $(1).clean
 PREPS += $(1).prep
 ifneq ($(2),testing)
 ALLPKGS += $(1)/.build
