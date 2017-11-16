@@ -183,8 +183,8 @@ sources:
 - https://www.x.org/releases/individual/xserver/xorg-server-{{.Version}}.tar.bz2
 data:
   bins:
-    xfbdev: xfbdev
-    xvfb: xvfb
+    xfbdev: Xfbdev
+    xvfb: Xvfb
     xorg-server-xnest: Xnest
     xorg-server-xephyr: Xephyr
     xorg-server-xwayland: Xwayland
@@ -201,7 +201,7 @@ script:
   mv out/xorg-server/usr/bin/{{$v}} out/{{$i}}/usr/bin
   {{- end}}
   {{pkmv "usr/include" "xorg-server" "xorg-server-dev"}}
-  {{pkmv "usr/share/alocal" "xorg-server" "xorg-server-dev"}}
   {{pkmv "usr/lib/pkgconfig" "xorg-server" "xorg-server-dev"}}
-  {{pkmv "usr/lib/debug" "xorg-server" "xorg-server-dbg"}}
-  {{pkmv "usr/share" "xorg-server" "xorg-server-doc"}}
+  {{pkmv "usr/share/aclocal" "xorg-server" "xorg-server-dev"}}
+  {{pkmv "usr/share/man" "xorg-server" "xorg-server-doc"}}
+  rm -r out/xorg-server/var/log
