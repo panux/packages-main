@@ -40,6 +40,7 @@ packages:
 version: 7.2.0
 sources:
   - https://ftp.gnu.org/gnu/gcc/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
+  - file://./oninstall.sh
 builddependencies:
   - gcc
   - g++
@@ -112,4 +113,12 @@ script:
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
   mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
+  mkdir -p out/gcc/etc/lpkg.d/alt.d/gcc out/gpp/etc/lpkg.d/alt.d/g++
+  ln -s /usr/bin/gcc out/gcc/etc/lpkg.d/alt.d/gcc/00_gcc.provider
+  ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/g++/00_g++.provider
+  echo /usr/bin/gcc > out/gcc/etc/lpkg.d/alt.d/gcc/.target
+  echo /usr/bin/g++ > out/gpp/etc/lpkg.d/alt.d/g++/.target
+  mv src/oninstall.sh out/gcc/.oninstall
+  chmod 700 out/gcc/.oninstall
+  cp out/gcc/.oninstall out/gpp
   rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib) out/gcc/usr/include
