@@ -1,12 +1,13 @@
 packages:
   basefs:
-version: v0.1
+version: v0.1.1
 oneshell: true
 builder: panux
 script:
 - cd out/basefs
 - mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
-- (cd usr && mkdir lib bin local)
+- (cd usr && mkdir lib bin local share)
+- mkdir usr/share/man
 - (cd usr/local && mkdir lib bin)
 - ln -s usr/bin bin
 - ln -s usr/bin sbin
@@ -16,3 +17,4 @@ script:
 - mkdir run/lock
 - ln -s run/lock var/lock
 - rm -rf out/basefs/build
+- ln -s /usr/share/man/ /usr/man
