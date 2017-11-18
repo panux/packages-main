@@ -10,7 +10,7 @@ packages:
     - libxfont2
     - libxshmfence
     - libxdmcp
-    - eudev-libs
+    - eudev
     - libxau
     - libgbm
     - libgl
@@ -70,7 +70,7 @@ packages:
     - pixman
   xorg-server-xephyr:
     dependencies:
-    - eudev-libs
+    - eudev
     - libepoxy
     - libressl
     - libxau
@@ -106,7 +106,7 @@ packages:
     - xkeyboard-config
   xfbdev:
     dependencies:
-    - eudev-libs
+    - eudev
     - libressl
     - libxau
     - libxdmcp
