@@ -115,10 +115,10 @@ script:
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
   mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
   mkdir -p out/gcc/etc/lpkg.d/alt.d/gcc out/gpp/etc/lpkg.d/alt.d/g++
-  ln -s /usr/bin/gcc out/gcc/etc/lpkg.d/alt.d/gcc/00_gcc.provider
-  ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/g++/00_g++.provider
-  echo /usr/bin/gcc > out/gcc/etc/lpkg.d/alt.d/gcc/.target
-  echo /usr/bin/g++ > out/gpp/etc/lpkg.d/alt.d/g++/.target
+  ln -s /usr/bin/gcc out/gcc/etc/lpkg.d/alt.d/cc/00_gcc.provider
+  ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/c++/00_g++.provider
+  echo /usr/bin/cc > out/gcc/etc/lpkg.d/alt.d/cc/.target
+  echo /usr/bin/c++ > out/gpp/etc/lpkg.d/alt.d/c++/.target
   mv src/oninstall_gcc.sh out/gcc/.oninstall
   mv src/oninstall_g++.sh out/gpp/.oninstall
   chmod 700 out/gcc/.oninstall out/gpp/.oninstall
