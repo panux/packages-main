@@ -40,7 +40,8 @@ packages:
 version: 7.2.0
 sources:
   - https://ftp.gnu.org/gnu/gcc/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
-  - file://./oninstall.sh
+  - file://./oninstall_gcc.sh
+  - file://./oninstall_g++.sh
 builddependencies:
   - gcc
   - g++
@@ -118,7 +119,7 @@ script:
   ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/g++/00_g++.provider
   echo /usr/bin/gcc > out/gcc/etc/lpkg.d/alt.d/gcc/.target
   echo /usr/bin/g++ > out/gpp/etc/lpkg.d/alt.d/g++/.target
-  mv src/oninstall.sh out/gcc/.oninstall
-  chmod 700 out/gcc/.oninstall
-  cp out/gcc/.oninstall out/gpp
+  mv src/oninstall_gcc.sh out/gcc/.oninstall
+  mv src/oninstall_g++.sh out/gpp/.oninstall
+  chmod 700 out/gcc/.oninstall out/gpp/.oninstall
   rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib) out/gcc/usr/include
