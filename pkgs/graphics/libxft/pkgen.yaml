@@ -1,0 +1,40 @@
+packages:
+  libxft:
+    dependencies:
+    - fontconfig
+    - freetype
+    - libx11
+    - libxrender
+  libxft-dev:
+    dependencies:
+    - fontconfig-dev
+    - freetype-dev
+    - libxft
+    - libxft-headers
+    - libxrender-dev
+    - xproto
+    - zlib-dev
+  libxft-headers:
+  libxft-doc:
+    dependencies:
+    - libxft-man
+  libxft-man:
+version: 2.3.2
+builddependencies:
+- zlib-dev
+- fontconfig-dev
+- freetype-dev
+- xproto
+- libxrender-dev
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXft-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXft" "bz2"}}
+  (cd libXft && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXft
+  $(MAKE) -C libXft DESTDIR=$(shell pwd)/out/libxft install
+  {{pkmv "usr/include" "libxft" "libxft-headers"}}
+  {{pkmv "usr/share/man" "libxft" "libxft-man"}}
+  {{pkmv "usr/share" "libxft" "libxft-doc"}}
