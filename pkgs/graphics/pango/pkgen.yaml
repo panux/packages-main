@@ -1,0 +1,55 @@
+packages:
+  pango:
+    dependencies:
+    - busybox
+    - cairo
+    - fontconfig
+    - freetype
+    - glib
+    - harfbuzz
+    - libx11
+    - libxft
+    - libxrender
+  libpango:
+    dependencies:
+    - pango
+  pango-dev:
+    dependencies:
+    - cairo-dev
+    - fontconfig-dev
+    - freetype-dev
+    - glib-dev
+    - harfbuzz-dev
+    - libxft-dev
+    - pango
+    - pango-headers
+  libpango-dev:
+    dependencies:
+    - pango-dev
+  pango-headers:
+  pango-doc:
+    dependencies:
+    - pango-man
+  pango-man:
+version: 1.40.13
+builddependencies:
+- cairo-dev
+- expat-dev
+- gobject-introspection-dev
+- fontconfig-dev
+- freetype-dev
+- glib-dev
+- harfbuzz-dev
+- libxft-dev
+sources:
+- https://download.gnome.org/sources/pango/1.40/pango-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "pango" "xz"}}
+  (cd pango && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C pango
+  $(MAKE) -C pango DESTDIR=$(shell pwd)/out/pango install
+  {{pkmv "usr/include" "pango" "pango-headers"}}
+  {{pkmv "usr/share/gir-1.0" "pango" "pango-dev"}}
+  {{pkmv "usr/share/man" "pango" "pango-man"}}
+  {{pkmv "usr/share" "pango" "pango-doc"}}
