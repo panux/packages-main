@@ -114,7 +114,7 @@ script:
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
   mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
-  mkdir -p out/gcc/etc/lpkg.d/alt.d/gcc out/gpp/etc/lpkg.d/alt.d/g++
+  mkdir -p out/gcc/etc/lpkg.d/alt.d/cc out/gpp/etc/lpkg.d/alt.d/c++
   ln -s /usr/bin/gcc out/gcc/etc/lpkg.d/alt.d/cc/00_gcc.provider
   ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/c++/00_g++.provider
   echo /usr/bin/cc > out/gcc/etc/lpkg.d/alt.d/cc/.target
