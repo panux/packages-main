@@ -27,3 +27,4 @@ script:
   {{pkmv "usr/include" "sudo" "sudo-headers"}}
   {{pkmv "usr/share/man" "sudo" "sudo-man"}}
   {{pkmv "usr/share" "sudo" "sudo-doc"}}
+  rm -r out/sudo/var
