@@ -1,6 +1,6 @@
 packages:
   basefs:
-version: v0.1.1
+version: v0.1.2
 oneshell: true
 builder: panux
 builddependencies:
@@ -11,12 +11,12 @@ script:
 - (cd usr && mkdir lib bin local share)
 - mkdir usr/share/man
 - (cd usr/local && mkdir lib bin)
-- ln -s usr/bin bin
-- ln -s usr/bin sbin
-- ln -s usr/lib lib
+- ln -s /usr/bin bin
+- ln -s /usr/bin sbin
+- ln -s /usr/lib lib
 - (cd var && mkdir cache db games lib local log opt spool tmp)
-- ln -s run var/run
+- ln -s /run var/run
 - mkdir run/lock
-- ln -s run/lock var/lock
+- ln -s /run/lock var/lock
 - rm -rf out/basefs/build
 - ln -s /usr/share/man/ /usr/man
