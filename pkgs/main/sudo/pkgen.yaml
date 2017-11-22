@@ -1,0 +1,29 @@
+packages:
+  sudo:
+    dependencies:
+    - musl
+    - zlib
+  sudo-dev:
+    dependencies:
+    - sudo-headers
+  sudo-headers:
+  sudo-doc:
+    dependencies:
+    - sudo-man
+  sudo-man:
+version: 1.8.21
+builddependencies:
+- zlib-dev
+- bash
+- mdocml
+sources:
+- https://www.sudo.ws/dist/sudo-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "sudo" "gz"}}
+  (cd sudo && ./configure --prefix=/usr --libexecdir=/usr/lib --mandir=/usr/share/man)
+  $(MAKE) -C sudo
+  $(MAKE) -C sudo DESTDIR=$(shell pwd)/out/sudo install
+  {{pkmv "usr/include" "sudo" "sudo-headers"}}
+  {{pkmv "usr/share/man" "sudo" "sudo-man"}}
+  {{pkmv "usr/share" "sudo" "sudo-doc"}}
