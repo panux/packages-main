@@ -1,6 +1,6 @@
 packages:
   basefs:
-version: v0.1.2
+version: v0.1.3
 oneshell: true
 builder: panux
 builddependencies:
@@ -19,4 +19,5 @@ script:
 - mkdir run/lock
 - ln -s /run/lock var/lock
 - rm -rf out/basefs/build
-- ln -s /usr/share/man/ /usr/man
+- ln -s /usr/share/man/ usr/man
+- chmod 1777 tmp
