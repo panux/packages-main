@@ -15,8 +15,8 @@ builddependencies:
 - wget
 script:
 - |
-  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
-  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/libsodium.tar.gz
+  wget https://dl.projectpanux.com/beta/$(ARCH)/pkgs/libsodium-dev.tar.gz
+  wget https://dl.projectpanux.com/beta/$(ARCH)/pkgs/libsodium.tar.gz
   tar -xvf libsodium.tar.gz -C /
   tar -xvf libsodium-dev.tar.gz -C /
   mv src/{{.Version}} src/minisign-{{.Version}}.tar.gz
