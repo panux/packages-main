@@ -10,6 +10,11 @@ packages:
   xmlwf:
     dependencies:
     - libexpat
+  libexpat-dev:
+    dependencies:
+    - libexpat
+    - xmlwf
+    - libexpat-headers
 version: 2.2.4
 sources:
 - https://newcontinuum.dl.sourceforge.net/project/expat/expat/{{.Version}}/expat-{{.Version}}.tar.bz2
