@@ -1,0 +1,42 @@
+packages:
+  lz4:
+    dependencies:
+    - liblz4
+  liblz4:
+    dependencies:
+    - musl
+  liblz4-pkgconfig:
+    dependencies:
+    - liblz4
+    - liblz4-headers
+  liblz4-headers:
+  lz4-dev:
+    dependencies:
+    - lz4
+    - liblz4-pkgconfig
+    - liblz4-headers
+  lz4-man:
+    dependencies:
+    - lz4
+version: 1.8.0
+sources:
+- https://github.com/lz4/lz4/archive/v{{.Version}}.tar.gz
+builder: panux
+builddependencies:
+- gcc
+- musl-dev
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/lz4-{{.Version}}.tar.gz
+  {{extract "lz4" "gz"}}
+  $(MAKE) -C lz4
+  $(MAKE) -C lz4 install DESTDIR=$(shell pwd)/out/lz4
+  {{pkmv "/usr/local/lib/pkgconfig" "lz4" "liblz4-pkgconfig"}}
+  {{pkmv "/usr/local/lib" "lz4" "liblz4"}}
+  {{pkmv "/usr/local/include" "lz4" "liblz4-headers"}}
+  {{pkmv "/usr/local/share/man" "lz4" "lz4-man"}}
+  mv out/lz4/usr/local/bin out/lz4/usr/bin
+  rm -r out/lz4/usr/local
+  rm out/liblz4/usr/local/lib/liblz4.a
+  mkdir out/liblz4/usr/lib
+  for i in out/liblz4/usr/local/lib/liblz4.so*; do ln -s /usr/local/lib/liblz4.so out/liblz4/usr/lib/$$(basename $$i); done
