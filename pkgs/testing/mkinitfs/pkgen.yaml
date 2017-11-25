@@ -1,0 +1,22 @@
+packages:
+  mkinitfs:
+    dependencies:
+    - busybox
+    - cryptsetup-libs
+    - kmod
+    - lddtree
+    - libblkid
+version: 3.2.0
+builddependencies:
+- busybox
+- kmod-dev
+- util-linux-dev
+- cryptsetup-dev
+- linux-headers
+sources:
+- https://git.alpinelinux.org/cgit/mkinitfs/snapshot/mkinitfs-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "mkinitfs" "bz2"}}
+  $(MAKE) -C mkinitfs VERSION={{.Version}}
+  $(MAKE) -C mkinitfs DESTDIR=$(shell pwd)/out/mkinitfs install
