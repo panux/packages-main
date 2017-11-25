@@ -1,0 +1,31 @@
+packages:
+  libxdamage:
+    dependencies:
+    - libx11
+  libxdamage-dev:
+    dependencies:
+    - damageproto
+    - fixesproto
+    - libx11-dev
+    - libxdamage
+    - libxdamage-headers
+    - libxfixes-dev
+    - xproto
+  libxdamage-headers:
+version: 1.1.4
+builddependencies:
+- damageproto
+- libx11-dev
+- libxfixes-dev
+- util-macros
+- xextproto
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXdamage-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXdamage" "bz2"}}
+  (cd libXdamage && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXdamage
+  $(MAKE) -C libXdamage DESTDIR=$(shell pwd)/out/libxdamage install
+  {{pkmv "usr/include" "libxdamage" "libxdamage-headers"}}
