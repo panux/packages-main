@@ -6,6 +6,7 @@ packages:
     - mkfontscale
     - mkfontdir
     - font-cursor-misc
+    - util-macros
 version: 1.0.3
 builddependencies:
 - font-util-dev
