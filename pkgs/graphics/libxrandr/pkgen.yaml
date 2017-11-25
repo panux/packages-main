@@ -1,0 +1,39 @@
+packages:
+  libxrandr:
+    dependencies:
+    - libx11
+    - libxext
+    - libxrender
+  libxrandr-dev:
+    dependencies:
+    - libx11-dev
+    - libxext-dev
+    - libxrandr
+    - libxrandr-headers
+    - libxrender-dev
+    - randrproto
+    - xproto
+  libxrandr-headers:
+  libxrandr-doc:
+    dependencies:
+    - libxrandr-man
+  libxrandr-man:
+version: 1.5.1
+builddependencies:
+- randrproto
+- libxext-dev
+- libx11-dev
+- libxrender-dev
+- xproto
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXrandr-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXrandr" "bz2"}}
+  (cd libXrandr && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libXrandr
+  $(MAKE) -C libXrandr DESTDIR=$(shell pwd)/out/libxrandr install
+  {{pkmv "usr/include" "libxrandr" "libxrandr-headers"}}
+  {{pkmv "usr/share/man" "libxrandr" "libxrandr-man"}}
+  {{pkmv "usr/share" "libxrandr" "libxrandr-doc"}}
