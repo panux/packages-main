@@ -8,6 +8,7 @@ packages:
     dependencies:
     - libx11-dev
     - libxcursor
+    - libxcursor-headers
     - libxfixes-dev
     - libxrender-dev
     - xproto
