@@ -1,0 +1,26 @@
+packages:
+  startup-notification:
+    dependencies:
+    - libx11
+    - libxcb
+    - xcb-util
+  startup-notification-dev:
+    dependencies:
+    - startup-notification
+    - startup-notification-headers
+    - xcb-util-dev
+  startup-notification-headers:
+version: 0.12
+builddependencies:
+- libx11-dev
+- libsm-dev
+- xcb-util-dev
+sources:
+- http://www.freedesktop.org/software/startup-notification/releases/startup-notification-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "startup-notification" "gz"}}
+  (cd startup-notification && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C startup-notification
+  $(MAKE) -C startup-notification DESTDIR=$(shell pwd)/out/startup-notification install
+  {{pkmv "usr/include" "startup-notification" "startup-notification-headers"}}
