@@ -1,0 +1,26 @@
+packages:
+  pax-utils:
+    dependencies:
+    - libcap
+    - scanelf
+  pax-utils-doc:
+    dependencies:
+    - pax-utils-man
+  pax-utils-man:
+  scanelf:
+version: 1.2.2
+builddependencies:
+- linux-headers
+- libcap-dev
+- scanelf
+sources:
+- https://dev.gentoo.org/~vapier/dist/pax-utils-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "pax-utils" "xz"}}
+  $(MAKE) -C pax-utils USE_CAP=yes
+  $(MAKE) -C pax-utils DESTDIR=$(shell pwd)/out/pax-utils install
+  {{pkmv "usr/share/man" "pax-utils" "pax-utils-man"}}
+  {{pkmv "usr/share" "pax-utils" "pax-utils-doc"}}
+  {{pkmv "usr/bin/scanelf" "pax-utils" "scanelf"}}
+  rm -f pax-utils/usr/bin/lddtree
