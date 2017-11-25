@@ -1,0 +1,36 @@
+packages:
+  libxcursor:
+    dependencies:
+    - libx11
+    - libxfixes
+    - libxrender
+  libxcursor-dev:
+    dependencies:
+    - libx11-dev
+    - libxcursor
+    - libxfixes-dev
+    - libxrender-dev
+    - xproto
+  libxcursor-headers:
+  libxcursor-doc:
+    dependencies:
+    - libxcursor-man
+  libxcursor-man:
+version: 1.1.14
+builddependencies:
+- util-macros
+- xproto
+- libx11-dev
+- libxrender-dev
+- libxfixes-dev
+sources:
+- https://www.x.org/releases/individual/lib/libXcursor-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXcursor" "bz2"}}
+  (cd libXcursor && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXcursor
+  $(MAKE) -C libXcursor DESTDIR=$(shell pwd)/out/libxcursor install
+  {{pkmv "usr/include" "libxcursor" "libxcursor-headers"}}
+  {{pkmv "usr/share/man" "libxcursor" "libxcursor-man"}}
+  {{pkmv "usr/share" "libxcursor" "libxcursor-doc"}}
