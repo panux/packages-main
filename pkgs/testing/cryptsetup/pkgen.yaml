@@ -1,0 +1,39 @@
+packages:
+  cryptsetup:
+    dependencies:
+    - cryptsetup-libs
+    - popt
+  cryptsetup-dev:
+    dependencies:
+    - libcryptsetup
+    - cryptsetup-headers
+  cryptsetup-headers:
+  cryptsetup-doc:
+    dependencies:
+    - cryptsetup-man
+  cryptsetup-man:
+  cryptsetup-libs:
+    dependencies:
+    - libcryptsetup
+    - libuuid
+    - libdevmapper
+    - libressl
+  libcryptsetup:
+version: 1.7.5
+builddependencies:
+- lvm2-dev
+- libressl-dev
+- popt-dev
+- util-linux-dev
+sources:
+- https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "cryptsetup" "gz"}}
+  (cd cryptsetup && ./configure --prefix=/usr --libdir=/lib --sbindir=/sbin	--disable-static --with-crypto_backend=openssl)
+  $(MAKE) -C cryptsetup
+  $(MAKE) -C cryptsetup DESTDIR=$(shell pwd)/out/cryptsetup install
+  {{pkmv "usr/include" "cryptsetup" "cryptsetup-headers"}}
+  {{pkmv "usr/lib/libcryptsetup.so*" "cryptsetup" "libcryptsetup"}}
+  {{pkmv "usr/share/man" "cryptsetup" "cryptsetup-man"}}
+  {{pkmv "usr/share" "cryptsetup" "cryptsetup-doc"}}
