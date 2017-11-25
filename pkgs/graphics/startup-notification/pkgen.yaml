@@ -16,7 +16,7 @@ builddependencies:
 - libsm-dev
 - xcb-util-dev
 sources:
-- http://www.freedesktop.org/software/startup-notification/releases/startup-notification-{{.Version}}.tar.gz
+- https://www.freedesktop.org/software/startup-notification/releases/startup-notification-{{.Version}}.tar.gz
 script:
 - |
   {{extract "startup-notification" "gz"}}
