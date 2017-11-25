@@ -1,0 +1,46 @@
+packages:
+  librsvg:
+    dependencies:
+    - cairo
+    - fontconfig
+    - gdk-pixbuf
+    - glib
+    - libcroco
+    - libintl
+    - libxml2
+    - pango
+  librsvg-dev:
+    dependencies:
+    - cairo-dev
+    - gdk-pixbuf-dev
+    - glib-dev
+    - gtk2-dev
+    - libcroco-dev
+    - libgsf-dev
+    - librsvg
+    - librsvg-headers
+  librsvg-headers:
+  librsvg-doc:
+    dependencies:
+    - librsvg-man
+  librsvg-man:
+version: 2.40.19
+builddependencies:
+- glib-dev
+- gtk+2.0-dev
+- cairo-dev
+- libcroco-dev
+- libgsf-dev
+- bzip2-dev
+- gobject-introspection-dev
+sources:
+- https://download.gnome.org/sources/librsvg/2.40/librsvg-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "librsvg" "xz"}}
+  (cd librsvg && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/librsvg)
+  $(MAKE) -C librsvg
+  $(MAKE) -C librsvg DESTDIR=$(shell pwd)/out/librsvg install
+  {{pkmv "usr/include" "librsvg" "librsvg-headers"}}
+  {{pkmv "usr/share/man" "librsvg" "librsvg-man"}}
+  {{pkmv "usr/share" "librsvg" "librsvg-doc"}}
