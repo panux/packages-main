@@ -1,0 +1,87 @@
+packages:
+  gtk2:
+    dependencies:
+    - atk
+    - busybox
+    - cairo
+    - cups-libs
+    - fontconfig
+    - gdk-pixbuf
+    - glib
+    - libintl
+    - libx11
+    - libxcomposite
+    - libxcursor
+    - libxdamage
+    - libxext
+    - libxfixes
+    - libxi
+    - libxrandr
+    - libxrender
+    - musl
+    - pango
+    - shared-mime-info
+  gtk2-dev:
+    dependencies:
+    - atk-dev
+    - cairo
+    - cairo-dev
+    - gdk-pixbuf
+    - gdk-pixbuf-dev
+    - glib
+    - glib-dev
+    - gtk2
+    - gtk2-headers
+#   - intltool        likely unessesary and has too many perl dependencies for the moment
+    - libxdamage-dev
+    - musl
+    - pango
+    - pango-dev
+  gtk2-headers:
+  gtk2-doc:
+  gtk2-locale:
+    dependencies:
+    - shared-mime-info
+version: 2.24.31
+builddependencies:
+- atk-dev
+- cairo-dev
+- intltool
+- libxdamage-dev
+- pango-dev
+- autoconf
+- automake
+- libtool
+- cups-dev
+- expat-dev
+- gdk-pixbuf-dev
+- gettext-dev
+- glib-dev
+- gnutls-dev
+- gobject-introspection-dev
+- gtk-doc
+- hicolor-icon-theme
+- libice-dev
+- libx11-dev
+- libxcomposite-dev
+- libxcursor-dev
+- libxext-dev
+- libxfixes-dev
+- libxrandr-dev
+- libxi-dev
+- zlib-dev
+sources:
+- https://download.gnome.org/sources/gtk+/2.24/gtk+-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gtk+" "xz"}}
+  (cd gtk+ && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-xinput=yes --with-included-loaders=png)
+  $(MAKE) -C gtk+
+  $(MAKE) -C gtk+ DESTDIR=$(shell pwd)/out/gtk2 install
+  {{pkmv "usr/include" "gtk2" "gtk2-headers"}}
+  {{pkmv "usr/lib/gtk-2.0/include" "gtk2" "gtk2-headers"}}
+  {{pkmv "usr/share/gtk-doc" "gtk2" "gtk2-doc"}}
+  {{pkmv "usr/share/gtk-locale" "gtk2" "gtk2-locale"}}
+  {{pkmv "usr/share/gtk-2.0" "gtk2" "gtk2-dev"}}
+  {{pkmv "usr/share/aclocal" "gtk2" "gtk2-dev"}}
+  {{pkmv "usr/share/gir-1.0" "gtk2" "gtk2-dev"}}
