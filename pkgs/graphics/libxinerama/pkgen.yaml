@@ -1,0 +1,34 @@
+packages:
+  libxinerama:
+    dependencies:
+    - libx11
+    - libxext
+  libxinerama-dev:
+    dependencies:
+    - libx11-dev
+    - libxext-dev
+    - libxinerama
+    - libxinerama-headers
+    - xineramaproto
+  libxinerama-headers:
+  libxinerama-doc:
+    dependencies:
+    - libxinerama-man
+  libxinerama-man:
+version: 1.1.3
+builddependencies:
+- xineramaproto
+- libx11-dev
+- libxext-dev
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXinerama-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXinerama" "bz2"}}
+  (cd libXinerama && ./configure --prefix=/usr)
+  $(MAKE) -C libXinerama
+  $(MAKE) -C libXinerama DESTDIR=$(shell pwd)/out/libxinerama install
+  {{pkmv "usr/include" "libxinerama" "libxinerama-headers"}}
+  {{pkmv "usr/share/man" "libxinerama" "libxinerama-man"}}
+  {{pkmv "usr/share" "libxinerama" "libxinerama-doc"}}
