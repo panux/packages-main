@@ -1,0 +1,37 @@
+packages:
+  libxcomposite:
+    dependencies:
+    - libx11
+  libxcomposite-dev:
+    dependencies:
+    - compositeproto
+    - libx11-dev
+    - libxcomposite
+    - libxcomposite-headers
+    - libxext-dev
+    - libxfixes-dev
+    - xproto
+  libxcomposite-headers:
+  libxcomposite-doc:
+    dependencies:
+    - libxcomposite-man
+  libxcomposite-man:
+version: 0.4.4
+builddependencies:
+- libx11-dev
+- libxext-dev
+- libxfixes-dev
+- compositeproto
+- util-macros
+- xproto
+sources:
+- https://www.x.org/releases/individual/lib/libXcomposite-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXcomposite" "bz2"}}
+  (cd libXcomposite && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXcomposite
+  $(MAKE) -C libXcomposite DESTDIR=$(shell pwd)/out/libxcomposite install
+  {{pkmv "usr/include" "libxcomposite" "libxcomposite-headers"}}
+  {{pkmv "usr/share/man" "libxcomposite" "libxcomposite-man"}}
+  {{pkmv "usr/share" "libxcomposite" "libxcomposite-doc"}}
