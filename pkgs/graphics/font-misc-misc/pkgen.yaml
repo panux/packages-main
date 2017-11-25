@@ -5,7 +5,8 @@ packages:
     - font-alias
     - mkfontscale
     - mkfontdir
-    - font-misc-misc
+    - fontconfig
+    - util-macros
 version: 1.1.2
 builddependencies:
 - font-util-dev
