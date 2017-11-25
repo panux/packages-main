@@ -3,10 +3,32 @@ packages:
     dependencies:
     - glib
     - libxml2
+    - libice
     - libintl
+    - libsm
+    - libx11
+    - libxcursor
+    - libxext
+    - libxinerama
+    - libxrandr
+    - openbox-libs
+    - startup-notification
     - openbox-themes
+  openbox-libs:
+    dependencies:
     - libobt
     - libobrender
+    - cairo
+    - glib
+    - imlib2
+    - librsvg
+    - libx11
+    - libxext
+    - libxft
+    - libxinerama
+    - libxml2
+    - libxrandr
+    - pango
   openbox-locale:
   openbox-themes:
   openbox-doc:
@@ -15,6 +37,9 @@ packages:
   openbox-gnome:
     dependencies:
     - openbox
+    - glib
+    - libx11
+    - libxau
   openbox-kde:
     dependencies:
     - openbox
@@ -25,17 +50,32 @@ packages:
     dependencies:
     - openbox-pkgconfig
     - openbox-headers
+    - glib-dev
+    - imlib2-dev
+    - librsvg-dev
+    - libxcursor-dev
+    - libxft-dev
+    - libxinerama-dev
+    - libxml2-dev
+    - libxrandr-dev
+    - openbox-libs
+    - pango-dev
+    - pkgconf
+    - startup-notification-dev
   libobt:
   libobrender:
 version: 3.6.1
 builddependencies:
+- libxcursor-dev
+- libxrandr-dev
+- libxinerama-dev
+- startup-notification-dev
 - pango-dev
 - libxml2-dev
 - imlib2-dev
 - librsvg-dev
 - gettext-dev
 - libtool
-- gcc
 - m4
 - automake
 - autoconf
