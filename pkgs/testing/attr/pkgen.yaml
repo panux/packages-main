@@ -1,0 +1,22 @@
+packages:
+  attr:
+builddependencies:
+- gcc
+- zlib-dev
+- libtool
+- autoconf
+- automake
+- bash
+version: 2.4.47
+sources:
+- https://download.savannah.nongnu.org/releases/attr/attr-{{.Version}}.src.tar.gz
+- https://git.alpinelinux.org/cgit/aports/tree/main/attr/fix-decls.patch
+- https://git.alpinelinux.org/cgit/aports/tree/main/attr/fix-throw.patch
+script:
+- |
+  mv src/attr-{{.Version}}.src.tar.gz src/attr-{{.Version}}.tar.gz
+  {{extract "attr" "gz"}}
+  (cd attr && patch -p1 -i ../src/fix-decls.patch && patch -p1 -i ../src/fix-throw.patch)
+  (cd attr && DEBUG=-DNDEBUG INSTALL_USER=root INSTALL_GROUP=root ./configure --build={{confarch}}-pc-linux-gnu --host={{confarch}}-pc-linux-gnu --prefix=/usr --disable-static --disable-gettext)
+  $(MAKE) -C attr SHELL=/bin/bash
+  $(MAKE) -C attr install DESTDIR=$(shell pwd)/out/attr
