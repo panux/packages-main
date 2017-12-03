@@ -1,0 +1,13 @@
+packages:
+  lxmenu-data:
+version: 0.1.4
+builddependencies:
+- intltool
+sources:
+- https://sourceforge.net/projects/lxde/files/lxmenu-data%20%28desktop%20menu%29/lxmenu-data%20{{.Version}}/lxmenu-data-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "lxmenu-data" "xz"}}
+  (cd lxmenu-data && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C lxmenu-data
+  $(MAKE) -C lxmenu-data DESTDIR=$(shell pwd)/out/lxmenu-data install
