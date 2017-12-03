@@ -1,0 +1,48 @@
+packages:
+  polkit:
+    dependencies:
+    - expat
+    - glib
+  polkit-dev:
+    dependencies:
+    - polkit
+    - polkit-headers
+    - glib-dev
+#   - dbus-glib-dev
+#   - eggdbus-dev
+  polkit-headers:
+  polkit-doc:
+    dependencies:
+    - polkit-man
+  polkit-man:
+version: 0.105
+builddependencies:
+- eggdbus-dev
+- dbus-glib-dev
+- expat-dev
+- glib-dev
+- gtk-doc
+- gobject-introspection-dev
+- intltool
+- autoconf
+- automake
+- libtool
+- patch
+sources:
+- https://www.freedesktop.org/software/polkit/releases/polkit-{{.Version}}.tar.gz
+- https://git.alpinelinux.org/cgit/aports/plain/main/polkit/0001-Bug-50145-make-netgroup-support-optional.patch?h=3.6-stable
+- https://git.alpinelinux.org/cgit/aports/plain/main/polkit/fix-parallel-make.patch?h=3.6-stable
+script:
+- |
+  {{extract "polkit" "gz"}}
+  (cd polkit && patch -p1 -i ../src/0001-Bug-50145-make-netgroup-support-optional.patch)
+  (cd polkit && patch -p1 -i ../src/fix-parallel-make.patch)
+  (cd polkit && libtoolize --force && aclocal && autoconf && automake --add-missing)
+  (cd polkit && ./configure --prefix=/usr --sysconfdir=/etc	--mandir=/usr/share/man	--infodir=/usr/share/info	--libexecdir=/usr/lib/polkit-1 --localstatedir=/var --disable-static --disable-nls --with-authfw=shadow --disable-gtk-doc --disable-gtk-doc-html --disable-gtk-doc-pdf)
+  $(MAKE) -C polkit
+  $(MAKE) -C polkit DESTDIR=$(shell pwd)/out/polkit install
+  {{pkmv "usr/include" "polkit" "polkit-headers"}}
+  {{pkmv "usr/share/gir-1.0" "polkit" "polkit-dev"}}
+  {{pkmv "usr/lib/pkgconfig" "polkit" "polkit-dev"}}
+  {{pkmv "usr/share/man" "polkit" "polkit-man"}}
+  {{pkmv "usr/share/locale" "polkit" "polkit-locale"}}
