@@ -26,4 +26,4 @@ script:
   {{pkmv "usr/include" "pkgconf" "pkgconf-headers"}}
   {{pkmv "usr/share/man" "pkgconf" "pkgconf-man"}}
   {{pkmv "usr/share" "pkgconf" "pkgconf-doc"}}
-  ln -s out/pkgconf/usr/bin/pkgconf out/pkgconf/usr/bin/pkg-config
+  ln -s /usr/bin/pkgconf out/pkgconf/usr/bin/pkg-config
