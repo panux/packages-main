@@ -1,0 +1,34 @@
+packages:
+  libxres:
+    dependencies:
+    - libx11
+    - libxext
+  libxres-dev:
+    dependencies:
+    - libx11-dev
+    - libxext-dev
+    - libxres
+    - libxres-headers
+    - resourceproto
+    - xproto
+  libxres-doc:
+    dependencies:
+    - libxres-man
+  libxres-man:
+version: 1.0.7
+builddependencies:
+- xproto
+- resourceproto
+- libx11-dev
+- libxext-dev
+sources:
+- https://xorg.freedesktop.org/releases/individual/lib/libXres-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXres" "bz2"}}
+  (cd libXres && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXres
+  $(MAKE) -C libXres DESTDIR=$(shell pwd)/out/libxres install
+  {{pkmv "usr/include" "libxres" "libxres-headers"}}
+  {{pkmv "usr/share/man" "libxres" "libxres-man"}}
+  {{pkmv "usr/share" "libxres" "libxres-doc"}}
