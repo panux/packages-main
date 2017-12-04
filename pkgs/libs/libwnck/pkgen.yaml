@@ -1,0 +1,48 @@
+packages:
+  libwnck:
+    dependencies:
+    - atk
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libx11
+    - libxres
+    - pango
+    - startup-notification
+  libwnck-dev:
+    dependencies:
+    - cairo-dev
+    - glib-dev
+    - gtk2-dev
+    - libwnck
+    - libwnck-headers
+    - libx11-dev
+    - libxres-dev
+    - pango-dev
+    - startup-notification-dev
+  libwnck-headers:
+  libwnck-doc:
+  libwnck-locale:
+version: 2.31.0
+builddependencies:
+- libxres-dev
+- intltool
+- glib-dev
+- gtk+2.0-dev
+- libx11-dev
+- pango-dev
+- cairo-dev
+- startup-notification-dev
+sources:
+- https://ftp.gnome.org/pub/gnome/sources/libwnck/2.31/libwnck-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "libwnck" "xz"}}
+  (cd libwnck && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static)
+  $(MAKE) -C libwnck
+  $(MAKE) -C libwnck DESTDIR=$(shell pwd)/out/libwnck install
+  {{pkmv "usr/include" "libwnck" "libwnck-headers"}}
+  {{pkmv "usr/share/locale" "libwnck" "libwnck-locale"}}
+  {{pkmv "usr/share" "libwnck" "libwnck-doc"}}
