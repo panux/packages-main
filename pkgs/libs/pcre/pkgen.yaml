@@ -3,7 +3,13 @@ packages:
     dependencies:
     - musl
     - ncurses
+  pcre-dev:
+    depedencies:
+    - pcre
+    - pcre-headers
   pcre-doc:
+    dependencies:
+    - pcre-man
   pcre-man:
   pcre-headers:
 version: 8.41
@@ -15,16 +21,11 @@ builddependencies:
 - bzip2-dev
 - readline-dev
 script:
-- tar -xf src/pcre-{{.Version}}.tar.bz2
-- mv pcre-{{.Version}} pcre
-- (cd pcre && ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-8.41 --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static)
-- $(MAKE) -C pcre
-- $(MAKE) -C pcre check
-- $(MAKE) -C pcre install DESTDIR=$(shell pwd)/out/pcre
-- rm -r out/pcre/usr/lib/pkgconfig
-- mkdir -p out/pcre-doc/usr/share
-- mv out/pcre/usr/share/doc out/pcre-doc/usr/share/doc
-- mkdir -p out/pcre-man/usr/share
-- mv out/pcre/usr/share/man out/pcre-doc/usr/share/man
-- mkdir -p out/pcre-headers/usr
-- mv out/pcre/usr/include out/pcre-headers/usr/include
+- |
+  {{extract "pcre" "bz2"}}
+  (cd pcre && ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-{{.Version}} --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static)
+  $(MAKE) -C pcre
+  $(MAKE) -C pcre install DESTDIR=$(shell pwd)/out/pcre
+  {{pkmv "usr/share/man" "pcre" "pcre-man"}}
+  {{pkmv "usr/share" "pcre" "pcre-doc"}}
+  {{pkmv "usr/include" "pcre" "pcre-headers"}}
