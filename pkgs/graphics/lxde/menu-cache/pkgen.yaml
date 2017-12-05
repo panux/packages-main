@@ -1,0 +1,23 @@
+packages:
+  menu-cache:
+    dependencies:
+    - glib
+  menu-cache-dev:
+    depedencies:
+    - glib-dev
+    - menu-cache
+    - menu-cache-headers
+  menu-cache-headers:
+version: 0.5.1
+builddependencies:
+- glib-dev
+sources:
+- https://downloads.sourceforge.net/lxde/menu-cache-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "menu-cache" "gz"}}
+  (cd menu-cache && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/menu-cache --disable-static)
+  $(MAKE) -C menu-cache
+  $(MAKE) -C menu-cache DESTDIR=$(shell pwd)/out/menu-cache install
+  {{pkmv "usr/include" "menu-cache" "menu-cache-headers"}}
