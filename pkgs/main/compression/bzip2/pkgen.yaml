@@ -8,6 +8,8 @@ packages:
   bzip2-dev:
     dependencies:
     - libbz2-headers
+    - bzip2
+    - libbz2
   bzip2-doc:
 version: 1.0.6
 builddependencies:
