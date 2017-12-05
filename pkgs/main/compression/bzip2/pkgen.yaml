@@ -27,4 +27,4 @@ script:
   (cd bzip2 && ln -s libbz2.so.{{.Version}} ../out/libbz2/usr/lib/libbz2.so.1)
   {{pkmv "usr/lib/libbz2.*" "bzip2" "libbz2"}}
   {{pkmv "usr/include" "bzip2" "libbz2"}}
-  {{pkmv "usr/share" "bzip2" "libbz2-doc"}}
+  {{pkmv "usr/share" "bzip2" "bzip2-doc"}}
