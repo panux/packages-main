@@ -1,0 +1,26 @@
+packages:
+  wireless-tools:
+    dependencies:
+    - musl
+  wireless-tools-dev:
+    depedencies:
+    - wireless-headers
+  wireless-tools-headers:
+  wireless-tools-doc:
+    depedencies:
+    - wireless-tools-man
+  wireless-tools-man:
+version: 29
+builddependencies:
+- linux-headers
+sources:
+- https://hewlettpackard.github.io/wireless-tools/wireless_tools.{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  tar xf src/wireless_tools.{{.Version}}.tar.gz
+  mv wireless_tools.{{.Version}} wireless-tools
+  $(MAKE) -C wireless-tools
+  $(MAKE) -C wireless-tools INSTALL_DIR=$(shell pwd)/out/wireless-tools/usr/sbin INSTALL_LIB=$(shell pwd)/out/wireless-tools/usr/lib INSTALL_INC=$(shell pwd)/out/wireless-tools/usr/include	INSTALL_MAN=$(shell pwd)/out/wireless-tools/usr/share/man install
+  {{pkmv "usr/include" "wireless-tools" "wireless-tools-headers"}}
+  {{pkmv "usr/share/man" "wireless-tools" "wireless-tools-man"}}
