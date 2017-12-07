@@ -1,0 +1,26 @@
+packages:
+  libexif:
+    dependencies:
+    - musl
+  libexif-dev:
+    dependencies:
+    - libexif
+    - libexif-headers
+  libexif-headers:
+  libexif-doc:
+    dependencies:
+    - libexif-locale
+  libexif-locale:
+version: 0.6.21
+builder: panux
+sources:
+- https://downloads.sf.net/sourceforge/libexif/libexif-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libexif" "bz2"}}
+  (cd libexif && ./configure --prefix=/usr)
+  $(MAKE) -C libexif
+  $(MAKE) -C libexif DESTDIR=$(shell pwd)/out/libexif install
+  {{pkmv "usr/include" "libexif" "libexif-headers"}}
+  {{pkmv "usr/share/locale" "libexif" "libexif-locale"}}
+  {{pkmv "usr/share" "libexif" "libexif-doc"}}
