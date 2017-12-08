@@ -1,0 +1,35 @@
+packages:
+  dbus-glib:
+    dependencies:
+    - dbus-libs
+    - expat
+    - glib
+  dbus-glib-dev:
+    dependencies:
+    - dbus-dev
+    - dbus-glib
+    - dbus-glib-headers
+    - glib-dev
+    - pkgconf
+  dbus-glib-headers:
+  dbus-glib-doc:
+    dependencies:
+    - dbus-glib-man
+  dbus-glib-man:
+version: 0.108
+builddependencies:
+- dbus-dev
+- glib-dev
+- gettext-dev
+- expat-dev
+sources:
+- https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "dbus-glib" "gz"}}
+  (cd dbus-glib && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-static=no --enable-bash-completion=no)
+  $(MAKE) -C dbus-glib
+  $(MAKE) -C dbus-glib DESTDIR=$(shell pwd)/out/dbus-glib install
+  {{pkmv "usr/include" "dbus-glib" "dbus-glib-headers"}}
+  {{pkmv "usr/share/man" "dbus-glib" "dbus-glib-man"}}
+  {{pkmv "usr/share" "dbus-glib" "dbus-glib-doc"}}
