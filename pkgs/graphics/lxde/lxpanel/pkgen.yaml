@@ -1,0 +1,53 @@
+packages:
+  lxpanel:
+    dependencies:
+    - gtk2
+    - libfm
+    - libwnck
+    - libxmu
+    - libxpm
+    - cairo
+    - pango
+    - gdk-pixbuf
+    - libx11
+    - lxmenu-data
+    - lxpanel-data
+    - menu-cache
+    - alsa-lib
+    - wireless-tools
+    - pkgconf
+    - gettext
+    - glib
+  lxpanel-doc:
+    dependencies:
+    - lxpanel-man
+    - lxpanel-locale
+  lxpanel-man:
+  lxpanel-locale:
+  lxpanel-data:
+version: 0.9.3
+builddependencies:
+- autoconf
+- automake
+- intltool
+- alsa-lib-dev
+- gtk+2.0-dev
+- menu-cache-dev
+- libwnck-dev
+- libfm-dev
+- libxml2-dev
+- keybinder-dev
+- wireless-tools-dev
+- wireless-tools
+sources:
+- https://sourceforge.net/projects/lxde/files/LXPanel%20%28desktop%20panel%29/LXPanel%200.9.x/lxpanel-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "lxpanel" "xz"}}
+  (cd lxpanel && ./configure --prefix=/usr --with-x --with-plugins=netstatus,volume,cpu,deskno,batt,kbled,xkb,thermal,cpufreq,monitors)
+  ls /usr/include
+  $(MAKE) -C lxpanel
+  $(MAKE) -C lxpanel DESTDIR=$(shell pwd)/out/lxpanel install
+  {{pkmv "usr/share/man" "lxpanel" "lxpanel-man"}}
+  {{pkmv "usr/share/locale" "lxpanel" "lxpanel-locale"}}
+  {{pkmv "usr/share/lxpanel" "lxpanel" "lxpanel-data"}}
