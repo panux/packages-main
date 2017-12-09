@@ -1,0 +1,34 @@
+packages:
+  libxpm:
+    dependencies:
+    - libx11
+    - libxext
+    - libxt
+  libxpm-dev:
+    dependencies:
+    - libx11-dev
+    - libxpm
+    - libxpm-headers
+    - pkgconf
+  libxpm-headers:
+  libxpm-doc:
+    dependencies:
+    - libxpm-man
+  libxpm-man:
+version: 3.5.12
+builddependencies:
+- libxt-dev
+- libxext-dev
+- libx11-dev
+- util-linux-dev
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXpm-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXpm" "bz2"}}
+  (cd libXpm && ac_cv_search_gettext=no ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C libXpm
+  $(MAKE) -C libXpm DESTDIR=$(shell pwd)/out/libxpm install
+  {{pkmv "usr/include" "libxpm" "libxpm-headers"}}
+  {{pkmv "usr/share/man" "libxpm" "libxpm-man"}}
