@@ -1,0 +1,20 @@
+packages:
+  alsa-lib:
+  alsa-lib-dev:
+    dependencies:
+    - alsa-lib
+    - alsa-lib-dev
+  alsa-lib-headers:
+version: 1.1.5
+builddependencies:
+- linux-headers
+sources:
+- https://ftp.osuosl.org/pub/blfs/conglomeration/alsa-lib/alsa-lib-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "alsa-lib" "bz2"}}
+  autoreconf --install
+  (cd alsa-lib && ./configure --prefix=/usr)
+  $(MAKE) -C alsa-lib
+  $(MAKE) -C alsa-lib DESTDIR=$(shell pwd)/out/alsa-lib install
+  {{pkmv "usr/include" "alsa-lib" "alsa-lib-headers"}}
