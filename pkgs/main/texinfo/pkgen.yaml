@@ -1,0 +1,23 @@
+packages:
+  texinfo:
+    dependencies:
+    - ncurses
+    - perl
+  texinfo-doc:
+    dependencies:
+    - texinfo-man
+  texinfo-man:
+version: 6.5
+builddependencies:
+- ncurses-dev
+- perl-dev
+sources:
+- https://ftp.gnu.org/pub/gnu/texinfo/texinfo-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "texinfo" "xz"}}
+  (cd texinfo && ./configure --prefix=/usr)
+  $(MAKE) -C texinfo
+  $(MAKE) -C texinfo DESTDIR=$(shell pwd)/out/texinfo install
+  {{pkmv "usr/share/man" "texinfo" "texinfo-man"}}
+  {{pkmv "usr/share/info" "texinfo" "texinfo-doc"}}
