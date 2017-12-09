@@ -1,0 +1,24 @@
+packages:
+  automake:
+    dependencies:
+    - perl
+  automake-doc:
+    dependencies:
+    - automake-man
+  automake-man:
+version: 1.15.1
+builddependencies:
+- m4
+- perl
+- autoconf
+sources:
+- https://ftp.gnu.org/pub/gnu/automake/automake-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "automake" "gz"}}
+  (cd automake && ./configure --prefix=/usr)
+  $(MAKE) -C automake
+  $(MAKE) -C automake DESTDIR=$(shell pwd)/out/automake install
+  {{pkmv "usr/share/man" "automake" "automake-man"}}
+  {{pkmv "usr/share/doc" "automake" "automake-doc"}}
+  {{pkmv "usr/share/info" "automake" "automake-doc"}}

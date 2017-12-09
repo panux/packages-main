@@ -1,0 +1,17 @@
+packages:
+  m4:
+  m4-doc:
+    dependencies:
+    - m4-man
+  m4-man:
+version: 1.4.18
+sources:
+- https://ftp.gnu.org/gnu/m4/m4-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "m4" "gz"}}
+  (cd m4 && ./configure --prefix=/usr)
+  $(MAKE) -C m4
+  $(MAKE) -C m4 DESTDIR=$(shell pwd)/out/m4 install
+  {{pkmv "usr/share/man" "m4" "m4-man"}}
+  {{pkmv "usr/share" "m4" "m4-doc"}}

@@ -1,0 +1,22 @@
+packages:
+  autoconf:
+    dependencies:
+    - m4
+  autoconf-doc:
+    dependencies:
+    - autoconf-man
+  autoconf-man:
+version: 2.69
+builddependencies:
+- m4
+- perl
+sources:
+- https://ftp.gnu.org/pub/gnu/autoconf/autoconf-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "autoconf" "gz"}}
+  (cd autoconf && ./configure --prefix=/usr)
+  $(MAKE) -C autoconf
+  $(MAKE) -C autoconf DESTDIR=$(shell pwd)/out/autoconf install
+  {{pkmv "usr/share/man" "autoconf" "autoconf-man"}}
+  {{pkmv "usr/share/info" "autoconf" "autoconf-doc"}}
