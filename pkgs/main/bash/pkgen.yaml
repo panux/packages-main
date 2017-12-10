@@ -10,7 +10,7 @@ packages:
   bash-locale:
     dependencies:
     - bash
-version: 4.4
+version: 4.4.12
 builddependencies:
 - gcc
 - musl-dev
