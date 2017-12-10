@@ -1,0 +1,25 @@
+packages:
+  libtool:
+    dependencies:
+    - bash
+    - libltdl
+  libtool-doc:
+    dependencies:
+    - libtool-man
+  libtool-man:
+  libltdl:
+version: 2.4.6
+builddependencies:
+- m4
+- help2man
+sources:
+- https://ftp.gnu.org/pub/gnu/libtool/libtool-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "libtool" "gz"}}
+  (cd libtool && ./configure --prefix=/usr --disable-static)
+  $(MAKE) -C libtool
+  $(MAKE) -C libtool DESTDIR=$(shell pwd)/out/libtool install
+  {{pkmv "usr/lib/libltdl.so*" "libtool" "libltdl"}}
+  {{pkmv "usr/share/info" "libtool" "libtool-doc"}}
+  {{pkmv "usr/share/man" "libtool" "libtool-man"}}
