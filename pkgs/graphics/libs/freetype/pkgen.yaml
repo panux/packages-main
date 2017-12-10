@@ -1,0 +1,34 @@
+packages:
+  freetype:
+    dependencies:
+    - zlib
+    - libbz2
+    - libpng
+  freetype-doc:
+    dependencies:
+    - freetype-man
+  freetype-man:
+  freetype-dev:
+    dependencies:
+    - zlib-dev
+    - freetype
+    - freetype-headers
+  freetype-headers:
+version: 2.8.1
+builddependencies:
+- zlib-dev
+- libpng-dev
+- bzip2-dev
+sources:
+- https://download.savannah.gnu.org/releases/freetype/freetype-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "freetype" "bz2"}}
+  (cd freetype && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  $(MAKE) -C freetype
+  $(MAKE) -C freetype DESTDIR=$(shell pwd)/out/freetype install
+  {{pkmv "usr/share/man" "freetype" "freetype-man"}}
+  {{pkmv "usr/include" "freetype" "freetype-headers"}}
+  {{pkmv "usr/share/aclocal" "freetype" "freetype-dev"}}
+  {{pkmv "usr/bin" "freetype" "freetype-dev"}}
