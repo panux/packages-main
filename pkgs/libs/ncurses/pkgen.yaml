@@ -16,21 +16,15 @@ packages:
     - ncurses-headers
     - ncurses
 version: 6.0
-builddependencies:
-- gcc
-- libc-dev
+builder: panux
 sources:
 - https://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{.Version}}.tar.gz
 script:
 - |
   {{extract "ncurses" "gz"}}
-  (cd ncurses && ./configure --with-shared --enable-widec --disable-static)
+  (cd ncurses && ./configure --with-shared --enable-widec)
   make -C ncurses
   make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
-  mkdir -p out/ncurses-man/usr/share
-  mv out/ncurses/usr/share/man out/ncurses-man/usr/share/man
-  mkdir -p out/ncurses-terminfo/usr/share
-  mv out/ncurses/usr/share/terminfo out/ncurses-terminfo/usr/share/terminfo
-  mkdir out/ncurses-headers/usr
-  mv out/ncurses/usr/include out/ncurses-headers/usr/include
-  rm -rf out/ncurses/usr/share
+  {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}
+  {{pkmv "usr/share/terminfo" "ncurses" "ncurses-terminfo"}}
+  {{pkmv "usr/include" "ncurses" "ncurses-headers"}}
