@@ -1,0 +1,14 @@
+packages:
+  file:
+    dependencies:
+version: 5.32
+sources:
+- https://ftp.icm.edu.pl/packages/file/file-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "file" "gz"}}
+  bash --version
+  (cd file && ./configure --prefix=/usr --datadir=/usr/share)
+  $(MAKE) -C file
+  $(MAKE) -C file DESTDIR=$(shell pwd)/out/file install
