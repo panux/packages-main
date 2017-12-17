@@ -8,7 +8,6 @@ builder: panux
 script:
 - |
   {{extract "file" "gz"}}
-  bash --version
   (cd file && ./configure --prefix=/usr --datadir=/usr/share)
   $(MAKE) -C file
   $(MAKE) -C file DESTDIR=$(shell pwd)/out/file install
