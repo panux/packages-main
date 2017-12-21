@@ -13,8 +13,10 @@ sources:
 - https://github.com/AdelieLinux/efivar/archive/{{.Version}}.tar.gz
 - file://./haxe.h
 builddependencies:
-- popt-dev
+- popt
+- popt-headers
 - linux-headers
+builder: panux
 script:
 - tar -xf src/{{.Version}}.tar.gz
 - cat src/haxe.h >> /usr/include/strings.h
