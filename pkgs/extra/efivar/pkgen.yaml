@@ -15,8 +15,6 @@ sources:
 builddependencies:
 - popt-dev
 - linux-headers
-- gcc
-- musl-dev
 script:
 - tar -xf src/{{.Version}}.tar.gz
 - cat src/haxe.h >> /usr/include/strings.h

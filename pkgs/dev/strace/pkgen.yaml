@@ -5,17 +5,16 @@ packages:
   strace-doc:
 version: 4.18
 builddependencies:
-- libc-dev
 - linux-headers
 - autoconf
 - automake
 sources:
-- https://fossies.org/linux/misc/strace-{{.Version}}.tar.xz
+- https://sourceforge.net/projects/strace/files/strace/{{.Version}}/strace-{{.Version}}.tar.xz
+builder: panux
 script:
 - |
   {{extract "strace" "xz"}}
   (cd strace && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
   $(MAKE) -C strace
   $(MAKE) -C strace DESTDIR=$(shell pwd)/out/strace install
-  mkdir -p out/strace-doc/usr
-  mv out/strace/usr/share out/strace-doc/usr
+  {{pkmv "usr/share" "strace" "strace-doc"}}

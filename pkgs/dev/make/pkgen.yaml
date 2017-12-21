@@ -5,13 +5,9 @@ packages:
     - ncurses
   make-doc:
 version: 4.2
-builddependencies:
-- gcc
-- libc-dev
-- ncurses-dev
-- gawk
 sources:
 - https://ftp.gnu.org/gnu/make/make-{{.Version}}.tar.gz
+builder: panux
 script:
 - tar -xf src/make-{{.Version}}.tar.gz
 - mv make-{{.Version}} make

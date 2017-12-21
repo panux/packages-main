@@ -6,6 +6,7 @@ version: 1.26
 builddependencies:
 sources:
 - https://github.com/ncopa/lddtree/archive/v{{.Version}}.tar.gz
+builder: panux
 script:
 - |
   tar xf src/v{{.Version}}.tar.gz

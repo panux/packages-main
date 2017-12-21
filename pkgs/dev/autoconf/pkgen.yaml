@@ -12,6 +12,7 @@ builddependencies:
 - perl
 sources:
 - https://ftp.gnu.org/pub/gnu/autoconf/autoconf-{{.Version}}.tar.gz
+builder: panux
 script:
 - |
   {{extract "autoconf" "gz"}}

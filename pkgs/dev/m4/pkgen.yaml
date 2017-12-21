@@ -5,8 +5,11 @@ packages:
     - m4-man
   m4-man:
 version: 1.4.18
+builddependencies:
+- texinfo
 sources:
 - https://ftp.gnu.org/gnu/m4/m4-{{.Version}}.tar.gz
+builder: panux
 script:
 - |
   {{extract "m4" "gz"}}

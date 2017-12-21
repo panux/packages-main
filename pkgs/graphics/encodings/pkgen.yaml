@@ -6,6 +6,7 @@ builddependencies:
 - mkfontscale
 sources:
 - https://www.x.org/releases/individual/font/encodings-{{.Version}}.tar.bz2
+builder: panux
 script:
 - |
   {{extract "encodings" "bz2"}}

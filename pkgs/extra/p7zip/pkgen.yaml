@@ -9,7 +9,8 @@ version: 16.02
 sources:
 - https://downloads.sourceforge.net/sourceforge/p7zip/p7zip_{{.Version}}_src_all.tar.bz2
 builddependencies:
-- g++
+- gpp
+builder: panux
 script:
 - |
   tar -xf src/p7zip_{{.Version}}_src_all.tar.bz2

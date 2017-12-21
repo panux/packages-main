@@ -11,13 +11,12 @@ packages:
   curl-headers:
 version: 7.54.1
 builddependencies:
-- gcc
-- libc-dev
 - ncurses-dev
 - zlib-dev
 - libressl-dev
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
+builder: panux
 script:
 - |
   {{extract "curl" "gz"}}

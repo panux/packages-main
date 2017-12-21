@@ -5,8 +5,6 @@ packages:
     - ncurses
 version: 5.02
 builddependencies:
-- gcc
-- libc-dev
 - ncurses-dev
 sources:
 - https://codeload.github.com/mtoyoda/sl/tar.gz/{{.Version}}
