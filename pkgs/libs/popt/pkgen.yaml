@@ -13,7 +13,7 @@ packages:
   popt-headers:
 version: 1.16
 sources:
-- https://transfer.sh/k7f9u/popt-{{.Version}}.tar.gz
+- https://ftp.osuosl.org/pub/blfs/conglomeration/popt/popt-{{.Version}}.tar.gz
 script:
 - |
   {{extract "popt" "gz"}}
