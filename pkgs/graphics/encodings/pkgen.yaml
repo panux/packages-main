@@ -4,6 +4,7 @@ packages:
 version: 1.0.4
 builddependencies:
 - mkfontscale
+- util-macros
 sources:
 - https://www.x.org/releases/individual/font/encodings-{{.Version}}.tar.bz2
 builder: panux
