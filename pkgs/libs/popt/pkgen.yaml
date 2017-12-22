@@ -1,7 +1,5 @@
 packages:
   popt:
-    dependencies:
-    - musl
   popt-dev:
     depedencies:
     - popt
@@ -11,6 +9,10 @@ packages:
     - popt-man
   popt-man:
   popt-headers:
+  libpopt:
+    depedencies: popt
+  libpopt-dev:
+    dependencies: popt-dev
 version: 1.16
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/popt/popt-{{.Version}}.tar.gz
