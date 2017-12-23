@@ -1,7 +1,7 @@
 packages:
   dbus-glib:
     dependencies:
-    - dbus-libs
+    - libdbus
     - expat
     - glib
   dbus-glib-dev:
