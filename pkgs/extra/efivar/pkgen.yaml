@@ -13,22 +13,20 @@ sources:
 - https://github.com/AdelieLinux/efivar/archive/{{.Version}}.tar.gz
 - file://./haxe.h
 builddependencies:
-- popt
 - popt-headers
+- popt
+- popt-dev
 - linux-headers
 builder: panux
 script:
-- tar -xf src/{{.Version}}.tar.gz
-- cat src/haxe.h >> /usr/include/strings.h
-- mv efivar-{{.Version}} efivar
-- $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
-- $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
-- mkdir -p out/libefivar/usr/lib
-- mv out/efivar/usr/lib/libefivar.* out/libefivar/usr/lib
-- mkdir -p out/libefiboot/usr/lib
-- mv out/efivar/usr/lib/libefiboot.* out/libefiboot/usr/lib
-- mkdir -p out/efivar-include/usr
-- mv out/efivar/usr/include out/efivar-include/usr/include
-- mkdir -p out/efivar-man/usr/share
-- mv out/efivar/usr/share/man out/efivar-man/usr/share/man
-- rm -r out/efivar/usr/share
+- |
+  tar -xf src/{{.Version}}.tar.gz
+  cat src/haxe.h >> /usr/include/strings.h
+  mv efivar-{{.Version}} efivar
+  $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
+  $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
+  {{pkmv "usr/lib/libefivar.*" "efivar" "libefivar"}}
+  {{pkmv "usr/lib/libefiboot.*" "efivar" "libefiboot"}}
+  {{pkmv "usr/include" "efivar" "efivar-boot"}}
+  {{pkmv "usr/share/man" "efivar" "efivar-man"}}
+  rm -r out/efivar/usr/share
