@@ -1,0 +1,15 @@
+packages:
+  lsb-release:
+    dependencies:
+    - perl
+version: 1.4
+builddependencies:
+- perl
+sources:
+- https://sourceforge.net/projects/lsb/files/lsb_release/{{.Version}}/lsb-release-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "lsb-release" "gz"}}
+  (cd lsb-release && make)
+  (cd lsb-release  && install -D -m 644 lsb_release.1.gz ../out/lsb-release/usr/share/man/man1/lsb_release.1.gz && install -D -m 755 lsb_release ../out/lsb-release/usr/bin/lsb_release)
