@@ -1,0 +1,26 @@
+packages:
+  intltool:
+    dependencies:
+    - file
+    - gettext
+    - perl
+#   - perl-xml-parser
+  intltool-doc:
+    dependencies:
+    - intltool-man
+  intltool-man:
+version: 0.51.0
+builddependencies:
+- perl
+- perl-xml-parser
+- gettext
+- file
+sources:
+- https://edge.launchpad.net/intltool/trunk/{{.Version}}/+download/intltool-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "intltool" "gz"}}
+  (cd intltool && ./configure --prefix=/usr)
+  $(MAKE) -C intltool
+  $(MAKE) -C intltool DESTDIR=$(shell pwd)/out/intltool install
+  {{pkmv "usr/share/man" "intltool" "intltool-man"}}
