@@ -1,0 +1,36 @@
+packages:
+  consolekit:
+    dependencies:
+    - dbus-glib
+    - libdbus
+    - glib
+    - libintl
+    - libx11
+    - musl
+    - polkit
+    - zlib
+  consolekit-dev:
+    dependencies:
+    - consolekit
+    - consolekit-headers
+    - dbus-dev
+    - pkgconf
+  consolekit-headers:
+version: 0.4.6
+builddependencies:
+- polkit-dev
+- zlib-dev
+- libx11-dev
+- dbus-glib-dev
+- linux-headers
+- dbus-dev
+sources:
+- https://www.freedesktop.org/software/ConsoleKit/dist/ConsoleKit-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "ConsoleKit" "xz"}}
+  (cd ConsoleKit && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var)
+  $(MAKE) -C ConsoleKit
+  $(MAKE) -C ConsoleKit DESTDIR=$(shell pwd)/out/consolekit install
+  {{pkmv "usr/include" "consolekit" "consolekit-headers"}}
