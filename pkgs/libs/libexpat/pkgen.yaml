@@ -15,6 +15,12 @@ packages:
     - libexpat
     - xmlwf
     - libexpat-headers
+  expat:
+    dependencies:
+    - libexpat
+  expat-dev:
+    dependencies:
+    - libexpat-dev
 version: 2.2.4
 sources:
 - https://newcontinuum.dl.sourceforge.net/project/expat/expat/{{.Version}}/expat-{{.Version}}.tar.bz2
