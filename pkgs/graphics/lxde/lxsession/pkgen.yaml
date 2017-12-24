@@ -1,0 +1,42 @@
+packages:
+  lxsession:
+    dependencies:
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libunique
+    - libx11
+    - musl
+    - polkit
+    - atk
+    - fontconfig
+    - freetype
+    - pango
+    - lsb-release
+    - dbus-glib
+  lxsession-locale:
+  lxsession-doc:
+    dependencies:
+    - lxsession-man
+  lxsession-man:
+version: 0.5.3
+builddependencies:
+- gtk2-dev
+- dbus-glib-dev
+- polkit-dev
+- libunique-dev
+- intltool
+- libgomp
+sources:
+- https://sourceforge.net/projects/lxde/files/LXSession%20%28session%20manager%29/LXSession%200.5.x/lxsession-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "lxsession" "xz"}}
+  (cd lxsession && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info	--localstatedir=/var)
+  $(MAKE) -C lxsession
+  $(MAKE) -C lxsession DESTDIR=$(shell pwd)/out/lxsession install
+  {{pkmv "usr/share/locale" "lxsession" "lxsession-locale"}}
+  {{pkmv "usr/share/man" "lxsession" "lxsession-man"}}
