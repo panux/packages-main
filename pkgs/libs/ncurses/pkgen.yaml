@@ -22,7 +22,7 @@ sources:
 script:
 - |
   {{extract "ncurses" "gz"}}
-  (cd ncurses && ./configure --with-shared --enable-widec)
+  (cd ncurses && ./configure --with-shared --enable-widec --enable-static)
   make -C ncurses
   make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
   {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}
