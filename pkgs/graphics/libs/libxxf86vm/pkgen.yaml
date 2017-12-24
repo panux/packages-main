@@ -1,0 +1,35 @@
+packages:
+  libxxf86vm:
+    dependencies:
+    - libx11
+    - libxext
+    - musl
+  libxxf86vm-dev:
+    dependencies:
+    - libx11-dev
+    - libxext-dev
+    - libxxf86vm
+    - libxxf86vm-headers
+    - pkgconf
+    - xf86vidmodeproto
+  libxxf86vm-headers:
+  libxxf86vm-doc:
+    dependencies:
+    - libxxf86vm-man
+  libxxf86vm-man:
+version: 1.1.4
+builddependencies:
+- libx11-dev
+- libxext-dev
+- util-macros
+- xf86vidmodeproto
+sources:
+- https://www.x.org/releases/individual/lib/libXxf86vm-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "libXxf86vm" "bz2"}}
+  (cd libXxf86vm && ./configure --prefix=/usr)
+  $(MAKE) -C libXxf86vm
+  $(MAKE) -C libXxf86vm DESTDIR=$(shell pwd)/out/libxxf86vm install
+  {{pkmv "usr/include" "libxxf86vm" "libxxf86vm-headers"}}
+  {{pkmv "usr/share/man" "libxxf86vm" "libxxf86vm-man"}}
