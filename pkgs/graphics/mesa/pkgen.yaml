@@ -72,6 +72,20 @@ packages:
     - libdrm
     - libexpat
     - zlib
+  mesa-gl:
+    dependencies:
+    - expat
+    - libdrm
+    - libx11
+    - libxcb
+    - libxdamage
+    - libxext
+    - libxfixes
+    - libxshmfence
+    - libxxf86vm
+    - libglapi
+    - musl
+    - libgl
 version: 17.1.4
 builddependencies:
 - libxdamage-dev
