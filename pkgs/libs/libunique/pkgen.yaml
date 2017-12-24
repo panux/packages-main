@@ -1,0 +1,31 @@
+packages:
+  libunique:
+    dependencies:
+    - dbus-glib
+    - glib
+    - gtk2
+    - libx11
+  libunique-dev:
+    dependencies:
+    - gtk2-dev
+    - libunique
+    - libunique-headers
+    - pkgconf
+  libunique-headers:
+  libunique-doc:
+version: 1.1.6
+builddependencies:
+- gtk+2.0-dev
+- dbus-glib-dev
+sources:
+- https://download.gnome.org/sources/libunique/1.1/libunique-{{.Version}}.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/plain/main/libunique/g_const_return.patch
+script:
+- |
+  {{extract "libunique" "bz2"}}
+  (cd libunique && patch -p1 -i ../src/g_const_return.patch)
+  (cd libunique && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-maintainer-flags=no --enable-debug=no --disable-static)
+  $(MAKE) -C libunique
+  $(MAKE) -C libunique DESTDIR=$(shell pwd)/out/libunique install
+  {{pkmv "usr/include" "libunique" "libunique-headers"}}
+  {{pkmv "usr/share" "libunique" "libunique-doc"}}
