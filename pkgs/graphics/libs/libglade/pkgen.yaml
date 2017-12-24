@@ -1,0 +1,37 @@
+packages:
+  libglade:
+    dependencies:
+    - atk
+    - busybox
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libxml2
+    - libxml2-utils
+    - musl
+    - pango
+  libglade-dev:
+    dependencies:
+    - gtk2-dev
+    - libglade
+    - libglade-headers
+    - libxml2-dev
+    - pkgconf
+  libglade-headers:
+  libglade-doc:
+version: 2.6.4
+builddependencies:
+- gtk2-dev
+- libxml2-dev
+sources:
+- https://download.gnome.org/sources/libglade/2.6/libglade-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "libglade" "bz2"}}
+  (cd libglade && ./configure --prefix=/usr --disable-static --localstatedir=/var)
+  $(MAKE) -C libglade
+  $(MAKE) -C libglade DESTDIR=$(shell pwd)/out/libglade install
+  {{pkmv "usr/include" "libglade" "libglade-headers"}}
+  {{pkmv "usr/share/gtk-doc" "libglade" "libglade-doc"}}
