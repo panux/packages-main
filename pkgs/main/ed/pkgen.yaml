@@ -1,0 +1,24 @@
+packages:
+  ed:
+    dependencies:
+    - musl
+  ed-doc:
+    dependencies:
+    - ed-man
+  ed-man:
+version: 1.14.2
+builddependencies:
+- lzip
+sources:
+- https://ftp.gnu.org/gnu/ed/ed-{{.Version}}.tar.lz
+builder: panux
+script:
+- |
+  lzip -d src/ed-{{.Version}}.tar.lz
+  tar -xf src/ed-{{.Version}}.tar
+  mv ed-{{.Version}} ed
+  (cd ed && ./configure --prefix=/usr --bindir=/bin --mandir=/usr/share/man)
+  $(MAKE) -C ed
+  $(MAKE) -C ed DESTDIR=$(shell pwd)/out/ed install
+  {{pkmv "usr/share/man" "ed" "ed-man"}}
+  {{pkmv "usr/share" "ed" "ed-doc"}}
