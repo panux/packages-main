@@ -28,3 +28,4 @@ script:
   {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}
   {{pkmv "usr/share/terminfo" "ncurses" "ncurses-terminfo"}}
   {{pkmv "usr/include" "ncurses" "ncurses-headers"}}
+  ln -s /usr/lib/libncursesw.so.6 out/ncurses/usr/lib/libncurses.so
