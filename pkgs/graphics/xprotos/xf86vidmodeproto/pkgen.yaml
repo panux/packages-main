@@ -1,0 +1,16 @@
+packages:
+  xf86vidmodeproto:
+    dependencies:
+    - pkgconf
+version: 2.3.1
+builddependencies:
+- util-macros
+sources:
+- https://www.x.org/releases/individual/proto/xf86vidmodeproto-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "xf86vidmodeproto" "bz2"}}
+  (cd xf86vidmodeproto && ./configure --prefix=/usr)
+  $(MAKE) -C xf86vidmodeproto
+  $(MAKE) -C xf86vidmodeproto DESTDIR=$(shell pwd)/out/xf86vidmodeproto install
