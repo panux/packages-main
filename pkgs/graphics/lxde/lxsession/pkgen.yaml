@@ -9,18 +9,84 @@ packages:
     - libunique
     - libx11
     - musl
-    - polkit
     - atk
     - fontconfig
     - freetype
     - pango
     - lsb-release
     - dbus-glib
+    - lxpolkit
+    - lxsession-data
+    - lxsession-logout
   lxsession-locale:
   lxsession-doc:
     dependencies:
     - lxsession-man
   lxsession-man:
+  lxsettings-daemon:
+    dependencies:
+    - glib
+    - libx11
+  lxlock:
+    dependencies:
+    - xscreensaver
+  lxpolkit:
+    dependencies:
+    - atk
+    - musl
+    - cairo
+    - fontconfig
+    - freetype
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - pango
+    - polkit
+    - libunique
+    - libx11
+  lxsession-logout:
+    dependencies:
+    - consolekit
+    - atk
+    - cairo
+    - fontconfig
+    - freetype
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - pango
+    - libx11
+    - lxlock
+    - lxsession-data
+    - polkit
+  lxsession-edit:
+    dependencies:
+    - atk
+    - cairo
+    - fontconfig
+    - freetype
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - pango
+    - lxsession-data
+  lxsession-data:
+    dependencies:
+    - lxsession-locale
+    - lxsession-doc
+  lxsession-default-apps:
+    dependencies:
+    - atk
+    - cairo
+    - fontconfig
+    - freetype
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - pango
+    - libx11
+    - lxsession
+    - lxsession-data
 version: 0.5.3
 builddependencies:
 - gtk2-dev
@@ -32,6 +98,17 @@ builddependencies:
 sources:
 - https://sourceforge.net/projects/lxde/files/LXSession%20%28session%20manager%29/LXSession%200.5.x/lxsession-{{.Version}}.tar.xz
 builder: panux
+data:
+  bins:
+    - lxsettings-daemon
+    - lxlock
+    - lxsession-logout
+    - lxpolkit
+    - lxsession-default-apps
+    - lxsession-edit
+  apps:
+    - lxsession-edit
+    - lxsession-default-apps
 script:
 - |
   {{extract "lxsession" "xz"}}
@@ -40,3 +117,14 @@ script:
   $(MAKE) -C lxsession DESTDIR=$(shell pwd)/out/lxsession install
   {{pkmv "usr/share/locale" "lxsession" "lxsession-locale"}}
   {{pkmv "usr/share/man" "lxsession" "lxsession-man"}}
+  {{pkmv "etc" "lxsession" "lxpolkit"}}
+  {{pkmv "usr/share/lxsession" "lxsession" "lxsession-data"}}
+  {{pkmv "usr/share/doc" "lxsession" "lxsession-data"}}
+  {{range .Data.bins}}
+  mkdir -p out/{{.}}/usr/bin
+  mv out/lxsession/usr/bin/{{.}} out/{{.}}/usr/bin
+  {{- end}}
+  {{range .Data.bins}}
+  mkdir -p out/{{.}}/usr/share/applications
+  mv out/lxsession/usr/share/applications/{{.}}.desktop out/{{.}}/usr/share/applications
+  {{- end}}
