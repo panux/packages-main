@@ -1,0 +1,25 @@
+packages:
+  vala:
+    dependencies:
+    - glib
+    - glib-dev
+    - pkgconf
+  vala-doc:
+    dependencies:
+    - vala-man
+  vala-man:
+version: 0.36.4
+builddependencies:
+- libxslt-dev
+- glib-dev
+- flex
+- bison
+sources:
+- https://download.gnome.org/sources/vala/0.36/vala-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "vala" "xz"}}
+  (cd vala && ./configure --prefix=/usr)
+  $(MAKE) -C vala
+  $(MAKE) -C vala DESTDIR=$(shell pwd)/out/vala install
+  {{pkmv "usr/share/man" "vala" "vala-man"}}
