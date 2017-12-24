@@ -25,24 +25,17 @@ version: 2.2.4
 sources:
 - https://newcontinuum.dl.sourceforge.net/project/expat/expat/{{.Version}}/expat-{{.Version}}.tar.bz2
 builddependencies:
-- gcc
-- g++
-- libc-dev
-- libstdc++
+- gpp
+- libstdcpp
+builder: panux
 script:
-- tar -xf src/expat-{{.Version}}.tar.bz2
-- mv expat-{{.Version}} expat
-- (cd expat && ./configure --prefix=/usr --disable-static)
-- $(MAKE) -C expat
-- $(MAKE) -C expat check
-- $(MAKE) -C expat install DESTDIR=$(shell pwd)/out/libexpat
-- rm -r out/libexpat/usr/lib/pkgconfig
-- mkdir -p out/libexpat-headers/usr
-- mv out/libexpat/usr/include out/libexpat-headers/usr/include
-- mkdir -p out/libexpat-doc/usr/share
-- mv out/libexpat/usr/share/doc out/libexpat-doc/usr/share/doc
-- mkdir -p out/libexpat-man/usr/share
-- mv out/libexpat/usr/share/man out/libexpat-man/usr/share/man
-- rm -r out/libexpat/usr/share
-- mkdir -p out/xmlwf/usr
-- mv out/libexpat/usr/bin out/xmlwf/usr/bin
+- |
+  {{extract "expat" "bz2"}}
+  (cd expat && ./configure --prefix=/usr --disable-static)
+  $(MAKE) -C expat
+  $(MAKE) -C expat check
+  $(MAKE) -C expat install DESTDIR=$(shell pwd)/out/libexpat
+  {{pkmv "usr/include" "libexpat" "libexpat-headers"}}
+  {{pkmv "usr/share/doc" "libexpat" "libexpat-doc"}}
+  {{pkmv "usr/share/man" "libexpat" "libexpat-man"}}
+  {{pkmv "usr/bin" "libexpat" "xmlwf"}}
