@@ -1,0 +1,22 @@
+packages:
+  help2man:
+    dependencies:
+    - perl
+  help2man-doc:
+    dependencies:
+    - help2man-man
+  help2man-man:
+version: 1.47.5
+builddependencies:
+- perl
+sources:
+- https://ftp.gnu.org/gnu/help2man/help2man-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "help2man" "xz"}}
+  (cd help2man && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var)
+  $(MAKE) -C help2man
+  $(MAKE) -C help2man DESTDIR=$(shell pwd)/out/help2man install
+  {{pkmv "usr/share/man" "help2man" "help2man-man"}}
+  {{pkmv "usr/share" "help2man" "help2man-doc"}}
