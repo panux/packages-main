@@ -1,0 +1,67 @@
+packages:
+  xscreensaver:
+    dependencies:
+    - atk
+    - bc
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libglade
+    - libintl
+    - libx11
+    - libxext
+    - libxinerama
+    - libxml2
+    - libxmu
+    - libxrandr
+    - libxt
+    - libxxf86vm
+    - musl
+    - pango
+  xscreensaver-extras:
+    dependencies:
+    - bc
+    - gdk-pixbuf
+    - glib
+    - libjpeg-turbo
+    - libx11
+    - libxext
+    - libxft
+    - libxmu
+    - libxt
+    - musl
+    - mesa-gl
+  xscreensaver-doc:
+    dependencies:
+    - xscreensaver-man
+    - xscreensaver-locale
+  xscreensaver-man:
+  xscreensaver-locale:
+    dependencies:
+    - bc
+version: 5.38
+builddependencies:
+- bc
+- gtk+2.0-dev
+- libjpeg-turbo-dev
+- mesa-dev
+- gettext-dev
+- libxmu-dev
+- perl
+- libxml2-dev
+- libglade-dev
+- libxinerama-dev
+- libxrandr-dev
+- glu-dev
+- sed
+sources:
+- https://www.jwz.org/xscreensaver/xscreensaver-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "xscreensaver" "gz"}}
+  (cd xscreensaver && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --with-gtk --libexecdir=/usr/lib/xscreensaver --with-xinerama-ext --with-xf86vmode-ext	--with-randr-ext)
+  $(MAKE) -C xscreensaver
+  $(MAKE) -C xscreensaver install_prefix=$(shell pwd)/out/xscreensaver install
+  {{pkmv "usr/share/locale" "xscreensaver" "xscreensaver-locale"}}
+  {{pkmv "usr/share/man" "xscreensaver" "xscreensaver-man"}}
+  {{pkmv "usr/share/xscreensaver/config" "xscreensaver" "xscreensaver-doc"}}
