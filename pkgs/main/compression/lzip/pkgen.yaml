@@ -1,0 +1,25 @@
+packages:
+  lzip:
+    dependencies:
+    - libgcc
+    - libstdcpp
+    - musl
+  lzip-doc:
+    dependencies:
+    - lzip-man
+  lzip-man:
+version: 1.19
+builddependencies:
+- gpp
+- libstdcpp-dev
+sources:
+- https://download.savannah.gnu.org/releases/lzip/lzip-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "lzip" "gz"}}
+  (cd lzip && ./configure --prefix=/usr)
+  $(MAKE) -C lzip
+  $(MAKE) -C lzip DESTDIR=$(shell pwd)/out/lzip install
+  {{pkmv "usr/share/man" "lzip" "lzip-man"}}
+  {{pkmv "usr/share" "lzip" "lzip-doc"}}
