@@ -1,0 +1,23 @@
+packages:
+  perl-html-tagset:
+    dependencies:
+    - perl
+  perl-html-tagset-doc:
+    dependencies:
+    - perl-html-tagset-man
+  perl-html-tagset-man:
+version: 3.20
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/P/PE/PETDANCE/HTML-Tagset-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTML-Tagset" "gz"}}
+  (cd HTML-Tagset && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTML-Tagset
+  $(MAKE) -C HTML-Tagset test
+  $(MAKE) -C HTML-Tagset DESTDIR=$(shell pwd)/out/perl-html-tagset install
+  {{pkmv "usr/share/man" "perl-html-tagset" "perl-html-tagset-man"}}
+  rm -r out/perl-html-tagset/usr/lib
