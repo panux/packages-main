@@ -1,0 +1,25 @@
+packages:
+  perl-html-parser:
+    dependencies:
+    - musl
+    - perl-html-tagset
+  perl-html-parser-doc:
+    dependencies:
+    - perl-html-parser-man
+  perl-html-parser-man:
+version: 3.72
+builddependencies:
+- perl-dev
+- perl-html-tagset
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTML-Parser-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTML-Parser" "gz"}}
+  (cd HTML-Parser && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTML-Parser
+  $(MAKE) -C HTML-Parser test
+  $(MAKE) -C HTML-Parser DESTDIR=$(shell pwd)/out/perl-html-parser install
+  {{pkmv "usr/share/man" "perl-html-parser" "perl-html-parser-man"}}
+  rm -r out/perl-html-parser/usr/lib
