@@ -1,0 +1,25 @@
+packages:
+  perl-http-cookies:
+    dependencies:
+    - perl
+    - perl-http-date
+    - perl-http-message
+  perl-http-cookies-doc:
+    dependencies:
+    - perl-http-cookies-man
+  perl-http-cookies-man:
+version: 6.04
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTTP-Cookies-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTTP-Cookies" "gz"}}
+  (cd HTTP-Cookies && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTTP-Cookies
+  $(MAKE) -C HTTP-Cookies test
+  $(MAKE) -C HTTP-Cookies DESTDIR=$(shell pwd)/out/perl-http-cookies install
+  {{pkmv "usr/share/man" "perl-http-cookies" "perl-http-cookies-man"}}
+  rm -r out/perl-http-cookies/usr/lib
