@@ -1,0 +1,24 @@
+packages:
+  perl-file-listing:
+    dependencies:
+    - perl
+    - perl-http-date
+  perl-file-listing-doc:
+    dependencies:
+    - perl-file-listing-man
+  perl-file-listing-man:
+version: 6.04
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/File-Listing-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "File-Listing" "gz"}}
+  (cd File-Listing && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C File-Listing
+  $(MAKE) -C File-Listing test
+  $(MAKE) -C File-Listing DESTDIR=$(shell pwd)/out/perl-file-listing install
+  {{pkmv "usr/share/man" "perl-file-listing" "perl-file-listing-man"}}
+  rm -r out/perl-file-listing/usr/lib
