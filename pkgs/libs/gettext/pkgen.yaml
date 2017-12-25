@@ -1,5 +1,12 @@
 packages:
   gettext:
+    dependencies:
+    - libgomp
+    - libintl
+    - libunistring
+    - libxml2
+    - musl
+    - ncurses
   gettext-doc:
   gettext-static:
   gettext-dev:
