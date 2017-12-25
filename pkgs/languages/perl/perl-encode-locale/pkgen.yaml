@@ -1,0 +1,23 @@
+packages:
+  perl-encode-locale:
+    dependencies:
+    - perl
+  perl-encode-locale-doc:
+    dependencies:
+    - perl-encode-locale-man
+  perl-encode-locale-man:
+version: 1.05
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/Encode-Locale-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Encode-Locale" "gz"}}
+  (cd Encode-Locale && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Encode-Locale
+  $(MAKE) -C Encode-Locale test
+  $(MAKE) -C Encode-Locale DESTDIR=$(shell pwd)/out/perl-encode-locale install
+  {{pkmv "usr/share/man" "perl-encode-locale" "perl-encode-locale-man"}}
+  find "out/perl-encode-locale" -name perllocal.pod -delete
