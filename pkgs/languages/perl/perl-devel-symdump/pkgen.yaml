@@ -1,0 +1,21 @@
+packages:
+  perl-devel-symdump:
+  perl-devel-symdump-doc:
+    dependencies:
+    - perl-devel-symdump-man
+  perl-devel-symdump-man:
+version: 2.18
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/A/AN/ANDK/Devel-Symdump-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Devel-Symdump" "gz"}}
+  (cd Devel-Symdump && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Devel-Symdump
+  $(MAKE) -C Devel-Symdump test
+  $(MAKE) -C Devel-Symdump DESTDIR=$(shell pwd)/out/perl-devel-symdump install
+  {{pkmv "usr/share/man" "perl-devel-symdump" "perl-devel-symdump-man"}}
+  rm -r out/perl-devel-symdump/usr/lib
