@@ -1,0 +1,21 @@
+packages:
+  perl-test-pod:
+  perl-test-pod-doc:
+    dependencies:
+    - perl-test-pod-man
+  perl-test-pod-man:
+version: 1.51
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/E/ET/ETHER/Test-Pod-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Test-Pod" "gz"}}
+  (cd Test-Pod && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Test-Pod
+  $(MAKE) -C Test-Pod test
+  $(MAKE) -C Test-Pod DESTDIR=$(shell pwd)/out/perl-test-pod install
+  {{pkmv "usr/share/man" "perl-test-pod" "perl-test-pod-man"}}
+  rm -r out/perl-test-pod/usr/lib
