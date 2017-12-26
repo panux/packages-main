@@ -1,0 +1,23 @@
+packages:
+  perl-uri:
+    dependencies:
+    - perl
+  perl-uri-doc:
+    dependencies:
+    - perl-uri-man
+  perl-uri-man:
+version: 1.71
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/E/ET/ETHER/URI-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "URI" "gz"}}
+  (cd URI && perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C URI
+  $(MAKE) -C URI test
+  $(MAKE) -C URI DESTDIR=$(shell pwd)/out/perl-uri install
+  {{pkmv "usr/share/man" "perl-uri" "perl-uri-man"}}
+  rm -r out/perl-uri/usr/lib
