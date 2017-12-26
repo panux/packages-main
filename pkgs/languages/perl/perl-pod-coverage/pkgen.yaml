@@ -1,0 +1,27 @@
+packages:
+  perl-pod-coverage:
+    dependencies:
+    - perl
+    - perl-devel-symdump
+    - perl-test-pod
+  perl-pod-coverage-doc:
+    dependencies:
+    - perl-pod-coverage-man
+  perl-pod-coverage-man:
+version: 0.23
+builddependencies:
+- perl-dev
+- perl-devel-symdump
+- perl-test-pod
+sources:
+- https://cpan.metacpan.org/authors/id/R/RC/RCLAMP/Pod-Coverage-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Pod-Coverage" "gz"}}
+  (cd Pod-Coverage && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Pod-Coverage
+  $(MAKE) -C Pod-Coverage test
+  $(MAKE) -C Pod-Coverage DESTDIR=$(shell pwd)/out/perl-pod-coverage install
+  {{pkmv "usr/share/man" "perl-pod-coverage" "perl-pod-coverage-man"}}
+  rm -r out/perl-pod-coverage/usr/lib/perl5/core_perl
