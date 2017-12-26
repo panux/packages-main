@@ -1,0 +1,25 @@
+packages:
+  perl-http-daemon:
+    dependencies:
+    - perl
+    - perl-http-date
+    - perl-http-message
+  perl-http-daemon-doc:
+    dependencies:
+    - perl-http-daemon-man
+  perl-http-daemon-man:
+version: 6.01
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTTP-Daemon-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTTP-Daemon" "gz"}}
+  (cd HTTP-Daemon && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTTP-Daemon
+  $(MAKE) -C HTTP-Daemon test
+  $(MAKE) -C HTTP-Daemon DESTDIR=$(shell pwd)/out/perl-http-daemon install
+  {{pkmv "usr/share/man" "perl-http-daemon" "perl-http-daemon-man"}}
+  rm -r out/perl-http-daemon/usr/lib
