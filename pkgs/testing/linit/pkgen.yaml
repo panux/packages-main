@@ -1,0 +1,26 @@
+packages:
+  linit-headers:
+    dependencies:
+    - musl-headers
+  linit:
+    dependencies:
+    - musl
+    - busybox
+  linit-dev:
+    dependencies:
+    - linit-headers
+version: 0.0.1
+sources:
+- https://github.com/panux/linit/archive/v{{.Version}}.tar.gz
+builder: panux
+builddependencies:
+- gcc
+- binutils
+- bash
+- libc-dev
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/linit-{{.Version}}.tar.gz
+  {{extract "linit" "gz"}}
+  $(MAKE) -C linit
+  $(MAKE) -C linit install DESTDIR=$(shell pwd)/out/linit
