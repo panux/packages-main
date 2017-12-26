@@ -1,0 +1,23 @@
+packages:
+  perl-http-date:
+    dependencies:
+    - perl
+  perl-http-date-doc:
+    dependencies:
+    - perl-http-date-man
+  perl-http-date-man:
+version: 6.02
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTTP-Date-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTTP-Date" "gz"}}
+  (cd HTTP-Date && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTTP-Date
+  $(MAKE) -C HTTP-Date test
+  $(MAKE) -C HTTP-Date DESTDIR=$(shell pwd)/out/perl-http-date install
+  {{pkmv "usr/share/man" "perl-http-date" "perl-http-date-man"}}
+  rm -r out/perl-http-date/usr/lib/perl5/core_perl
