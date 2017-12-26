@@ -1,0 +1,23 @@
+packages:
+  perl-lwp-mediatypes:
+    dependencies:
+    - perl
+  perl-lwp-mediatypes-doc:
+    dependencies:
+    - perl-lwp-mediatypes-man
+  perl-lwp-mediatypes-man:
+version: 6.02
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/LWP-MediaTypes-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "LWP-MediaTypes" "gz"}}
+  (cd LWP-MediaTypes && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C LWP-MediaTypes
+  $(MAKE) -C LWP-MediaTypes test
+  $(MAKE) -C LWP-MediaTypes DESTDIR=$(shell pwd)/out/perl-lwp-mediatypes install
+  {{pkmv "usr/share/man" "perl-lwp-mediatypes" "perl-lwp-mediatypes-man"}}
+  rm -r out/perl-lwp-mediatypes/usr/lib/perl5/core_perl
