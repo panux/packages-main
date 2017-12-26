@@ -1,0 +1,21 @@
+packages:
+  perl-io-html:
+  perl-io-html-doc:
+    dependencies:
+    - perl-io-html-man
+  perl-io-html-man:
+version: 1.001
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/C/CJ/CJM/IO-HTML-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "IO-HTML" "gz"}}
+  (cd IO-HTML && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C IO-HTML
+  $(MAKE) -C IO-HTML test
+  $(MAKE) -C IO-HTML DESTDIR=$(shell pwd)/out/perl-io-html install
+  {{pkmv "usr/share/man" "perl-io-html" "perl-io-html-man"}}
+  rm -r out/perl-io-html/usr/lib
