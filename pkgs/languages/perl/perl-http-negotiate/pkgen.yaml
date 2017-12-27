@@ -1,0 +1,25 @@
+packages:
+  perl-http-negotiate:
+    dependencies:
+    - perl
+    - perl-http-message
+  perl-http-negotiate-doc:
+    dependencies:
+    - perl-http-negotiate-man
+  perl-http-negotiate-man:
+version: 6.01
+builddependencies:
+- perl-dev
+- perl-http-message
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTTP-Negotiate-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTTP-Negotiate" "gz"}}
+  (cd HTTP-Negotiate && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTTP-Negotiate
+  $(MAKE) -C HTTP-Negotiate test
+  $(MAKE) -C HTTP-Negotiate DESTDIR=$(shell pwd)/out/perl-http-negotiate install
+  {{pkmv "usr/share/man" "perl-http-negotiate" "perl-http-negotiate-man"}}
+  rm -r out/perl-http-negotiate/usr/lib
