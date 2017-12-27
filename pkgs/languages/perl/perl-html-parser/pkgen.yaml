@@ -9,6 +9,7 @@ packages:
   perl-html-parser-man:
 version: 3.72
 builddependencies:
+- perl
 - perl-dev
 - perl-html-tagset
 sources:
