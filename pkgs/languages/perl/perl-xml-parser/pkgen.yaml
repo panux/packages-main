@@ -24,4 +24,4 @@ script:
   $(MAKE) -C XML-Parser test
   $(MAKE) -C XML-Parser DESTDIR=$(shell pwd)/out/perl-xml-parser install
   {{pkmv "usr/share/man" "perl-xml-parser" "perl-xml-parser-man"}}
-  rm -r out/perl-xml-parser/usr/lib
+  rm -r out/perl-xml-parser/usr/lib/perl5/core_perl
