@@ -22,4 +22,4 @@ script:
   $(MAKE) -C HTML-Parser test
   $(MAKE) -C HTML-Parser DESTDIR=$(shell pwd)/out/perl-html-parser install
   {{pkmv "usr/share/man" "perl-html-parser" "perl-html-parser-man"}}
-  rm -r out/perl-html-parser/usr/lib
+  rm -r out/perl-html-parser/usr/lib/perl5/core_perl
