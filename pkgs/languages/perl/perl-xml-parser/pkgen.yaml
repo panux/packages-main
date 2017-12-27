@@ -1,0 +1,27 @@
+packages:
+  perl-xml-parser:
+    dependencies:
+    - libexpat
+    - musl
+    - perl-libwww
+  perl-xml-parser-doc:
+    dependencies:
+    - perl-xml-parser-man
+  perl-xml-parser-man:
+version: 2.44
+builddependencies:
+- perl-dev
+- libexpat-dev
+- perl-libwww
+sources:
+- https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "XML-Parser" "gz"}}
+  (cd XML-Parser && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C XML-Parser
+  $(MAKE) -C XML-Parser test
+  $(MAKE) -C XML-Parser DESTDIR=$(shell pwd)/out/perl-xml-parser install
+  {{pkmv "usr/share/man" "perl-xml-parser" "perl-xml-parser-man"}}
+  rm -r out/perl-xml-parser/usr/lib
