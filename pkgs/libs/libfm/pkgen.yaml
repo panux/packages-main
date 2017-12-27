@@ -38,7 +38,6 @@ script:
   (cd libfm && ./configure --prefix=/usr --sysconfdir=/etc --enable-udisks --with-gnu-ld)
   $(MAKE) -C libfm
   $(MAKE) -C libfm DESTDIR=$(shell pwd)/out/libfm install
-  mv $(shell pwd)/out/libfm/usr/include/libfm-1.0 $(shell pwd)/out/libfm/usr/include/libfm-{{.Version}}
-  rm -r out/libfm/usr/include/libfm
+  mv $(shell pwd)/out/libfm/usr/include/libfm-1.0 $(shell pwd)/out/libfm/usr/include/libfm
   {{pkmv "usr/include" "libfm" "libfm-headers"}}
   {{pkmv "usr/share/man" "libfm" "libfm-man"}}
