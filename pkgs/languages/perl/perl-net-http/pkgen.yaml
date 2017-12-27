@@ -1,0 +1,25 @@
+packages:
+  perl-net-http:
+    dependencies:
+    - perl
+    - perl-uri
+  perl-net-http-doc:
+    dependencies:
+    - perl-net-http-man
+  perl-net-http-man:
+version: 6.09
+builddependencies:
+- perl-dev
+- perl-uri
+sources:
+- https://cpan.metacpan.org/authors/id/E/ET/ETHER/Net-HTTP-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Net-HTTP" "gz"}}
+  (cd Net-HTTP && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Net-HTTP
+  $(MAKE) -C Net-HTTP test
+  $(MAKE) -C Net-HTTP DESTDIR=$(shell pwd)/out/perl-net-http install
+  {{pkmv "usr/share/man" "perl-net-http" "perl-net-http-man"}}
+  rm -r out/perl-net-http/usr/lib
