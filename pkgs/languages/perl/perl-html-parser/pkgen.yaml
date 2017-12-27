@@ -18,7 +18,7 @@ oneshell: true
 script:
 - |
   {{extract "HTML-Parser" "gz"}}
-  export CFLAGS=`perl -MConfig -E 'say $Config{ccflags}'`
+  export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
   (cd HTML-Parser && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
   $(MAKE) -C HTML-Parser
   $(MAKE) -C HTML-Parser test
