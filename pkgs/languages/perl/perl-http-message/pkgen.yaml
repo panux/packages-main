@@ -1,0 +1,33 @@
+packages:
+  perl-http-message:
+    dependencies:
+    - perl-encode-locale
+    - perl-http-date
+    - perl-io-html
+    - perl-lwp-mediatypes
+    - perl-uri
+  perl-http-message-doc:
+    dependencies:
+    - perl-http-message-man
+  perl-http-message-man:
+version: 6.13
+builddependencies:
+- perl-dev
+- perl-lwp-mediatypes
+- perl-encode-locale
+- perl-http-date
+- perl-uri
+- perl-io-html
+- perl-try-tiny
+sources:
+- https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTTP-Message-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "HTTP-Message" "gz"}}
+  (cd HTTP-Message && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C HTTP-Message
+  $(MAKE) -C HTTP-Message test
+  $(MAKE) -C HTTP-Message DESTDIR=$(shell pwd)/out/perl-http-message install
+  {{pkmv "usr/share/man" "perl-http-message" "perl-http-message-man"}}
+  rm -r out/perl-http-message/usr/lib
