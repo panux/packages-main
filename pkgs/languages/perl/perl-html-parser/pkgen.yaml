@@ -9,15 +9,16 @@ packages:
   perl-html-parser-man:
 version: 3.72
 builddependencies:
-- perl
 - perl-dev
 - perl-html-tagset
 sources:
 - https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTML-Parser-{{.Version}}.tar.gz
 builder: panux
+oneshell: true
 script:
 - |
   {{extract "HTML-Parser" "gz"}}
+  export CFLAGS=`perl -MConfig -E 'say $Config{ccflags}'`
   (cd HTML-Parser && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
   $(MAKE) -C HTML-Parser
   $(MAKE) -C HTML-Parser test
