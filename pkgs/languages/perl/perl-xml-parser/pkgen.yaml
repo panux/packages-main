@@ -15,7 +15,7 @@ builddependencies:
 - perl-libwww
 sources:
 - https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-{{.Version}}.tar.gz
-builder: panux
+builder: alpine
 script:
 - |
   {{extract "XML-Parser" "gz"}}
