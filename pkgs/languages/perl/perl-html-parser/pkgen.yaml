@@ -13,7 +13,7 @@ builddependencies:
 - perl-html-tagset
 sources:
 - https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTML-Parser-{{.Version}}.tar.gz
-builder: panux
+builder: alpine
 oneshell: true
 script:
 - |
