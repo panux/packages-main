@@ -1,0 +1,33 @@
+packages:
+  pcmanfm:
+    dependencies:
+    - atk
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libfm
+    - libintl
+    - libx11
+    - musl
+    - pango
+  pcmanfm-doc:
+    dependencies:
+    - pcmanfm-man
+  pcmanfm-man:
+  pcmanfm-locale:
+version: 1.2.5
+builddependencies:
+- gtk2-dev
+- libfm-dev
+- intltool
+sources:
+- https://downloads.sourceforge.net/pcmanfm/pcmanfm-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "pcmanfm" "xz"}}
+  (cd pcmanfm && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C pcmanfm
+  $(MAKE) -C pcmanfm DESTDIR=$(shell pwd)/out/pcmanfm install
+  {{pkmv "usr/share/man" "pcmanfm" "pcmanfm-man"}}
