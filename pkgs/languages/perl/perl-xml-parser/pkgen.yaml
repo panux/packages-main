@@ -11,7 +11,7 @@ packages:
 version: 2.44
 builddependencies:
 - perl-dev
-- libexpat-dev
+- expat-dev
 - perl-libwww
 sources:
 - https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-{{.Version}}.tar.gz
