@@ -103,7 +103,8 @@ packages:
    - libgbm
    - libgl
    - libglapi
-   - libgles
+   - libgles1
+   - libgles2
    - libwayland-egl
    - libosmesa
    - libxatracker
