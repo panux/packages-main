@@ -86,6 +86,29 @@ packages:
     - libglapi
     - musl
     - libgl
+   mesa-dev:
+    dependencies:
+    - dri2proto
+    - dri3proto
+    - glproto
+    - libdrm
+    - libx11-dev
+    - libxcb-dev
+    - libxdamage-dev
+    - libxext-dev
+    - libxfixes-dev
+    - libxshmfence-dev
+    - libxxf86vm-dev
+    - libegl
+    - libgbm
+    - libgl
+    - libglapi
+    - libgles
+    - libwayland-egl
+    - libosmesa
+    - libxatracker
+    - presentproto
+    - wayland-dev
 version: 17.1.4
 builddependencies:
 - libxdamage-dev
