@@ -10,6 +10,7 @@ packages:
       - libllvm
 version: 4.0.1
 builddependencies:
+- g++
 - binutils-dev
 - bison
 - chrpath
