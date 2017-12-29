@@ -10,13 +10,20 @@ packages:
       - libllvm
 version: 4.0.1
 builddependencies:
-- xz
-- gnupg
+- binutils-dev
+- bison
+- chrpath
 - cmake
+- file
+- flex
+- groff
+- isl-dev
 - libffi-dev
-- python
-- libstdc++
-- g++
+- make
+- paxmark
+- py-sphinx
+- python2
+- python2-dev
 - zlib-dev
 sources:
 - https://releases.llvm.org/{{.Version}}/llvm-{{.Version}}.src.tar.xz
@@ -45,6 +52,7 @@ script:
   curl https://reviews.llvm.org/file/data/n35uo3zj7ecmkxghkgnd/PHID-FILE-g62ekzl6tmu4lryqmweq/D34943.id105061.diff > redef.patch
   tar -xf src/llvm-{{.Version}}.src.tar.xz
   mv llvm-{{.Version}}.src llvm
+  (cd llvm && rm test/tools/llvm-objdump/macho-compact-unwind-x86_64.test	test/tools/llvm-objdump/macho-compact-unwind-i386.test test/Transforms/GlobalOpt/alias-used.ll test/tools/llvm-symbolizer/print_context.c)
   (cd llvm && patch -p1 -i ../llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
   (cd llvm/include && patch -p1 -i ../../redef.patch)
   mkdir llvm/build
