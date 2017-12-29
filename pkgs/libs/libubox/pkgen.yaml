@@ -1,0 +1,25 @@
+packages:
+  libubox:
+    dependencies:
+    - libc
+  libubox-headers:
+    dependencies:
+    - musl-headers
+  libubox-dev:
+    dependencies:
+    - libubox-headers
+    - libc-dev
+version: 2017
+sources:
+- https://github.com/panux/libubox/archive/{{.Version}}.tar.gz
+builddependencies:
+- cmake
+- gcc
+- json-c-dev
+script:
+- |
+  mv src/{{.Version}}.tar.gz src/libubox-{{.Version}}.tar.gz
+  {{extract "libubox" "gz"}}
+  (cd libubox && cmake CMakeLists.txt -DBUILD_LUA=OFF -DCMAKE_INSTALL_PREFIX=/usr)
+  $(MAKE) -C libubox
+  $(MAKE) -C libubox DESTDIR=$(shell pwd)/out/libubox
