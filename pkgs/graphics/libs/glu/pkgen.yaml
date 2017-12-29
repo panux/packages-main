@@ -1,0 +1,28 @@
+packages:
+  glu:
+    dependencies:
+    - libgcc
+    - libstdcpp
+    - mesa-gl
+    - musl
+  glu-dev:
+    dependencies:
+    - glu
+    - glu-headers
+    - mesa-dev
+    - pkgconf
+  glu-headers:
+version: 9.0.0
+builddependencies:
+- mesa-dev
+- gpp
+sources:
+- https://mesa.freedesktop.org/archive/glu/glu-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "glu" "bz2"}}
+  (cd glu && ./configure --prefix=/usr --disable-static)
+  $(MAKE) -C glu
+  $(MAKE) -C glu DESTDIR=$(shell pwd)/out/glu install
+  {{pkmv "usr/include" "glu" "glu-headers"}}
