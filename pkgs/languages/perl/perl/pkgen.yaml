@@ -9,7 +9,7 @@ packages:
   perl-utils:
     dependencies:
     - perl
-version: 5.26.1
+version: 5.24.2
 builddependencies:
 - perl-utils
 - ncurses-dev
