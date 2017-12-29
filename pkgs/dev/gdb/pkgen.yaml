@@ -3,6 +3,8 @@ packages:
     dependencies:
     - readline
     - zlib
+    - libstdcpp
+    - libintl
   gdb-doc:
 version: 7.12.1
 builddependencies:
