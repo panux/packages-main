@@ -11,6 +11,8 @@ packages:
 version: 6.01
 builddependencies:
 - perl-dev
+- perl-http-date
+- perl-http-message
 sources:
 - https://cpan.metacpan.org/authors/id/G/GA/GAAS/HTTP-Daemon-{{.Version}}.tar.gz
 builder: panux

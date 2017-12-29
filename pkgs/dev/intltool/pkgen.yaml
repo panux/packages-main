@@ -4,7 +4,7 @@ packages:
     - file
     - gettext
     - perl
-#   - perl-xml-parser
+    - perl-xml-parser
   intltool-doc:
     dependencies:
     - intltool-man
@@ -15,6 +15,7 @@ builddependencies:
 - perl-xml-parser
 - gettext
 - file
+builder: alpine
 sources:
 - https://edge.launchpad.net/intltool/trunk/{{.Version}}/+download/intltool-{{.Version}}.tar.gz
 script:

@@ -1,0 +1,24 @@
+packages:
+  perl-test-fatal:
+    dependencies:
+    - perl-try-tiny
+  perl-test-fatal-doc:
+    dependencies:
+    - perl-test-fatal-man
+  perl-test-fatal-man:
+version: 0.014
+builddependencies:
+- perl-dev
+- perl-try-tiny
+sources:
+- https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-Fatal-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Test-Fatal" "gz"}}
+  (cd Test-Fatal && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Test-Fatal
+  $(MAKE) -C Test-Fatal test
+  $(MAKE) -C Test-Fatal DESTDIR=$(shell pwd)/out/perl-test-fatal install
+  {{pkmv "usr/share/man" "perl-test-fatal" "perl-test-fatal-man"}}
+  rm -r out/perl-test-fatal/usr/lib

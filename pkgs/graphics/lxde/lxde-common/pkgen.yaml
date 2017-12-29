@@ -1,0 +1,32 @@
+packages:
+  lxde-common:
+  openbox-lxde-session:
+    dependencies:
+    - lxde-common
+    - lxsession
+    - openbox
+  lxde-session:
+    dependencies:
+    - openbox-lxde-session
+  lxde-common-doc:
+    dependencies:
+    - openbox-lxde-session-man
+  openbox-lxde-session-man:
+version: 0.99.2
+builddependencies:
+- intltool
+sources:
+- https://sourceforge.net/projects/lxde/files/lxde-common%20%28default%20config%29/lxde-common%200.99/lxde-common-{{.Version}}.tar.xz
+builder: alpine
+script:
+- |
+  {{extract "lxde-common" "xz"}}
+  (cd lxde-common && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man)
+  $(MAKE) -C lxde-common
+  $(MAKE) -C lxde-common DESTDIR=$(shell pwd)/out/lxde-common install
+  {{pkmv "etc/xdg/lxsession" "lxde-common" "openbox-lxde-session"}}
+  {{pkmv "etc/xdg/openbox" "lxde-common" "openbox-lxde-session"}}
+  {{pkmv "usr/bin" "lxde-common" "openbox-lxde-session"}}
+  {{pkmv "usr/share/applications" "lxde-common" "openbox-lxde-session"}}
+  {{pkmv "usr/share/xsessions" "lxde-common" "openbox-lxde-session"}}
+  {{pkmv "usr/share/man" "lxde-common" "openbox-lxde-session-man"}}

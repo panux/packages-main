@@ -1,0 +1,23 @@
+packages:
+  perl-test-requiresinternet:
+  perl-test-requiresinternet-doc:
+    dependencies:
+    - perl-test-requiresinternet-man
+  perl-test-requiresinternet-man:
+version: 0.05
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/M/MA/MALLEN/Test-RequiresInternet-{{.Version}}.tar.gz
+builder: panux
+oneshell: true
+script:
+- |
+  {{extract "Test-RequiresInternet" "gz"}}
+  export CFLAGS=`perl -MConfig -E 'say $Config{ccflags}'`
+  (cd Test-RequiresInternet && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Test-RequiresInternet
+  $(MAKE) -C Test-RequiresInternet test
+  $(MAKE) -C Test-RequiresInternet DESTDIR=$(shell pwd)/out/perl-test-requiresinternet install
+  {{pkmv "usr/share/man" "perl-test-requiresinternet" "perl-test-requiresinternet-man"}}
+  rm -r out/perl-test-requiresinternet/usr/lib

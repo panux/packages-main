@@ -1,0 +1,25 @@
+packages:
+  perl-www-robotrules:
+    dependencies:
+    - perl
+    - perl-uri
+  perl-www-robotrules-doc:
+    dependencies:
+    - perl-www-robotrules-man
+  perl-www-robotrules-man:
+version: 6.02
+builddependencies:
+- perl-dev
+- perl-uri
+sources:
+- https://cpan.metacpan.org/authors/id/G/GA/GAAS/WWW-RobotRules-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "WWW-RobotRules" "gz"}}
+  (cd WWW-RobotRules && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C WWW-RobotRules
+  $(MAKE) -C WWW-RobotRules test
+  $(MAKE) -C WWW-RobotRules DESTDIR=$(shell pwd)/out/perl-www-robotrules install
+  {{pkmv "usr/share/man" "perl-www-robotrules" "perl-www-robotrules-man"}}
+  rm -r out/perl-www-robotrules/usr/lib

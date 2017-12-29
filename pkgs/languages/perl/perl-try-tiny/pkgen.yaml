@@ -1,0 +1,27 @@
+packages:
+  perl-try-tiny:
+    dependencies:
+    - perl
+    - perl-capture-tiny
+    - perl-pod-coverage
+  perl-try-tiny-doc:
+    dependencies:
+    - perl-try-tiny-man
+  perl-try-tiny-man:
+version: 0.28
+builddependencies:
+- perl-dev
+- perl-capture-tiny
+- perl-pod-coverage
+sources:
+- https://cpan.metacpan.org/authors/id/E/ET/ETHER/Try-Tiny-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "Try-Tiny" "gz"}}
+  (cd Try-Tiny && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Try-Tiny
+  $(MAKE) -C Try-Tiny test
+  $(MAKE) -C Try-Tiny DESTDIR=$(shell pwd)/out/perl-try-tiny install
+  {{pkmv "usr/share/man" "perl-try-tiny" "perl-try-tiny-man"}}
+  rm -r out/perl-try-tiny/usr/lib

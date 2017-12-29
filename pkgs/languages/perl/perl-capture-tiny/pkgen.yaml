@@ -1,0 +1,23 @@
+packages:
+  perl-capture-tiny:
+  perl-capture-tiny-doc:
+    dependencies:
+    - perl-capture-tiny-man
+  perl-capture-tiny-man:
+version: 0.46
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-{{.Version}}.tar.gz
+builder: panux
+oneshell: true
+script:
+- |
+  {{extract "Capture-Tiny" "gz"}}
+  export CFLAGS=`perl -MConfig -E 'say $Config{ccflags}'`
+  (cd Capture-Tiny && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C Capture-Tiny
+  $(MAKE) -C Capture-Tiny test
+  $(MAKE) -C Capture-Tiny DESTDIR=$(shell pwd)/out/perl-capture-tiny install
+  {{pkmv "usr/share/man" "perl-capture-tiny" "perl-capture-tiny-man"}}
+  rm -r out/perl-capture-tiny/usr/lib

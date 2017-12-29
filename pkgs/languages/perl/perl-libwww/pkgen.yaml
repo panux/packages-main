@@ -1,0 +1,53 @@
+packages:
+  perl-libwww:
+    dependencies:
+    - perl-encode-locale
+    - perl-file-listing
+    - perl-html-parser
+    - perl-http-cookies
+    - perl-http-daemon
+    - perl-http-date
+    - perl-http-message
+    - perl-http-negotiate
+    - perl-lwp-mediatypes
+    - perl-net-http
+    - perl-try-tiny
+    - perl-try-tiny
+    - perl-uri
+    - perl-www-robotrules
+  perl-libwww-doc:
+    dependencies:
+    - perl-libwww-man
+  perl-libwww-man:
+version: 6.29
+builddependencies:
+- perl-dev
+- perl-test-fatal
+- perl-test-requiresinternet
+- perl-encode-locale
+- perl-file-listing
+- perl-html-parser
+- perl-http-cookies
+- perl-http-daemon
+- perl-http-date
+- perl-http-message
+- perl-http-negotiate
+- perl-lwp-mediatypes
+- perl-net-http
+- perl-try-tiny
+- perl-try-tiny
+- perl-uri
+- perl-www-robotrules
+sources:
+- https://github.com/libwww-perl/libwww-perl/archive/v{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/libwww-perl-{{.Version}}.tar.gz
+  {{extract "libwww-perl" "gz"}}
+  (cd libwww-perl && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C libwww-perl
+  $(MAKE) -C libwww-perl test
+  $(MAKE) -C libwww-perl DESTDIR=$(shell pwd)/out/perl-libwww install
+  {{pkmv "usr/share/man" "perl-libwww" "perl-libwww-man"}}
+  rm -r out/perl-libwww/usr/lib/perl5/core_perl

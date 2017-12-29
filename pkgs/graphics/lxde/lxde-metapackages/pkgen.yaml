@@ -1,0 +1,7 @@
+packages:
+  lxde-core:
+    dependencies:
+    - lxde-session
+    - lxpanel
+    - pcmanfm
+version: 0
