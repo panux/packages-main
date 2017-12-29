@@ -110,6 +110,7 @@ packages:
    - libxatracker
    - presentproto
    - wayland-dev
+   - mesa-headers
 version: 17.1.4
 builddependencies:
 - libxdamage-dev
