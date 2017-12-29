@@ -122,4 +122,3 @@ script:
   mv src/oninstall_gcc.sh out/gcc/.oninstall
   mv src/oninstall_g++.sh out/gpp/.oninstall
   chmod 700 out/gcc/.oninstall out/gpp/.oninstall
-  rm -rf out/gcc/usr/share/gcc-{{.Version}} out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib) out/gcc/usr/include
