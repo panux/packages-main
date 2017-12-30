@@ -165,8 +165,8 @@ data:
   dri:
     nouveau-dri: nouveau_*
     radeon-dri: radeon_dri.so
-    virtio-gpu-dri: virtio_gpu_dri.so
     swrast-dri: *swrast_dri.so
+    virtio-gpu-dri: virtio_gpu_dri.so
   libs:
     libglapi: libglapi.*
     libgles1: libGLESv1_CM.*
