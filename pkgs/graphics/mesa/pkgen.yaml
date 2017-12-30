@@ -36,6 +36,9 @@ packages:
     dependencies:
     - mesa-core
     - libllvm
+  swrast-dri:
+    dependencies:
+    - mesa-core
   virtio-gpu-dri:
     dependencies:
     - mesa-core
@@ -44,6 +47,7 @@ packages:
     - nouveau-dri
     - radeon-dri
     - virtio-gpu-dri
+    - swrast-dri
   libosmesa:
     dependencies:
     - mesa-core
@@ -162,6 +166,7 @@ data:
     nouveau-dri: nouveau_*
     radeon-dri: radeon_dri.so
     virtio-gpu-dri: virtio_gpu_dri.so
+    swrast-dri: *swrast_dri.so
   libs:
     libglapi: libglapi.*
     libgles1: libGLESv1_CM.*
@@ -177,7 +182,7 @@ script:
 - |
   {{extract "mesa" "xz"}}
   (cd mesa && ./autogen.sh)
-  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau --with-gallium-drivers=nouveau,virgl --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
+  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau,swrast --with-gallium-drivers=nouveau,virgl,swrast --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
   $(MAKE) -C mesa
   $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
   {{- range $i, $v := .Data.headers}}
