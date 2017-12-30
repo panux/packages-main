@@ -163,7 +163,6 @@ data:
     gbm-headers: gbm.h
     xa-headers: xa_*
   dri:
-    swrast-dri: *swrast_dri.so
     nouveau-dri: nouveau_*
     radeon-dri: radeon_dri.so
     virtio-gpu-dri: virtio_gpu_dri.so
@@ -195,6 +194,7 @@ script:
   mkdir -p out/{{$i}}/usr/lib/dri
   mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/dri
   {{- end}}
+  {{pkmv "usr/lib/dri/*swrast_dri.so" "mesa" "dri-swrast"}}
   rm -r out/mesa/usr/lib/dri
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/usr/lib
