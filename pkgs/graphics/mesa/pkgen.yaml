@@ -163,9 +163,9 @@ data:
     gbm-headers: gbm.h
     xa-headers: xa_*
   dri:
+    swrast-dri: *swrast_dri.so
     nouveau-dri: nouveau_*
     radeon-dri: radeon_dri.so
-    swrast-dri: *swrast_dri.so
     virtio-gpu-dri: virtio_gpu_dri.so
   libs:
     libglapi: libglapi.*
