@@ -36,7 +36,7 @@ packages:
     dependencies:
     - mesa-core
     - libllvm
-  dri-swrast:
+  swrast-dri:
     dependencies:
     - mesa-core
   virtio-gpu-dri:
@@ -194,7 +194,7 @@ script:
   mkdir -p out/{{$i}}/usr/lib/dri
   mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/dri
   {{- end}}
-  {{pkmv "usr/lib/dri/*swrast_dri.so" "mesa" "dri-swrast"}}
+  {{pkmv "usr/lib/dri/*swrast_dri.so" "mesa" "swrast-dri"}}
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/usr/lib
   mv out/mesa/usr/lib/{{$v}} out/{{$i}}/usr/lib
