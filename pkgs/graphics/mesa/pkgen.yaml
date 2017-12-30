@@ -35,10 +35,11 @@ packages:
   radeon-dri:
     dependencies:
     - mesa-core
-    - libllvm
+    - libllvm4
   swrast-dri:
     dependencies:
     - mesa-core
+    - libllvm4
   virtio-gpu-dri:
     dependencies:
     - mesa-core
@@ -75,6 +76,7 @@ packages:
     - libstdcpp
     - libdrm
     - libexpat
+    - libllvm4
     - zlib
   mesa-gl:
     dependencies:
@@ -89,6 +91,7 @@ packages:
     - libxxf86vm
     - libglapi
     - musl
+    - libllvm4
     - libgl
   mesa-dev:
    dependencies:
