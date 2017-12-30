@@ -155,5 +155,5 @@ script:
   mkdir -p out/llvm4/usr/bin
   mv out/llvm4/usr/lib/llvm4/bin/* out/llvm4/usr/bin
   {{range .Data.bins}}
-  (cd out/llvm4 && ln -s /usr/bin/{{.}} out/llvm4/usr/lib/llvm4/bin)
+  ln -s /usr/bin/{{.}} out/llvm4/usr/lib/llvm4/bin
   {{end -}}
