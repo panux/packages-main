@@ -1,0 +1,161 @@
+packages:
+  llvm4:
+    dependencies:
+      - libgcc
+      - libstdcpp
+      - musl
+      - libllvm
+  llvm4-dev:
+    dependencies:
+    - libstdcpp
+    - llvm4
+    - llvm4-headers
+    - libllvm4
+    - musl
+  llvm4-headers:
+  libllvm4:
+    dependencies:
+    - libffi
+    - libgcc
+    - libstdcpp
+    - musl
+    - zlib
+version: 4.0.0
+builddependencies:
+- g++
+- binutils-dev
+- chrpath
+- cmake
+- file
+- libffi-dev
+- paxmark
+- python2
+- py-setuptools
+- zlib-dev
+- patch
+sources:
+- https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
+oneshell: true
+data:
+  cmake:
+    - Wno-dev
+    - DCMAKE_BUILD_TYPE=Release
+    - DCMAKE_INSTALL_PREFIX=/usr/lib/llvm4
+    - DCMAKE_VERBOSE_MAKEFILE=NO
+    - DLLVM_BINUTILS_INCDIR=/usr/include
+    - DLLVM_BUILD_DOCS=OFF
+    - DLLVM_BUILD_EXAMPLES=OFF
+    - DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON
+    - DLLVM_BUILD_LLVM_DYLIB=ON
+    - DLLVM_BUILD_TESTS=ON
+    - DLLVM_DYLIB_EXPORT_ALL=ON
+    - DLLVM_ENABLE_ASSERTIONS=OFF
+    - DLLVM_ENABLE_CXX1Y=ON
+    - DLLVM_ENABLE_FFI=ON
+    - DLLVM_ENABLE_LIBCXX=OFF
+    - DLLVM_ENABLE_PIC=ON
+    - DLLVM_ENABLE_RTTI=ON
+    - DLLVM_ENABLE_SPHINX=OFF
+    - DLLVM_ENABLE_TERMINFO=ON
+    - DLLVM_ENABLE_ZLIB=ON
+    - DLLVM_INCLUDE_EXAMPLES=OFF
+    - DLLVM_LINK_LLVM_DYLIB=ON
+    - DLLVM_HOST_TRIPLE=$(ARCH)
+    - DLLVM_DEFAULT_TARGET_TRIPLE=$(ARCH)
+    - DLLVM_TARGETS_TO_BUILD='X86;ARM;AArch64;PowerPC;SystemZ;AMDGPU;NVPTX;Mips;BPF'
+  patches:
+    - cmake-fix-libLLVM-name.patch
+    - disable-FileSystemTest.CreateDir-perms-assert.patch
+    - fix-CheckAtomic.cmake.patch
+    - llvm-fix-build-with-musl-libc.patch
+    - llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+    - silent-amdgpu-test-failing.patch
+  bins:
+    - bugpoint
+    - llvm-as
+    - llvm-cov
+    - llvm-diff
+    - llvm-dwp
+    - llvm-lto
+    - llvm-modextract
+    - llvm-pdbdump
+    - llvm-rtdyld
+    - llvm-strings
+    - obj2yaml
+    - verify-uselistorder
+    - llc
+    - llvm-bcanalyzer
+    - llvm-c-test
+    - llvm-dis
+    - llvm-extract
+    - llvm-lto2
+    - llvm-nm
+    - llvm-profdata
+    - llvm-size
+    - llvm-symbolizer
+    - opt
+    - yaml2obj
+    - lli
+    - llvm-cat
+    - llvm-cxxdump
+    - llvm-dsymutil
+    - llvm-lib
+    - llvm-mc
+    - llvm-objdump
+    - llvm-ranlib
+    - llvm-split
+    - llvm-tblgen
+    - sancov
+    - llvm-ar
+    - llvm-config
+    - llvm-cxxfilt
+    - llvm-dwarfdump
+    - llvm-link
+    - llvm-mcmarkup
+    - llvm-opt-report
+    - llvm-readobj
+    - llvm-stress
+    - llvm-xray
+    - sanstats
+script:
+- |
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?h=3.7-stable > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-build-with-musl-libc.patch?h=3.7-stable > llvm-fix-build-with-musl-libc.patch
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/cmake-fix-libLLVM-name.patch?h=3.7-stable > cmake-fix-libLLVM-name.patch
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/disable-FileSystemTest.CreateDir-perms-assert.patch?h=3.7-stable > disable-FileSystemTest.CreateDir-perms-assert.patch
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/fix-CheckAtomic.cmake.patch?h=3.7-stable > fix-CheckAtomic.cmake.patch
+  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/silent-amdgpu-test-failing.patch?h=3.7-stable > silent-amdgpu-test-failing.patch
+  tar -xf src/llvm-{{.Version}}.src.tar.xz
+  mv llvm-{{.Version}}.src llvm
+  {{range .Data.patches}}
+  (cd llvm && patch -p1 -i ../{{.}})
+  {{- end}}
+  (cd llvm && rm test/tools/llvm-symbolizer/print_context.c)
+  mkdir llvm/build
+  (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} ..)
+  $(MAKE) -C llvm/build llvm-tblgen
+  $(MAKE) -C llvm/build
+  $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm4
+  mkdir -p out/llvm4-headers/usr/include/llvm4
+  mv out/llvm4/usr/lib/llvm4/include/* out/llvm4-headers/usr/include/llvm4
+  rmdir out/llvm4/usr/lib/llvm4/include
+  mkdir -p out/llvm4-headers/usr/lib/llvm4
+  ln -s /usr/include/llvm4 out/llvm4-headers/usr/lib/llvm4/include
+  mkdir -p out/llvm4-dev/usr/lib/cmake/llvm4
+  mv out/llvm4/usr/lib/llvm4/lib/cmake/llvm/* out/llvm4-dev/usr/lib/cmake/llvm4
+  rmdir out/llvm4/usr/lib/llvm4/lib/cmake/llvm
+  mkdir -p out/llvm4-dev/usr/lib/llvm4/lib/cmake
+  ln -s /usr/lib/cmake/llvm4 out/llvm4-dev/usr/lib/llvm4/lib/cmake/llvm
+  {{pkmv "usr/lib/llvm4/lib/*.a" "llvm4" "llvm4-static"}}
+  mkdir -p out/libllvm4/usr/lib
+  mv out/llvm4/usr/lib/llvm4/lib/libLLVM*.so out/libllvm4/usr/lib
+  mkdir -p out/libllvm4/usr/lib/llvm4/lib
+  ln -s /usr/lib/libLLVM-4.0.0.so out/libllvm4/usr/lib/llvm4/lib/libLLVM-4.0.0.so
+  ln -s /usr/lib/libLLVM-4.0.so out/libllvm4/usr/lib/llvm4/lib/libLLVM-4.0.so
+  mkdir -p out/llvm4/usr/bin
+  mv out/llvm4/usr/lib/llvm4/bin/* out/llvm4/usr/bin
+  {{range .Data.bins}}
+  (cd out/llvm4 && ln -s /usr/bin/{{.}} out/llvm4/usr/lib/llvm4/bin)
+  {{end -}}
+  {{pkmv "usr/bin/llvm-config" "llvm4" "llvm4-dev"}}
+  {{pkmv "usr/lib/llvm4/bin/llvm-config" "llvm4" "llvm4-dev"}}
