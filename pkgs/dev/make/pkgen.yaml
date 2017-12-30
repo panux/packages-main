@@ -3,6 +3,7 @@ packages:
     dependencies:
     - libc
     - ncurses
+    - libintl
   make-doc:
 version: 4.2
 sources:
