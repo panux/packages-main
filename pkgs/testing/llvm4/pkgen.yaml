@@ -157,5 +157,3 @@ script:
   {{range .Data.bins}}
   (cd out/llvm4 && ln -s /usr/bin/{{.}} out/llvm4/usr/lib/llvm4/bin)
   {{end -}}
-  {{pkmv "usr/bin/llvm-config" "llvm4" "llvm4-dev"}}
-  {{pkmv "usr/lib/llvm4/bin/llvm-config" "llvm4" "llvm4-dev"}}
