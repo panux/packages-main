@@ -195,11 +195,7 @@ script:
   mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/dri
   {{- end}}
   {{pkmv "usr/lib/dri/*swrast_dri.so" "mesa" "dri-swrast"}}
-  rm -r out/mesa/usr/lib/dri
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/usr/lib
   mv out/mesa/usr/lib/{{$v}} out/{{$i}}/usr/lib
   {{- end}}
-  rm -r out/mesa/usr/lib
-  rm -r out/mesa/usr
-  rm -r out/mesa/etc
