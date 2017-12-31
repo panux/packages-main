@@ -1,0 +1,26 @@
+packages:
+  dhcpcd:
+    dependencies:
+    - musl
+  dhcpcd-doc:
+    dependencies:
+    - dhcpcd-man
+  dhcpcd-man:
+version: 6.11.5
+builddependencies:
+- linux-headers
+- bsd-compat-headers
+- dbus-dev
+sources:
+- https://roy.marples.name/downloads/dhcpcd/dhcpcd-{{.Version}}.tar.xz
+- https://github.com/panux/packages-main/blob/beta/pkgs/main/dhcpcd/dhcpcd.initd
+builder: panux
+oneshell: true
+script:
+- |
+  {{extract "dhcpcd" "xz"}}
+  (cd dhcpcd && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd)
+  $(MAKE) -C dhcpcd
+  $(MAKE) -C dhcpcd DESTDIR=$(shell pwd)/out/dhcpcd install
+  {{pkmv "usr/share/man" "dhcpcd" "dhcpcd-man"}}
+  install -Dm755 src/dhcpcd.initd out/dhcpcd/etc/init.d/dhcpcd
