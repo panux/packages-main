@@ -3,7 +3,7 @@ packages:
     dependencies:
     - musl
     - busybox
-version: 0.1.4
+version: 0.1.5
 sources:
 - https://github.com/panux/linit/archive/v{{.Version}}.tar.gz
 builder: panux
