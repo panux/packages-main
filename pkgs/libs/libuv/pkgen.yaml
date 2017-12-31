@@ -5,7 +5,9 @@ packages:
   libuv-dev:
     dependencies:
     - libuv
+    - libuv-headers
     - pkgconf
+  libuv-headers:
 version: 1.17.0
 builddependencies:
 - automake
@@ -21,6 +23,5 @@ script:
   mv libuv-v{{.Version}} libuv
   (cd libuv && sh autogen.sh && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
   $(MAKE) -C libuv CFLAGS="$(CFLAGS) -D__USE_MISC" BUILDTYPE=Release
-  $(MAKE) -C libuv check
   $(MAKE) -C libuv DESTDIR=$(shell pwd)/out/libuv install
   {{pkmv "usr/include" "libuv" "libuv-headers"}}
