@@ -26,6 +26,7 @@ builddependencies:
 - libuv-dev
 - xz-dev
 - rhash-dev
+- util-linux
 sources:
 - https://cmake.org/files/v3.9/cmake-{{.Version}}.tar.gz
 builder: panux
