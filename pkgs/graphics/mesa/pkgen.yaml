@@ -184,7 +184,7 @@ script:
 - |
   {{extract "mesa" "xz"}}
   (cd mesa && ./autogen.sh)
-  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-drivers=radeon,nouveau,swrast --with-gallium-drivers=nouveau,virgl,swrast --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
+  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-driverdir=/usr/lib/xorg/modules/dri --with-dri-drivers=radeon,nouveau,swrast --with-gallium-drivers=nouveau,virgl,swrast --with-vulcan-drivers=radeon --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau)
   $(MAKE) -C mesa
   $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
   {{- range $i, $v := .Data.headers}}
@@ -195,10 +195,10 @@ script:
   rm -r out/mesa/usr/lib/pkgconfig
   {{- range $i, $v := .Data.dri}}
   mkdir -p out/{{$i}}/usr/lib/xorg/modules/dri
-  mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/xorg/modules/dri
+  mv out/mesa/usr/lib/xorg/modules/dri/{{$v}} out/{{$i}}/usr/lib/xorg/modules/dri
   {{- end}}
   mkdir -p out/swrast-dri/usr/lib/xorg/modules/dri
-  mv out/mesa/usr/lib/dri/*swrast_dri.so out/swrast-dri/usr/lib/xorg/modules/dri
+  mv out/mesa/usr/lib/xorg/modules/dri/*swrast_dri.so out/swrast-dri/usr/lib/xorg/modules/dri
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/usr/lib
   mv out/mesa/usr/lib/{{$v}} out/{{$i}}/usr/lib
