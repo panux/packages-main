@@ -1,0 +1,46 @@
+packages:
+  acl:
+    dependencies:
+    - libacl
+    - musl
+  acl-dev:
+    dependencies:
+    - libacl
+    - acl-headers
+  acl-headers:
+  acl-doc:
+    dependencies:
+    - acl-man
+    - acl-locale
+  acl-man:
+  acl-locale:
+  libacl:
+    dependencies:
+    - libattr
+    - musl
+version: 2.2.52
+sources:
+- https://download.savannah.nongnu.org/releases/acl/acl-{{.Version}}.src.tar.gz
+builddependencies:
+- libtool
+- automake
+- attr-dev
+- gettext
+builder: panux
+oneshell: true
+script:
+- |
+  mv src/acl-{{.Version}}.src.tar.gz src/acl-{{.Version}}.tar.gz
+  {{extract "acl" "gz"}}
+  (cd acl && sed -i -e '/^as_dummy=/s:=":="$(PATH)$(PATH_SEPARATOR):' configure && sed -i -e "/^PKG_DOC_DIR/s:@pkg_name@:$pkgname:"	-e '/HAVE_ZIPPED_MANPAGES/s:=.*:=false:' include/builddefs.in)
+  unset PLATFORM
+  export OPTIMIZER="${CFLAGS}"
+  export DEBUG=-DNDEBUG
+  (cd acl && CONFIG_SHELL=/bin/sh ./configure --prefix=/usr --libdir=/lib --libexecdir=/usr/lib)
+  $(MAKE) -C acl
+  $(MAKE) -C acl install install-lib install-dev DESTDIR=$(shell pwd)/out/acl
+  {{pkmv "usr/include" "acl" "acl-headers"}}
+  {{pkmv "usr/share/locale" "acl" "acl-locale"}}
+  {{pkmv "usr/share/man" "acl" "acl-man"}}
+  {{pkmv "usr/share" "acl" "acl-doc"}}
+  {{pkmv "/lib/libacl.so.1*" "acl" "libacl"}}
