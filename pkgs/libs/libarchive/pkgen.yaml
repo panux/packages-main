@@ -1,0 +1,50 @@
+packages:
+  libarchive:
+    dependencies:
+    - zlib
+    - libbz2
+    - xz-libs
+    - liblz4
+    - libacl
+    - libressl
+    - libexpat
+  libarchive-dev:
+    dependencies:
+    - libarchive
+    - libarchive-headers
+    - pkgconf
+  libarchive-headers:
+  libarchive-doc:
+    dependencies:
+    - libarchive-man
+  libarchive-man:
+  libarchive-tools:
+    dependencies:
+    - libacl
+    - libbz2
+    - libressl
+    - liblz4
+    - musl
+    - xz-libs
+    - zlib
+version: 3.3.2
+builddependencies:
+- zlib-dev
+- bzip2-dev
+- xz-dev
+- lz4-dev
+- acl-dev
+- libressl-dev
+- libexpat-dev
+builder: panux
+sources:
+- https://libarchive.org/downloads/libarchive-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "libarchive" "gz"}}
+  (cd libarchive && ./configure --prefix=/usr --without-xml2)
+  $(MAKE) -C libarchive
+  $(MAKE) -C libarchive install DESTDIR=$(shell pwd)/out/libarchive
+  {{pkmv "usr/include" "libarchive" "libarchive-headers"}}
+  {{pkmv "usr/share/man" "libarchive" "libarchive-man"}}
+  {{pkmv "usr/bin" "libarchive" "libarchive-tools"}}
