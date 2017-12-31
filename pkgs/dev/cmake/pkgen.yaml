@@ -36,3 +36,4 @@ script:
   $(MAKE) -C cmake
   $(MAKE) -C cmake DESTDIR=$(shell pwd)/out/cmake install
   {{pkmv "usr/share/doc" "cmake" "cmake-doc"}}
+  (cd out/cmake/usr/share/cmake/Help/generator && rename ' ' '_' * && rename ' ' '_' * && rename ' ' '_' * && rename ' ' '_' *)
