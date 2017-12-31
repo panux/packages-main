@@ -13,7 +13,7 @@ builddependencies:
 - dbus-dev
 sources:
 - https://roy.marples.name/downloads/dhcpcd/dhcpcd-{{.Version}}.tar.xz
-- https://github.com/panux/packages-main/blob/beta/pkgs/main/dhcpcd/dhcpcd.initd
+- https://raw.githubusercontent.com/panux/packages-main/beta/pkgs/main/dhcpcd/dhcpcd.initd
 builder: panux
 oneshell: true
 script:
