@@ -194,10 +194,11 @@ script:
   rm -r out/mesa/usr/include
   rm -r out/mesa/usr/lib/pkgconfig
   {{- range $i, $v := .Data.dri}}
-  mkdir -p out/{{$i}}/usr/lib/dri
-  mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/dri
+  mkdir -p out/{{$i}}/usr/lib/xorg/modules/dri
+  mv out/mesa/usr/lib/dri/{{$v}} out/{{$i}}/usr/lib/xorg/modules/dri
   {{- end}}
-  {{pkmv "usr/lib/dri/*swrast_dri.so" "mesa" "swrast-dri"}}
+  mkdir -p out/swrast-dri/usr/lib/xorg/modules/dri
+  mv out/mesa/usr/lib/dri/*swrast_dri.so out/swrast-dri/usr/lib/xorg/modules/dri
   {{- range $i, $v := .Data.libs}}
   mkdir -p out/{{$i}}/usr/lib
   mv out/mesa/usr/lib/{{$v}} out/{{$i}}/usr/lib
