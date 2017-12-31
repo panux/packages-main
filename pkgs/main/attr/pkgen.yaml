@@ -6,6 +6,7 @@ packages:
   attr-dev:
     dependencies:
     - libattr
+    - attr
     - attr-headers
   attr-headers:
   attr-doc:
@@ -17,6 +18,7 @@ packages:
   libattr:
     dependencies:
     - musl
+    - attr
 version: 2.4.47
 builddependencies:
 - libtool
