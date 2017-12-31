@@ -3,7 +3,7 @@ packages:
     dependencies:
     - musl
     - busybox
-version: 0.1.3
+version: 0.1.4
 sources:
 - https://github.com/panux/linit/archive/v{{.Version}}.tar.gz
 builder: panux
@@ -15,5 +15,5 @@ script:
 - |
   mv src/v{{.Version}}.tar.gz src/linit-{{.Version}}.tar.gz
   {{extract "linit" "gz"}}
-  $(MAKE) -C linit
+  $(MAKE) -C linit CFLAGS="-Os -s"
   $(MAKE) -C linit install DESTDIR=$(shell pwd)/out/linit
