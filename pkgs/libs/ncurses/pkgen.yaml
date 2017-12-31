@@ -7,6 +7,10 @@ packages:
     dependencies:
     - ncurses
   ncurses-terminfo:
+    dependencies:
+    - ncurses-terminfo-base
+  ncurses-terminfo-base:
+  ncurses-static:
   ncurses-headers:
     dependencies:
     - musl-headers
@@ -14,7 +18,19 @@ packages:
     dependencies:
     - musl-dev
     - ncurses-headers
-    - ncurses
+    - ncurses-libs
+  ncurses-libs:
+    dependencies:
+    - musl
+    - ncurses-terminfo
+    - ncurses-terminfo-base
+data:
+  libs:
+  - ncurses
+  - ncurses++
+  - form
+  - panel
+  - menu
 version: 6.0
 builder: panux
 sources:
@@ -22,10 +38,20 @@ sources:
 script:
 - |
   {{extract "ncurses" "gz"}}
-  (cd ncurses && ./configure --with-shared --enable-widec --enable-static)
+  (cd ncurses && ./configure --with-shared --enable-widec --enable-static --enable-pc-files --with-pkg-config-libdir=/usr/lib/pkgconfig --with-terminfo-dirs="/etc/terminfo:/usr/share/terminfo")
   make -C ncurses
   make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
   {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}
   {{pkmv "usr/share/terminfo" "ncurses" "ncurses-terminfo"}}
+  {{pkmv "etc/terminfo" "ncurses" "ncurses-terminfo-base"}}
   {{pkmv "usr/include" "ncurses" "ncurses-headers"}}
-  ln -s /usr/lib/libncursesw.so.6 out/ncurses/usr/lib/libncurses.so
+  {{pkmv "usr/lib/*.a" "ncurses" "ncurses-static"}}
+  {{pkmv "usr/lib/pkgconfig" "ncurses" "ncurses-dev"}}
+  {{pkmv "usr/lib" "ncurses" "ncurses-libs"}}
+  mkdir -p out/ncurses-dev/usr/lib
+  {{range .Data.libs}}
+  echo "INPUT(-l{{.}}w)" > out/ncurses-dev/usr/lib/lib{{.}}.so
+  ln -s {{.}}w.pc out/ncurses-dev/usr/lib/pkgconfig/{{.}}.pc
+  {{end -}}
+  echo "INPUT(-lncursesw)" > out/ncurses-dev/usr/lib/libcursesw.so
+  ln -s libncurses.so out/ncurses-dev/usr/lib/libcurses.so
