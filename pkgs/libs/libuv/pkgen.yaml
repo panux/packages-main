@@ -1,0 +1,26 @@
+packages:
+  libuv:
+    dependencies:
+    - musl
+  libuv-dev:
+    dependencies:
+    - libuv
+    - pkgconf
+version: 1.17.0
+builddependencies:
+- automake
+- autoconf
+- libtool
+- linux-headers
+sources:
+- https://dist.libuv.org/dist/v{{.Version}}/libuv-v{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  tar xf src/libuv-v{{.Version}}.tar.gz
+  mv libuv-v{{.Version}} libuv
+  (cd libuv && sh autogen.sh && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libuv CFLAGS="$(CFLAGS) -D__USE_MISC" BUILDTYPE=Release
+  $(MAKE) -C libuv check
+  $(MAKE) -C libuv DESTDIR=$(shell pwd)/out/libuv install
+  {{pkmv "usr/include" "libuv" "libuv-headers"}}
