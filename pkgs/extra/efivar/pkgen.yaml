@@ -7,7 +7,7 @@ packages:
     dependencies:
     - libefivar
   efivar-man:
-  efivar-include:
+  efivar-headers:
 version: 31
 sources:
 - https://github.com/AdelieLinux/efivar/archive/{{.Version}}.tar.gz
@@ -25,8 +25,8 @@ script:
   mv efivar-{{.Version}} efivar
   $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
   $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
+  {{pkmv "usr/include" "efivar" "efivar-headers"}}
   {{pkmv "usr/lib/libefivar.*" "efivar" "libefivar"}}
   {{pkmv "usr/lib/libefiboot.*" "efivar" "libefiboot"}}
-  {{pkmv "usr/include" "efivar" "efivar-include"}}
   {{pkmv "usr/share/man" "efivar" "efivar-man"}}
   rm -r out/efivar/usr/share
