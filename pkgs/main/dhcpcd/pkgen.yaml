@@ -13,12 +13,12 @@ builddependencies:
 - dbus-dev
 sources:
 - https://roy.marples.name/downloads/dhcpcd/dhcpcd-{{.Version}}.tar.xz
+- file://./dhcpcd.initd
 builder: panux
 oneshell: true
 script:
 - |
   {{extract "dhcpcd" "xz"}}
-  (cd src && wget https://raw.githubusercontent.com/panux/packages-main/beta/pkgs/main/dhcpcd/dhcpcd.initd)
   (cd dhcpcd && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd)
   $(MAKE) -C dhcpcd
   $(MAKE) -C dhcpcd DESTDIR=$(shell pwd)/out/dhcpcd install
