@@ -17,3 +17,5 @@ script:
 - (cd nano && ./configure --build={{confarch}}-pc-linux-gnu)
 - $(MAKE) -C nano
 - $(MAKE) -C nano DESTDIR=$(shell pwd)/out/nano install
+- mv out/nano/usr/local/* out/nano/usr
+- rm -r out/nano/usr/local
