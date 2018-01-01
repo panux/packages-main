@@ -27,6 +27,6 @@ script:
   $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
   {{pkmv "usr/lib/libefivar.*" "efivar" "libefivar"}}
   {{pkmv "usr/lib/libefiboot.*" "efivar" "libefiboot"}}
-  {{pkmv "usr/include" "efivar" "efivar-boot"}}
+  {{pkmv "usr/include" "efivar" "efivar-include"}}
   {{pkmv "usr/share/man" "efivar" "efivar-man"}}
   rm -r out/efivar/usr/share
