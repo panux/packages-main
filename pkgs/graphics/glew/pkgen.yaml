@@ -1,0 +1,33 @@
+packages:
+  glew:
+    dependencies:
+    - mesa-gl
+  glew-dev:
+    dependencies:
+    - glew
+    - glew-headers
+    - glu-dev
+    - libxi-dev
+    - libxmu-dev
+    - mesa-dev
+    - pkgconf
+  glew-headers:
+  glew-doc:
+version: 2.1.0
+builddependencies:
+- libxmu-dev
+- libxi-dev
+- mesa-dev
+- glu-dev
+sources:
+- https://downloads.sourceforge.net/glew/glew-{{.Version}}.tgz
+builder: panux
+script:
+- |
+  tar xf src/glew-{{.Version}}.tgz
+  mv glew-{{.Version}} glew
+  (cd glew && sed -i 's|lib64|lib|' config/Makefile.linux)
+  (cd glew && make CFLAGS.EXTRA="$(CFLAGS) -fPIC")
+  $(MAKE) -C glew GLEW_DEST=$(shell pwd)/out/glew/usr install
+  install -D -m644 glew/LICENSE.txt out/glew-doc/usr/share/licenses/glew/LICENSE
+  {{pkmv "usr/include" "glew" "glew-headers"}}
