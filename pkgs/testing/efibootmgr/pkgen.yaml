@@ -10,10 +10,10 @@ builddependencies:
 - linux-headers
 - zlib-dev
 - gettext-dev
-- gettext-static
-- pkgconfig
 - binutils
-- efivar-dev
+- efivar
+- efivar-include
+builder: panux
 oneshell: true
 script:
 - |
