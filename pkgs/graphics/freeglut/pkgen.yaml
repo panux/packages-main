@@ -18,6 +18,7 @@ packages:
     - mesa-dev
     - pkgconf
   freeglut-headers:
+  freeglut-doc:
 version: 3.0.0
 builddependencies:
 - mesa-dev
@@ -40,4 +41,5 @@ script:
   (cd freeglut && cmake .	-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib	-DFREEGLUT_BUILD_STATIC_LIBS=0)
   $(MAKE) -C freeglut
   $(MAKE) -C freeglut DESTDIR=$(shell pwd)/out/freeglut install
+  install -D -m644 freeglut/COPYING out/freeglut-doc/usr/share/licenses/freeglut/COPYING
   {{pkmv "usr/include" "freeglut" "freeglut-headers"}}
