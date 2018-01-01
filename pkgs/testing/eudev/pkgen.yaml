@@ -2,7 +2,6 @@ packages:
   eudev:
     dependencies:
     - libblkid
-    - udev-init-scripts
     - kmod
   eudev-dev:
     dependencies:
@@ -18,6 +17,7 @@ builddependencies:
 - util-linux-dev
 sources:
 - https://dev.gentoo.org/~blueness/eudev/eudev-{{.Version}}.tar.gz
+- file://./eudev.sh
 script:
 - tar -xf src/eudev-{{.Version}}.tar.gz
 - mv eudev-{{.Version}} eudev
@@ -35,3 +35,6 @@ script:
 - mv out/eudev/usr/lib/pkgconfig out/eudev/usr/lib/libudev.a out/eudev-dev/usr/lib
 - mkdir -p out/eudev-doc/usr
 - mv out/eudev/usr/share out/eudev-doc/usr
+- mkdir out/eudev/etc/init.d
+- mv src/eudev.sh out/eudev/etc/init.d/eudev
+- chmod +x out/eudev/etc/init.d/eudev
