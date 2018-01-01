@@ -13,19 +13,10 @@ builddependencies:
 - gettext-static
 - pkgconfig
 - binutils
+- efivar-dev
 oneshell: true
-data:
-  deps:
-    - efivar-include.tar.gz
-    - efivar.tar.gz
-    - libefiboot.tar.gz
-    - libefivar.tar.gz
 script:
 - |
-  {{- range $i, $v := .Data.deps}}
-  wget https://repo.projectpanux.com/beta/$(ARCH)/pkgs/{{$v}} -O src/{{$v}}
-  {{- end}}
-  for i in src/*.tar.gz; do tar -xf $$i -C /; echo $$i; done
   tar -xf src/{{.Version}}.tar.gz
   mv efibootmgr-{{.Version}} efibootmgr
   sed -i -e s/-Werror// Make.defaults
