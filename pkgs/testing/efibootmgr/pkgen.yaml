@@ -12,7 +12,7 @@ builddependencies:
 - gettext-dev
 - binutils
 - efivar
-- efivar-include
+- efivar-headers
 builder: panux
 oneshell: true
 script:
