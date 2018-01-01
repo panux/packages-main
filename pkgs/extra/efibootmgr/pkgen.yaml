@@ -1,0 +1,35 @@
+packages:
+  efibootmgr:
+    dependencies:
+    - libefivar
+    - libefiboot
+    - libintl
+    - musl
+    - popt
+  efibootmgr-doc:
+    dependencies:
+    - efibootmgr-man
+  efibootmgr-man:
+version: 15
+sources:
+- https://github.com/rhboot/efibootmgr/archive/{{.Version}}.tar.gz
+- https://git.alpinelinux.org/cgit/aports/plain/testing/efibootmgr/musl-gettext.patch
+builddependencies:
+- efivar
+- efivar-headers
+- linux-headers
+- popt
+- popt-headers
+- gettext-dev
+builder: panux
+oneshell: true
+script:
+- |
+  tar -xf src/{{.Version}}.tar.gz
+  mv efibootmgr-{{.Version}} efibootmgr
+  mv /usr/include/efivar/* /usr/include
+  (cd efibootmgr && patch -p1 -i ../src/musl-gettext.patch)
+  (cd efibootmgr && PCDIR=/usr/lib/pkgconfig EFIDIR="/boot/efi" make)
+  (cd efibootmgr && EFIDIR="/boot/efi" make libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efibootmgr install)
+  mv out/efibootmgr/usr/sbin out/efibootmgr/usr/bin
+  {{pkmv "usr/share/man" "efibootmgr" "efibootmgr-man"}}
