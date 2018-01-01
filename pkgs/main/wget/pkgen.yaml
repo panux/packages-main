@@ -3,6 +3,7 @@ packages:
     dependencies:
     - nettle
     - libressl
+    - gnutls
 version: 1.19.1
 builddependencies:
 - gcc
