@@ -15,7 +15,8 @@ version: 4.13.10
 oneshell: true
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
-- file://conf
+- file://./conf/x86_64.conf
+- file://./conf/x86.conf
 builddependencies:
 - gcc
 - libc-dev
@@ -31,9 +32,8 @@ builddependencies:
 script:
 - tar -xf src/linux-{{.Version}}.tar.xz
 - mv linux-{{.Version}} linux
-- mv src/conf/$(ARCH).conf linux/.config
+- mv src/$(ARCH).conf linux/.config
 - cat linux/.config
-- $(MAKE) -C linux oldconfig
 - $(MAKE) -C linux
 - $(MAKE) -C linux bzImage vmlinux modules
 - mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
