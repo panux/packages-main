@@ -1,0 +1,43 @@
+packages:
+  freeglut:
+    dependencies:
+    - libx11
+    - libxi
+    - libxxf86vm
+    - mesa-gl
+    - musl
+  freeglut-dev:
+    dependencies:
+    - freeglut
+    - freeglut-headers
+    - glu-dev
+    - libice-dev
+    - libx11-dev
+    - libxi-dev
+    - libxxf86vm-dev
+    - mesa-dev
+    - pkgconf
+  freeglut-headers:
+version: 3.0.0
+builddependencies:
+- mesa-dev
+- libx11-dev
+- libice-dev
+- libxxf86vm-dev
+- libxi-dev
+- glu-dev
+- xz-dev
+- cmake
+- gpp
+- libstdcpp-dev
+- linux-headers
+sources:
+- https://downloads.sourceforge.net/freeglut/freeglut-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "freeglut" "gz"}}
+  (cd freeglut && cmake .	-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib	-DFREEGLUT_BUILD_STATIC_LIBS=0)
+  $(MAKE) -C freeglut
+  $(MAKE) -C freeglut DESTDIR=$(shell pwd)/out/freeglut install
+  {{pkmv "usr/include" "freeglut" "freeglut-headers"}}
