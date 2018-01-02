@@ -1,7 +1,7 @@
 packages:
   libdrm:
     dependencies:
-version: 2.4.81
+version: 2.4.89
 builddependencies:
 - linux-headers
 - libpthread-stubs
@@ -12,6 +12,6 @@ sources:
 script:
 - |
   {{extract "libdrm" "bz2"}}
-  (cd libdrm && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  (cd libdrm && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --enable-udev --disable-valgrind)
   $(MAKE) -C libdrm
   $(MAKE) -C libdrm DESTDIR=$(shell pwd)/out/libdrm install
