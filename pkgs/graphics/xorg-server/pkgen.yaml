@@ -125,7 +125,7 @@ packages:
     - xinit
     - xkbcomp
     - xkeyboard-config
-version: 1.19.3
+version: 1.19.6
 builddependencies:
 - bigreqsproto
 - compositeproto
