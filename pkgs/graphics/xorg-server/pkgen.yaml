@@ -20,6 +20,9 @@ packages:
     - libepoxy
     - xkbcomp
     - xkeyboard-config
+    - libxdamage
+    - libxfixes
+    - libxxf86vm
   xorg-server-dev:
     dependencies:
       - bigreqsproto
