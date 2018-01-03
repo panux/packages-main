@@ -1,0 +1,20 @@
+packages:
+  xf86-video-vesa:
+    dependencies:
+    - xorg-server
+version: 2.3.3
+builddependencies:
+- xorg-server-dev
+- libxi-dev
+- fontsproto
+- randrproto
+- videoproto
+- renderproto
+sources:
+- https://xorg.freedesktop.org/archive/individual/driver/xf86-video-vesa-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-video-vesa" "bz2"}}
+  (cd xf86-video-vesa && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-video-vesa
+  $(MAKE) -C xf86-video-vesa DESTDIR=$(shell pwd)/out/xf86-video-vesa
