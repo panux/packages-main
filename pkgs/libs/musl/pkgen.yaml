@@ -14,7 +14,7 @@ packages:
   libc:
     dependencies:
     - musl
-version: 1.1.16
+version: 1.1.18
 builddependencies:
   - gcc
 sources:
