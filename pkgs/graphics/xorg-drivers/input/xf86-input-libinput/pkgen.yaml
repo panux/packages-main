@@ -1,0 +1,17 @@
+packages:
+  xf86-input-libinput:
+    dependencies:
+    - xorg-server
+    - libinput
+builddependencies:
+- xorg-server-dev
+- libinput-dev
+version: 0.26.0
+sources:
+- https://www.x.org/pub/individual/driver/xf86-input-libinput-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-input-libinput" "bz2"}}
+  (cd xf86-input-libinput && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-input-libinput
+  $(MAKE) -C xf86-input-libinput install DESTDIR=$(shell pwd)/out/xf86-input-libinput
