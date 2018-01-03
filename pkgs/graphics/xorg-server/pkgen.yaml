@@ -184,6 +184,7 @@ builddependencies:
 - zlib-dev
 sources:
 - https://www.x.org/releases/individual/xserver/xorg-server-{{.Version}}.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/plain/main/xorg-server/20-modules.conf
 data:
   bins:
     xfbdev: Xfbdev
@@ -208,3 +209,5 @@ script:
   {{pkmv "usr/share/aclocal" "xorg-server" "xorg-server-dev"}}
   {{pkmv "usr/share/man" "xorg-server" "xorg-server-doc"}}
   rm -r out/xorg-server/var/log
+  mkdir -p out/xorg-server/etc/X11/xorg.conf.d/
+  cp src/20-modules.conf out/xorg-server/etc/X11/xorg.conf.d/
