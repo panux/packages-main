@@ -1,0 +1,18 @@
+packages:
+  xf86-input-mouse:
+    dependencies:
+    - xorg-server
+builddependencies:
+- libxkbfile-dev
+- xorg-server-dev
+- libxi-dev
+- libxrandr-dev
+version: 1.9.2
+sources:
+- https://www.x.org/pub/individual/driver/xf86-input-mouse-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-input-mouse" "bz2"}}
+  (cd xf86-input-mouse && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-input-mouse
+  $(MAKE) -C xf86-input-mouse install DESTDIR=$(shell pwd)/out/xf86-input-mouse
