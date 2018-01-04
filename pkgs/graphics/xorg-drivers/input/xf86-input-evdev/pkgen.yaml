@@ -1,0 +1,24 @@
+packages:
+  xf86-input-evdev:
+    dependencies:
+    - xorg-server
+    - eudev
+    - libevdev
+    - mtdev
+builddependencies:
+- libxkbfile-dev
+- xorg-server-dev
+- libxi-dev
+- libxrandr-dev
+- eudev-dev
+- mtdev-dev
+- libevdev-dev
+version: 2.10.5
+sources:
+- https://www.x.org/pub/individual/driver/xf86-input-evdev-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-input-evdev" "bz2"}}
+  (cd xf86-input-evdev && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-input-evdev
+  $(MAKE) -C xf86-input-evdev install DESTDIR=$(shell pwd)/out/xf86-input-evdev
