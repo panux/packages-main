@@ -1,0 +1,35 @@
+packages:
+  at-spi2-atk:
+    dependencies:
+    - at-spi2-core
+    - atk
+    - libdbus
+    - glib
+    - musl
+  at-spi2-atk-dev:
+    dependencies:
+    - at-spi2-atk
+    - at-spi2-atk-headers
+    - at-spi2-core-dev
+    - atk-dev
+    - dbus-dev
+    - glib-dev
+    - pkgconf
+  at-spi2-atk-headers:
+version: 2.26.1
+builddependencies:
+- glib-dev
+- dbus-dev
+- atk-dev
+- at-spi2-core-dev
+- intltool
+sources:
+- https://download.gnome.org/sources/at-spi2-atk/2.26/at-spi2-atk-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "at-spi2-atk" "xz"}}
+  (cd at-spi2-atk && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C at-spi2-atk
+  $(MAKE) -C at-spi2-atk DESTDIR=$(shell pwd)/out/at-spi2-atk install
+  {{pkmv "usr/include" "at-spi2-atk" "at-spi2-atk-headers"}}
