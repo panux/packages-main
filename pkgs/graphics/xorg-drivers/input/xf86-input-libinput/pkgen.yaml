@@ -18,4 +18,4 @@ script:
   (cd xf86-input-libinput && ./configure --prefix=/usr)
   $(MAKE) -C xf86-input-libinput
   $(MAKE) -C xf86-input-libinput install DESTDIR=$(shell pwd)/out/xf86-input-libinput
-  install -D -m 0644 src/libinput-modules.sh $(DESTDIR)/etc/modules-load.d/libinput-modules.sh
+  install -D -m 0644 src/libinput-modules.sh out/etc/modules-load.d/libinput-modules.sh
