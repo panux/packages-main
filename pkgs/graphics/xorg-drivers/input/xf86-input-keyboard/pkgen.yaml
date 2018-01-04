@@ -1,0 +1,18 @@
+packages:
+  xf86-input-keyboard:
+    dependencies:
+    - xorg-server
+builddependencies:
+- libxkbfile-dev
+- xorg-server-dev
+- libxi-dev
+- libxrandr-dev
+version: 1.9.0
+sources:
+- https://www.x.org/pub/individual/driver/xf86-input-keyboard-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-input-keyboard" "bz2"}}
+  (cd xf86-input-keyboard && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-input-keyboard
+  $(MAKE) -C xf86-input-keyboard install DESTDIR=$(shell pwd)/out/xf86-input-keyboard
