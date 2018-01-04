@@ -1,0 +1,20 @@
+packages:
+  xf86-video-fbdev:
+    dependencies:
+    - xorg-server
+builddependencies:
+- xorg-server-dev
+- libxi-dev
+- fontsproto
+- randrproto
+- videoproto
+- renderproto
+version: 0.4.4
+sources:
+- https://www.x.org/pub/individual/driver/xf86-video-fbdev-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-video-fbdev" "bz2"}}
+  (cd xf86-video-fbdev && ./configure --prefix=/usr)
+  $(MAKE) -C xf86-video-fbdev
+  $(MAKE) -C xf86-video-fbdev install DESTDIR=$(shell pwd)/out/xf86-video-fbdev
