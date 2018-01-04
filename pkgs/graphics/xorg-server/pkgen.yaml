@@ -38,10 +38,9 @@ packages:
       - libepoxy-dev
       - libpciaccess-dev
       - libxfont2-dev
-      - mesa-headers
-      - mesa-core
-      - mesa
+      - mesa-dev
       - pixman-dev
+      - pkgconf
       - presentproto
       - randrproto
       - recordproto
