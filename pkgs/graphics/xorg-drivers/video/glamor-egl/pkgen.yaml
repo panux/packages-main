@@ -1,0 +1,19 @@
+packages:
+  glamor-egl:
+    dependencies:
+    - libegl
+    - libgbm
+    - mesa-gl
+    - xorg-server
+version: 0.6.0
+builddependencies:
+- xorg-server-dev
+- mesa-dev
+sources:
+- https://www.x.org/releases/individual/driver/glamor-egl-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "glamor-egl" "bz2"}}
+  (cd glamor-egl && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-static)
+  $(MAKE) -C glamor-egl
+  $(MAKE) -C glamor-egl DESTDIR=$(shell pwd)/out/glamor-egl install
