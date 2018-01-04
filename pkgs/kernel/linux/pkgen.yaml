@@ -7,11 +7,8 @@ packages:
   linux-modules:
     dependencies:
     - linux-kernel
-  linux-firmware:
-    dependencies:
-    - linux-kernel
   linux-headers:
-version: 4.13.10
+version: 4.14.11
 oneshell: true
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
