@@ -42,6 +42,14 @@ packages:
   gtk2-locale:
     dependencies:
     - shared-mime-info
+  gtk-update-icon-cache:
+    dependencies:
+    - busybox
+    - gdk-pixbuf
+    - glib
+    - hicolor-icon-theme
+    - libintl
+    - musl
 version: 2.24.31
 builddependencies:
 - atk-dev
@@ -85,3 +93,4 @@ script:
   {{pkmv "usr/share/gtk-2.0" "gtk2" "gtk2-dev"}}
   {{pkmv "usr/share/aclocal" "gtk2" "gtk2-dev"}}
   {{pkmv "usr/share/gir-1.0" "gtk2" "gtk2-dev"}}
+  {{pkmv "usr/bin/gtk-update-icon-cache" "gtk2" "gtk-update-icon-cache"}}
