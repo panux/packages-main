@@ -1,0 +1,42 @@
+packages:
+  libxtst:
+    dependencies:
+    - libx11
+    - libxext
+    - musl
+  libxtst-dev:
+    dependencies:
+    - inputproto
+    - libx11-dev
+    - libxext-dev
+    - libxi-dev
+    - libxtst
+    - libxtst-headers
+    - pkgconf
+    - recordproto
+    - xextproto
+  libxtst-headers:
+  libxtst-doc:
+    dependencies:
+    - libxtst-man
+  libxtst-man:
+version: 1.2.3
+builddependencies:
+- recordproto
+- libx11-dev
+- libxext-dev
+- libxi-dev
+- util-macros
+sources:
+- https://www.x.org/releases/individual/lib/libXtst-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "libXtst" "bz2"}}
+  (cd libXtst && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C libXtst
+  $(MAKE) -C libXtst DESTDIR=$(shell pwd)/out/libxtst install
+  install -Dm644 libXtst/COPYING out/libxtst/usr/share/licenses/libxtst/LICENSE
+  {{pkmv "usr/include" "libxtst" "libxtst-headers"}}
+  {{pkmv "usr/share/man" "libxtst" "libxtst-man"}}
+  {{pkmv "usr/share" "libxtst" "libxtst-doc"}}
