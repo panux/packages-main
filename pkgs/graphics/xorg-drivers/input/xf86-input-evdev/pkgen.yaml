@@ -16,9 +16,11 @@ builddependencies:
 version: 2.10.5
 sources:
 - https://www.x.org/pub/individual/driver/xf86-input-evdev-{{.Version}}.tar.bz2
+- file://./evdev-modules.sh
 script:
 - |
   {{extract "xf86-input-evdev" "bz2"}}
   (cd xf86-input-evdev && ./configure --prefix=/usr)
   $(MAKE) -C xf86-input-evdev
   $(MAKE) -C xf86-input-evdev install DESTDIR=$(shell pwd)/out/xf86-input-evdev
+  install -D -m 0644 src/evdev-modules.sh $(DESTDIR)/etc/modules-load.d/evdev-modules.sh
