@@ -1,0 +1,12 @@
+packages:
+  linit-modules-load:
+    dependencies:
+    - linit
+version: 2
+sources:
+- https://github.com/panux/linit-modules-load/archive/v{{.Version}}.tar.gz
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/linit-modules-load-{{.Version}}.tar.gz
+  {{extract "linit-modules-load" "gz"}}
+  $(MAKE) -C linit-modules-load install DESTDIR=$(shell pwd)/out/linit-modules-load
