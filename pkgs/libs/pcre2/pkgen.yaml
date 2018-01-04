@@ -1,0 +1,30 @@
+packages:
+  pcre2:
+    dependencies:
+    - musl
+  libpcre2:
+    dependencies:
+    - pcre2
+  pcre2-dev:
+    dependencies:
+    - libpcre2
+    - pcre2
+    - pkgconf
+    - zlib-dev
+version: 10.30
+sources:
+- https://ftp.pcre.org/pub/pcre/pcre2-{{.Version}}.tar.gz
+builddependencies:
+- libedit-dev
+- zlib-dev
+- paxmark
+script:
+- |
+  {{extract "pcre2" "gz"}}
+  (cd pcre2 && ./configure --prefix=/usr --docdir=/usr/share/doc/pcre2-{{.Version}}	--htmldir=/usr/share/doc/pcre2-{{.Version}}/html --enable-pcre2-16 --enable-pcre2-32 --enable-pcre2grep-libz --enable-pcre2test-libedit	--with-match-limit-recursion=8192)
+  $(MAKE) -C pcre2
+  $(MAKE) -C pcre2 DESTDIR=$(shell pwd)/out/pcre2 install
+  {{pkmv "usr/lib/libpcre2-*" "pcre2" "libpcre2"}}
+  {{pkmv "usr/include" "pcre2" "pcre2-headers"}}
+  {{pkmv "usr/share/doc" "pcre2" "pcre2-doc"}}
+  {{pkmv "usr/share/man" "pcre2" "pcre2-man"}}
