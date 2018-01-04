@@ -3,9 +3,11 @@ packages:
     dependencies:
     - xorg-server
     - libinput
+    - mtdev
 builddependencies:
 - xorg-server-dev
 - libinput-dev
+- mtdev-dev
 version: 0.26.0
 sources:
 - https://www.x.org/pub/individual/driver/xf86-input-libinput-{{.Version}}.tar.bz2
