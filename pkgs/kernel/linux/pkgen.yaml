@@ -37,7 +37,6 @@ script:
 - $(MAKE) -C linux INSTALL_PATH=$(shell pwd)/out/linux-kernel/boot install
 - $(MAKE) -C linux INSTALL_HDR_PATH=$(shell pwd)/out/linux-headers/usr headers_install
 - $(MAKE) -C linux INSTALL_MOD_PATH=$(shell pwd)/out/linux-modules modules_install
-- $(MAKE) -C linux INSTALL_FW_PATH=$(shell pwd)/out/linux-firmware/lib/firmware firmware_install
 - mkdir out/linux-modules/usr out/linux-firmware/usr
 - mv out/linux-modules/lib out/linux-modules/usr/lib
 - mv out/linux-firmware/lib out/linux-firmware/usr/lib
