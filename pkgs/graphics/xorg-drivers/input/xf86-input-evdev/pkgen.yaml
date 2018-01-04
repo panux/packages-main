@@ -23,4 +23,4 @@ script:
   (cd xf86-input-evdev && ./configure --prefix=/usr)
   $(MAKE) -C xf86-input-evdev
   $(MAKE) -C xf86-input-evdev install DESTDIR=$(shell pwd)/out/xf86-input-evdev
-  install -D -m 0644 src/evdev-modules.sh out/etc/modules-load.d/evdev-modules.sh
+  install -D -m 0644 src/evdev-modules.sh out/xf86-input-evdev/etc/modules-load.d/evdev-modules.sh
