@@ -13,6 +13,7 @@ packages:
     - musl
     - pango
     - consolekit
+    - libexecinfo
   lxdm-locale:
     dependencies:
     - bash
