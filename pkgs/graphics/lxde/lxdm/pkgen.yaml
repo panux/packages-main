@@ -3,7 +3,7 @@ packages:
     dependencies:
     - bash
     - cairo
-    - dbus-libs
+    - libdbus
     - gdk-pixbuf
     - glib
     - gtk2
