@@ -6,7 +6,7 @@ packages:
   libvte:
     dependencies:
     - atk
-    - cario
+    - cairo
     - gdk-pixbuf
     - glib
     - gtk2
