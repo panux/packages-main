@@ -1,0 +1,34 @@
+packages:
+  libexecinfo:
+    dependencies:
+    - musl
+  libexecinfo-dev:
+    dependencies:
+    - libexecinfo
+    - libexecinfo-headers
+  libexecinfo-headers:
+version: 1.1
+builddependencies:
+sources:
+- https://ftp.nsysu.edu.tw/FreeBSD/ports/local-distfiles/itetcu/libexecinfo-{{.Version}}.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/plain/main/libexecinfo/10-execinfo.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/libexecinfo/20-define-gnu-source.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/libexecinfo/30-linux-makefile.patch
+oneshell: true
+data:
+  install:
+    execinfo.h: usr/include
+    stacktraverse.h: usr/include
+    libexecinfo.a: usr/lib
+    libexecinfo.so.1: usr/lib
+script:
+- |
+  {{extract "libexecinfo" "bz2"}}
+  (cd libexecinfo && patch -p0 -i ../src/10-execinfo.patch && patch -p0 -i ../src/20-define-gnu-source.patch && patch -p0 -i ../src/30-linux-makefile.patch)
+  export CFLAGS="${CFLAGS} -fno-omit-frame-pointer"
+  $(MAKE) -C libexecinfo
+  {{- range $i, $v := .Data.install}}
+  install -D -m755 libexecinfo/{{$i}} out/libexecinfo/{{$v}}/{{$i}}
+  {{- end}}
+  ln -s /usr/lib/libexecinfo.so.1 out/libexecinfo/usr/lib/libexecinfo.so
+  {{pkmv "usr/include" "libexecinfo" "libexecinfo-headers"}}

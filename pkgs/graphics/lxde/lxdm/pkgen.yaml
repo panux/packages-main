@@ -1,0 +1,44 @@
+packages:
+  lxdm:
+    dependencies:
+    - bash
+    - cairo
+    - libdbus
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libx11
+    - libxcb
+    - musl
+    - pango
+    - consolekit
+    - libexecinfo
+  lxdm-locale:
+    dependencies:
+    - bash
+version: 0.5.3
+builddependencies:
+- gtk2-dev
+- consolekit-dev
+- autoconf
+- automake
+- libtool
+- intltool
+- linux-headers
+- libx11-dev
+- libexecinfo-dev
+sources:
+- https://downloads.sourceforge.net/lxdm/lxdm-{{.Version}}.tar.xz
+- file://./lxdm.initrd
+builder: panux
+oneshell: true
+script:
+- |
+  {{extract "lxdm" "xz"}}
+  export CFLAGS="${CFLAGS} -lexecinfo"
+  (cd lxdm && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/lxdm --without-pam --with-xconn=xcb)
+  $(MAKE) -C lxdm
+  $(MAKE) -C lxdm DESTDIR=$(shell pwd)/out/lxdm DATADIRNAME=share install
+  {{pkmv "usr/share/locale" "lxdm" "lxdm-locale"}}
+  install -m755 -D src/lxdm.initrd out/lxdm/etc/init.d/lxdm

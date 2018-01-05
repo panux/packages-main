@@ -1,0 +1,41 @@
+packages:
+  at-spi2-core:
+    dependencies:
+    - libdbus
+    - glib
+    - libintl
+    - libx11
+    - libxtst
+    - musl
+  at-spi2-core-dev:
+    dependencies:
+    - at-spi2-core
+    - at-spi2-core-headers
+    - dbus-dev
+    - glib-dev
+    - libxtst-dev
+    - pkgconf
+  at-spi2-core-headers:
+  at-spi2-core-doc:
+  at-spi2-core-locale:
+version: 2.26.2
+builddependencies:
+- dbus-dev
+- glib-dev
+- libxtst-dev
+- dbus
+- intltool
+- gobject-introspection-dev
+sources:
+- https://download.gnome.org/sources/at-spi2-core/2.26/at-spi2-core-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "at-spi2-core" "xz"}}
+  (cd at-spi2-core && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C at-spi2-core
+  $(MAKE) -C at-spi2-core DESTDIR=$(shell pwd)/out/at-spi2-core install
+  {{pkmv "usr/include" "at-spi2-core" "at-spi2-core-headers"}}
+  {{pkmv "usr/share/gir-1.0" "at-spi2-core" "at-spi2-core-dev"}}
+  {{pkmv "usr/share/gtk-doc" "at-spi2-core" "at-spi2-core-doc"}}
+  {{pkmv "usr/share/locale" "at-spi2-core" "at-spi2-core-locale"}}

@@ -1,0 +1,31 @@
+packages:
+  keybinder:
+    dependencies:
+    - glib
+    - gtk2
+    - libx11
+    - musl
+  keybinder-dev:
+    dependencies:
+    - gtk2-dev
+    - keybinder
+    - keybinder-headers
+    - libxext-dev
+    - pkgconf
+  keybinder-headers:
+  keybinder-doc:
+version: 0.3.0
+builddependencies:
+- gtk2-dev
+- libxext-dev
+sources:
+- https://dev.alpinelinux.org/archive/keybinder/keybinder-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "keybinder" "gz"}}
+  (cd keybinder && ./configure --prefix=/usr --disable-static --disable-python --disable-lua)
+  $(MAKE) -C keybinder
+  $(MAKE) -C keybinder DESTDIR=$(shell pwd)/out/keybinder install
+  {{pkmv "usr/share" "keybinder" "keybinder-doc"}}
+  {{pkmv "usr/include" "keybinder" "keybinder-headers"}}

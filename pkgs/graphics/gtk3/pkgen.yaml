@@ -1,0 +1,105 @@
+packages:
+  gtk3:
+    dependencies:
+    - at-spi2-atk
+    - atk
+    - busybox
+    - cairo
+    - cairo-gobject
+    - cups-libs
+    - fontconfig
+    - gdk-pixbuf
+    - glib
+    - gtk-update-icon-cache
+    - harfbuzz
+    - libepoxy
+    - libintl
+    - libx11
+    - libxcomposite
+    - libxcursor
+    - libxdamage
+    - libxext
+    - libxfixes
+    - libxi
+    - libxinerama
+    - libxrandr
+    - musl
+    - pango
+    - shared-mime-info
+  gtk3-dev:
+    dependencies:
+    - at-spi2-atk-dev
+    - atk-dev
+    - cairo-dev
+    - fontconfig-dev
+    - gdk-pixbuf-dev
+    - glib-dev
+    - gtk3
+    - intltool
+    - libepoxy-dev
+    - libx11-dev
+    - libxcomposite-dev
+    - libxcursor-dev
+    - libxdamage-dev
+    - libxext-dev
+    - libxfixes-dev
+    - libxi-dev
+    - libxinerama-dev
+    - libxrandr-dev
+    - pango-dev
+    - pkgconf
+  gtk3-headers:
+  gtk3-doc:
+    dependencies:
+    - gtk3-man
+  gtk3-man:
+  gtk3-locale:
+    dependencies:
+    - shared-mime-info
+    - gtk-update-icon-cache
+version: 3.22.21
+builddependencies:
+- at-spi2-atk-dev
+- atk-dev
+- cairo-dev
+- fontconfig-dev
+- gdk-pixbuf-dev
+- glib-dev
+- intltool
+- libepoxy-dev
+- libx11-dev
+- libxcomposite-dev
+- libxcursor-dev
+- libxdamage-dev
+- libxext-dev
+- libxfixes-dev
+- libxi-dev
+- libxinerama-dev
+- libxrandr-dev
+- pango-dev
+- cups-dev
+- expat-dev
+- gettext-dev
+- gnutls-dev
+- gobject-introspection-dev
+- libice-dev
+- tiff-dev
+- zlib-dev
+sources:
+- https://download.gnome.org/sources/gtk+/3.22/gtk+-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gtk+" "xz"}}
+  (cd gtk+ && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --enable-xkb --enable-xinerama	--enable-xrandr	--enable-xfixes	--enable-xcomposite	--enable-xdamage --enable-x11-backend)
+  (cd gtk+ && sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool)
+  $(MAKE) -C gtk+
+  $(MAKE) -C gtk+ DESTDIR=$(shell pwd)/out/gtk3 install
+  {{pkmv "usr/include" "gtk3" "gtk3-headers"}}
+  {{pkmv "usr/lib/gtk-2.0/include" "gtk3" "gtk3-headers"}}
+  {{pkmv "usr/share/gtk-doc" "gtk3" "gtk3-doc"}}
+  {{pkmv "usr/share/man" "gtk3" "gtk3-man"}}
+  {{pkmv "usr/share/locale" "gtk3" "gtk3-locale"}}
+  {{pkmv "usr/share/gettext" "gtk3" "gtk3-dev"}}
+  {{pkmv "usr/share/aclocal" "gtk3" "gtk3-dev"}}
+  {{pkmv "usr/share/gir-1.0" "gtk3" "gtk3-dev"}}
+  rm out/gtk3/usr/bin/gtk-update-icon-cache

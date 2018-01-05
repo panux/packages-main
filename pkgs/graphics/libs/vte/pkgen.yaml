@@ -6,10 +6,10 @@ packages:
   libvte:
     dependencies:
     - atk
-    - cario
+    - cairo
     - gdk-pixbuf
     - glib
-    - gtk+3.0
+    - gtk2
     - libintl
     - libx11
     - musl
@@ -30,11 +30,17 @@ packages:
     - libvte
   vte-pkgconfig:
     dependencies:
-    - pkgconfig
+    - pkgconf
   vte-dev:
     dependencies:
+    - vte
     - vte-headers
     - vte-pkgconfig
+    - cairo-dev
+    - glib-dev
+    - gtk2-dev
+    - libx11-dev
+    - pango-dev
 version: 0.48.3
 sources:
 - https://ftp.gnome.org/pub/gnome/sources/vte/0.48/vte-{{.Version}}.tar.xz

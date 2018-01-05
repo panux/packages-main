@@ -1,0 +1,48 @@
+packages:
+  gobject-introspection:
+    dependencies:
+    - glib
+    - libffi
+    - musl
+  gobject-introspection-dev:
+    dependencies:
+    - cairo-dev
+    - glib
+    - glib-dev
+    - gobject-introspection
+    - gobject-introspection-headers
+    - libffi
+    - libffi-dev
+    - libtool
+    - musl
+    - pkgconf
+    - python
+  gobject-introspection-headers:
+  gobject-introspection-doc:
+    dependencies:
+    - gobject-introspection-man
+  gobject-introspection-man:
+version: 1.52.1
+builddependencies:
+- python2
+- glib-dev
+- glib
+- libffi-dev
+- cairo-dev
+- libtool
+- flex
+- bison
+- python2-dev
+sources:
+- https://download.gnome.org/sources/gobject-introspection/1.52/gobject-introspection-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gobject-introspection" "xz"}}
+  (cd gobject-introspection && ./configure --prefix=/usr --disable-static)
+  $(MAKE) -C gobject-introspection V=1
+  $(MAKE) -C gobject-introspection DESTDIR=$(shell pwd)/out/gobject-introspection install
+  {{pkmv "usr/include" "gobject-introspection" "gobject-introspection-headers"}}
+  {{pkmv "usr/share/man" "gobject-introspection" "gobject-introspection-man"}}
+  {{pkmv "usr/share" "gobject-introspection" "gobject-introspection-dev"}}
+  {{pkmv "usr/lib/gobject-introspection" "gobject-introspection" "gobject-introspection-dev"}}
+  {{pkmv "usr/bin" "gobject-introspection" "gobject-introspection-dev"}}

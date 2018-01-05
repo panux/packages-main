@@ -1,0 +1,27 @@
+packages:
+  gpicview:
+    dependencies:
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libjpeg-turbo
+    - libx11
+    - musl
+  gpicview-locale:
+version: 0.2.5
+builddependencies:
+- gtk2-dev
+- intltool
+- libjpeg-turbo-dev
+sources:
+- https://downloads.sourceforge.net/project/lxde/GPicView%20%28image%20Viewer%29/0.2.x/gpicview-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "gpicview" "xz"}}
+  (cd gpicview && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C gpicview
+  $(MAKE) -C gpicview DESTDIR=$(shell pwd)/out/gpicview install
+  {{pkmv "usr/share/locale" "gpicview" "gpicview-locale"}}

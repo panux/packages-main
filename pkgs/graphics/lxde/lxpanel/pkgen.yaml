@@ -18,6 +18,7 @@ packages:
     - pkgconf
     - gettext
     - glib
+    - keybinder
   lxpanel-doc:
     dependencies:
     - lxpanel-man
