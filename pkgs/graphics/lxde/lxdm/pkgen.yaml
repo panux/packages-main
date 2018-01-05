@@ -29,7 +29,7 @@ builddependencies:
 - libexecinfo-dev
 sources:
 - https://downloads.sourceforge.net/lxdm/lxdm-{{.Version}}.tar.xz
-- files://./lxdm.initrd
+- file://./lxdm.initrd
 builder: panux
 oneshell: true
 script:
@@ -39,5 +39,5 @@ script:
   (cd lxdm && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/lxdm --without-pam --with-xconn=xcb)
   $(MAKE) -C lxdm
   $(MAKE) -C lxdm DESTDIR=$(shell pwd)/out/lxdm DATADIRNAME=share install
-  {{pkmv "usr/share/locale"}}
-  install -m755 -D src/lxdm.initd out/lxdm/etc/init.d/lxdm
+  {{pkmv "usr/share/locale" "lxdm" "lxdm-locale"}}
+  install -m755 -D src/lxdm.initrd out/lxdm/etc/init.d/lxdm
