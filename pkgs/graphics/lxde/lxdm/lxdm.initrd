@@ -1,10 +1,8 @@
 #!/etc/rc.common
 
-# depends() {
-# 	dep pre
-# }
-
-# depends are commented out for testing purposes
+depends() {
+	  dep pre
+}
 
 start() {
         lxdm -d &
