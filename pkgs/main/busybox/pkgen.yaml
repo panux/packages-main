@@ -1,11 +1,16 @@
 packages:
   busybox:
+  bbcron:
+    dependencies:
+    - busybox
+    - linit
 version: 1.27.2
 sources:
 - https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
 - file://./oninstall.sh
 - file://./addalt.sh
 - file://./conf
+- file://./cron.sh
 builddependencies:
 - linux-headers
 - binutils
@@ -23,3 +28,5 @@ script:
 - sh src/addalt.sh
 - mv src/oninstall.sh out/busybox/.oninstall
 - chmod 700 out/busybox/.oninstall
+- install -D -m 0744 src/cron.sh out/bbcron/etc/init.d/cron
+- mkdir -p out/bbcron/var/spool/cron/crontabs
