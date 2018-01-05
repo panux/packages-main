@@ -1,0 +1,18 @@
+#!/etc/rc.common
+
+# depends() {
+# 	dep pre
+# }
+
+# depends are commented out for testing purposes
+
+start() {
+        lxdm -d &
+        echo -n $! > /var/run/lxdm.pid
+}
+
+stop() {
+        lxdmpid=$(cat /var/run/lxdm.pid)
+        kill $lxdmpid
+        wait $lxdmpid || true
+}
