@@ -1,0 +1,67 @@
+packages:
+  vte:
+    dependencies:
+    - libvte
+  libvte:
+    dependencies:
+    - atk
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - libx11
+    - musl
+    - ncurses
+    - pango
+  vte-headers:
+    dependencies:
+    - musl-headers
+  vte-locale:
+  vte-doc:
+  vte-dev:
+    dependencies:
+    - cairo-dev
+    - glib-dev
+    - gtk2-dev
+    - libx11-dev
+    - pango-dev
+    - pkgconf
+    - vte
+    - vte-headers
+  py2-vte:
+    dependencies:
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - musl
+    - pango
+    - vte
+version: 0.28.2
+sources:
+- https://ftp.gnome.org/pub/gnome/sources/vte/0.28/vte-{{.Version}}.tar.xz
+- https://git.alpinelinux.org/cgit/aports/plain/main/vte/vte-0.28.2-paste-fix.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/vte/CVE-2012-2738.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/vte/allow_alt_in_terminal.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/vte/fix-includes.patch
+builddependencies:
+- pango-dev
+- gtk+2.0-dev
+- intltool
+- ncurses-dev
+- python2-dev
+- py-gtk-dev
+- patch
+script:
+- |
+  {{extract "vte" "xz"}}
+  (cd vte && patch -p1 -i ../src/allow_alt_in_terminal.patch && patch -p1 -i ../src/fix-includes.patch && patch -p1 -i ../src/CVE-2012-2738.patch && patch -p1 -i ../src/vte-0.28.2-paste-fix.patch)
+  (cd vte && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/vte --localstatedir=/var --disable-static)
+  $(MAKE) -C vte
+  $(MAKE) -C vte install DESTDIR=$(shell pwd)/out/vte
+  {{pkmv "usr/lib/libvte.so*" "vte" "libvte"}}
+  {{pkmv "usr/include" "vte" "vte-headers"}}
+  {{pkmv "usr/share/locale" "vte" "vte-locale"}}
+  {{pkmv "usr/share/gtk-doc" "vte" "vte-doc"}}
+  {{pkmv "usr/share/pygtk" "vte" "py2-vte"}}
+  {{pkmv "usr/lib/python2.7" "vte" "py2-vte"}}
