@@ -73,4 +73,3 @@ script:
   {{pkmv "usr/share/gtk-doc" "vte" "vte-doc"}}
   {{pkmv "usr/bin" "vte" "vte-bin"}}
   {{pkmv "usr/lib/pkgconfig" "vte" "vte-pkgconfig"}}
-  rm -r out/vte/usr
