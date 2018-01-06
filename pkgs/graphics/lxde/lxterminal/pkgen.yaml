@@ -1,0 +1,32 @@
+packages:
+  lxterminal:
+    dependencies:
+    - gdk-pixbuf
+    - glib
+    - gtk2
+    - libintl
+    - musl
+    - pango
+    - vte
+  lxterminal-doc:
+    dependencies:
+    - lxterminal-man
+  lxterminal-man:
+  lxterminal-locale:
+version: 0.3.1
+builddependencies:
+- vte-dev
+sources:
+- https://downloads.sourceforge.net/lxde/lxterminal-{{.Version}}.tar.xz
+- https://git.alpinelinux.org/cgit/aports/tree/main/lxterminal/CVE-2016-10369.patch
+builder: alpine
+script:
+- |
+  {{extract "lxterminal" "xz"}}
+  (cd lxterminal && patch -p1 -i ../src/CVE-2016-10369.patch)
+  (cd lxterminal && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C lxterminal
+  $(MAKE) -C lxterminal/src check
+  $(MAKE) -C lxterminal DESTDIR=$(shell pwd)/out/lxterminal install
+  {{pkmv "usr/share/man" "lxterminal" "lxterminal-man"}}
+  {{pkmv "usr/share/locale" "lxterminal" "lxterminal-locale"}}
