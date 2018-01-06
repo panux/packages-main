@@ -1,0 +1,76 @@
+packages:
+  vte3:
+    dependencies:
+    - libvte3
+    - vte3-bin
+  libvte3:
+    dependencies:
+    - atk
+    - cairo
+    - gdk-pixbuf
+    - glib
+    - gtk3
+    - libintl
+    - libx11
+    - musl
+    - ncurses
+    - pango
+  vte3-vala:
+    dependencies:
+    - vala
+  vte3-headers:
+    dependencies:
+    - musl-headers
+  vte3-profile:
+  vte3-gir:
+  vte3-locale:
+  vte3-doc:
+  vte3-bin:
+    dependencies:
+    - libvte3
+  vte3-pkgconfig:
+    dependencies:
+    - pkgconf
+  vte3-dev:
+    dependencies:
+    - vte3
+    - vte3-headers
+    - vte3-pkgconfig
+    - glib-dev
+    - gnutls-dev
+    - gtk3-dev
+    - pango-dev
+    - pcre2-dev
+    - zlib-dev
+version: 0.48.3
+sources:
+- https://ftp.gnome.org/pub/gnome/sources/vte/0.48/vte-{{.Version}}.tar.xz
+builddependencies:
+- pango-dev
+- gtk+3.0-dev
+- intltool
+- ncurses-dev
+- python2-dev
+- py-gtk-dev
+- pcre2-dev
+- gnutls-dev
+- gobject-introspection-dev
+- vala
+- g++
+- gperf
+script:
+- |
+  {{extract "vte" "xz"}}
+  (cd vte && ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/vte --localstatedir=/var --disable-static)
+  $(MAKE) -C vte
+  $(MAKE) -C vte install DESTDIR=$(shell pwd)/out/vte3
+  {{pkmv "usr/lib/libvte-*" "vte3" "libvte3"}}
+  {{pkmv "usr/include" "vte3" "vte3-headers"}}
+  {{pkmv "usr/etc" "vte3" "vte3-profile"}}
+  {{pkmv "usr/lib/girepository-1.0" "vte3" "vte3-gir"}}
+  {{pkmv "usr/share/gir-1.0" "vte3" "vte3-gir"}}
+  {{pkmv "usr/share/vala" "vte3" "vte3-vala"}}
+  {{pkmv "usr/share/locale" "vte3" "vte3-locale"}}
+  {{pkmv "usr/share/gtk-doc" "vte3" "vte3-doc"}}
+  {{pkmv "usr/bin" "vte3" "vte3-bin"}}
+  {{pkmv "usr/lib/pkgconfig" "vte3" "vte3-pkgconfig"}}
