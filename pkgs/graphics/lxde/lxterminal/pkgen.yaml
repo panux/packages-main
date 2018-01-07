@@ -18,12 +18,10 @@ builddependencies:
 - vte-dev
 sources:
 - https://downloads.sourceforge.net/lxde/lxterminal-{{.Version}}.tar.xz
-- https://git.alpinelinux.org/cgit/aports/tree/main/lxterminal/CVE-2016-10369.patch
 builder: alpine
 script:
 - |
   {{extract "lxterminal" "xz"}}
-  (cd lxterminal && patch -p1 -i ../src/CVE-2016-10369.patch)
   (cd lxterminal && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
   $(MAKE) -C lxterminal
   $(MAKE) -C lxterminal/src check
