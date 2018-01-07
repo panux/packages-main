@@ -1,0 +1,51 @@
+packages:
+  xf86-video-intel:
+    dependencies:
+    - eudev
+    - libdrm
+    - libpciaccess
+    - libx11
+    - libxcb
+    - libxv
+    - libxvmc
+    - intel-dri
+    - musl
+    - pixman
+    - xcb-util
+  xf86-video-intel-doc:
+    dependencies:
+    - xf86-video-intel
+  xf86-video-intel-man:
+version: 2.99.917
+builddependencies:
+- xorg-server-dev
+- libxi-dev
+- fontsproto
+- randrproto
+- videoproto
+- renderproto
+- glproto
+- xineramaproto
+- libdrm-dev
+- xf86driproto
+- mesa-dev
+- libxvmc-dev
+- xcb-util-dev
+- eudev-dev
+- util-macros
+- libtool
+- automake
+- autoconf
+sources:
+- https://www.x.org/releases/individual/driver/xf86-video-intel-2.99.917.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/plain/main/xf86-video-intel/git.patch
+oneshell: true
+script:
+- |
+  {{extract "xf86-video-intel" "bz2"}}
+  (cd xf86-video-intel && patch -p1 -i ../src/git.patch && autoreconf -vif)
+  (cd xf86-video-intel && ./configure --prefix=/usr --enable-xvmc --disable-selective-werror --with-default-dri=3)
+  $(MAKE) -C xf86-video-intel
+  $(MAKE) -C xf86-video-intel DESTDIR=$(shell pwd)/out/xf86-video-intel install
+  {{pkmv "usr/share/man" "xf86-video-intel" "xf86-video-intel-man"}}
+  install -Dm644 xf86-video-intel/COPYING out/xf86-video-intel-doc/usr/share/licenses/xf86-video-intel/COPYING
