@@ -1,0 +1,30 @@
+packages:
+  xterm:
+    dependencies:
+    - fontconfig
+    - freetype
+    - libice
+    - libx11
+    - libxaw
+    - libxft
+    - libxmu
+    - libxpm
+    - libxt
+    - musl
+    - ncurses-libs
+version: 331
+builddependencies:
+- libxaw-dev
+- libxft-dev
+- ncurses-dev
+sources:
+- https://invisible-island.net/datafiles/release/xterm.tar.gz
+- https://git.archlinux.org/svntogit/packages.git/plain/trunk/LICENSE?h=packages/xterm
+builder: panux
+script:
+- |
+  tar xf src/xterm.tar.gz
+  mv xterm-{{.Version}} xterm
+  (cd xterm && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var --with-app-defaults=/usr/share/X11/app-defaults/ --with-x --disable-full-tgetent --disable-imake --enable-ansi-color --enable-88-color --enable-256-color --enable-broken-osc --enable-broken-st --enable-load-vt-fonts --enable-i18n --enable-wide-chars --enable-doublechars --enable-warnings --enable-tcap-query --enable-logging --enable-dabbrev --enable-freetype --enable-luit --enable-mini-luit --enable-narrowproto --enable-exec-xterm --enable-sixel-graphics --enable-regis-graphics --with-tty-group=tty --with-utempter)
+  $(MAKE) -C xterm
+  $(MAKE) -C xterm DESTDIR=$(shell pwd)/out/xterm install

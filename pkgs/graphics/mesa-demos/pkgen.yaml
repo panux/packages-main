@@ -1,0 +1,35 @@
+packages:
+  mesa-demos:
+    dependencies:
+    - freeglut
+    - glew
+    - glu
+    - libx11
+    - libxext
+    - libegl
+    - mesa-gl
+    - libgles1
+    - libgles2
+    - libosmesa
+    - musl
+version: 8.3.0
+sources:
+- https://people.freedesktop.org/~brianp/mesa/demos/{{.Version}}/mesa-demos-{{.Version}}.tar.bz2
+builddependencies:
+- mesa-dev
+- glew-dev
+- glu-dev
+- freeglut-dev
+- automake
+- autoconf
+- libtool
+- g++
+oneshell: true
+script:
+- |
+  {{extract "mesa-demos" "bz2"}}
+  (cd mesa-demos && autoreconf -vif)
+  export LDFLAGS="${LDFLAGS} -Wl,-z,lazy"
+  (cd mesa-demos && ./configure --prefix=/usr)
+  $(MAKE) -C mesa-demos
+  $(MAKE) -C mesa-demos DESTDIR=$(shell pwd)/out/mesa-demos install

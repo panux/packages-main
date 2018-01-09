@@ -1,0 +1,42 @@
+packages:
+  libxaw:
+    dependencies:
+    - libx11
+    - libxext
+    - libxmu
+    - libxpm
+    - libxt
+    - musl
+  libxaw-dev:
+    dependencies:
+    - libxaw
+    - libxaw-headers
+    - libxaw-doc
+    - libxext-dev
+    - libxmu-dev
+    - libxpm-dev
+    - pkgconf
+    - xproto
+  libxaw-headers:
+  libxaw-doc:
+    dependencies:
+    - libxaw-man
+  libxaw-man:
+version: 1.0.13
+builddependencies:
+- xproto
+- libxmu-dev
+- libxpm-dev
+- libxext-dev
+sources:
+- https://www.x.org/releases/individual/lib/libXaw-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "libXaw" "bz2"}}
+  (cd libXaw && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-xaw8 --disable-static --disable-xaw6)
+  $(MAKE) -C libXaw
+  $(MAKE) -C libXaw DESTDIR=$(shell pwd)/out/libxaw install
+  {{pkmv "usr/include" "libxaw" "libxaw-headers"}}
+  {{pkmv "usr/share/man" "libxaw" "libxaw-man"}}
+  {{pkmv "usr/share/doc" "libxaw" "libxaw-doc"}}
