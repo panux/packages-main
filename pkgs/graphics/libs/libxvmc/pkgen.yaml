@@ -1,0 +1,43 @@
+packages:
+  libxvmc:
+    dependencies:
+    - musl
+  libxvmc-man:
+    dependencies:
+    - libxv
+  libxvmc-doc:
+    dependencies:
+    - libxv-man
+  libxvmc-pkgconfig:
+    dependencies:
+    - libxv
+    - libxv-headers
+  libxvmc-headers:
+  libxvmc-dev:
+    dependencies:
+    - libxv-pkgconfig
+    - libxext-dev
+version: 1.0.10
+sources:
+- https://www.x.org/archive//individual/lib/libXvMC-{{.Version}}.tar.gz
+builddependencies:
+- xproto
+- videoproto
+- libx11-dev
+- libxext-dev
+- libtool
+- autoconf
+- automake
+- util-macros
+- gcc
+- libxv-dev
+script:
+- |
+  {{extract "libXvMC" "gz"}}
+  (cd libXvMC && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C libXvMC
+  $(MAKE) -C libXvMC install DESTDIR=$(shell pwd)/out/libxvmc
+  {{pkmv "usr/include" "libxvmc" "libxvmc-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "libxvmc" "libxvmc-pkgconfig"}}
+  {{mvman "libxvmc"}}
+  rm -r out/libxvmc/usr/share
