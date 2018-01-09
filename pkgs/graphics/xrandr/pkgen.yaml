@@ -1,0 +1,22 @@
+packages:
+  xrandr:
+    dependencies:
+    - libxrandr
+  xrandr-doc:
+    dependencies:
+    - xrandr-man
+  xrandr-man:
+version: 1.5.0
+builddependencies:
+- libxrandr-dev
+- util-macros
+sources:
+- https://www.x.org/releases/individual/app/xrandr-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "xrandr" "bz2"}}
+  (cd xrandr && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C xrandr
+  $(MAKE) -C xrandr DESTDIR=$(shell pwd)/out/xrandr install
+  {{pkmv "usr/share/man" "xrandr" "xrandr-man"}}
