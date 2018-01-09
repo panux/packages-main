@@ -1,0 +1,42 @@
+packages:
+  libxv:
+    dependencies:
+    - musl
+  libxv-man:
+    dependencies:
+    - libxv
+  libxv-doc:
+    dependencies:
+    - libxv-man
+  libxv-pkgconfig:
+    dependencies:
+    - libxv
+    - libxv-headers
+  libxv-headers:
+  libxv-dev:
+    dependencies:
+    - libxv-pkgconfig
+    - libxext-dev
+version: 1.0.11
+sources:
+- https://www.x.org/archive//individual/lib/libXv-{{.Version}}.tar.gz
+builddependencies:
+- xproto
+- videoproto
+- libx11-dev
+- libxext-dev
+- libtool
+- autoconf
+- automake
+- util-macros
+- gcc
+script:
+- |
+  {{extract "libXv" "gz"}}
+  (cd libXv && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var)
+  $(MAKE) -C libXv
+  $(MAKE) -C libXv install DESTDIR=$(shell pwd)/out/libxv
+  {{pkmv "usr/include" "libxv" "libxv-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "libxv" "libxv-pkgconfig"}}
+  {{mvman "libxv"}}
+  rm -r out/libxv/usr/share
