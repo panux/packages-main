@@ -22,4 +22,4 @@ script:
   $(MAKE) -C lxrandr
   $(MAKE) -C lxrandr DESTDIR=$(shell pwd)/out/lxrandr install
   {{pkmv "usr/share/man" "lxrandr" "lxrandr-man"}}
-  {pkmv "usr/share/locale" "lxrandr" "lxrandr-locale"}}
+  {{pkmv "usr/share/locale" "lxrandr" "lxrandr-locale"}}
