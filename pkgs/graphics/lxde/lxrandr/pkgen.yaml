@@ -1,0 +1,25 @@
+packages:
+  lxrandr:
+    dependencies:
+    - gtk2
+    - xrandr
+  lxrandr-doc:
+    dependencies:
+    - lxrandr-man
+  lxrandr-man:
+  lxrandr-locale:
+version: 0.3.1
+builddependencies:
+- intltool
+- gtk2-dev
+sources:
+- https://downloads.sourceforge.net/lxde/lxrandr-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "lxrandr" "xz"}}
+  (cd lxrandr && ./configure --prefix=/usr --sysconfdir=/etc)
+  $(MAKE) -C lxrandr
+  $(MAKE) -C lxrandr DESTDIR=$(shell pwd)/out/lxrandr install
+  {{pkmv "usr/share/man" "lxrandr" "lxrandr-man"}}
+  {pkmv "usr/share/locale" "lxrandr" "lxrandr-locale"}}
