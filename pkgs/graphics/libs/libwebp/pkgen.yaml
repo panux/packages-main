@@ -1,0 +1,43 @@
+packages:
+  libwebp:
+  libwebp-dev:
+    dependencies:
+    - libwebp-headers
+    - libwebp
+    - pkgconf
+  libwebp-headers:
+  libwebp-doc:
+    dependencies:
+    - libwebp-man
+  libwebp-man:
+  libwebp-bins:
+    dependencies:
+    - libgif
+    - libjpeg-turbo
+    - libpng
+    - libwebp
+    - libtiff
+version: 0.6.0
+builddependencies:
+- libpng-dev
+- libjpeg-turbo-dev
+- libtiff-dev
+- libgif-dev
+- automake
+- autoconf
+- libtool
+- gcc-include
+sources:
+- https://github.com/webmproject/libwebp/archive/v{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/libwebp-{{.Version}}.tar.gz
+  {{extract "libwebp" "gz"}}
+  (cd libwebp && ./autogen.sh && ./configure --prefix=/usr --disable-static	--enable-libwebpmux	--enable-libwebpdemux	--enable-libwebpdecoder)
+  $(MAKE) -C libwebp
+  $(MAKE) -C libwebp DESTDIR=$(shell pwd)/out/libwebp install
+  install -Dm644 libwebp/COPYING out/libwebp-doc/usr/share/licenses/libwebp/COPYING
+  {{pkmv "usr/include" "libwebp" "libwebp-headers"}}
+  {{pkmv "usr/share/man" "libwebp" "libwebp-man"}}
+  {{pkmv "usr/bin" "libwebp" "libwebp-bins"}}
