@@ -1,0 +1,30 @@
+packages:
+  xf86-video-nouveau:
+    dependencies:
+    - eudev
+    - libdrm
+    - nouveau-dri
+  xf86-video-nouveau-doc:
+    dependencies:
+    - xf86-video-nouveau-man
+  xf86-video-nouveau-man:
+version: 1.0.15
+builddependencies:
+- randrproto
+- renderproto
+- videoproto
+- xextproto
+- libdrm
+- xorg-server-dev
+- util-macros
+- xf86driproto
+- eudev-dev
+sources:
+- https://www.x.org/archive/individual/driver/xf86-video-nouveau-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xf86-video-nouveau" "bz2"}}
+  (cd xf86-video-nouveau && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C xf86-video-nouveau
+  $(MAKE) -C xf86-video-nouveau DESTDIR=$(shell pwd)/out/xf86-video-nouveau install
+  {{pkmv "usr/share/man" "xf86-video-nouveau" "xf86-video-nouveau-man"}}
