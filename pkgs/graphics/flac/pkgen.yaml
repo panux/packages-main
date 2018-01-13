@@ -1,0 +1,39 @@
+packages:
+  flac:
+    dependencies:
+    - libgcc
+    - libogg
+    - libstdcpp
+  flac-dev:
+    dependencies:
+    - flac
+    - flac-headers
+    - flac-pkgconfig
+    - libogg-dev
+  flac-headers:
+  flac-pkgconfig:
+    dependencies:
+    - pkgconf
+  flac-doc:
+    dependencies:
+    - flac-man
+  flac-man:
+version: 1.3.2
+builddependencies:
+- libogg-dev
+- gpp
+- libstdcpp-dev
+sources:
+- https://downloads.xiph.org/releases/flac/flac-{{.Version}}.tar.xz
+builder: panux
+script:
+- |
+  {{extract "flac" "xz"}}
+  (cd flac && ./configure --prefix=/usr --disable-sse)
+  $(MAKE) -C flac
+  $(MAKE) -C flac DESTDIR=$(shell pwd)/out/flac install
+  install -D -m644 flac/COPYING.Xiph "out/flac/usr/share/licenses/flac/LICENSE"
+  {{pkmv "usr/include" "flac" "flac-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "flac" "flac-pkgconfig"}}
+  {{pkmv "usr/share/doc" "flac" "flac-doc"}}
+  {{pkmv "usr/share/man" "flac" "flac-man"}}
