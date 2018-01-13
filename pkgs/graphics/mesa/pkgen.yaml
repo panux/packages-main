@@ -87,6 +87,7 @@ packages:
     - libdrm
     - libexpat
     - libllvm4
+    - libelf
     - zlib
   mesa-gl:
     dependencies:
