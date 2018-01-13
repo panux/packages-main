@@ -1,0 +1,31 @@
+packages:
+  nspr:
+  nspr-dev:
+    dependencies:
+    - nspr
+    - nspr-headers
+    - nspr-pkgconfig
+  nspr-headers:
+  nspr-pkgconfig:
+    dependencies:
+    - pkgconf
+version: 4.17
+builddependencies:
+- autoconf
+- automake
+- gpp
+sources:
+- https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v{{.Version}}/src/nspr-{{.Version}}.tar.gz
+- https://git.alpinelinux.org/cgit/aports/plain/main/nspr/fix-getproto.patch
+builder: panux
+oneshell: true
+script:
+- |
+  {{extract "nspr" "gz"}}
+  (cd nspr/nspr && CFLAGS="${CFLAGS} -D_PR_POLL_AVAILABLE -D_PR_HAVE_OFF64_T -D_PR_INET6 -D_PR_HAVE_INET_NTOP -D_PR_HAVE_GETHOSTBYNAME2 -D_PR_HAVE_GETADDRINFO -D_PR_INET6_PROBE" ./configure --prefix=/usr --disable-debug --enable-optimize --enable-ipv6 $(filter x86,--enable-64bit))
+  $(MAKE) -C nspr/nspr CC="gcc" CXX="g++"
+  $(MAKE) -C nspr/nspr DESTDIR=$(shell pwd)/out/nspr install
+  (cd nspr/nspr/config && install -Dm755 nspr-config ../../../out/nspr/usr/bin/nspr-config && install -Dm644 nspr.pc ../../../out/nspr/usr/lib/pkgconfig/nspr.pc)
+  rm -rf out/nspr/usr/bin/prerr.properties out/nspr/usr/bin/compile-et.pl out/nspr/usr/share out/nspr/usr/include/nspr/md
+  {{pkmv "usr/include" "nspr" "nspr-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "nspr" "nspr-pkgconfig"}}
