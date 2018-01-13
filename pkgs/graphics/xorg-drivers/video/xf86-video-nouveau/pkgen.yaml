@@ -21,9 +21,11 @@ builddependencies:
 - eudev-dev
 sources:
 - https://www.x.org/archive/individual/driver/xf86-video-nouveau-{{.Version}}.tar.bz2
+- https://git.alpinelinux.org/cgit/aports/plain/main/xf86-video-nouveau/git.patch
 script:
 - |
   {{extract "xf86-video-nouveau" "bz2"}}
+  (cd xf86-video-nouveau && patch -p1 -i ../src/git.patch)
   (cd xf86-video-nouveau && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
   $(MAKE) -C xf86-video-nouveau
   $(MAKE) -C xf86-video-nouveau DESTDIR=$(shell pwd)/out/xf86-video-nouveau install
