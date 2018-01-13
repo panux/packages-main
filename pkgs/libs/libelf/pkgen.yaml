@@ -19,6 +19,6 @@ script:
   {{extract "libelf" "gz"}}
   (cd libelf && ./configure --prefix=/usr --enable-shared --enable-gnu-names --enable-compat --disable-nls)
   $(MAKE) -C libelf
-  $(MAKE) -C libelf DESTDIR=$(shell pwd)/out/libelf install
+  $(MAKE) -C libelf install prefix=$(shell pwd)/out/libelf/usr
   {{pkmv "usr/include" "libelf" "libelf-headers"}}
   {{pkmv "usr/lib/pkgconfig" "libelf" "libelf-pkgconfig"}}
