@@ -1,0 +1,42 @@
+packages:
+  libxslt:
+    dependencies:
+    - libgcrypt
+    - libxml2
+  libxslt-dev:
+    dependencies:
+    - libxml2-dev
+    - libxslt
+    - libxslt-headers
+    - libxslt-pkgconfig
+  libxslt-headers:
+  libxslt-pkgconfig:
+    dependencies:
+    - pkgconf
+  libxslt-doc:
+    dependencies:
+    - libxslt-man
+  libxslt-man:
+version: 1.1.32
+builddependencies:
+- libxml2-dev
+- libgcrypt-dev
+- libgpg-error-dev
+- python-dev
+- automake
+- autoconf
+- libtool
+sources:
+- https://github.com/GNOME/libxslt/archive/v{{.Version}}.tar.gz
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/libxslt-{{.Version}}.tar.gz
+  {{extract "libxslt" "gz"}}
+  (cd libxslt && ./autogen.sh --prefix=/usr)
+  $(MAKE) -C libxslt
+  $(MAKE) -C libxslt DESTDIR=$(shell pwd)/out/libxslt install
+  install -D -m644 libxslt/COPYING out/libxslt-doc/usr/share/licenses/libxslt/COPYING
+  {{pkmv "usr/include" "libxslt" "libxslt-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "libxslt" "libxslt-pkgconfig"}}
+  {{pkmv "usr/share/doc" "libxslt" "libxslt-doc"}}
+  {{pkmv "usr/share/man" "libxslt" "libxslt-man"}}
