@@ -1,0 +1,108 @@
+packages:
+  nss:
+    dependencies:
+    - libgcc
+    - libstdcpp
+    - musl
+    - nspr
+    - sqlite-libs
+    - zlib
+  nss-dev:
+    dependencies:
+    - nspr-dev
+    - nss
+    - nss-headers
+    - nss-pkgconfig
+  nss-headers:
+  nss-pkgconfig:
+    dependencies:
+    - pkgconf
+version: 3.34.1
+builddependencies:
+- nspr-dev
+- sqlite-dev
+- zlib-dev
+- perl
+- bsd-compat-headers
+- g++
+- clang-dev
+sources:
+- https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_34_1_RTM/src/nss-{{.Version}}.tar.gz
+- https://git.archlinux.org/svntogit/packages.git/plain/trunk/nss-config.in?h=packages/nss
+- https://git.archlinux.org/svntogit/packages.git/plain/trunk/nss.pc.in?h=packages/nss
+- https://git.alpinelinux.org/cgit/aports/plain/main/nss/nss-softokn.pc.in
+- https://git.alpinelinux.org/cgit/aports/plain/main/nss/nss-util.pc.in
+- https://git.alpinelinux.org/cgit/aports/plain/main/nss/gcc6-fixes.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/nss/add_spi+cacert_ca_certs.patch
+oneshell: true
+data:
+  pkgconfig:
+  - nss.pc
+  - nss-util.pc
+  - nss-softokn.pc
+  bins:
+  - certutil
+  - cmsutil
+  - crlutil
+  - modutil
+  - pk12util
+  - shlibsign
+  - signtool
+  - signver
+  - ssltap
+  libs:
+  - libfreebl3.so
+  - libgtest1.so
+  - libgtestutil.so
+  - libnss3.so
+  - libnssckbi.so
+  - libnssdbm3.so
+  - libnsssysinit.so
+  - libnssutil3.so
+  - libsmime3.so
+  - libsoftokn3.so
+  - libssl3.so
+script:
+- |
+  {{extract "nss" "gz"}}
+  (cd nss && patch -p1 -i ../src/gcc6-fixes.patch && patch -p1 -i  ../src/dd_spi+cacert_ca_certs.patch)
+  (cd nss && sed -i -e 's/\$(MKSHLIB) -o/\$(MKSHLIB) \$(LDFLAGS) -o/g' ./nss/coreconf/rules.mk)
+  unset CFLAGS
+  unset CXXFLAGS
+  export BUILD_OPT=1
+  export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+  export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+  export FREEBL_NO_DEPEND=0
+  export NSS_USE_SYSTEM_SQLITE=1
+  export NSS_ENABLE_WERROR=0
+  export NSPR_INCLUDE_DIR=`pkg-config --cflags-only-I nspr | sed 's/-I//'`
+  export NSPR_LIB_DIR=`pkg-config --libs-only-L nspr | sed 's/-L.//'`
+  export USE_64=$(if $(filter x86_64,$(ARCH)),1,0)
+  (cd nss && make -j 1 -C nss/coreconf)
+  (cd nss && make -j 1 -C nss/lib/dbm)
+  (cd nss && make -j 1 -C nss)
+  mkdir -p out/nss/usr/lib/pkgconfig
+  mkdir -p out/nss/usr/bin
+  mkdir -p out/nss/usr/include/nss/private
+  {{range .Data.pkgconfig}}
+  (cd nss && sed ../src/{{.}}.in -e "s,%libdir%,/usr/lib,g" -e "s,%prefix%,/usr,g" -e "s,%exec_prefix%,/usr/bin,g"	-e "s,%includedir%,/usr/include/nss,g" -e "s,%SOFTOKEN_VERSION%,3.34.1,g" -e "s,%NSPR_VERSION%,4.15,g" -e "s,%NSS_VERSION%,3.34.1,g" -e "s,%NSSUTIL_VERSION%,3.34.1,g" > $(shell pwd)/out/nss/usr/lib/pkgconfig/{{.}})
+  {{- end}}
+  export NSS_VMAJOR=`awk '/#define.*NSS_VMAJOR/ {print $3}' nss/nss/lib/nss/nss.h`
+  export NSS_VMINOR=`awk '/#define.*NSS_VMINOR/ {print $3}' nss/nss/lib/nss/nss.h`
+  export NSS_VPATCH=`awk '/#define.*NSS_VPATCH/ {print $3}' nss/nss/lib/nss/nss.h`
+  (cd nss && sed ../src/nss-config.in -e "s,@libdir@,/usr/lib,g" -e "s,@prefix@,/usr/bin,g" -e "s,@exec_prefix@,/usr/bin,g" -e "s,@includedir@,/usr/include/nss,g" -e "s,@MOD_MAJOR_VERSION@,$(NSS_VMAJOR),g" -e "s,@MOD_MINOR_VERSION@,$(NSS_VMINOR),g" -e "s,@MOD_PATCH_VERSION@,$(NSS_VPATCH),g" > ../out/nss/usr/bin/nss-config && chmod 755 ../out/nss/usr/bin/nss-config)
+  (cd nss && install -m644 dist/*.OBJ/lib/*.a ../out/nss/usr/lib/ &&	install -m644 dist/*.OBJ/lib/*.chk ../out/nss/usr/lib/)
+  {{range .Data.bins}}
+  (cd nss && install -m755 dist/*.OBJ/bin/{{.}} ../out/nss/usr/bin/)
+  {{- end}}
+  (cd nss && install -m644 dist/public/nss/*.h ../out/nss/usr/include/nss/ && install -m644 dist/private/nss/blapi.h dist/private/nss/alghmac.h ../out/nss/usr/include/nss/private/)
+  {{range .Data.libs}}
+  (cd nss && install -m755 dist/*.OBJ/lib/{{.}} ../out/nss/usr/lib/{{.}}.34 && ln -s {{.}}.34 ../out/nss/usr/lib/{{.}})
+  {{- end}}
+  {{pkmv "usr/lib/*.a" "nss" "nss-static"}}
+  {{pkmv "usr/bin/nss-config" "nss" "nss-dev"}}
+  {{pkmv "usr/lib/libgtest1.*" "nss" "nss-dev"}}
+  {{pkmv "usr/lib/libnsssysinit.*" "nss" "nss-dev"}}
+  {{pkmv "usr/include" "nss" "nss-headers"}}
+  {{pkmv "usr/bin" "nss" "nss-bins"}}
+  {{pkmv "usr/lib/pkgconfig" "nss" "nss-pkgconfig"}}
