@@ -1,0 +1,37 @@
+packages:
+  libxscrnsaver:
+    dependencies:
+    - libxext
+  libxscrnsaver-dev:
+    dependencies:
+    - libxext-dev
+    - libxscrnsaver
+    - libxscrnsaver-headers
+    - libxscrnsaver-pkgconfig
+  libxscrnsaver-headers:
+    dependencies:
+    - scrnsaverproto
+  libxscrnsaver-pkgconfig:
+    dependencies:
+    - pkgconf
+  libxscrnsaver-doc:
+    dependencies:
+    - libxscrnsaver-man
+  libxscrnsaver-man:
+version: 1.2.2
+builddependencies:
+- scrnsaverproto
+- libxext-dev
+- libx11-dev
+sources:
+- https://www.x.org/releases/individual/lib/libXScrnSaver-{{.Version}}.tar.bz2
+builder: panux
+script:
+- |
+  {{extract "libXScrnSaver" "bz2"}}
+  (cd libXScrnSaver && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-static)
+  $(MAKE) -C libXScrnSaver
+  $(MAKE) -C libXScrnSaver DESTDIR=$(shell pwd)/out/libxscrnsaver install
+  {{pkmv "usr/include" "libxscrnsaver" "libxscrnsaver-headers"}}
+  {{pkmv "usr/lib/pkgconfig" "libxscrnsaver" "libxscrnsaver-pkgconfig"}}
+  {{pkmv "usr/share/man" "libxscrnsaver" "libxscrnsaver-man"}}
