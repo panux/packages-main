@@ -1,0 +1,33 @@
+packages:
+  ttf-opensans:
+    dependencies:
+    - busybox
+    - fontconfig
+    - mkfontdir
+    - mkfontscale
+  ttf-opensans-doc:
+version: 1.10
+builddependencies:
+sources:
+data:
+  sources:
+  - OpenSans-Bold.ttf
+  - OpenSans-BoldItalic.ttf
+  - OpenSans-ExtraBold.ttf
+  - OpenSans-ExtraBoldItalic.ttf
+  - OpenSans-Italic.ttf
+  - OpenSans-Light.ttf
+  - OpenSans-LightItalic.ttf
+  - OpenSans-Regular.ttf
+  - OpenSans-SemiBold.ttf
+  - OpenSans-SemiBoldItalic.ttf
+  - LICENSE.txt
+builder: panux
+script:
+- |
+  {{range .Data.sources}}
+  wget https://github.com/google/fonts/tree/master/apache/opensans/{{.}}
+  {{- end}}
+  install -d "out/opensans-ttf/usr/share/fonts/TTF"
+  install -m644 *.ttf "out/opensans-ttf/usr/share/fonts/TTF/"
+  install -m644 LICENSE.txt out/opensans-ttf-doc/usr/share/licences/ttf-opensans/LICENSE
