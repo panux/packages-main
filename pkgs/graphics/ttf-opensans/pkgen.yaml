@@ -30,4 +30,5 @@ script:
   {{- end}}
   install -d "out/opensans-ttf/usr/share/fonts/TTF"
   install -m644 *.ttf "out/opensans-ttf/usr/share/fonts/TTF/"
+  mkdir -p out/opensans-ttf-doc/usr/share/licences/ttf-opensans/
   install -m644 LICENSE.txt out/opensans-ttf-doc/usr/share/licences/ttf-opensans/LICENSE
