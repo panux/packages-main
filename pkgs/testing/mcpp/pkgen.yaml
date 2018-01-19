@@ -10,9 +10,10 @@ packages:
 version: 2.7.2
 builddependencies:
 sources:
-- git://github.com/h8liu/mcpp
+- https://github.com/h8liu/mcpp/archive/master.tar.gz
 script:
-- mv src/mcpp mcpp
+- tar -xf src/master.tar.gz
+- mv mcpp-master mcpp
 - (cd mcpp && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var --enable-mcpplib)
 - $(MAKE) -C mcpp
 - $(MAKE) -C mcpp DESTDIR=$(shell pwd)/out/mcpp install
