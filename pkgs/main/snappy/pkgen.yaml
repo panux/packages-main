@@ -1,0 +1,31 @@
+packages:
+  snappy:
+    dependencies:
+  snappy-dev:
+    dependencies:
+    - snappy
+    - snapy-headers
+    - snappy-pkgconfig
+  snappy-headers:
+  snappy-pkgconfig:
+    dependencies:
+    - pkgconf
+  snappy-doc:
+version: 1.1.4
+builddependencies:
+- gpp
+- libstdcpp-dev
+- gcc-include
+- zlib-dev
+sources:
+- https://github.com/google/snappy/releases/download/{{.Version}}/snappy-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "snappy" "gz"}}
+  (cd snappy && ./configure --prefix=/usr --disable-static)
+  $(MAKE) -C snappy
+  $(MAKE) -C snappy DESTDIR=$(shell pwd)/out/snappy install
+  {{pkmv "usr/include" "snappy" "snappy-headers"}}
+  {{pkmv "usr/share/doc" "snappy" "snappy-doc"}}
+  {{pkmv "usr/lib/pkgconfig" "snappy" "snappy-pkgconfig"}}
