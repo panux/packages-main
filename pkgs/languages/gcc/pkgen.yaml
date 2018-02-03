@@ -7,6 +7,9 @@ packages:
   gpp:
     dependencies:
     - gcc
+  g++:
+    dependencies:
+    - gpp
   gcc-ranlib:
   gcov:
   gcc-libexec:
@@ -45,12 +48,9 @@ sources:
 builddependencies:
   - gcc
   - g++
-  - paxmark
   - bison
   - flex
   - texinfo
-  - gawk
-  - zip
   - gmp-dev
   - mpfr-dev
   - mpc1-dev

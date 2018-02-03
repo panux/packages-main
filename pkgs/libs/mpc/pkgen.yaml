@@ -9,6 +9,12 @@ packages:
     dependencies:
     - libmpc
     - libmpc-include
+  mpc1-dev:
+    dependencies:
+    - libmpc-dev
+  mpc:
+    dependencies:
+    - libmpc
 version: 1.0.3
 sources:
 - https://ftp.gnu.org/gnu/mpc/mpc-{{.Version}}.tar.gz

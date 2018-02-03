@@ -5,6 +5,9 @@ packages:
     - libgmp
     - libgmp-headers
     - libgmpxx
+  gmp-dev:
+    dependencies:
+    - libgmp-dev
   libgmp-headers:
   libgmp-doc:
   libgmp-info:
@@ -13,6 +16,9 @@ packages:
     - libgmp
     - libgcc
     - libstdcpp
+  gmp:
+    dependencies:
+    - libgmpxx
 version: 6.1.2
 builddependencies:
 - texinfo

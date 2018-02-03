@@ -10,6 +10,12 @@ packages:
     dependencies:
     - libmpfr
     - libmpfr-include
+  mpfr-dev:
+    dependencies:
+    - libmpfr-dev
+  mpfr:
+    dependencies:
+    - libmpfr
 version: 3.1.5
 sources:
 - https://ftp.gnu.org/gnu/mpfr/mpfr-{{.Version}}.tar.xz
