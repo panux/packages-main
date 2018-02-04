@@ -12,6 +12,7 @@ version: 1.2.11
 builddependencies:
 - gcc
 - libc-dev
+builder: bootstrap
 sources:
 - https://zlib.net/zlib-{{.Version}}.tar.gz
 script:

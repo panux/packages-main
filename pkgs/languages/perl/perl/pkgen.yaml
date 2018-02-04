@@ -10,6 +10,7 @@ packages:
     dependencies:
     - perl
 version: 5.24.2
+builder: bootstrap
 builddependencies:
 - perl-utils
 - ncurses-dev

@@ -2,7 +2,7 @@ packages:
   basefs:
 version: v0.1.4
 oneshell: true
-builder: panux
+builder: bootstrap
 builddependencies:
 - busybox
 sources:

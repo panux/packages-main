@@ -16,7 +16,7 @@ builddependencies:
 - texinfo
 sources:
 - https://ftp.gnu.org/gnu/bc/bc-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "bc" "gz"}}

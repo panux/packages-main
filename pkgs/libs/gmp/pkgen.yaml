@@ -20,6 +20,7 @@ packages:
     dependencies:
     - libgmpxx
 version: 6.1.2
+builder: bootstrap
 builddependencies:
 - texinfo
 - m4

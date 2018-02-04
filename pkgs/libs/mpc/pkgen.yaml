@@ -16,6 +16,7 @@ packages:
     dependencies:
     - libmpc
 version: 1.0.3
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/gnu/mpc/mpc-{{.Version}}.tar.gz
 builddependencies:

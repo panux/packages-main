@@ -15,6 +15,7 @@ packages:
     dependencies:
     - musl
 version: 1.1.18
+builder: bootstrap
 builddependencies:
   - gcc
 sources:

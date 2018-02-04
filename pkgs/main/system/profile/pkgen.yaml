@@ -9,7 +9,7 @@ data:
         source $$profile
     done
 oneshell: true
-builder: panux
+builder: bootstrap
 script:
 - |-
   mkdir -p out/profile/etc/profile.d

@@ -76,6 +76,7 @@ addcmd("pkgens.list", (function()
     for l in f:lines() do
         table.insert(pkl, l)
     end
+    f:close()
     return pkl
 end)(), {"./tools/genpktbl.sh"})
 
@@ -254,6 +255,7 @@ end)
 local function isBootstrap(pkgf)
     local f = assert(io.popen(string.format("pkgen -i %s builder", pkgf)))
     local bldr = assert(f:read("*a"))
+    f:close()
     return bldr == "bootstrap"
 end
 

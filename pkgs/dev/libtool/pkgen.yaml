@@ -9,6 +9,7 @@ packages:
   libtool-man:
   libltdl:
 version: 2.4.6
+builder: bootstrap
 builddependencies:
 - m4
 - help2man

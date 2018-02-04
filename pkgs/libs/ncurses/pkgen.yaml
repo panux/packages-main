@@ -32,7 +32,7 @@ data:
   - panel
   - menu
 version: 6.0
-builder: panux
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{.Version}}.tar.gz
 script:

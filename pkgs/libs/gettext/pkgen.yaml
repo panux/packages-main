@@ -20,6 +20,7 @@ packages:
     dependencies:
     - musl
 version: 0.19.8.1
+builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev

@@ -8,7 +8,7 @@ packages:
 version: 4.2
 sources:
 - https://ftp.gnu.org/gnu/make/make-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - tar -xf src/make-{{.Version}}.tar.gz
 - mv make-{{.Version}} make

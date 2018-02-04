@@ -14,6 +14,7 @@ packages:
     - readline-man
     - readline-doc
 version: 6.3
+builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev

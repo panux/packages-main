@@ -14,7 +14,7 @@ builddependencies:
 - libstdcpp-dev
 sources:
 - https://download.savannah.gnu.org/releases/lzip/lzip-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "lzip" "gz"}}

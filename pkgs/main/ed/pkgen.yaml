@@ -11,7 +11,7 @@ builddependencies:
 - lzip
 sources:
 - https://ftp.gnu.org/gnu/ed/ed-{{.Version}}.tar.lz
-builder: panux
+builder: bootstrap
 script:
 - |
   lzip -d src/ed-{{.Version}}.tar.lz

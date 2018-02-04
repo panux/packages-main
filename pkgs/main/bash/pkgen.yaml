@@ -22,7 +22,7 @@ builddependencies:
 sources:
 - https://ftp.gnu.org/gnu/bash/bash-{{.Version}}.tar.gz
 - file://./oninstall.sh
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "bash" "gz"}}

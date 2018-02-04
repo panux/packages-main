@@ -10,6 +10,7 @@ packages:
     - ncurses-dev
     - libc-dev
 version: 5.2.3
+builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev

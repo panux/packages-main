@@ -9,7 +9,7 @@ builddependencies:
 - texinfo
 sources:
 - https://ftp.gnu.org/gnu/m4/m4-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "m4" "gz"}}

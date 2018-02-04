@@ -17,6 +17,7 @@ packages:
     dependencies:
     - libmpfr
 version: 3.1.5
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/gnu/mpfr/mpfr-{{.Version}}.tar.xz
 builddependencies:

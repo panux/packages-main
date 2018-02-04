@@ -5,6 +5,7 @@ packages:
     - busybox
     - linit
 version: 1.27.2
+builder: bootstrap
 sources:
 - https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
 - file://./oninstall.sh

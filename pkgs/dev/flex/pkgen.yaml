@@ -26,7 +26,7 @@ builddependencies:
 - help2man
 sources:
 - https://github.com/westes/flex/releases/download/v{{.Version}}/flex-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "flex" "gz"}}

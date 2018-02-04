@@ -13,7 +13,7 @@ builddependencies:
 - m4
 sources:
 - https://ftp.gnu.org/gnu/bison/bison-{{.Version}}.tar.xz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "bison" "xz"}}
