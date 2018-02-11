@@ -25,7 +25,7 @@ builddependencies:
 - gcc
 - libc-dev
 sources:
-- https://mirrors.peers.community/mirrors/gnu/gettext/gettext-{{.Version}}.tar.xz
+- https://ftp.gnu.org/pub/gnu/gettext/gettext-{{.Version}}.tar.xz
 script:
 - tar -xvf src/gettext-{{.Version}}.tar.xz
 - mv gettext-{{.Version}} gettext

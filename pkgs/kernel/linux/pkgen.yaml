@@ -12,8 +12,7 @@ version: 4.14.11
 oneshell: true
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
-- file://./conf/x86_64.conf
-- file://./conf/x86.conf
+- file://./conf
 builddependencies:
 - gcc
 - libc-dev
@@ -23,10 +22,11 @@ builddependencies:
 - bc
 - linux-headers
 - xz
+- libelf-dev
 script:
 - tar -xf src/linux-{{.Version}}.tar.xz
 - mv linux-{{.Version}} linux
-- mv src/$(ARCH).conf linux/.config
+- mv src/conf/{{buildarch}}.conf linux/.config
 - cat linux/.config
 - $(MAKE) -C linux
 - $(MAKE) -C linux bzImage vmlinux modules

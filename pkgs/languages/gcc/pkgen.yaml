@@ -93,7 +93,7 @@ script:
   {{mvman "gcc"}}
   {{range .Data.libs}}
   mkdir -p out/lib{{.}}/usr/lib
-  mv out/gcc/usr/$(if $(filter x86_64,$(ARCH)),lib64,lib)/lib{{.}}.* out/lib{{.}}/usr/lib
+  mv out/gcc/usr/{{if eq buildarch "x86_64"}}lib64{{else}}lib{{end}}/lib{{.}}.* out/lib{{.}}/usr/lib
   {{- end}}
   mkdir -p out/gcc-libcc1/usr
   mv out/gcc/usr/lib out/gcc-libcc1/usr/lib

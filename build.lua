@@ -259,6 +259,56 @@ local function isBootstrap(pkgf)
     return bldr == "bootstrap"
 end
 
+local function resolvedeps(name, tbl)
+    if tbl == nil then
+        return promise(function(s, f)
+            local t = {}
+            resolvedeps(name, t):prom(function()
+                s(t)
+            end, f)
+        end)
+    end
+    if pktbl == nil then
+        return promise(function(s, f)
+            ruletable:run("pkgens.list"):prom(function()
+                if pktbl ~= nil then loadpktbl() end
+                resolvedeps(name, tbl):prom(s, f)
+            end, f)
+        end)
+    end
+    local pkgen = pktbl[name]
+    if pkgen == nil then
+        error(string.format("Package %s not found", name))
+    end
+    local depf = "build/" .. path:basename(path:dirname(pkgen)) .. "/deplists/" .. name .. ".list"
+    return promise(function(s, f)
+        if tbl[name] ~= nil then
+            s(tbl)
+            return
+        end
+        tbl[name] = true
+        table.insert(tbl, name)
+        ruletable:run(depf):prom(function()
+            local n = 1
+            local function cb()
+                n = n - 1
+                if n == 0 then
+                    s(tbl)
+                end
+            end
+            local l
+            local n = 1
+            for l in io.lines(depf) do
+                if l ~= "" then
+                    n = n + 1
+                    resolvedeps(l, tbl):prom(cb)
+                end
+            end
+            cb()
+        end, f)
+    end)
+end
+
 --add generator for rootfs tars
 ruletable:addgenerator(function(name)
     local fname = path:filename(name)
@@ -273,28 +323,48 @@ ruletable:addgenerator(function(name)
     function r:deps()
         return promise(function(s, f)
             ruletable:run(path:dirname(name) .. "/builddeps.list"):prom(function()
-                local bdlist = {}
-                local dlist = {path:dirname(name) .. "/builddeps.list"}
                 local a = os.getenv("HOSTARCH")
                 --use the bootstrapped copy to build the new version
-                if isBootstrap(pkgname) then
+                if isBootstrap(pktbl[pkgname]) then
                     a = "bootstrap"
                 end
+                --resolve deps and convert to dep files
+                local bdli = {"make", "gcc", "musl-dev"}
                 local l
                 for l in io.lines(path:dirname(name) .. "/builddeps.list") do
                     if l ~= "" then
-                        local tarball = "out/" .. a .. "/" .. l .. ".tar.gz"
-                        table.insert(dlist, tarball)
-                        table.insert(bdlist, tarball)
+                        table.insert(bdli, l)
                     end
                 end
-                for _, l in ipairs({"make", "gcc", "musl-dev"}) do
-                    local tarball = "out/" .. a .. "/" .. l .. ".tar.gz"
-                    table.insert(dlist, tarball)
-                    table.insert(bdlist, tarball)
+                local n = 1
+                local bdl = {}
+                local function meh()
+                    n = n - 1
+                    if n == 0 then
+                        local deptable = {path:dirname(name) .. "/builddeps.list"}
+                        local tars = {}
+                        local v
+                        for _, v in ipairs(bdl) do
+                            local tar = "out/" .. a .. "/" .. v .. ".tar.gz"
+                            table.insert(deptable, tar)
+                            table.insert(tars, tar)
+                        end
+                        r.tars = tars
+                        s(deptable)
+                    end
                 end
-                self.tars = bdlist
-                s(dlist)
+                for _, l in ipairs(bdli) do
+                    n = n + 1
+                    table.insert(bdl, l)
+                    resolvedeps(l):prom(function(dd)
+                        local v
+                        for _, v in ipairs(dd) do
+                            table.insert(bdl, v)
+                        end
+                        meh()
+                    end)
+                end
+                meh()
             end, f)
         end)
     end
@@ -401,7 +471,41 @@ ruletable:addgenerator(function(name)
         end)
     end
     function r:run()
+        --just update file access times
         return runner:run("touch", "-m", name)
+    end
+    return r
+end)
+
+--add generator for dependency list rules
+ruletable:addgenerator(function(name)
+    local pkgname = string.match(path:filename(name), "(.+)%.list")
+    if pkgname == nil then
+        return nil
+    end
+    if path:basename(path:dirname(name)) ~= "deplists" then
+        return nil
+    end
+    if path:dirname(path:dirname(path:dirname(name))) ~= "build" then
+        return nil
+    end
+    local r = {}
+    function r:deps()
+        return promise(function(s, f)
+            ruletable:run("pkgens.list"):prom(function()
+                if pktbl == nil then
+                    loadpktbl()
+                end
+                local pkgen = pktbl[pkgname]
+                if pkgen == nil then
+                    error(string.format("Invalid package %s", pkgname))
+                end
+                s({pkgen, path:dirname(name) .. "/.dir"})
+            end, f)
+        end)
+    end
+    function r:run()
+        return runner:run("pkgen", "-i", r.deplst[1], "-o", name, "deps", "-p", pkgname, "-n")
     end
     return r
 end)

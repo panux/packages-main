@@ -12,7 +12,7 @@ arch="$4"
 cp "$sdir/build-$arch.mk" "$bdir/Makefile"
 
 # run build
-make -C "$bdir" SRCTAR="$sdir/src.tar"
+make -j6 -C "$bdir" SRCTAR="$sdir/src.tar"
 
 # copy tars to output dir
 for t in $(ls "$bdir/tars"); do

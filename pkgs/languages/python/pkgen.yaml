@@ -2,6 +2,9 @@ packages:
   python:
     dependencies:
   python-dev:
+  python2-dev:
+    dependencies:
+    - python-dev
   python-doc:
 version: 2.7.13
 builddependencies:
