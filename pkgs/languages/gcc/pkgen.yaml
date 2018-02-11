@@ -106,11 +106,10 @@ script:
   mv out/gcc/usr/bin/g++ out/gpp/usr/bin/g++
   mv out/gcc/usr/bin/c++ out/gpp/usr/bin/c++
   mv out/gcc/usr/bin/cpp out/gpp/usr/bin/cpp
-  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-g++ out/gpp/usr/bin/{{confarch}}-pc-linux-musl-g++
-  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-c++ out/gpp/usr/bin/{{confarch}}-pc-linux-musl-c++
+  mv out/gcc/usr/bin/*-g++ out/gpp/usr/bin
+  mv out/gcc/usr/bin/*-c++ out/gpp/usr/bin
   mkdir -p out/gcc-ranlib/usr/bin
-  mv out/gcc/usr/bin/gcc-ranlib out/gcc-ranlib/usr/bin/gcc-ranlib
-  mv out/gcc/usr/bin/{{confarch}}-pc-linux-musl-gcc-ranlib out/gcc-ranlib/bin/{{confarch}}-pc-linux-musl-gcc-ranlib
+  mv out/gcc/usr/bin/*-ranlib out/gcc-ranlib/bin
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
