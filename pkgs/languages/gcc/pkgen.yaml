@@ -109,7 +109,7 @@ script:
   mv out/gcc/usr/bin/*-g++ out/gpp/usr/bin
   mv out/gcc/usr/bin/*-c++ out/gpp/usr/bin
   mkdir -p out/gcc-ranlib/usr/bin
-  mv out/gcc/usr/bin/*-ranlib out/gcc-ranlib/bin
+  mv out/gcc/usr/bin/*-ranlib out/gcc-ranlib/usr/bin
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
