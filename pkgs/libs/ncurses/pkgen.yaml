@@ -7,9 +7,6 @@ packages:
     dependencies:
     - ncurses
   ncurses-terminfo:
-    dependencies:
-    - ncurses-terminfo-base
-  ncurses-terminfo-base:
   ncurses-static:
   ncurses-headers:
     dependencies:
@@ -23,7 +20,6 @@ packages:
     dependencies:
     - musl
     - ncurses-terminfo
-    - ncurses-terminfo-base
 data:
   libs:
   - ncurses
@@ -43,7 +39,6 @@ script:
   make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
   {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}
   {{pkmv "usr/share/terminfo" "ncurses" "ncurses-terminfo"}}
-  {{pkmv "etc/terminfo" "ncurses" "ncurses-terminfo-base"}}
   {{pkmv "usr/include" "ncurses" "ncurses-headers"}}
   {{pkmv "usr/lib/*.a" "ncurses" "ncurses-static"}}
   {{pkmv "usr/lib/pkgconfig" "ncurses" "ncurses-dev"}}
