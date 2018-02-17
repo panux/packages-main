@@ -3,6 +3,9 @@ packages:
     dependencies:
     - libjpeg-turbo
     - zlib
+  tiff-dev:
+    dependencies:
+    - libtiff-dev
   libtiff-dev:
     dependencies:
     - libjpeg-turbo-dev
