@@ -2,6 +2,9 @@ packages:
   python:
     dependencies:
   python-dev:
+  python2:
+    dependencies:
+    - python
   python2-dev:
     dependencies:
     - python-dev
