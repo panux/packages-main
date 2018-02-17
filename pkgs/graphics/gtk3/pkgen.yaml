@@ -47,6 +47,9 @@ packages:
     - libxinerama-dev
     - libxrandr-dev
     - pango-dev
+    - gtk3-pkginfo
+  gtk3-pkginfo:
+    dependencies:
     - pkgconf
   gtk3-headers:
   gtk3-doc:
@@ -57,7 +60,7 @@ packages:
     dependencies:
     - shared-mime-info
     - gtk-update-icon-cache
-version: 3.22.21
+version: 3.22.26
 builddependencies:
 - at-spi2-atk-dev
 - atk-dev
@@ -87,6 +90,7 @@ builddependencies:
 - zlib-dev
 sources:
 - https://download.gnome.org/sources/gtk+/3.22/gtk+-{{.Version}}.tar.xz
+builder: alpine
 script:
 - |
   {{extract "gtk+" "xz"}}
@@ -98,8 +102,10 @@ script:
   {{pkmv "usr/lib/gtk-2.0/include" "gtk3" "gtk3-headers"}}
   {{pkmv "usr/share/gtk-doc" "gtk3" "gtk3-doc"}}
   {{pkmv "usr/share/man" "gtk3" "gtk3-man"}}
+  {{pkmv "usr/lib/pkginfo" "gtk3" "gtk3-pkginfo"}}
   {{pkmv "usr/share/locale" "gtk3" "gtk3-locale"}}
   {{pkmv "usr/share/gettext" "gtk3" "gtk3-dev"}}
   {{pkmv "usr/share/aclocal" "gtk3" "gtk3-dev"}}
   {{pkmv "usr/share/gir-1.0" "gtk3" "gtk3-dev"}}
-  rm out/gtk3/usr/bin/gtk-update-icon-cache
+  rm -f out/gtk3/usr/bin/gtk-update-icon-cache
+  rm -f out/gtk3-man/usr/share/man/man1/gtk-update-icon-cache.1
