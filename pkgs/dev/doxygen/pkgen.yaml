@@ -1,0 +1,23 @@
+packages:
+  doxygen:
+    dependencies:
+    - musl
+    - libstdcpp
+version: 1.8.11
+sources:
+- https://ftp.stack.nl/pub/users/dimitri/doxygen-{{.Version}}.src.tar.gz
+builddependencies:
+- cmake
+- gcc
+- g++
+- python2
+- flex
+- bison
+- perl
+script:
+- |
+  mv src/doxygen-{{.Version}}.src.tar.gz src/doxygen-{{.Version}}.tar.gz
+  {{extract "doxygen" "gz"}}
+  (cd doxygen && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -Dbuild_xmlparser=ON -DMAN_INSTALL_DIR=/usr/share/man/man1 -DDOC_INSTALL_DIR=/usr/share/doc/doxygen)
+  $(MAKE) -C doxygen
+  $(MAKE) -C doxygen install DESTDIR=$(shell pwd)/out/doxygen
