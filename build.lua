@@ -259,6 +259,8 @@ local function isBootstrap(pkgf)
     return bldr == "bootstrap"
 end
 
+local blehbleh = 0
+
 local function resolvedeps(name, tbl)
     if tbl == nil then
         return promise(function(s, f)
@@ -282,6 +284,8 @@ local function resolvedeps(name, tbl)
     end
     local depf = "build/" .. path:basename(path:dirname(pkgen)) .. "/deplists/" .. name .. ".list"
     return promise(function(s, f)
+	print("start", name)
+		    blehbleh = blehbleh + 1
         if tbl[name] ~= nil then
             s(tbl)
             return
@@ -294,10 +298,11 @@ local function resolvedeps(name, tbl)
                 n = n - 1
                 if n == 0 then
                     s(tbl)
+			print(blehbleh, name)
+			blehbleh = blehbleh - 1
                 end
             end
             local l
-            local n = 1
             for l in io.lines(depf) do
                 if l ~= "" then
                     n = n + 1
@@ -329,7 +334,7 @@ ruletable:addgenerator(function(name)
                     a = "bootstrap"
                 end
                 --resolve deps and convert to dep files
-                local bdli = {"make", "gcc", "musl-dev"}
+                local bdli = {"make", "gcc", "musl-dev", "base"}
                 local l
                 for l in io.lines(path:dirname(name) .. "/builddeps.list") do
                     if l ~= "" then
@@ -369,7 +374,16 @@ ruletable:addgenerator(function(name)
         end)
     end
     function r:run()
-        return runner:run("buildcontainer", name, unpack(self.tars))
+	--dedup tars
+	local tt = {}
+	local tdt = {}
+	for i, v in ipairs(self.tars) do
+		if not tdt[v] then
+			tdt[v] = true
+			table.insert(tt, v)
+		end
+	end
+        return runner:run("buildcontainer", name, unpack(tt))
     end
     return r
 end)

@@ -31,12 +31,14 @@ script:
     strip --strip-unneeded out/musl/usr/local/musl/lib/*
     {{pkmv "usr/local/musl/lib/*.a" "musl" "musl-a"}}
     rm -r out/musl/lib
-    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-$(if $(filter x86,$(ARCH)),i386,$(ARCH)).so.1)
-    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/libc.musl-$(if $(filter x86,$(ARCH)),x86,$(ARCH)).so.1)
+    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/ld-musl-{{confarch}}.so.1)
+    (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/lib/libc.musl-{{confarch}}.so.1)
     (cd out/musl && ln -s /usr/local/musl/lib/libc.so usr/bin/ldd)
     mkdir -p out/musl/usr/lib
     (cd out/musl/usr/lib && for i in $$(ls ../local/musl/lib/); do ln -s /usr/local/musl/lib/$$i $$i; done)
     mkdir -p out/musl-a/usr/lib
     (cd out/musl-a/usr/lib && for i in $$(ls ../local/musl/lib/); do ln -s /usr/local/musl/lib/$$i $$i; done)
-    mkdir -p out/musl-headers/usr/include
-    (cd out/musl-headers/usr/include && for i in $$(ls ../local/musl/include/); do ln -s /usr/local/musl/include/$$i $$i; done)
+    mv out/musl-headers/usr/local/musl/include out/musl-headers/usr/include
+    # mkdir -p out/musl-headers/usr/include
+    # (cd out/musl-headers/usr/include && for i in $$(ls ../local/musl/include/); do ln -s /usr/local/musl/include/$$i $$i; done)
+    # rm out/musl-headers/usr/include/scsi
