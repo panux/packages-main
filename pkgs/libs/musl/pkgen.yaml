@@ -23,7 +23,7 @@ sources:
 script:
   - |
     {{extract "musl" "gz"}}
-    (cd musl && ./configure)
+    {{configure "musl"}}
     $(MAKE) -C musl
     $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl install-libs
     $(MAKE) -C musl DESTDIR=$(shell pwd)/out/musl-headers install-headers
