@@ -22,6 +22,7 @@ builddependencies:
 - zlib-dev
 - libtool
 - g++
+- bsd-compat-headers
 sources:
 - https://ftp.gnu.org/gnu/binutils/binutils-{{.Version}}.tar.bz2
 script:
