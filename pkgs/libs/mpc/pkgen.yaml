@@ -30,7 +30,7 @@ script:
 - |
   {{extract "mpc" "gz"}}
   DD=/usr/share/doc/mpc-{{.Version}}
-  {{configure "mpc" "--disable-static --docdir=$DD"}}
+  {{configure "mpc" "--disable-static --docdir=$$DD"}}
   $(MAKE) -C mpc
   $(MAKE) -C mpc html
   $(MAKE) -C mpc check
