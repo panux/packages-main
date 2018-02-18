@@ -18,7 +18,7 @@ sources:
 script:
 - |
   {{extract "libtool" "gz"}}
-  (cd libtool && ./configure --prefix=/usr --disable-static)
+  {{configure "libtool" "--disable-static"}}
   $(MAKE) -C libtool
   $(MAKE) -C libtool DESTDIR=$(shell pwd)/out/libtool install
   {{pkmv "usr/lib/libltdl.so*" "libtool" "libltdl"}}

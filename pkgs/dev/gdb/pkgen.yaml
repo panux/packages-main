@@ -24,7 +24,7 @@ builder: panux
 script:
 - |
   {{extract "gdb" "xz"}}
-  (cd gdb && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --with-expat=no --with-guile=no --with-python=no)
+  {{configure "gdb" "--sysconfdir=/etc --with-expat=no --with-guile=no --with-python=no"}}
   $(MAKE) -C gdb
   $(MAKE) -C gdb DESTDIR=$(shell pwd)/out/gdb install
   {{pkmv "usr/share" "gdb" "gdb-doc"}}

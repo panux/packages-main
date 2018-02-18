@@ -13,7 +13,7 @@ builder: bootstrap
 script:
 - |
   {{extract "m4" "gz"}}
-  (cd m4 && ./configure --prefix=/usr)
+  {{configure "m4"}}
   $(MAKE) -C m4
   $(MAKE) -C m4 DESTDIR=$(shell pwd)/out/m4 install
   {{pkmv "usr/share/man" "m4" "m4-man"}}

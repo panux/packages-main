@@ -17,7 +17,7 @@ builder: bootstrap
 script:
 - |
   {{extract "bison" "xz"}}
-  (cd bison && ./configure --prefix=/usr --datadir=/usr/share --infodir=/usr/share/info	--mandir=/usr/share/man)
+  {{configure "bison" "--datadir=/usr/share --infodir=/usr/share/info"}}
   $(MAKE) -C bison
   $(MAKE) -C bison DESTDIR=$(shell pwd)/out/bison install
   {{pkmv "usr/share/man" "bison" "bison-man"}}

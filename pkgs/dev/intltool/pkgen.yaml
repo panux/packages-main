@@ -21,7 +21,7 @@ sources:
 script:
 - |
   {{extract "intltool" "gz"}}
-  (cd intltool && ./configure --prefix=/usr)
+  {{configure "intltool"}}
   $(MAKE) -C intltool
   $(MAKE) -C intltool DESTDIR=$(shell pwd)/out/intltool install
   {{pkmv "usr/share/man" "intltool" "intltool-man"}}
