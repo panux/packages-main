@@ -13,32 +13,14 @@ sources:
 builddependencies:
 - linux-headers
 - libressl-dev
-- paxmark
 - pcre-dev
 - perl-dev
 - pkgconf
 - zlib-dev
-data:
-  configure:
-  - --sbin-path=/usr/bin/nginx
-  - --with-threads
-  - --with-file-aio
-  - --with-http_ssl_module
-  - --with-http_v2_module
-  - --with-http_realip_module
-  - --with-http_addition_module
-  - --with-http_gunzip_module
-  - --with-http_gzip_static_module
-  - --with-http_auth_request_module
-  - --with-http_degradation_module
-  - --with-mail=dynamic
-  - --with-mail_ssl_module
-  - --with-stream=dynamic
-  - --with-stream_ssl_module
 script:
 - |
   {{extract "nginx" "gz"}}
-  {{configure "nginx"}}
+  {{configure "nginx" "--sbin-path=/usr/bin/nginx --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_degradation_module --with-mail=dynamic --with-mail_ssl_module --with-stream=dynamic --with-stream_ssl_module"}}
   $(MAKE) -C nginx
   $(MAKE) -C nginx install DESTDIR=$(shell pwd)/out/nginx
   mv src/oninstall.sh out/nginx/.oninstall
