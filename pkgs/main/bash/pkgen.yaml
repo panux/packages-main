@@ -14,8 +14,7 @@ version: 4.4.18
 builddependencies:
 - gcc
 - musl-dev
-- ncurses
-- ncurses-headers
+- ncurses-dev
 - readline-dev
 - gettext-dev
 - make
