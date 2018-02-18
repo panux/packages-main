@@ -21,7 +21,7 @@ sources:
 script:
 - |
   {{extract "libcroco" "xz"}}
-  (cd libcroco && ./configure --prefix=/usr)
+  {{configure "libcroco"}}
   $(MAKE) -C libcroco
   $(MAKE) -C libcroco DESTDIR=$(shell pwd)/out/libcroco install
   {{pkmv "usr/include" "libcroco" "libcroco-headers"}}

@@ -27,16 +27,17 @@ builddependencies:
 - gmp-dev
 - mpfr-dev
 script:
-- tar -xf src/mpc-{{.Version}}.tar.gz
-- mv mpc-{{.Version}} mpc
-- (cd mpc && ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/mpc-{{.Version}} --build={{confarch}}-unknown-linux-musl)
-- $(MAKE) -C mpc
-- $(MAKE) -C mpc html
-- $(MAKE) -C mpc check
-- $(MAKE) -C mpc install DESTDIR=$(shell pwd)/out/libmpc
-- $(MAKE) -C mpc install-html DESTDIR=$(shell pwd)/out/libmpc-doc
-- mkdir -p out/libmpc-info/usr/share
-- mv out/libmpc/usr/share/info out/libmpc-info/usr/share/info
-- mkdir out/libmpc-include/usr
-- mv out/libmpc/usr/include out/libmpc-include/usr/include
-- rm -r out/libmpc/usr/share
+- |
+  {{extract "mpc" "gz"}}
+  DD=/usr/share/doc/mpc-{{.Version}}
+  {{configure "mpc" "--disable-static --docdir=$DD"}}
+  $(MAKE) -C mpc
+  $(MAKE) -C mpc html
+  $(MAKE) -C mpc check
+  $(MAKE) -C mpc install DESTDIR=$(shell pwd)/out/libmpc
+  $(MAKE) -C mpc install-html DESTDIR=$(shell pwd)/out/libmpc-doc
+  mkdir -p out/libmpc-info/usr/share
+  mv out/libmpc/usr/share/info out/libmpc-info/usr/share/info
+  mkdir out/libmpc-include/usr
+  mv out/libmpc/usr/include out/libmpc-include/usr/include
+  rm -r out/libmpc/usr/share

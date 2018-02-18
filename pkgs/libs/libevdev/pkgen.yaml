@@ -19,7 +19,7 @@ sources:
 script:
 - |
   {{extract "libevdev" "xz"}}
-  (cd libevdev && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  {{configure "libevdev"}}
   $(MAKE) -C libevdev
   $(MAKE) -C libevdev DESTDIR=$(shell pwd)/out/libevdev install
   {{pkmv "usr/include" "libevdev" "libevdev-headers"}}

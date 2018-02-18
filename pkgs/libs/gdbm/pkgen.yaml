@@ -13,7 +13,7 @@ sources:
 script:
 - |
   {{extract "gdbm" "gz"}}
-  (cd gdbm && ./configure --prefix=/usr --enable-libgdbm-compat)
+  {{configure "gdbm" "--enable-libgdbm-compat"}}
   $(MAKE) -C gdbm
   $(MAKE) -C gdbm DESTDIR=$(shell pwd)/out/gdbm install
   {{pkmv "usr/include" "gdbm" "gdbm-headers"}}

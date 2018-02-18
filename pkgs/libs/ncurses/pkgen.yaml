@@ -34,7 +34,7 @@ sources:
 script:
 - |
   {{extract "ncurses" "gz"}}
-  (cd ncurses && ./configure --with-shared --enable-widec --enable-static --enable-pc-files --with-pkg-config-libdir=/usr/lib/pkgconfig --with-terminfo-dirs="/etc/terminfo:/usr/share/terminfo")
+  {{configure "ncurses" "--with-shared --enable-widec --enable-static --enable-pc-files --with-pkg-config-libdir=/usr/lib/pkgconfig --with-terminfo-dirs=\"/etc/terminfo:/usr/share/terminfo\""}}
   make -C ncurses
   make -C ncurses DESTDIR=$(shell pwd)/out/ncurses install
   {{pkmv "usr/share/man" "ncurses" "ncurses-man"}}

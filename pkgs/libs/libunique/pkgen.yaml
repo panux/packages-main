@@ -24,7 +24,7 @@ script:
 - |
   {{extract "libunique" "bz2"}}
   (cd libunique && patch -p1 -i ../src/g_const_return.patch)
-  (cd libunique && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-maintainer-flags=no --enable-debug=no --disable-static)
+  {{configure "libunique" "--enable-maintainer-flags=no --enable-debug=no --disable-static"}}
   $(MAKE) -C libunique
   $(MAKE) -C libunique DESTDIR=$(shell pwd)/out/libunique install
   {{pkmv "usr/include" "libunique" "libunique-headers"}}

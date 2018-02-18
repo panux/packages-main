@@ -19,7 +19,7 @@ sources:
 script:
 - |
   {{extract "p11-kit" "gz"}}
-  (cd p11-kit && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  {{configure "p11-kit" "--sysconfdir=/etc"}}
   $(MAKE) -C p11-kit
   $(MAKE) -C p11-kit DESTDIR=$(shell pwd)/out/p11-kit install
   {{pkmv "usr/include" "p11-kit" "p11-kit-headers"}}

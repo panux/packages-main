@@ -17,7 +17,7 @@ builder: panux
 script:
 - |
   {{extract "libelf" "gz"}}
-  (cd libelf && ./configure --prefix=/usr --enable-shared --enable-gnu-names --enable-compat --disable-nls)
+  {{configure "libelf" "--enable-shared --enable-gnu-names --enable-compat --disable-nls"}}
   $(MAKE) -C libelf
   $(MAKE) -C libelf install prefix=$(shell pwd)/out/libelf/usr
   {{pkmv "usr/include" "libelf" "libelf-headers"}}

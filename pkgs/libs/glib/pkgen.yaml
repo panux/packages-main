@@ -36,9 +36,8 @@ sources:
 - https://gemmei.ftp.acc.umu.se/pub/gnome/sources/glib/2.54/glib-{{.Version}}.tar.xz
 script:
 - |
-  tar -xf src/glib-{{.Version}}.tar.xz
-  mv glib-{{.Version}} glib
-  (cd glib && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  {{extract "glib" "xz"}}
+  {{configure "glib"}}
   $(MAKE) -C glib
   $(MAKE) -C glib DESTDIR=$(shell pwd)/out/glib install
   mkdir -p out/glib-doc/usr/share

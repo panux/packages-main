@@ -37,7 +37,7 @@ sources:
 script:
 - |
   {{extract "gnutls" "xz"}}
-  (cd gnutls && ./configure --prefix=/usr --mandir=/usr/share/man)
+  {{configure "gnutls"}}
   $(MAKE) -C gnutls
   $(MAKE) -C gnutls DESTDIR=$(shell pwd)/out/gnutls install
   {{pkmv "usr/include" "gnutls" "gnutls-headers"}}

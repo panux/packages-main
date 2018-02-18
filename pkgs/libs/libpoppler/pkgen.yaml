@@ -50,7 +50,7 @@ sources:
 script:
 - |
   {{extract "poppler" "xz"}}
-  (cd poppler && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --enable-cairo-output	--enable-xpdf-headers --enable-libjpeg --enable-zlib --enable-poppler-glib)
+  {{configure "poppler" "--enable-cairo-output	--enable-xpdf-headers --enable-libjpeg --enable-zlib --enable-poppler-glib"}}
   $(MAKE) -C poppler
   $(MAKE) -C poppler DESTDIR=$(shell pwd)/out/libpoppler install
   {{pkmv "usr/include" "libpoppler" "libpoppler-headers"}}

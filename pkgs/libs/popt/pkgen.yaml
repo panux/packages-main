@@ -22,7 +22,7 @@ builder: panux
 script:
 - |
   {{extract "popt" "gz"}}
-  (cd popt && ./configure --prefix=/usr --disable-static)
+  {{configure "popt" "--disable-static"}}
   $(MAKE) -C popt
   $(MAKE) -C popt install DESTDIR=$(shell pwd)/out/popt
   {{pkmv "usr/include" "popt" "popt-headers"}}

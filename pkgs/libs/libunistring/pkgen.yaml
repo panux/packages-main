@@ -13,7 +13,7 @@ sources:
 script:
 - |
   {{extract "libunistring" "xz"}}
-  (cd libunistring && ./configure --prefix=/usr)
+  {{configure "libunistring"}}
   $(MAKE) -C libunistring
   $(MAKE) -C libunistring DESTDIR=$(shell pwd)/out/libunistring install
   {{pkmv "usr/include" "libunistring" "libunistring-headers"}}

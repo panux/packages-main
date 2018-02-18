@@ -15,19 +15,19 @@ builddependencies:
 sources:
   - https://www.gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-{{.Version}}.tar.bz2
 script:
-  - tar -xvf src/libgpg-error-{{.Version}}.tar.bz2 -C .
-  - mv libgpg-error-{{.Version}} libgpg-error
-  - (cd libgpg-error && ./configure --build={{confarch}}-pc-linux-gnu)
-  - $(MAKE) -C libgpg-error
-  - $(MAKE) -C libgpg-error DESTDIR=$(shell pwd)/out/libgpg-error install
-  - mv out/libgpg-error/usr/local/lib out/libgpg-error/lib
-  - mkdir -p out/libgpg-error-lisp/usr/local/share out/libgpg-error-man/usr/local/share out/libgpg-error-doc/usr/local/share out/libgpg-error-dev/usr/local/share
-  - mv out/libgpg-error/usr/local/share/common-lisp out/libgpg-error-lisp/usr/local/share/common-lisp
-  - mv out/libgpg-error/usr/local/share/man out/libgpg-error-man/usr/local/share/man
-  - mv out/libgpg-error/usr/local/share/info out/libgpg-error-doc/usr/local/share/info
-  - mv out/libgpg-error/usr/local/share/libgpg-error out/libgpg-error-doc/usr/local/share/libgpg-error
-  - mv out/libgpg-error/usr/local/share/aclocal out/libgpg-error-dev/usr/local/share/aclocal
-  - mv out/libgpg-error/usr/local/include out/libgpg-error-dev/usr/local/include
-  - mv out/libgpg-error/lib out/libgpg-error/usr/lib
-  - mv out/libgpg-error/usr/local/bin out/libgpg-error/usr/bin
-  - rm -rf out/libgpg-error/usr/local
+- |
+  {{extract "libgpg-error" "bz2"}}
+  {{configure "libgpg-error"}}
+  $(MAKE) -C libgpg-error
+  $(MAKE) -C libgpg-error DESTDIR=$(shell pwd)/out/libgpg-error install
+  mv out/libgpg-error/usr/local/lib out/libgpg-error/lib
+  mkdir -p out/libgpg-error-lisp/usr/local/share out/libgpg-error-man/usr/local/share out/libgpg-error-doc/usr/local/share out/libgpg-error-dev/usr/local/share
+  mv out/libgpg-error/usr/local/share/common-lisp out/libgpg-error-lisp/usr/local/share/common-lisp
+  mv out/libgpg-error/usr/local/share/man out/libgpg-error-man/usr/local/share/man
+  mv out/libgpg-error/usr/local/share/info out/libgpg-error-doc/usr/local/share/info
+  mv out/libgpg-error/usr/local/share/libgpg-error out/libgpg-error-doc/usr/local/share/libgpg-error
+  mv out/libgpg-error/usr/local/share/aclocal out/libgpg-error-dev/usr/local/share/aclocal
+  mv out/libgpg-error/usr/local/include out/libgpg-error-dev/usr/local/include
+  mv out/libgpg-error/lib out/libgpg-error/usr/lib
+  mv out/libgpg-error/usr/local/bin out/libgpg-error/usr/bin
+  rm -rf out/libgpg-error/usr/local

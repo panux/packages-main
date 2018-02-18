@@ -18,7 +18,7 @@ sources:
 script:
 - |
   {{extract "libexif" "bz2"}}
-  (cd libexif && ./configure --prefix=/usr)
+  {{configure "libexif"}}
   $(MAKE) -C libexif
   $(MAKE) -C libexif DESTDIR=$(shell pwd)/out/libexif install
   {{pkmv "usr/include" "libexif" "libexif-headers"}}

@@ -13,13 +13,12 @@ builddependencies:
 - libtool
 - musl-dev
 sources:
-- git://git.0pointer.de/libdaemon?proto=git
+- https://dev.alpinelinux.org/archive/libdaemon/libdaemon-0.14.tar.gz
 script:
 - |
-  mv src/libdaemon libdaemon
+  {{extract "libdaemon"}}
   cp /usr/include/unistd.h /usr/include/sys/unistd.h
-  (cd libdaemon && ./bootstrap.sh)
-  (cd libdaemon && ./configure --prefix=/usr)
+  {{configure "libdaemon"}}
   $(MAKE) -C libdaemon
   $(MAKE) -C libdaemon DESTDIR=$(shell pwd)/out/libdaemon install
   {{pkmv "usr/include" "libdaemon" "libdaemon-headers"}}
