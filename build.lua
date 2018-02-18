@@ -259,7 +259,6 @@ local function isBootstrap(pkgf)
     return bldr == "bootstrap"
 end
 
-local blehbleh = 0
 
 local function resolvedeps(name, tbl)
     if tbl == nil then
@@ -284,8 +283,6 @@ local function resolvedeps(name, tbl)
     end
     local depf = "build/" .. path:basename(path:dirname(pkgen)) .. "/deplists/" .. name .. ".list"
     return promise(function(s, f)
-	print("start", name)
-		    blehbleh = blehbleh + 1
         if tbl[name] ~= nil then
             s(tbl)
             return
@@ -298,8 +295,6 @@ local function resolvedeps(name, tbl)
                 n = n - 1
                 if n == 0 then
                     s(tbl)
-			print(blehbleh, name)
-			blehbleh = blehbleh - 1
                 end
             end
             local l
