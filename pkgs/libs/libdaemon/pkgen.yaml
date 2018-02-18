@@ -16,7 +16,7 @@ sources:
 - https://dev.alpinelinux.org/archive/libdaemon/libdaemon-0.14.tar.gz
 script:
 - |
-  {{extract "libdaemon"}}
+  {{extract "libdaemon" "gz"}}
   cp /usr/include/unistd.h /usr/include/sys/unistd.h
   {{configure "libdaemon"}}
   $(MAKE) -C libdaemon
