@@ -23,6 +23,7 @@ builddependencies:
 - libtool
 - g++
 - bsd-compat-headers
+- libstdcpp-dev
 sources:
 - https://ftp.gnu.org/gnu/binutils/binutils-{{.Version}}.tar.bz2
 script:
