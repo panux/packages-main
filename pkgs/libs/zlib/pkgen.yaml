@@ -18,7 +18,7 @@ sources:
 script:
 - |
   {{extract "zlib" "gz"}}
-  {{configure "zlib" "--shared"}}
+  (cd zlib && CC=/usr/bin/{{confarch}}-*-linux-musl-gcc ./configure --prefix=/usr)
   $(MAKE) -C zlib
   $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
   mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
