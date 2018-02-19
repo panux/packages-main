@@ -10,6 +10,7 @@ packages:
   g++:
     dependencies:
     - gpp
+    - libstdcpp-dev
   gcc-ranlib:
   gcov:
   gcc-libexec:
