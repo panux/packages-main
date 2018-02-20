@@ -19,7 +19,6 @@ version: 2.9.5
 builddependencies:
 - zlib-dev
 - perl
-- tar
 - python2-dev
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/libxml2/libxml2-{{.Version}}.tar.gz
