@@ -23,7 +23,7 @@ builddependencies:
 - musl
 - ncurses-dev
 - ncurses-libs
-- openssl-dev
+- libressl-dev
 - readline-dev
 - sqlite-dev
 - bzip2-dev
