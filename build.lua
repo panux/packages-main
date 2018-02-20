@@ -155,7 +155,7 @@ ruletable:addgenerator(function(name)
                 end
                 local pkgen = pktbl[pkgname]
                 if pkgen == nil then
-                    f("Invalid src.tar dep")
+                    f(string.format("Invalid builddep list %s", name))
                 end
                 r.pkgen = pkgen
                 s({pkgen, "build/" .. pkgname .. "/.dir"})
