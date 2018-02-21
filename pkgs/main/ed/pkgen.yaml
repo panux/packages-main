@@ -18,7 +18,7 @@ script:
   lzip -d src/ed-{{.Version}}.tar.lz
   tar -xf src/ed-{{.Version}}.tar
   mv ed-{{.Version}} ed
-  (cd ed && ./configure --prefix=/usr --bindir=/bin --mandir=/usr/share/man)
+  (cd ed && ./configure --prefix=/usr --bindir=/usr/bin --mandir=/usr/share/man)
   $(MAKE) -C ed
   $(MAKE) -C ed DESTDIR=$(shell pwd)/out/ed install
   {{pkmv "usr/share/man" "ed" "ed-man"}}
