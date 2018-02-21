@@ -20,6 +20,7 @@ builddependencies:
 - bash
 - gmp-dev
 - bc
+- linux-headers
 - xz
 - libelf-dev
 script:
