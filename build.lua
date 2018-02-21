@@ -324,10 +324,6 @@ ruletable:addgenerator(function(name)
         return promise(function(s, f)
             ruletable:run(path:dirname(name) .. "/builddeps.list"):prom(function()
                 local a = os.getenv("HOSTARCH")
-                --use the bootstrapped copy to build the new version
-                if isBootstrap(pktbl[pkgname]) then
-                    a = "bootstrap"
-                end
                 --resolve deps and convert to dep files
                 local bdli = {"make", "gcc", "musl-dev", "base"}
                 local l
@@ -345,7 +341,12 @@ ruletable:addgenerator(function(name)
                         local tars = {}
                         local v
                         for _, v in ipairs(bdl) do
-                            local tar = "out/" .. a .. "/" .. v .. ".tar.gz"
+                            local ar = a
+                            --use the bootstrapped copy to build the new version
+                            if isBootstrap(pktbl[v]) then
+                                ar = "bootstrap"
+                            end
+                            local tar = "out/" .. ar .. "/" .. v .. ".tar.gz"
                             table.insert(deptable, tar)
                             table.insert(tars, tar)
                         end
