@@ -265,6 +265,12 @@ local function resolvedeps(name, tbl)
         return promise(function(s, f)
             local t = {}
             resolvedeps(name, t):prom(function()
+                local str = string.format("Depscan of %s: ", name)
+                local v
+                for _, v in ipairs(t) do
+                    str = str .. " " .. v
+                end
+                print(str)
                 s(t)
             end, f)
         end)
