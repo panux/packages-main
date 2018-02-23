@@ -18,14 +18,14 @@ packages:
 version: 1.3.5
 builddependencies:
 sources:
-- https://downloads.sourceforge.net/rhash/rhash-{{.Version}}-src.tar.gz
+- https://github.com/rhash/RHash/archive/v{{.Version}}.tar.gz
 builder: bootstrap
 script:
 - |
-  tar xf src/rhash-{{.Version}}-src.tar.gz
-  mv RHash-{{.Version}} rhash
-  (cd rhash && amek build-shared && make -C librhash && make test-shared)
-  (cd rhash && make PREFIX=/usr DESTDIR=$(shell pwd)/out/rhash install-shared && make -C librhash PREFIX=/usr DESTDIR=$(shell pwd)/out/rhash install-headers install-lib-shared install-so-link)
+  mv src/v{{.Version}}.tar.gz src/RHash-{{.Version}}.tar.gz
+  {{extract "RHash" "gz"}}
+  (cd RHash && make build-shared && make -C librhash && make test-shared)
+  (cd RHash && make PREFIX=/usr DESTDIR=$(shell pwd)/out/rhash install-shared && make -C librhash PREFIX=/usr DESTDIR=$(shell pwd)/out/rhash install-headers install-lib-shared install-so-link)
   {{pkmv "usr/include" "rhash" "rhash-headers"}}
   {{pkmv "usr/share/man" "rhash" "rhash-man"}}
   {{pkmv "usr/lib" "rhash" "librhash"}}
