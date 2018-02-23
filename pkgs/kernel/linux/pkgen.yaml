@@ -10,6 +10,7 @@ packages:
   linux-headers:
 version: 4.14.11
 oneshell: true
+builder: bootstrap
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
 - file://./conf
