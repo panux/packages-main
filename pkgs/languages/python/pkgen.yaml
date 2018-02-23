@@ -32,6 +32,7 @@ sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
 - https://pastebin.com/raw/my0mZJ3f
 oneshell: true
+builder: bootstrap
 script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python

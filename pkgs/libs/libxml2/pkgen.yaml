@@ -22,6 +22,7 @@ builddependencies:
 - python2-dev
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/libxml2/libxml2-{{.Version}}.tar.gz
+builder: bootstrap
 script:
 - |
   {{extract "libxml2" "gz"}}
