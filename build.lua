@@ -225,7 +225,7 @@ ruletable:addgenerator(function(name)
         return promise(function(s, f)
             local base
             if fname == "Dockerfile.bootstrap" then
-                base = "alpine"
+                base = "alpine:v3.7"
             else
                 base = "scratch"
             end
