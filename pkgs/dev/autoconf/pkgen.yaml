@@ -10,13 +10,14 @@ version: 2.69
 builddependencies:
 - m4
 - perl
+- autoconf
 sources:
 - https://ftp.gnu.org/pub/gnu/autoconf/autoconf-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "autoconf" "gz"}}
-  {{configure "autoconf"}}
+  (cd autoconf && ./configure --build={{buildarch}} --host={{hostarch}} --prefix=/usr)
   $(MAKE) -C autoconf
   $(MAKE) -C autoconf DESTDIR=$(shell pwd)/out/autoconf install
   {{pkmv "usr/share/man" "autoconf" "autoconf-man"}}
