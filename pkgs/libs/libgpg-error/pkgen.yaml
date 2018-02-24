@@ -29,4 +29,3 @@ script:
   mv out/libgpg-error/usr/share/aclocal out/libgpg-error-dev/usr/share/aclocal
   mv out/libgpg-error/usr/include out/libgpg-error-dev/usr/include
   mv out/libgpg-error/lib out/libgpg-error/usr/lib
-  mv out/libgpg-error/usr/bin out/libgpg-error/usr/bin
