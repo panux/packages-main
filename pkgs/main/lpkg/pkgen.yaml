@@ -15,6 +15,7 @@ builddependencies:
 - musl-dev
 sources:
 - https://github.com/panux/lpkg/archive/v{{.Version}}.tar.gz
+builder: bootstrap
 script:
 - |
   mv src/v{{.Version}}.tar.gz src/lpkg-{{.Version}}.tar.gz
