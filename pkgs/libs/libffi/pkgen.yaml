@@ -19,6 +19,6 @@ script:
   mkdir -p out/libffi-dev/usr/lib
   mv out/libffi/usr/lib/libffi-{{.Version}}/include out/libffi-dev/usr
   rm -r out/libffi/usr/lib/libffi-{{.Version}}
-  if [ -d out/libffi/usr/lib/lib64 ]; then mv out/libffi/usr/lib/lib64 out/libffi/usr/lib; fi
+  if [ -d out/libffi/usr/lib/lib64 ]; then mv out/libffi/usr/lib/lib64/* out/libffi/usr/lib; rm -r out/libffi/usr/lib/lib64; fi
   mkdir -p out/libffi-doc/usr
   mv out/libffi/usr/share out/libffi-doc/usr
