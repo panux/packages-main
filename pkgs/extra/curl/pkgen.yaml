@@ -20,7 +20,7 @@ builder: panux
 script:
 - |
   {{extract "curl" "gz"}}
-  (cd curl && ./configure --build={{confarch}}-pc-linux-gnu --with-ssl --disable-static)
+  {{configure "curl" "--with-ssl --disable-static"}}
   $(MAKE) -C curl
   $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
   mkdir -p out/libcurl/usr/local
