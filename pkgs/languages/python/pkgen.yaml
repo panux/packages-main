@@ -1,6 +1,7 @@
 packages:
   python:
     dependencies:
+  python-gdbm:
   python-dev:
   python2:
     dependencies:
@@ -44,3 +45,4 @@ script:
 - sed -i 's/plat-usage:uname\[option\]/plat-usage\\:uname\[option\]/g' python/Makefile
 - $(MAKE) -C python
 - $(MAKE) -C python install DESTDIR=$(shell pwd)/out/python
+- {{pkmv "usr/lib/python2.7/lib-dynload/gdbm.so" "python" "python-gdbm"}}
