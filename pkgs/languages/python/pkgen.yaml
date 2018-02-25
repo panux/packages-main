@@ -2,6 +2,9 @@ packages:
   python:
     dependencies:
   python-gdbm:
+  py-gdbm:
+    dependencies:
+    - python-gdbm
   python-dev:
   python2:
     dependencies:
