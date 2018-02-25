@@ -38,14 +38,15 @@ sources:
 oneshell: true
 builder: bootstrap
 script:
-- tar -xf src/Python-{{.Version}}.tar.xz
-- mv Python-{{.Version}} python
-- mv src/my0mZJ3f ldwrap.sh
-- curl https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable > musl-find_library.patch
-- (cd python && patch -p1 -i ../musl-find_library.patch)
-- if ! touch /dev/shm/python; then echo "problem"; return 1; fi
-- (cd python && ./configure --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --enable-unicode=ucs4)
-- sed -i 's/plat-usage:uname\[option\]/plat-usage\\:uname\[option\]/g' python/Makefile
-- $(MAKE) -C python
-- $(MAKE) -C python install DESTDIR=$(shell pwd)/out/python
-- {{pkmv "usr/lib/python2.7/lib-dynload/gdbm.so" "python" "python-gdbm"}}
+- |
+  tar -xf src/Python-{{.Version}}.tar.xz
+  mv Python-{{.Version}} python
+  mv src/my0mZJ3f ldwrap.sh
+  curl https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable > musl-find_library.patch
+  (cd python && patch -p1 -i ../musl-find_library.patch)
+  if ! touch /dev/shm/python; then echo "problem"; return 1; fi
+  (cd python && ./configure --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --enable-unicode=ucs4)
+  sed -i 's/plat-usage:uname\[option\]/plat-usage\\:uname\[option\]/g' python/Makefile
+  $(MAKE) -C python
+  $(MAKE) -C python install DESTDIR=$(shell pwd)/out/python
+  {{pkmv "usr/lib/python2.7/lib-dynload/gdbm.so" "python" "python-gdbm"}}
