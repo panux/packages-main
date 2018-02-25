@@ -13,13 +13,12 @@ sources:
 script:
 - |
   {{extract "libffi" "gz"}}
-  {{configure "libffi" "--enable-pax_emutramp"}}
+  {{configure "libffi" "--enable-pax_emutramp --disable-static"}}
   $(MAKE) -C libffi
   $(MAKE) -C libffi DESTDIR=$(shell pwd)/out/libffi install
   mkdir -p out/libffi-dev/usr/lib
   mv out/libffi/usr/lib/libffi-{{.Version}}/include out/libffi-dev/usr
   rm -r out/libffi/usr/lib/libffi-{{.Version}}
-  {{if eq "x86_64" buildarch}}mv out/libffi/usr/lib64 out/libffi/usr/lib{{end}}
-  mv out/libffi/usr/lib/*.a out/libffi/usr/lib/*.so out/libffi/usr/lib/pkgconfig out/libffi-dev/usr/lib
+  if [ -d out/libffi/usr/lib64 ]; then mv out/libffi/usr/lib64 out/libffi/usr/lib; fi
   mkdir -p out/libffi-doc/usr
   mv out/libffi/usr/share out/libffi-doc/usr
