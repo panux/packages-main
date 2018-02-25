@@ -1,0 +1,22 @@
+packages:
+  py-dbus:
+    dependencies:
+    - python
+    - dbus-glib
+  py-dbus-dev:
+    dependencies:
+    - py-dbus
+    - dbus-glib-dev
+    - python-dev
+version: 1.2.6
+sources:
+- https://dbus.freedesktop.org/releases/dbus-python/dbus-python-{{.Version}}.tar.gz
+builddependencies:
+- python-dev
+- dbus-glib-dev
+script:
+- |
+  {{extract "dbus-python" "gz"}}
+  {{configure "dbus-python"}}
+  $(MAKE) -C dbus-python
+  $(MAKE) -C dbus-python install DESTDIR=$(shell pwd)/out/py-dbus
