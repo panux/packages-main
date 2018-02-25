@@ -6,7 +6,7 @@ packages:
     - libtasn1-headers
   libtasn1-headers:
   libtasn1-doc:
-version: 4.12
+version: 4.13
 builddependencies:
 - texinfo
 sources:
@@ -14,7 +14,7 @@ sources:
 script:
 - |
   {{extract "libtasn1" "gz"}}
-  {{extract "libtasn1" "--sysconfdir=/etc"}}
+  {{configure "libtasn1" "--sysconfdir=/etc"}}
   $(MAKE) -C libtasn1
   $(MAKE) -C libtasn1 DESTDIR=$(shell pwd)/out/libtasn1 install
   {{pkmv "usr/include" "libtasn1" "libtasn1-headers"}}
