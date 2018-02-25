@@ -13,7 +13,7 @@ sources:
 script:
 - |
   {{extract "libffi" "gz"}}
-  {{configure "libffi" "--enable-pax_emutramp"}}
+  {{configure "libffi" "--enable-pax_emutramp --libdir=/usr/lib"}}
   $(MAKE) -C libffi
   $(MAKE) -C libffi DESTDIR=$(shell pwd)/out/libffi install
   mkdir -p out/libffi-dev/usr/lib
