@@ -16,11 +16,10 @@ builddependencies:
 - libressl-dev
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "curl" "gz"}}
-  {{configure "curl" "--with-ssl --disable-static CFLAGS=-fPIC"}}
+  {{configure "curl" "--with-ssl --disable-static"}}
   $(MAKE) -C curl
   $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
   mkdir -p out/libcurl/usr/local
