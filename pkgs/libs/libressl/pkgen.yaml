@@ -7,11 +7,15 @@ packages:
 version: 2.6.4
 builddependencies:
 - linux-headers
+- automake
+- autoconf
+- libtool
 sources:
 - https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{{.Version}}.tar.gz
 script:
 - |
   {{extract "libressl" "gz"}}
+  (cd libressl && autoreconf -vif)
   {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
   $(MAKE) -C libressl
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
