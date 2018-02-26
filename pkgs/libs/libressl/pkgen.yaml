@@ -16,7 +16,7 @@ script:
 - |
   {{extract "libressl" "gz"}}
   (cd libressl && autoreconf -vif)
-  {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl --disable-static"}}
+  {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
   $(MAKE) -C libressl
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
   mkdir -p out/libressl-dev/usr/lib
