@@ -19,7 +19,7 @@ sources:
 script:
 - |
   {{extract "curl" "gz"}}
-  {{configure "curl" "--with-ssl --disable-static --with-pic LDFLAGS=-L/usr/lib"}}
+  {{configure "curl" "--with-ssl=/usr/lib --disable-static --with-pic"}}
   $(MAKE) -C curl
   $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
   mkdir -p out/libcurl/usr/local
