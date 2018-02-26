@@ -11,9 +11,10 @@ packages:
   curl-headers:
 version: 7.58.0
 builddependencies:
-- ncurses-dev
 - zlib-dev
 - libressl-dev
+- groff
+- perl
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
 script:
