@@ -4,7 +4,7 @@ packages:
     dependencies:
     - pkgconf
   libressl-doc:
-version: 2.5.5
+version: 2.6.4
 builddependencies:
 - linux-headers
 sources:
