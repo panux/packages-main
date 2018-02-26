@@ -21,6 +21,6 @@ script:
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
   mkdir -p out/libressl-dev/usr/lib
   mv out/libressl/usr/include out/libressl-dev/usr
-  mv out/libressl/usr/lib/*.so out/libressl/usr/lib/pkgconfig out/libressl-dev/usr/lib
+  mv out/libressl/usr/lib/pkgconfig out/libressl-dev/usr/lib
   mkdir -p out/libressl-doc/usr
   mv out/libressl/usr/share out/libressl-doc/usr
