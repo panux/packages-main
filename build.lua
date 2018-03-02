@@ -36,6 +36,22 @@ local function loadpktbl()
     pktbl = t
 end
 
+local ltbl
+local function genltbl()
+    if ltbl ~= nil then
+        return
+    end
+    ltbl = {}
+    local f = assert(io.popen("find pkgs -name pkgen.yaml"))
+    local l
+    for l in f:lines() do
+        if l ~= "" then
+            local pkgn = path:basename(path:dirname(l))
+            ltbl[pkgn] = l
+        end
+    end
+end
+
 --generator for list files
 ruletable:addgenerator(function(name)
     if path:getext(name) == ".list" then
@@ -43,42 +59,64 @@ ruletable:addgenerator(function(name)
         if path:dirname(name) ~= "lists" then
             return nil
         end
+        genltbl()
+        local d = ltbl[path:basename(name)]
+        if not d then
+            return nil
+        end
         local rule = {}
         rule.name = name
-        function rule:deps()
-            return promise(function(s, f)
-                ruletable:run("pkgens.list"):prom(function()
-                    if pktbl == nil then
-                        loadpktbl()
-                    end
-                    local pkgen = pktbl[path:basename(name)]
-                    if pkgen == nil then
-                        f("Invalid list dep")
-                    end
-                    self.pkgen = pkgen
-                    s({pkgen})
-                end, f)
-            end)
+        rule.deps = function()
+            return {d, "tools/genpklist.lua"}
         end
         function rule:run()
-            return runner:run("pkgen", "-i", self.pkgen, "-o", name, "pkgs")
+            return runner:run("luajit", "tools/genpklist.lua", d, name)
         end
         return rule
     end
     return nil
 end)
 
---add rule for pkgens.list file
-addcmd("pkgens.list", (function()
-    local f = assert(io.popen("find pkgs -name \"pkgen.yaml\""))
+local pkgll = (function()
+    genltbl()
     local pkl = {}
-    local l
-    for l in f:lines() do
-        table.insert(pkl, l)
+    local v
+    for v in pairs(ltbl) do
+        table.insert(pkl, string.format("lists/%s.list", v))
     end
-    f:close()
     return pkl
-end)(), {"./tools/genpktbl.sh"})
+end)()
+
+--add rule for pkgens.list file
+local pkgrule = {name = "pkgens.list"}
+function pkgrule:deps()
+    local d = {"build.lua"}
+    local v
+    for _, v in ipairs(pkgll) do
+        table.insert(d, v)
+    end
+    return d
+end
+function pkgrule:run()
+    return promise(function(s, f)
+        local m = {}
+        local fn
+        for _, fn in ipairs(pkgll) do
+            local l
+            for l in io.lines(fn) do
+                table.insert(m, l)
+            end
+        end
+        local f = assert(io.open("pkgens.list", "w"))
+        local v
+        for _, v in ipairs(m) do
+            f:write(v .. "\n")
+        end
+        f:close()
+        s()
+    end)
+end
+add(pkgrule)
 
 --add generator for making dirs
 ruletable:addgenerator(function(name)
