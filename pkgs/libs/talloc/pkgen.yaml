@@ -1,0 +1,21 @@
+packages:
+  talloc:
+  talloc-py:
+    dependencies:
+    - talloc
+    - python
+  talloc-dev:
+    dependencies:
+    - talloc
+version: 2.1.10
+sources:
+- https://samba.org/ftp/talloc/talloc-{{.Version}}.tar.gz
+builddependencies:
+- python-dev
+- python
+script:
+- |
+  {{extract "talloc" "gz"}}
+  {{configure "talloc" "--without-gettext"}}
+  $(MAKE) -C talloc
+  $(MAKE) -C talloc install DESTDIR=$(shell pwd)/out/talloc
