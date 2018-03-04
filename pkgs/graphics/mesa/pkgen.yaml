@@ -134,7 +134,8 @@ builddependencies:
 - libxdamage-dev
 - libxxf86vm-dev
 - libxfixes-dev
-- libxcb-dev glproto
+- libxcb-dev
+- glproto
 - dri3proto
 - presentproto
 - libxshmfence-dev

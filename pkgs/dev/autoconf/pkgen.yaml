@@ -2,6 +2,7 @@ packages:
   autoconf:
     dependencies:
     - m4
+    - perl
   autoconf-doc:
     dependencies:
     - autoconf-man

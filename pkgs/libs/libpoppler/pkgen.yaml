@@ -26,6 +26,9 @@ packages:
     - lcms2
     - libstdcpp
     - libpoppler
+  poppler-utils:
+    dependencies:
+    - libpoppler-utils
   libpoppler-doc:
   libpoppler-glib:
     dependencies:

@@ -59,6 +59,7 @@ builddependencies:
 - g++
 - ncurses-dev
 - linux-headers
+- zlib-dev
 sources:
 - https://www.kernel.org/pub/linux/utils/util-linux/v{{.Version}}/util-linux-{{.Version}}.tar.xz
 data:
