@@ -1,0 +1,25 @@
+packages:
+  py-mako:
+    dependencies:
+    - py-mako2
+  py-mako2:
+    dependencies:
+    - python2
+  py-mako3:
+    dependencies:
+    - python3
+version: 1.0.7
+builddependencies:
+- py-setuptools
+- python2
+- python3
+sources:
+- https://bitbucket.org/zzzeek/mako/get/rel_1_0_7.tar.bz2
+script:
+- |
+  tar -xf src/rel_1_0_7.tar.bz2
+  mv *-mako-* mako
+  (cd mako && python2 setup.py build)
+  (cd mako && python3 setup.py build)
+  (cd mako && python2 setup.py build --prefix=/usr --root=$(shell pwd)/out/py-mako2)
+  (cd mako && python3 setup.py build --prefix=/usr --root=$(shell pwd)/out/py-mako3)

@@ -1,0 +1,20 @@
+packages:
+  libvdpau:
+  libvdpau-dev:
+  libvdpau-doc:
+version: 1.1.1
+sources:
+- https://people.freedesktop.org/~aplattner/vdpau/libvdpau-{{.Version}}.tar.bz2
+builddependencies:
+- libx11-dev
+- dri2proto
+- libxext-dev
+- autoconf
+- g++
+script:
+- |
+  {{extract "libvdpau" "bz2"}}
+  (cd libvdpau && autoreconf -vif)
+  {{configure "libvdpau"}}
+  $(MAKE) -C libvdpau
+  $(MAKE) -C libvdpau install DESTDIR=$(shell pwd)/out/libvdpau

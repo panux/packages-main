@@ -106,7 +106,6 @@ script:
   mkdir -p out/gpp/usr/bin
   mv out/gcc/usr/bin/g++ out/gpp/usr/bin/g++
   mv out/gcc/usr/bin/c++ out/gpp/usr/bin/c++
-  mv out/gcc/usr/bin/cpp out/gpp/usr/bin/cpp
   mv out/gcc/usr/bin/*-g++ out/gpp/usr/bin
   mv out/gcc/usr/bin/*-c++ out/gpp/usr/bin
   mkdir -p out/gcc-ranlib/usr/bin

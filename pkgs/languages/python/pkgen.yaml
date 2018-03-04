@@ -1,6 +1,17 @@
 packages:
   python:
     dependencies:
+    - expat
+    - zlib
+    - libffi
+    - expat
+    - musl
+    - ncurses
+    - libressl
+    - readline
+    - sqlite
+    - bzip2
+    - tcl
   python-gdbm:
   py-gdbm:
     dependencies:

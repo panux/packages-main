@@ -1,0 +1,28 @@
+packages:
+  py-setuptools:
+    dependencies:
+    - py2-setuptools
+  py2-setuptools:
+    dependencies:
+    - python2
+  py3-setuptools:
+    dependencies:
+    - python3
+version: 38.5.1
+builddependencies:
+- python2
+- python3
+sources:
+- https://github.com/pypa/setuptools/archive/v{{.Version}}.tar.gz
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/setuptools-{{.Version}}.tar.gz
+  {{extract "setuptools" "gz"}}
+  cd setuptools
+  python2 bootstrap.py
+  python3 bootstrap.py
+  python2 setup.py build
+  python3 setup.py build
+  python2 setup.py install --prefix=/usr --root=$(shell pwd)/out/py2-setuptools
+  python3 setup.py install --prefix=/usr --root=$(shell pwd)/out/py3-setuptools
+  cd ..
