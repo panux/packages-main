@@ -18,7 +18,7 @@ builder: bootstrap
 script:
 - |
   {{extract "autoconf" "gz"}}
-  (cd autoconf && ./configure --build={{buildarch}} --host={{hostarch}} --prefix=/usr)
+  {{configure "autoconf"}}
   $(MAKE) -C autoconf
   $(MAKE) -C autoconf DESTDIR=$(shell pwd)/out/autoconf install
   {{pkmv "usr/share/man" "autoconf" "autoconf-man"}}
