@@ -141,11 +141,9 @@ builddependencies:
 - libxshmfence-dev
 - expat-dev
 - xextproto
-- python2
 - libxt-dev
 - makedepend
 - talloc-dev
-- py-libxml2
 - flex
 - bison
 - llvm4-dev
@@ -156,7 +154,6 @@ builddependencies:
 - zlib-dev
 - wayland-dev
 - libelf-dev
-- py-mako
 - libtool
 - autoconf
 - automake
