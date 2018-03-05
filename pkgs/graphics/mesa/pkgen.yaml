@@ -196,7 +196,7 @@ script:
   {{extract "mesa" "xz"}}
   (cd mesa && patch -p1 -i ../src/drmdeps.patch)
   (cd mesa && ./autogen.sh)
-  (cd mesa && ./configure --prefix=/usr --sysconfdir=/etc --with-dri-driverdir=/usr/lib/xorg/modules/dri --with-dri-drivers=radeon,nouveau,swrast,i915,i965 --with-gallium-drivers=nouveau,virgl,swrast,svga --with-vulcan-drivers=radeon,intel --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau --enable-dri3 --enable-gallium-nouveau)
+  {{configure "--prefix=/usr --sysconfdir=/etc --with-dri-driverdir=/usr/lib/xorg/modules/dri --with-dri-drivers=radeon,nouveau,swrast,i915,i965 --with-gallium-drivers=nouveau,virgl,swrast,svga --with-vulcan-drivers=radeon,intel --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau --enable-dri3 --enable-gallium-nouveau"}}
   $(MAKE) -C mesa
   $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
   {{- range $i, $v := .Data.headers}}
