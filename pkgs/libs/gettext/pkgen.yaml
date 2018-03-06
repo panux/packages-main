@@ -20,32 +20,33 @@ packages:
     dependencies:
     - musl
 version: 0.19.8.1
+builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev
 sources:
-- https://mirrors.peers.community/mirrors/gnu/gettext/gettext-{{.Version}}.tar.xz
+- https://ftp.gnu.org/pub/gnu/gettext/gettext-{{.Version}}.tar.xz
 script:
-- tar -xvf src/gettext-{{.Version}}.tar.xz
-- mv gettext-{{.Version}} gettext
-- (cd gettext && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --enable-shared --libdir=/usr/lib)
-- $(MAKE) -C gettext
-- $(MAKE) -C gettext DESTDIR=$(shell pwd)/out/gettext install
-- mkdir -p out/gettext-doc/usr/share
-- mv out/gettext/usr/share/doc out/gettext-doc/usr/share/doc
-- mv out/gettext/usr/share/info out/gettext-doc/usr/share/info
-- mkdir -p out/gettext-man/usr/share
-- mv out/gettext/usr/share/man out/gettext-man/usr/share/man
-- mkdir -p out/gettext-dev/usr/share out/gettext-dev/usr/lib
-- mv out/gettext/usr/lib/*.la out/gettext-dev/usr/lib/
-- mv out/gettext/usr/share/gettext out/gettext-dev/usr/share/gettext
-- mv out/gettext/usr/share/gettext-0.19.8 out/gettext-dev/usr/share/gettext-0.19.8
-- mv out/gettext/usr/include out/gettext-dev/usr/include
-- mv out/gettext/usr/share/aclocal out/gettext-dev/usr/share/aclocal
-- mkdir -p out/gettext-locale/usr/share
-- mv out/gettext/usr/share/locale out/gettext-locale/usr/share/locale
-- mkdir -p out/gettext-static/usr/lib
-- mv out/gettext/usr/lib/*.a out/gettext-static/usr/lib/
-- mkdir -p out/libintl/usr/lib
-- mv out/gettext/usr/lib/libintl.* out/libintl/usr/lib/
-- rm -r out/gettext/usr/share
+- |
+  {{extract "gettext" "xz"}}
+  {{configure "gettext" "--enable-shared"}}
+  $(MAKE) -C gettext
+  $(MAKE) -C gettext DESTDIR=$(shell pwd)/out/gettext install
+  mkdir -p out/gettext-doc/usr/share
+  mv out/gettext/usr/share/doc out/gettext-doc/usr/share/doc
+  mv out/gettext/usr/share/info out/gettext-doc/usr/share/info
+  mkdir -p out/gettext-man/usr/share
+  mv out/gettext/usr/share/man out/gettext-man/usr/share/man
+  mkdir -p out/gettext-dev/usr/share out/gettext-dev/usr/lib
+  mv out/gettext/usr/lib/*.la out/gettext-dev/usr/lib/
+  mv out/gettext/usr/share/gettext out/gettext-dev/usr/share/gettext
+  mv out/gettext/usr/share/gettext-0.19.8 out/gettext-dev/usr/share/gettext-0.19.8
+  mv out/gettext/usr/include out/gettext-dev/usr/include
+  mv out/gettext/usr/share/aclocal out/gettext-dev/usr/share/aclocal
+  mkdir -p out/gettext-locale/usr/share
+  mv out/gettext/usr/share/locale out/gettext-locale/usr/share/locale
+  mkdir -p out/gettext-static/usr/lib
+  mv out/gettext/usr/lib/*.a out/gettext-static/usr/lib/
+  mkdir -p out/libintl/usr/lib
+  mv out/gettext/usr/lib/libintl.* out/libintl/usr/lib/
+  rm -r out/gettext/usr/share

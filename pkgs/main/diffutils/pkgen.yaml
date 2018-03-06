@@ -1,0 +1,20 @@
+packages:
+  diffutils:
+    dependencies:
+    - musl
+  diffutils-doc:
+    dependencies:
+    - diffutils-man
+  diffutils-man:
+version: 3.6
+builddependencies:
+sources:
+- https://ftp.gnu.org/pub/gnu/diffutils/diffutils-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "diffutils" "xz"}}
+  {{configure "diffutils" "--disable-nls"}}
+  $(MAKE) -C diffutils
+  $(MAKE) -C diffutils DESTDIR=$(shell pwd)/out/diffutils install
+  {{pkmv "usr/share/man" "diffutils" "diffutils-man"}}
+  {{pkmv "usr/share/info" "diffutils" "diffutils-doc"}}

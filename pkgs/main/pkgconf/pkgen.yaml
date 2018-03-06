@@ -13,10 +13,10 @@ packages:
   pkgconf-man:
 version: 1.3.10
 builddependencies:
-- kyua
-- atf
+- musl-dev
 sources:
 - https://distfiles.dereferenced.org/pkgconf/pkgconf-{{.Version}}.tar.xz
+builder: bootstrap
 script:
 - |
   {{extract "pkgconf" "xz"}}

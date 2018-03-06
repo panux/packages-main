@@ -23,7 +23,8 @@ builddependencies:
 script:
 - |
   {{extract "pcre" "bz2"}}
-  (cd pcre && ./configure --prefix=/usr --docdir=/usr/share/doc/pcre-{{.Version}} --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static)
+  DD=/usr/share/doc/pcre-{{.Version}}
+  {{configure "pcre" "--docdir=$DD --enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-pcregrep-libz --enable-pcregrep-libbz2 --enable-pcretest-libreadline --disable-static"}}
   $(MAKE) -C pcre
   $(MAKE) -C pcre install DESTDIR=$(shell pwd)/out/pcre
   {{pkmv "usr/share/man" "pcre" "pcre-man"}}

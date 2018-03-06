@@ -1,0 +1,17 @@
+packages:
+  gawk:
+    dependencies:
+    - musl
+builddependencies:
+- gcc
+- g++
+- libc-dev
+version: 4.2.0
+sources:
+- https://ftp.gnu.org/gnu/gawk/gawk-{{.Version}}.tar.xz
+script:
+- |
+  {{extract "gawk" "xz"}}
+  {{configure "gawk" "--sysconfdir=/etc --disable-nls --infodir=/usr/share/info"}}
+  $(MAKE) -C gawk
+  $(MAKE) -C gawk install

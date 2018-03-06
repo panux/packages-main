@@ -8,6 +8,7 @@ packages:
     - texinfo-man
   texinfo-man:
 version: 6.5
+builder: bootstrap
 builddependencies:
 - ncurses-dev
 - perl-dev

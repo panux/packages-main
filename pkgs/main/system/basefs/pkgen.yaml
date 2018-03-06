@@ -2,15 +2,15 @@ packages:
   basefs:
 version: v0.1.4
 oneshell: true
-builder: panux
+builder: bootstrap
 builddependencies:
 - busybox
 sources:
 - file://./oninstall.sh
 script:
 - mv src/oninstall.sh out/basefs/.oninstall
+- chmod 700 out/basefs/.oninstall
 - cd out/basefs
-- chmod 700 .oninstall
 - mkdir boot dev etc home mnt opt proc root run srv sys tmp usr var
 - (cd usr && mkdir lib bin local share)
 - mkdir usr/share/man

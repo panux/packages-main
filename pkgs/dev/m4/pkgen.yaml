@@ -9,11 +9,11 @@ builddependencies:
 - texinfo
 sources:
 - https://ftp.gnu.org/gnu/m4/m4-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "m4" "gz"}}
-  (cd m4 && ./configure --prefix=/usr)
+  {{configure "m4"}}
   $(MAKE) -C m4
   $(MAKE) -C m4 DESTDIR=$(shell pwd)/out/m4 install
   {{pkmv "usr/share/man" "m4" "m4-man"}}

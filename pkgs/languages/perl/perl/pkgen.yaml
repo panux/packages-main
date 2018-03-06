@@ -10,13 +10,12 @@ packages:
     dependencies:
     - perl
 version: 5.24.2
+builder: bootstrap
 builddependencies:
 - perl-utils
 - ncurses-dev
-- libc6-compat
 - binutils
 - musl-dev
-- openssh
 sources:
 - https://www.cpan.org/src/5.0/perl-{{.Version}}.tar.bz2
 oneshell: true

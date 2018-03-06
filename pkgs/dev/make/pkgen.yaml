@@ -8,14 +8,13 @@ packages:
 version: 4.2
 sources:
 - https://ftp.gnu.org/gnu/make/make-{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 script:
-- tar -xf src/make-{{.Version}}.tar.gz
-- mv make-{{.Version}} make
-- (cd make && ./configure)
-- $(MAKE) -C make
-- $(MAKE) -C make DESTDIR=$(shell pwd)/out/make install
-- mkdir -p out/make-doc/usr/share
-- mv out/make/usr/local/share/* out/make-doc/usr/share
-- mv out/make/usr/local/* out/make/usr/
-- rm -r out/make/usr/local
+- |
+  {{extract "make" "gz"}}
+  {{configure "make"}}
+  $(MAKE) -C make
+  $(MAKE) -C make DESTDIR=$(shell pwd)/out/make install
+  mkdir -p out/make-doc/usr/share
+  mv out/make/usr/share/* out/make-doc/usr/share
+  mv out/make/usr/* out/make/usr/

@@ -5,6 +5,7 @@ packages:
     - busybox
     - linit
 version: 1.27.2
+builder: bootstrap
 sources:
 - https://busybox.net/downloads/busybox-{{.Version}}.tar.bz2
 - file://./oninstall.sh
@@ -19,7 +20,7 @@ builddependencies:
 script:
 - tar -xf src/busybox-{{.Version}}.tar.bz2
 - mv busybox-{{.Version}} busybox
-- mv src/conf/$(ARCH).conf busybox/.config
+- mv src/conf/{{buildarch}}.conf busybox/.config
 - $(MAKE) -C busybox LDFLAGS=-static
 - mkdir -p out/busybox/usr/bin
 - mv busybox/busybox out/busybox/usr/bin/busybox

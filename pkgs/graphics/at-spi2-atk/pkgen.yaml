@@ -29,7 +29,7 @@ builder: panux
 script:
 - |
   {{extract "at-spi2-atk" "xz"}}
-  (cd at-spi2-atk && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  {{configure "at-spi2-atk" "--sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var"}}
   $(MAKE) -C at-spi2-atk
   $(MAKE) -C at-spi2-atk DESTDIR=$(shell pwd)/out/at-spi2-atk install
   {{pkmv "usr/include" "at-spi2-atk" "at-spi2-atk-headers"}}

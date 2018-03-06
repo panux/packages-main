@@ -31,7 +31,7 @@ builder: panux
 script:
 - |
   {{extract "expat" "bz2"}}
-  (cd expat && ./configure --prefix=/usr --disable-static)
+  {{configure "expat" "--disable-static"}}
   $(MAKE) -C expat
   $(MAKE) -C expat check
   $(MAKE) -C expat install DESTDIR=$(shell pwd)/out/libexpat

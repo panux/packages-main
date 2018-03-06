@@ -10,7 +10,14 @@ packages:
     dependencies:
     - libmpfr
     - libmpfr-include
+  mpfr-dev:
+    dependencies:
+    - libmpfr-dev
+  mpfr:
+    dependencies:
+    - libmpfr
 version: 3.1.5
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/gnu/mpfr/mpfr-{{.Version}}.tar.xz
 builddependencies:
@@ -20,16 +27,16 @@ builddependencies:
 - texinfo
 - gmp-dev
 script:
-- tar -xf src/mpfr-{{.Version}}.tar.xz
-- mv mpfr-{{.Version}} mpfr
-- (cd mpfr && ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/mpfr-{{.Version}} --build={{confarch}}-unknown-linux-musl)
-- $(MAKE) -C mpfr
-- $(MAKE) -C mpfr html
-- $(MAKE) -C mpfr check
-- $(MAKE) -C mpfr install DESTDIR=$(shell pwd)/out/libmpfr
-- $(MAKE) -C mpfr install-html DESTDIR=$(shell pwd)/out/libmpfr-doc
-- mkdir -p out/libmpfr-info/usr/share
-- mv out/libmpfr/usr/share/info out/libmpfr-info/usr/share/info
-- mkdir out/libmpfr-include/usr
-- mv out/libmpfr/usr/include out/libmpfr-include/usr/include
-- rm -r out/libmpfr/usr/share
+- |
+  {{extract "mpfr" "xz"}}
+  {{configure "mpfr" "--enable-cxx --disable-static"}}
+  $(MAKE) -C mpfr
+  $(MAKE) -C mpfr html
+  $(MAKE) -C mpfr check
+  $(MAKE) -C mpfr install DESTDIR=$(shell pwd)/out/libmpfr
+  $(MAKE) -C mpfr install-html DESTDIR=$(shell pwd)/out/libmpfr-doc
+  mkdir -p out/libmpfr-info/usr/share
+  mv out/libmpfr/usr/share/info out/libmpfr-info/usr/share/info
+  mkdir out/libmpfr-include/usr
+  mv out/libmpfr/usr/include out/libmpfr-include/usr/include
+  rm -r out/libmpfr/usr/share

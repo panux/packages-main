@@ -10,8 +10,11 @@ packages:
     - libstdcpp
   icu-headers:
   icu-doc:
+  icu-dev:
+    dependencies:
+    - icu
+    - g++
 builddependencies:
-- diffutils
 - g++
 version: 59.1
 sources:

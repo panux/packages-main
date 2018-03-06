@@ -14,15 +14,14 @@ version: 4.4.18
 builddependencies:
 - gcc
 - musl-dev
-- ncurses
-- ncurses-headers
+- ncurses-dev
 - readline-dev
 - gettext-dev
 - make
 sources:
 - https://ftp.gnu.org/gnu/bash/bash-{{.Version}}.tar.gz
 - file://./oninstall.sh
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "bash" "gz"}}

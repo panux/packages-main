@@ -3,16 +3,13 @@ packages:
     dependencies:
     - basefs
 version: v0.1
-data:
-  profile: |
-    for profile in `/etc/profile.d/*.sh`; do
-        source $$profile
-    done
+sources:
+- file://./profile.sh
 oneshell: true
-builder: panux
+builder: bootstrap
 script:
 - |-
   mkdir -p out/profile/etc/profile.d
-  echo {{printf "'%s'" .Data.profile}} > out/profile/etc/profile
+  cp src/profile.sh out/profile/etc/profile
   touch out/profile/etc/profile.d/nothing.sh
   chmod 0755 out/profile/etc/profile.d/nothing.sh

@@ -1,8 +1,5 @@
 packages:
   xproto:
-    dependencies:
-    - libx11
-    - libxkbfile
   xproto-doc:
 version: 7.0.31
 builddependencies:

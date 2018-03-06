@@ -25,7 +25,7 @@ sources:
 script:
 - |
   {{extract "nettle" "gz"}}
-  (cd nettle && ./configure --prefix=/usr --enable-shared)
+  {{configure "nettle" "--enable-shared"}}
   $(MAKE) -C nettle
   $(MAKE) -C nettle DESTDIR=$(shell pwd)/out/nettle install
   {{pkmv "usr/include" "nettle" "nettle-headers"}}

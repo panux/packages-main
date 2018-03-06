@@ -33,7 +33,7 @@ builder: panux
 script:
 - |
   {{extract "cmake" "gz"}}
-  (cd cmake && ./configure --prefix=/usr --mandir=/share/man --datadir=/share/cmake --docdir=/share/doc/cmake --system-libs --no-system-jsoncpp)
+  {{configure "cmake" "--datadir=/usr/share/cmake --docdir=/usr/share/doc/cmake --system-libs --no-system-jsoncpp"}}
   $(MAKE) -C cmake
   $(MAKE) -C cmake DESTDIR=$(shell pwd)/out/cmake install
   {{pkmv "usr/share/doc" "cmake" "cmake-doc"}}

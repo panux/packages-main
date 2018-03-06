@@ -11,7 +11,7 @@ builddependencies:
 - perl
 sources:
 - https://ftp.gnu.org/gnu/help2man/help2man-{{.Version}}.tar.xz
-builder: panux
+builder: bootstrap
 script:
 - |
   {{extract "help2man" "xz"}}

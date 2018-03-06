@@ -5,6 +5,9 @@ packages:
     - libgmp
     - libgmp-headers
     - libgmpxx
+  gmp-dev:
+    dependencies:
+    - libgmp-dev
   libgmp-headers:
   libgmp-doc:
   libgmp-info:
@@ -13,7 +16,11 @@ packages:
     - libgmp
     - libgcc
     - libstdcpp
+  gmp:
+    dependencies:
+    - libgmpxx
 version: 6.1.2
+builder: bootstrap
 builddependencies:
 - texinfo
 - m4
@@ -24,7 +31,7 @@ sources:
 script:
 - |
   {{extract "gmp" "xz"}}
-  (cd gmp && ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/gmp-{{.Version}} --enable-cxx)
+  {{configure "gmp" "--disable-static --enable-cxx"}}
   $(MAKE) -C gmp
   $(MAKE) -C gmp html
   $(MAKE) -C gmp check

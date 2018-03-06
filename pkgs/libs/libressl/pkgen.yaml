@@ -3,20 +3,24 @@ packages:
   libressl-dev:
     dependencies:
     - pkgconf
+    - libressl
   libressl-doc:
-version: 2.5.5
+version: 2.6.4
 builddependencies:
 - linux-headers
+- automake
+- autoconf
+- libtool
 sources:
 - https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-{{.Version}}.tar.gz
 script:
-- tar -xf src/libressl-{{.Version}}.tar.gz
-- mv libressl-{{.Version}} libressl
-- (cd libressl && ./configure --with-sysroot=$(shell pwd)/out/libressl --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
-- $(MAKE) -C libressl
-- $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
-- mkdir -p out/libressl-dev/usr/lib
-- mv out/libressl/usr/include out/libressl-dev/usr
-- mv out/libressl/usr/lib/*.so out/libressl/usr/lib/*.a out/libressl/usr/lib/pkgconfig out/libressl-dev/usr/lib
-- mkdir -p out/libressl-doc/usr
-- mv out/libressl/usr/share out/libressl-doc/usr
+- |
+  {{extract "libressl" "gz"}}
+  {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
+  $(MAKE) -C libressl
+  $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
+  mkdir -p out/libressl-dev/usr/lib
+  mv out/libressl/usr/include out/libressl-dev/usr
+  mv out/libressl/usr/lib/pkgconfig out/libressl-dev/usr/lib
+  mkdir -p out/libressl-doc/usr
+  mv out/libressl/usr/share out/libressl-doc/usr

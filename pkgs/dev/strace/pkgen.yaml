@@ -14,7 +14,7 @@ builder: panux
 script:
 - |
   {{extract "strace" "xz"}}
-  (cd strace && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr)
+  {{configure "strace"}}
   $(MAKE) -C strace
   $(MAKE) -C strace DESTDIR=$(shell pwd)/out/strace install
   {{pkmv "usr/share" "strace" "strace-doc"}}

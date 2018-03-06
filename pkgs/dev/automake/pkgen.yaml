@@ -17,7 +17,7 @@ builder: panux
 script:
 - |
   {{extract "automake" "gz"}}
-  (cd automake && ./configure --prefix=/usr)
+  {{configure "automake"}}
   $(MAKE) -C automake
   $(MAKE) -C automake DESTDIR=$(shell pwd)/out/automake install
   {{pkmv "usr/share/man" "automake" "automake-man"}}

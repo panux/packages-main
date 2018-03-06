@@ -1,0 +1,16 @@
+packages:
+  nasm:
+builddependencies:
+- gcc
+- autoconf
+version: 2.12.02
+sources:
+- https://codeload.github.com/Distrotech/nasm/tar.gz/nasm-{{.Version}}
+script:
+- |
+  tar -xzf src/nasm-{{.Version}}
+  mv nasm-nasm-{{.Version}} nasm
+  (cd nasm && ./autogen.sh)
+  {{configure "nasm"}}
+  $(MAKE) -C nasm
+  $(MAKE) -C nasm DESTDIR=$(shell pwd)/out/nasm

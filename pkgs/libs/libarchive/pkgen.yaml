@@ -42,7 +42,7 @@ sources:
 script:
 - |
   {{extract "libarchive" "gz"}}
-  (cd libarchive && ./configure --prefix=/usr --without-xml2)
+  {{configure "libarchive" "--without-xml2"}}
   $(MAKE) -C libarchive
   $(MAKE) -C libarchive install DESTDIR=$(shell pwd)/out/libarchive
   {{pkmv "usr/include" "libarchive" "libarchive-headers"}}

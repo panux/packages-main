@@ -40,7 +40,7 @@ sources:
 script:
 - |
   {{extract "libwnck" "xz"}}
-  (cd libwnck && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static)
+  {{configure "libwnck" "--disable-static"}}
   $(MAKE) -C libwnck
   $(MAKE) -C libwnck DESTDIR=$(shell pwd)/out/libwnck install
   {{pkmv "usr/include" "libwnck" "libwnck-headers"}}

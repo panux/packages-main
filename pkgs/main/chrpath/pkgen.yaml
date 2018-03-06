@@ -1,0 +1,21 @@
+packages:
+  chrpath:
+    dependencies:
+    - musl
+  chrpath-doc:
+    dependencies:
+    - chrpath-man
+  chrpath-man:
+version: 0.16
+builddependencies:
+sources:
+- https://alioth.debian.org/frs/download.php/latestfile/813/chrpath-{{.Version}}.tar.gz
+builder: panux
+script:
+- |
+  {{extract "chrpath" "gz"}}
+  (cd chrpath && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var)
+  $(MAKE) -C chrpath
+  $(MAKE) -C chrpath DESTDIR=$(shell pwd)/out/chrpath docdir=/usr/share/doc/chrpath-{{.Version}} install
+  {{pkmv "usr/share/man" "chrpath" "chrpath-man"}}
+  {{pkmv "usr/share/doc" "chrpath" "chrpath-doc"}}

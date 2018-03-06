@@ -10,7 +10,6 @@ packages:
   kmod-doc:
 version: 24
 builddependencies:
-- sed
 - libxslt
 - zlib-dev
 - xz-libs

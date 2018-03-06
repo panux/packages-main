@@ -19,7 +19,7 @@ script:
   mv libpaper-{{.Version}}+nmu5 libpaper
   mv libpaper/debian/* libpaper
   (cd libpaper && ./autogen.sh)
-  (cd libpaper && ./configure --prefix=/usr)
+  {{configure "libpaper"}}
   $(MAKE) -C libpaper
   $(MAKE) -C libpaper DESTDIR=$(shell pwd)/out/libpaper install
   {{pkmv "usr/include" "libpaper" "libpaper-headers"}}

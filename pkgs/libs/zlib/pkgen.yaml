@@ -12,17 +12,18 @@ version: 1.2.11
 builddependencies:
 - gcc
 - libc-dev
+builder: bootstrap
 sources:
 - https://zlib.net/zlib-{{.Version}}.tar.gz
 script:
-- tar -xvf src/zlib-{{.Version}}.tar.gz
-- mv zlib-{{.Version}} zlib
-- (cd zlib && ./configure --prefix=/usr --shared --libdir=/usr/lib)
-- $(MAKE) -C zlib
-- $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
-- mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
-- mv out/zlib/usr/include out/zlib-dev/usr/include
-- mv out/zlib/usr/lib/libz.a out/zlib-dev/usr/lib/libz.a
-- mkdir out/zlib-man/usr
-- mv out/zlib/usr/share out/zlib-man/usr/share
-- rm -r out/zlib/usr/lib/pkgconfig
+- |
+  {{extract "zlib" "gz"}}
+  (cd zlib && CC=/usr/bin/{{confarch}}-*-linux-musl-gcc ./configure --prefix=/usr)
+  $(MAKE) -C zlib
+  $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
+  mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
+  mv out/zlib/usr/include out/zlib-dev/usr/include
+  mv out/zlib/usr/lib/libz.a out/zlib-dev/usr/lib/libz.a
+  mkdir out/zlib-man/usr
+  mv out/zlib/usr/share out/zlib-man/usr/share
+  rm -r out/zlib/usr/lib/pkgconfig

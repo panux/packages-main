@@ -28,11 +28,8 @@ builddependencies:
 - cmake
 - file
 - libffi-dev
-- paxmark
 - python2
-- py-setuptools
 - zlib-dev
-- patch
 sources:
 - https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
 oneshell: true

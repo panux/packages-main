@@ -11,13 +11,14 @@ sources:
 builddependencies:
   - gcc
   - libc-dev
+builder: bootstrap
 script:
 - |
   {{extract "libsodium" "gz"}}
-  (cd libsodium && ./configure CFLAGS="-Os" --build={{confarch}}-unknown-linux-gnu --prefix=$(shell pwd)/out/libsodium/usr)
+  {{configure "libsodium" "CFLAGS=\"-Os\""}}
   $(MAKE) -C libsodium
   $(MAKE) -C libsodium check
-  $(MAKE) -C libsodium install
+  $(MAKE) -C libsodium install DESTDIR=$(shell pwd)/out/libsodium
   mkdir out/libsodium-dev/usr
   mv out/libsodium/usr/include out/libsodium-dev/usr/include
   rm out/libsodium/usr/lib/libsodium.la

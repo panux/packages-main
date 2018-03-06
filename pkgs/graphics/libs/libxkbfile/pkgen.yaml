@@ -8,7 +8,6 @@ packages:
     - libxkbfile
 version: 1.0.9
 builddependencies:
-- xkbcomp
 - intltool
 - libx11-dev
 sources:

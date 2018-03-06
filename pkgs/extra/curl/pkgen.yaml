@@ -9,25 +9,25 @@ packages:
     - zlib
   curl-man:
   curl-headers:
-version: 7.54.1
+version: 7.58.0
 builddependencies:
-- ncurses-dev
 - zlib-dev
 - libressl-dev
+- groff
+- perl
 sources:
 - https://curl.haxx.se/download/curl-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "curl" "gz"}}
-  (cd curl && ./configure --build={{confarch}}-pc-linux-gnu --with-ssl --disable-static)
+  {{configure "curl" "--disable-static --with-pic"}}
   $(MAKE) -C curl
   $(MAKE) -C curl DESTDIR=$(shell pwd)/out/curl install
   mkdir -p out/libcurl/usr/local
-  mv out/curl/usr/local/lib out/libcurl/usr/local
-  mkdir -p out/curl-man/usr/local
-  mv out/curl/usr/local/share out/curl-man/usr/local
-  mkdir -p out/curl-headers/usr/local
-  mv out/curl/usr/local/include out/curl-headers/usr/local
-  mv out/curl/usr/local/bin out/curl/usr
-  rm -r out/curl/usr/local
+  mv out/curl/usr/lib out/libcurl/usr
+  mkdir -p out/curl-man/usr
+  mv out/curl/usr/share out/curl-man/usr
+  mkdir -p out/curl-headers/usr
+  mv out/curl/usr/include out/curl-headers/usr
+  mv out/curl/usr/bin out/curl/usr
+  rm -r out/curl/usr

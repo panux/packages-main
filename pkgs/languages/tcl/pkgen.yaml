@@ -1,0 +1,23 @@
+packages:
+  tcl:
+    dependencies:
+    - sqlite
+    - musl
+  tcl-dev:
+    dependencies:
+    - tcl
+version: 8.6.4
+sources:
+- https://github.com/tcltk/tcl/archive/core-8-6-4.tar.gz
+builddependencies:
+- sqlite-dev
+- libc-dev
+- gcc
+script:
+- |
+  tar -xf src/core-8-6-4.tar.gz
+  mv tcl-core-8-6-4 tcl
+  f64={{if eq "x86_64" buildarch}}--enable-64{{end}}
+  {{configure "tcl/unix" "$$f64 --sysconfdir=/etc --with-system-sqlite"}}
+  $(MAKE) -C tcl/unix
+  $(MAKE) -C tcl/unix install DESTDIR=$(shell pwd)/out/tcl

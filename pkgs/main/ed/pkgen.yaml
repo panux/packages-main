@@ -11,14 +11,21 @@ builddependencies:
 - lzip
 sources:
 - https://ftp.gnu.org/gnu/ed/ed-{{.Version}}.tar.lz
-builder: panux
+- file://./oninstall.sh
+builder: bootstrap
 script:
 - |
   lzip -d src/ed-{{.Version}}.tar.lz
   tar -xf src/ed-{{.Version}}.tar
   mv ed-{{.Version}} ed
-  (cd ed && ./configure --prefix=/usr --bindir=/bin --mandir=/usr/share/man)
+  (cd ed && ./configure --prefix=/usr --bindir=/usr/bin --mandir=/usr/share/man)
   $(MAKE) -C ed
   $(MAKE) -C ed DESTDIR=$(shell pwd)/out/ed install
   {{pkmv "usr/share/man" "ed" "ed-man"}}
   {{pkmv "usr/share" "ed" "ed-doc"}}
+  mv out/ed/usr/bin/ed out/ed/usr/bin/gnu-ed
+  mkdir -p out/ed/etc/lpkg.d/alt.d/ed
+  ln -s /usr/bin/gnu-ed out/ed/etc/lpkg.d/alt.d/ed/02_gnu.provider
+  echo /usr/bin/ed > out/ed/etc/lpkg.d/alt.d/ed/.target
+  mv src/oninstall.sh out/ed/.oninstall
+  chmod 700 out/ed/.oninstall

@@ -5,6 +5,9 @@ packages:
     - libgraphite2
     - libgraphite2-headers
     - freetype-dev
+  graphite2-dev:
+    dependencies:
+    - libgraphite2-dev
   libgraphite2-headers:
 version: 1.3.10
 builddependencies:
