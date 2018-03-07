@@ -1,3 +1,3 @@
 #!/bin/sh
 
-update-ca-certificates
+chroot $2 update-ca-certificates

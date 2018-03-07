@@ -2,6 +2,7 @@ packages:
   ca-certificates:
     dependencies:
     - libressl
+    - base
   ca-certificates-doc:
 version: 20170801
 builddependencies:
@@ -16,6 +17,8 @@ script:
   tar xf src/ca-certificates-{{.Version}}.tar.bz2
   (cd ca-certificates-{{.Version}} && make)
   (cd ca-certificates-{{.Version}} && make DESTDIR=$(shell pwd)/out/ca-certificates install)
+  mv out/ca-certificates/usr/sbin/* out/ca-certificates/usr/bin
+  rm -r out/ca-certificates/usr/sbin
   {{pkmv "usr/share/man" "ca-certificates" "ca-certificates-doc"}}
   (cd out/ca-certificates/usr/share/ca-certificates && find . -name '*.crt' | sort | cut -b3-) > out/ca-certificates/etc/ca-certificates.conf
   cp src/oninstall.sh out/ca-certificates/.oninstall
