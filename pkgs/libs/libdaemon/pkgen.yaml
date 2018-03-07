@@ -18,6 +18,7 @@ script:
 - |
   {{extract "libdaemon" "gz"}}
   cp /usr/include/unistd.h /usr/include/sys/unistd.h
+  (cd libdaemon && autoreconf -vif)
   {{configure "libdaemon"}}
   $(MAKE) -C libdaemon
   $(MAKE) -C libdaemon DESTDIR=$(shell pwd)/out/libdaemon install
