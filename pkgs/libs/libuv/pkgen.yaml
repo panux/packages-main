@@ -15,7 +15,7 @@ builddependencies:
 - libtool
 - linux-headers
 sources:
-- https://dist.libuv.org/dist/v{{.Version}}/libuv-{{.Version}}.tar.gz
+- https://dist.libuv.org/dist/{{.Version}}/libuv-{{.Version}}.tar.gz
 builder: panux
 script:
 - |
