@@ -3,6 +3,7 @@ packages:
     dependencies:
     - musl
     - ncurses-terminfo
+    - ncurses-libs
   ncurses-man:
     dependencies:
     - ncurses
