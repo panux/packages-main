@@ -8,12 +8,13 @@ version: 0.34.0
 builddependencies:
 - linux-headers
 - perl
+- gcc-include
 sources:
 - https://www.x.org/releases/individual/lib/pixman-{{.Version}}.tar.bz2
 script:
 - |
   {{extract "pixman" "bz2"}}
-  (cd pixman && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --disable-static)
+  {{configure "pixman" "--disable-static"}}
   $(MAKE) -C pixman
   $(MAKE) -C pixman DESTDIR=$(shell pwd)/out/pixman install
   mkdir -p out/pixman-dev/usr/lib
