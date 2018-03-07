@@ -13,4 +13,4 @@ script:
   (cd nasm && ./autogen.sh)
   {{configure "nasm"}}
   $(MAKE) -C nasm
-  $(MAKE) -C nasm DESTDIR=$(shell pwd)/out/nasm
+  $(MAKE) -C nasm install INSTALLROOT=$(shell pwd)/out/nasm

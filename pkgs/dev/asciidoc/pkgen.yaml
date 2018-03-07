@@ -1,0 +1,24 @@
+packages:
+  asciidoc:
+    dependencies:
+    - python2
+    - libxml2-utils
+    - docbook-xsl
+builddependencies:
+- automake
+- autoconf
+- python2
+- libxml2-utils
+- docbook-xsl
+version: 8.6.10
+sources:
+- https://github.com/asciidoc/asciidoc/archive/{{.Version}}.tar.gz
+script:
+- |
+  mv src/{{.Version}}.tar.gz src/asciidoc-{{.Version}}.tar.gz
+  {{extract "asciidoc" "gz"}}
+  sed -i -e 's/--nonet//g' asciidoc/a2x.py
+  (cd asciidoc && autoconf)
+  {{configure "asciidoc"}}
+  $(MAKE) -C asciidoc
+  $(MAKE) -C asciidoc install DESTDIR=$(shell pwd)/out/asciidoc

@@ -5,13 +5,9 @@ packages:
   py2-setuptools:
     dependencies:
     - python2
-  py3-setuptools:
-    dependencies:
-    - python3
-version: 38.5.1
+version: 33.1.1
 builddependencies:
-- python2
-- python3
+- python2-dev
 sources:
 - https://github.com/pypa/setuptools/archive/v{{.Version}}.tar.gz
 script:
@@ -20,9 +16,10 @@ script:
   {{extract "setuptools" "gz"}}
   cd setuptools
   python2 bootstrap.py
-  python3 bootstrap.py
   python2 setup.py build
-  python3 setup.py build
   python2 setup.py install --prefix=/usr --root=$(shell pwd)/out/py2-setuptools
-  python3 setup.py install --prefix=/usr --root=$(shell pwd)/out/py3-setuptools
-  cd ..
+  cd ../out/py2-setuptools
+  rm usr/bin/easy_install
+  sed -e 's/launcher manifest.xml/launcher_manifest.xml/g' -e 's/ (dev).tmpl/_dev.tmpl/g' usr/lib/python2.7/site-packages/setuptools/command/easy_install.py > usr/lib/python2.7/site-packages/setuptools/command/easy_install.py
+  mv 'usr/lib/python2.7/site-packages/setuptools/command/launcher manifest.xml' usr/lib/python2.7/site-packages/setuptools/command/launcher_manifest.xml
+  mv 'usr/lib/python2.7/site-packages/setuptools/script (dev).tmpl' usr/lib/python2.7/site-packages/setuptools/script_dev.tmpl

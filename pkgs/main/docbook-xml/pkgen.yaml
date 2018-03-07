@@ -1,0 +1,15 @@
+packages:
+  docbook-xml:
+    dependencies:
+    - libxml2-utils
+version: 4.5
+sources:
+- https://github.com/docbook/docbook.org/raw/master/xml/{{.Version}}/docbook-xml-{{.Version}}.zip
+script:
+- |
+  mkdir docbook-xml
+  unzip src/docbook-xml-{{.Version}}.zip -d docbook-xml
+  mkdir -p out/docbook-xml/usr/share/xml/docbook/xml-dtd-{{.Version}}/
+  cp -dRf docbook-xml/docbook.cat docbook-xml/*.dtd docbook-xml/ent/ docbook-xml/*.mod out/docbook-xml/usr/share/xml/docbook/xml-dtd-{{.Version}}/
+  xmlcatalog --noout --create out/docbook-xml/etc/xml/docbook-xml
+  xmlcatalog --noout --sgml --add docbook-xml/docbook.cat out/docbook-xml/etc/xml/docbook-xml

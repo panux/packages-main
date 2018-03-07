@@ -14,11 +14,14 @@ version: 0.23.2
 builddependencies:
 - libtasn1-dev
 - libffi-dev
+- automake
 sources:
-- https://p11-glue.freedesktop.org/releases/p11-kit-{{.Version}}.tar.gz
+- https://github.com/p11-glue/p11-kit/archive/{{.Version}}.tar.gz
 script:
 - |
+  mv src/{{.Version}}.tar.gz src/p11-kit-{{.Version}}.tar.gz
   {{extract "p11-kit" "gz"}}
+  (cd p11-kit && ./autogen.sh)
   {{configure "p11-kit" "--sysconfdir=/etc"}}
   $(MAKE) -C p11-kit
   $(MAKE) -C p11-kit DESTDIR=$(shell pwd)/out/p11-kit install

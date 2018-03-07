@@ -16,22 +16,17 @@ packages:
     - g++
 builddependencies:
 - g++
-version: 59.1
+version: 60.2
 sources:
-data:
-  realversion:
-    59.1: "59_1"
+- https://ssl.icu-project.org/files/icu4c/60.2/icu4c-60_2-src.tgz
 script:
 - |
-  {{- range $i, $v := .Data.realversion}}
-  wget https://downloads.sourceforge.net/project/icu/ICU4C/{{$i}}/icu4c-{{$v}}-src.tgz
-  tar -xf icu4c-{{$v}}-src.tgz
-  {{- end}}
+  tar -xf src/icu4c-*-src.tgz
   ln -s /usr/include/locale.h /usr/include/xlocale.h
   (cd icu/source && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --with-data-packaging=library --disable-samples)
   {{make "icu/source"}}
   $(MAKE) -C icu/source
   (cd icu/source && make -j1 DESTDIR=$(shell pwd)/out/icu install)
-  {{pkmv "usr/lib/*.so.59" "icu" "icu-libs"}}
+  {{pkmv "usr/lib/*.so.*" "icu" "icu-libs"}}
   {{pkmv "usr/include" "icu" "icu-headers"}}
   {{pkmv "usr/share" "icu" "icu-doc"}}

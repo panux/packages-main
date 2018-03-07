@@ -6,8 +6,10 @@ packages:
     - zlib
     - expat
   python3-dev:
+    dependencies:
+    - python3
   python3-doc:
-version: 3.6.2
+version: 3.5.1
 builddependencies:
 - g++
 - zlib-dev
@@ -29,6 +31,6 @@ script:
 - mkdir -p out/python3-dev/usr
 - mv out/python3/usr/include out/python3-dev/usr
 - mkdir -p out/python3-dev/usr/lib
-- mv out/python3/usr/lib/libpython3.6m.so out/python3-dev/usr/lib
-- mkdir -p out/python3-dev/usr/lib/python3.6/distutils/tests
-- mv out/python3/usr/lib/python3.6/distutils/tests/xxmodule.c out/python3-dev/usr/lib/python3.6/distutils/tests
+- mv out/python3/usr/lib/libpython3.5m.so out/python3-dev/usr/lib
+- mkdir -p out/python3-dev/usr/lib/python3.5/distutils/tests
+- mv out/python3/usr/lib/python3.5/distutils/tests/xxmodule.c out/python3-dev/usr/lib/python3.5/distutils/tests

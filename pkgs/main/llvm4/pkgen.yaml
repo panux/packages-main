@@ -4,7 +4,7 @@ packages:
       - libgcc
       - libstdcpp
       - musl
-      - libllvm
+      - libllvm4
   llvm4-dev:
     dependencies:
     - libstdcpp

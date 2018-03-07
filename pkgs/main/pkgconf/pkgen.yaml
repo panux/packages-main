@@ -6,6 +6,9 @@ packages:
     dependencies:
     - pkgconf
     - pkgconf-headers
+  pkgconfig:
+    dependencies:
+    - pkgconf-dev
   pkgconf-headers:
   pkgconf-doc:
     dependencies:

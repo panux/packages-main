@@ -4,7 +4,7 @@ packages:
     - musl
 version: 1.0.4
 sources:
-- http://www.x.org/releases/individual/util/makedepend-{{.Version}}.tar.bz2
+- https://www.x.org/releases/individual/util/makedepend-{{.Version}}.tar.bz2
 builddependencies:
 - xproto
 - gcc

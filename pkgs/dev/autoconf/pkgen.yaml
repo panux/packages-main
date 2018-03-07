@@ -18,7 +18,8 @@ builder: bootstrap
 script:
 - |
   {{extract "autoconf" "gz"}}
-  {{configure "autoconf"}}
+  {{configure "autoconf" (printf "--build %s-alpine-linux --host %s-alpine-linux" (buildarch) (hostarch))}}
+  if [ -e /usr/bin/x86_64-alpine-linux-musl-gcc ]; then ln -s /usr/bin/x86_64-alpine-linux-musl-gcc /usr/bin/x86_64-pc-linux-musl-gcc; fi
   $(MAKE) -C autoconf
   $(MAKE) -C autoconf DESTDIR=$(shell pwd)/out/autoconf install
   {{pkmv "usr/share/man" "autoconf" "autoconf-man"}}

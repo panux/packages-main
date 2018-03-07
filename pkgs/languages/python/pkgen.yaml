@@ -17,6 +17,8 @@ packages:
     dependencies:
     - python-gdbm
   python-dev:
+    dependencies:
+    - python
   python2:
     dependencies:
     - python

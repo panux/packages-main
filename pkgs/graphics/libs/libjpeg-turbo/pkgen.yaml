@@ -13,12 +13,17 @@ packages:
 version: 1.5.2
 builddependencies:
 - nasm
+- automake
+- autoconf
+- libtool
 sources:
-- https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-{{.Version}}.tar.gz
+- https://github.com/libjpeg-turbo/libjpeg-turbo/archive/{{.Version}}.tar.gz
 script:
 - |
+  mv src/{{.Version}}.tar.gz src/libjpeg-turbo-{{.Version}}.tar.gz
   {{extract "libjpeg-turbo" "gz"}}
-  (cd libjpeg-turbo && ./configure --prefix=/usr --mandir=/usr/share/man --with-jpeg8)
+  (cd libjpeg-turbo && autoreconf -fiv)
+  {{configure "libjpeg-turbo" "--with-jpeg8"}}
   $(MAKE) -C libjpeg-turbo
   $(MAKE) -C libjpeg-turbo DESTDIR=$(shell pwd)/out/libjpeg-turbo install
   {{pkmv "usr/include" "libjpeg-turbo" "libjpeg-turbo-headers"}}

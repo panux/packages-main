@@ -1,0 +1,45 @@
+packages:
+  docbook-xsl:
+    dependencies:
+    - libxml2-utils
+    - libxslt
+    - docbook-xml
+version: 1.79.2
+sources:
+- https://github.com/docbook/xslt10-stylesheets/releases/download/release/{{.Version}}/docbook-xsl-{{.Version}}.tar.bz2
+data:
+  tocp:
+  - VERSION
+  - assembly
+  - common
+  - eclipse
+  - epub
+  - epub3
+  - extensions
+  - fo
+  - highlighting
+  - html
+  - htmlhelp
+  - images
+  - javahelp
+  - lib
+  - manpages
+  - params
+  - profiling
+  - roundtrip
+  - slides
+  - template
+  - tests
+  - tools
+  - webhelp
+  - website
+  - xhtml
+  - xhtml-1_1
+  - xhtml5
+script:
+- |
+  {{extract "docbook-xsl" "bz2"}}
+  install -v -m755 -d out/docbook-xsl/usr/share/xml/docbook/xsl-stylesheets-{{.Version}}
+  cp -v -R{{range .Data.tocp}}{{printf " docbook-xsl/%s" .}}{{end}} out/docbook-xsl/usr/share/xml/docbook/xsl-stylesheets-{{.Version}}
+  install -v -m644 -D README out/docbook-xsl/usr/share/doc/docbook-xsl-{{.Version}}/README.txt
+  install -v -m644 docbook-xsl/RELEASE-NOTES* docbook-xsl/NEWS* out/docbook-xsl/usr/share/doc/docbook-xsl-{{.Version}}
