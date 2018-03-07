@@ -13,7 +13,7 @@ builddependencies:
 - libtool
 - musl-dev
 sources:
-- https://dev.alpinelinux.org/archive/libdaemon/libdaemon-0.14.tar.gz
+- https://dev.alpinelinux.org/archive/libdaemon/libdaemon-{{.Version}}.tar.gz
 script:
 - |
   {{extract "libdaemon" "gz"}}
