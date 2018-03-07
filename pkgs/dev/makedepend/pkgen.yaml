@@ -8,9 +8,13 @@ sources:
 builddependencies:
 - xproto
 - gcc
+- automake
+- autoconf
+- util-macros
 script:
 - |
   {{extract "makedepend" "bz2"}}
+  (cd makedepend && autoreconf -vif)
   {{configure "makedepend"}}
   $(MAKE) -C makedepend
   $(MAKE) -C makedepend install DESTDIR=$(shell pwd)/out/makedepend
