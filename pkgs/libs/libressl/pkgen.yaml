@@ -16,6 +16,10 @@ sources:
 script:
 - |
   {{extract "libressl" "gz"}}
+  echo 01_busybox > /etc/lpkg.d/alt.d/sh/.override
+  lpkg-alt update sh
+  readlink /usr/bin/sh
+  rm /usr/bin/bash
   {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
   $(MAKE) -C libressl
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
