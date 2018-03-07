@@ -28,5 +28,5 @@ script:
   $(MAKE) -C pkgconf DESTDIR=$(shell pwd)/out/pkgconf install
   {{pkmv "usr/include" "pkgconf" "pkgconf-headers"}}
   {{pkmv "usr/share/man" "pkgconf" "pkgconf-man"}}
-  {{pkmv "usr/share" "pkgconf" "pkgconf-doc"}}
+  {{pkmv "usr/share/doc" "pkgconf" "pkgconf-doc"}}
   ln -s /usr/bin/pkgconf out/pkgconf/usr/bin/pkg-config
