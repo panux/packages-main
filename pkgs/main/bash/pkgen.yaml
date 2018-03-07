@@ -25,7 +25,7 @@ builder: bootstrap
 script:
 - |
   {{extract "bash" "gz"}}
-  (cd bash && ./configure --without-bash-malloc --prefix=/usr)
+  {{configure "bash" "--without-bash-malloc"}}
   $(MAKE) -C bash
   $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
   {{pkmv "usr/include" "bash" "bash-headers"}}
