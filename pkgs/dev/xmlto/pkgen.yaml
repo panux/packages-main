@@ -1,0 +1,23 @@
+packages:
+  xmlto:
+    dependencies:
+    - libxslt
+    - perl-yaml-syck
+    - perl-test-pod
+    - bash
+    - docbook-xsl
+builddependencies:
+- libxslt-dev
+- perl-yaml-syck
+- perl-test-pod
+- bash
+- docbook-xsl
+version: 0.0.28
+sources:
+- https://releases.pagure.org/xmlto/xmlto-{{.Version}}.tar.bz2
+script:
+- |
+  {{extract "xmlto" "bz2"}}
+  {{configure "xmlto"}}
+  $(MAKE) -C xmlto
+  $(MAKE) -C xmlto install DESTDIR=$(shell pwd)/out/xmlto
