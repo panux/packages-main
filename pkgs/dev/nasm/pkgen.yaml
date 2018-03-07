@@ -3,7 +3,9 @@ packages:
 builddependencies:
 - gcc
 - autoconf
-version: 2.12.02
+- asciidoc
+- xmlto
+version: 2.10.07
 sources:
 - https://codeload.github.com/Distrotech/nasm/tar.gz/nasm-{{.Version}}
 script:
