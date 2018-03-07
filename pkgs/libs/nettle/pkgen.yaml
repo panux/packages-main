@@ -25,11 +25,13 @@ sources:
 script:
 - |
   {{extract "nettle" "gz"}}
-  {{configure "nettle" "--enable-shared"}}
+  {{configure "nettle" "--enable-shared --disable-static"}}
   $(MAKE) -C nettle
   $(MAKE) -C nettle DESTDIR=$(shell pwd)/out/nettle install
   {{pkmv "usr/include" "nettle" "nettle-headers"}}
   {{pkmv "usr/bin" "nettle" "nettle-utils"}}
+  if [ -d out/nettle/usr/lib64 ]; then mv out/nettle/usr/lib64 out/nettle/usr/lib; fi
   {{pkmv "usr/lib/libnettle*" "nettle" "libnettle"}}
   {{pkmv "usr/lib/libhogweed*" "nettle" "libhogweed"}}
+  {{pkmv "usr/lib/pkgconfig" "nettle" "nettle-dev"}}
   rm -r out/nettle/usr
