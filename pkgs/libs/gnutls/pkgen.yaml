@@ -32,11 +32,16 @@ builddependencies:
 - p11-kit-dev
 - libunistring-dev
 - texinfo
+- libtool
+- autoconf
+- automake
 sources:
 - https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-{{.Version}}.tar.xz
 script:
 - |
   {{extract "gnutls" "xz"}}
+  find /usr -name '*.la' -delete
+  (cd gnutls && autoreconf -vif)
   {{configure "gnutls"}}
   $(MAKE) -C gnutls
   $(MAKE) -C gnutls DESTDIR=$(shell pwd)/out/gnutls install
