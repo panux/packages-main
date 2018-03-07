@@ -1,0 +1,13 @@
+packages:
+  perl-yaml-syck:
+version: 1.30
+builddependencies:
+- perl-dev
+sources:
+- https://cpan.metacpan.org/authors/id/T/TO/TODDR/YAML-Syck-{{.Version}}.tar.gz
+script:
+- |
+  {{extract "YAML-Syck" "gz"}}
+  (cd YAML-Syck && PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor)
+  $(MAKE) -C YAML-Syck
+  $(MAKE) -C YAML-Syck DESTDIR=$(shell pwd)/out/perl-yaml-syck install
