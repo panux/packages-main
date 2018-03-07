@@ -3,11 +3,14 @@ packages:
     dependencies:
     - libxml2-utils
 version: 4.5
+builddependencies:
+- libxml2-utils
 sources:
 - https://github.com/docbook/docbook.org/raw/master/xml/{{.Version}}/docbook-xml-{{.Version}}.zip
 script:
 - |
   mkdir docbook-xml
+  mkdir -p out/docbook-xml/etc/xml
   unzip src/docbook-xml-{{.Version}}.zip -d docbook-xml
   mkdir -p out/docbook-xml/usr/share/xml/docbook/xml-dtd-{{.Version}}/
   cp -dRf docbook-xml/docbook.cat docbook-xml/*.dtd docbook-xml/ent/ docbook-xml/*.mod out/docbook-xml/usr/share/xml/docbook/xml-dtd-{{.Version}}/

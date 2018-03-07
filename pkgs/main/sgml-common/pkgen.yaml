@@ -1,0 +1,17 @@
+packages:
+  sgml-common:
+version: 0.6.3
+sources:
+- https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/sgml-common-{{.Version}}.tgz
+- https://raw.githubusercontent.com/Alexpux/MSYS2-packages/master/sgml-common/sgml-common-0.6.3-manpage-1.patch
+builddependencies:
+- automake
+- autoconf
+script:
+- |
+  mv src/sgml-common-{{.Version}}.tgz src/sgml-common-{{.Version}}.tar.gz
+  {{extract "sgml-common" "gz"}}
+  (cd sgml-common && patch -Np1 -i ../src/sgml-common-0.6.3-manpage-1.patch && autoreconf -f -i)
+  {{configure "sgml-common"}}
+  $(MAKE) -C sgml-common
+  $(MAKE) -C sgml-common install DESTDIR=$(shell pwd)/out/sgml-common
