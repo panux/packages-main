@@ -17,7 +17,7 @@ packages:
     dependencies:
     - libxslt-man
   libxslt-man:
-version: 1.1.32
+version: 1.1.31
 builddependencies:
 - libxml2-dev
 - libgcrypt-dev
@@ -26,13 +26,19 @@ builddependencies:
 - automake
 - autoconf
 - libtool
+- bash
 sources:
 - https://github.com/GNOME/libxslt/archive/v{{.Version}}.tar.gz
 script:
 - |
   mv src/v{{.Version}}.tar.gz src/libxslt-{{.Version}}.tar.gz
+  echo 01_busybox > /etc/lpkg.d/alt.d/sh/.override
+  lpkg-alt update sh
+  rm /usr/bin/bash
   {{extract "libxslt" "gz"}}
-  (cd libxslt && ./autogen.sh --prefix=/usr)
+  export PKG_CONFIG_PATH=/usr/lib/pkgconfig
+  (cd libxslt && autoreconf -vif)
+  {{configure "libxslt" "--with-libxml-prefix=/usr"}}
   $(MAKE) -C libxslt
   $(MAKE) -C libxslt DESTDIR=$(shell pwd)/out/libxslt install
   install -D -m644 libxslt/COPYING out/libxslt-doc/usr/share/licenses/libxslt/COPYING
