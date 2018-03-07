@@ -5,6 +5,7 @@ packages:
 version: 4.5
 builddependencies:
 - libxml2-utils
+- sgml-common
 sources:
 - https://github.com/docbook/docbook.org/raw/master/xml/{{.Version}}/docbook-xml-{{.Version}}.zip
 script:
