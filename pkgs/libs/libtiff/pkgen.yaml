@@ -36,6 +36,7 @@ script:
 - |
   tar -xf src/Release-v4-0-8.tar.gz
   mv libtiff-Release-v4-0-8 libtiff
+  (cd libtiff && autoreconf -vif)
   {{configure "libtiff"}}
   $(MAKE) -C libtiff
   $(MAKE) -C libtiff DESTDIR=$(shell pwd)/out/libtiff install
