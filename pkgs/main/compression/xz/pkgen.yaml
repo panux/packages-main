@@ -1,5 +1,7 @@
 packages:
   xz:
+    dependencies:
+    - xz-libs
   xz-libs:
     dependencies:
     - ncurses
@@ -9,6 +11,7 @@ packages:
     dependencies:
     - ncurses-dev
     - libc-dev
+    - xz
 version: 5.2.3
 builddependencies:
 - gcc
