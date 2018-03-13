@@ -31,7 +31,7 @@ script:
   mv src/v{{.Version}}.tar.gz src/xz-{{.Version}}.tar.gz
   {{extract "xz" "gz"}}
   (cd xz && autoreconf -vif)
-  {{configure "xz" "--disable-shared --disable-gettext"}}
+  {{configure "xz" "--disable-static --disable-gettext"}}
   $(MAKE) -C xz
   $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
   mkdir -p out/xz-libs/usr
