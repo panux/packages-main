@@ -10,28 +10,34 @@ packages:
     - ncurses-dev
     - libc-dev
 version: 5.2.3
-builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev
 - ncurses-dev
 - g++
+- autoconf
+- automake
+- libtool
+- gettext-dev
+- bash
 sources:
-- https://fossies.org/linux/misc/xz-{{.Version}}.tar.gz
+- https://github.com/xz-mirror/xz/archive/v{{.Version}}.tar.gz
 script:
-- tar -xf src/xz-{{.Version}}.tar.gz
-- mv xz-{{.Version}} xz
-- (cd xz && ./configure --build={{confarch}}-pc-linux-gnu)
-- (cd xz && make)
-- $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
-- mkdir -p out/xz-libs/usr/local
-- mv out/xz/usr/local/lib out/xz-libs/usr/local
-- mkdir -p out/xz-doc/usr/local/share
-- mv out/xz/usr/local/share/doc out/xz-doc/usr/local/share
-- mv out/xz/usr/local/share/man out/xz-doc/usr/local/share
-- mkdir -p out/xz-dev/usr/local/share/doc/xz
-- mv out/xz-doc/usr/local/share/doc/xz/examples* out/xz-dev/usr/local/share/doc/xz
-- mv out/xz/usr/local/include out/xz-dev/usr/local
-- mkdir -p out/xz-dev/usr/local/lib
-- mv out/xz-libs/usr/local/lib/liblzma* out/xz-dev/usr/local/lib
-- mv out/xz-libs/usr/local/lib/pkgconfig out/xz-dev/usr/local/lib
+- |
+  lpkg-alt reconfigure sh 00_bash
+  mv src/v{{.Version}}.tar.gz src/xz-{{.Version}}.tar.gz
+  {{extract "xz" "gz"}}
+  (cd xz && autoreconf -vif)
+  {{configure "xz" "--disable-shared --disable-gettext"}}
+  $(MAKE) -C xz
+  $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
+  mkdir -p out/xz-libs/usr
+  mv out/xz/usr/lib out/xz-libs/usr
+  mkdir -p out/xz-doc/usr/share
+  mv out/xz/usr/share/doc out/xz-doc/usr/share
+  mv out/xz/usr/share/man out/xz-doc/usr/share
+  mkdir -p out/xz-dev/usr/share/doc/xz
+  mv out/xz-doc/usr/share/doc/xz/examples* out/xz-dev/usr/share/doc/xz
+  mv out/xz/usr/include out/xz-dev/usr
+  mkdir -p out/xz-dev/usr/lib
+  mv out/xz-libs/usr/lib/pkgconfig out/xz-dev/usr/lib
