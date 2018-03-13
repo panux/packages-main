@@ -36,12 +36,15 @@ builddependencies:
 - acl-dev
 - libressl-dev
 - libexpat-dev
-builder: panux
+- automake
+- autoconf
+- libtool
 sources:
 - https://libarchive.org/downloads/libarchive-{{.Version}}.tar.gz
 script:
 - |
   {{extract "libarchive" "gz"}}
+  (cd libarchive && autoreconf -vif)
   {{configure "libarchive" "--without-xml2"}}
   $(MAKE) -C libarchive
   $(MAKE) -C libarchive install DESTDIR=$(shell pwd)/out/libarchive
