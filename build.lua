@@ -290,11 +290,47 @@ ruletable:addgenerator(function(name)
     return r
 end)
 
+--add generator for isBootstrap files
+ruletable:addgenerator(function(name)
+    if path:filename(name) ~= ".isBootstrap" then
+        return nil
+    end
+    if path:dirname(path:dirname(name)) ~= "build" then
+        return nil
+    end
+    local r = {}
+    local pkgname = path:basename(path:dirname(name))
+    function r:deps()
+        return promise(function(s, f)
+            ruletable:run("pkgens.list"):prom(function()
+                if pktbl == nil then
+                    loadpktbl()
+                end
+                local pkgen = pktbl[pkgname]
+                if pkgen == nil then
+                    f(string.format("Invalid isBootstrap %s", pkgname))
+                end
+                r.pkgen = pkgen
+                s({pkgen, "build/" .. pkgname .. "/.dir"})
+            end, f)
+        end)
+    end
+    function r:run()
+        return runner:run("pkgen", "-i", r.pkgen, "-o", name, "builder")
+    end
+    return r
+end)
+
 local function isBootstrap(pkgf)
-    local f = assert(io.popen(string.format("pkgen -i %s builder", pkgf)))
-    local bldr = assert(f:read("*a"))
-    f:close()
-    return bldr == "bootstrap"
+    local ibf = "build/" .. path:filename(path:dirname(pkgf)) .. "/.isBootstrap"
+    return promise(function(s, f)
+        ruletable:run(ibf):prom(function()
+            local f = assert(io.open(ibf, "r"))
+            local bldr = assert(f:read("*a"))
+            f:close()
+            s(bldr == "bootstrap")
+        end)
+    end)
 end
 
 
@@ -378,18 +414,28 @@ ruletable:addgenerator(function(name)
                         local deptable = {path:dirname(name) .. "/builddeps.list"}
                         local tars = {}
                         local v
+                        local n2 = #bdl + 1
+                        local function p()
+                            n2 = n2 - 1
+                            if n2 == 0 then
+                                r.tars = tars
+                                s(deptable)
+                            end
+                        end
                         for _, v in ipairs(bdl) do
                             local ar = a
                             --use the bootstrapped copy to build the new version
-                            if isBootstrap(pktbl[v]) then
-                                ar = "bootstrap"
-                            end
-                            local tar = "out/" .. ar .. "/" .. v .. ".tar.gz"
-                            table.insert(deptable, tar)
-                            table.insert(tars, tar)
+                            isBootstrap(pktbl[v]):prom(function(ib)
+                                if ib then
+                                    ar = "bootstrap"
+                                end
+                                local tar = "out/" .. ar .. "/" .. v .. ".tar.gz"
+                                table.insert(deptable, tar)
+                                table.insert(tars, tar)
+                                p()
+                            end)
                         end
-                        r.tars = tars
-                        s(deptable)
+                        p()
                     end
                 end
                 for _, l in ipairs(bdli) do
