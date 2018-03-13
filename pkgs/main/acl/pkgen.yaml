@@ -26,7 +26,6 @@ builddependencies:
 - automake
 - attr-dev
 - gettext
-builder: panux
 oneshell: true
 script:
 - |
@@ -36,11 +35,11 @@ script:
   unset PLATFORM
   export OPTIMIZER="${CFLAGS}"
   export DEBUG=-DNDEBUG
-  (cd acl && CONFIG_SHELL=/bin/sh ./configure --prefix=/usr --libdir=/lib --libexecdir=/usr/lib)
+  (cd acl && CONFIG_SHELL=/bin/sh ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib)
   $(MAKE) -C acl
   $(MAKE) -C acl install install-lib install-dev DESTDIR=$(shell pwd)/out/acl
   {{pkmv "usr/include" "acl" "acl-headers"}}
   {{pkmv "usr/share/locale" "acl" "acl-locale"}}
   {{pkmv "usr/share/man" "acl" "acl-man"}}
   {{pkmv "usr/share" "acl" "acl-doc"}}
-  {{pkmv "/lib/libacl.so.1*" "acl" "libacl"}}
+  {{pkmv "usr/lib/libacl.so.1*" "acl" "libacl"}}
