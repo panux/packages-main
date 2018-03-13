@@ -30,6 +30,7 @@ builddependencies:
 - libffi-dev
 - python2
 - zlib-dev
+- curl
 sources:
 - https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
 oneshell: true
@@ -58,7 +59,7 @@ data:
     - DLLVM_INCLUDE_EXAMPLES=OFF
     - DLLVM_LINK_LLVM_DYLIB=ON
     - DLLVM_HOST_TRIPLE=$(ARCH)
-    - DLLVM_DEFAULT_TARGET_TRIPLE=$(ARCH)
+    - DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}}
     - DLLVM_TARGETS_TO_BUILD='X86;ARM;AArch64;PowerPC;SystemZ;AMDGPU;NVPTX;Mips;BPF'
   patches:
     - cmake-fix-libLLVM-name.patch
