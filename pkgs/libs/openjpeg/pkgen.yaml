@@ -19,6 +19,7 @@ builddependencies:
 - doxygen
 - cmake
 - g++
+- gcc-include
 sources:
 - https://github.com/uclouvain/openjpeg/archive/v{{.Version}}.tar.gz
 script:
