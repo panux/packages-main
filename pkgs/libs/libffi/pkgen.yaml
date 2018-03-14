@@ -20,6 +20,6 @@ script:
   mkdir -p out/libffi-doc/usr
   mv out/libffi/usr/share out/libffi-doc/usr
   mkdir -p out/libffi-dev/usr/include out/libffi-dev/usr/lib
-  mv out/libffi/usr/lib/libffi-* out/libffi-dev/usr/lib/libffi-*
-  (cd out/libffi-dev/usr/include && for i in $(ls ../lib/libffi-*/include); do ln -s ../lib/libffi-*/include/$i $i; done)
+  mv out/libffi/usr/lib/libffi-* out/libffi-dev/usr/lib/$$(basename out/libffi/usr/lib/libffi-*)
+  (set -x && cd out/libffi-dev/usr/include && for i in $$(ls ../lib/libffi-*/include); do ln -s ../lib/libffi-*/include/$$i $$i; done)
   mv out/libffi/usr/lib/pkgconfig out/libffi-dev/usr/lib/pkgconfig
