@@ -1,0 +1,32 @@
+packages:
+  ccache:
+    dependencies:
+    - musl
+    - zlib
+  ccache-man:
+    dependencies:
+    - ccache
+version: 3.4.1
+sources:
+- https://www.samba.org/ftp/ccache/ccache-{{.Version}}.tar.xz
+builddependencies:
+- zlib-dev
+data:
+  progs:
+  - cc
+  - gcc
+  - cpp
+  - c++
+  - g++
+script:
+- |
+  {{extract "ccache" "xz"}}
+  {{configure "ccache"}}
+  $(MAKE) -C ccache
+  install -Dm 755 ccache out/ccache/usr/bin/ccache
+  install -Dm 644 ccache.1 out/ccache/usr/share/man/man1/ccache.1
+  mkdir -p out/ccache/usr/lib/ccache/bin {{/* generate ccache links */}}
+  {{- range .Data.progs }}
+  ln -s /usr/bin/ccache out/ccache/usr/lib/ccache/bin/{{.}}
+  ln -s /usr/bin/ccache out/ccache/usr/lib/ccache/bin/$(shell basename /usr/bin/*-{{.}})
+  {{- end}}
