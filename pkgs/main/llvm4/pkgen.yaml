@@ -30,9 +30,14 @@ builddependencies:
 - libffi-dev
 - python2
 - zlib-dev
-- curl
 sources:
 - https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-build-with-musl-libc.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/cmake-fix-libLLVM-name.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/disable-FileSystemTest.CreateDir-perms-assert.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/fix-CheckAtomic.cmake.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/silent-amdgpu-test-failing.patch?h=3.7-stable
 oneshell: true
 data:
   cmake:
@@ -58,8 +63,6 @@ data:
     - DLLVM_ENABLE_ZLIB=ON
     - DLLVM_INCLUDE_EXAMPLES=OFF
     - DLLVM_LINK_LLVM_DYLIB=ON
-    - DLLVM_HOST_TRIPLE=$(ARCH)
-    - DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}}
     - DLLVM_TARGETS_TO_BUILD='X86;ARM;AArch64;PowerPC;SystemZ;AMDGPU;NVPTX;Mips;BPF'
   patches:
     - cmake-fix-libLLVM-name.patch
@@ -117,20 +120,14 @@ data:
     - sanstats
 script:
 - |
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?h=3.7-stable > llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-build-with-musl-libc.patch?h=3.7-stable > llvm-fix-build-with-musl-libc.patch
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/cmake-fix-libLLVM-name.patch?h=3.7-stable > cmake-fix-libLLVM-name.patch
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/disable-FileSystemTest.CreateDir-perms-assert.patch?h=3.7-stable > disable-FileSystemTest.CreateDir-perms-assert.patch
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/fix-CheckAtomic.cmake.patch?h=3.7-stable > fix-CheckAtomic.cmake.patch
-  curl https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/silent-amdgpu-test-failing.patch?h=3.7-stable > silent-amdgpu-test-failing.patch
   tar -xf src/llvm-{{.Version}}.src.tar.xz
   mv llvm-{{.Version}}.src llvm
   {{range .Data.patches}}
-  (cd llvm && patch -p1 -i ../{{.}})
+  (cd llvm && patch -p1 -i ../src/{{.}})
   {{- end}}
   (cd llvm && rm test/tools/llvm-symbolizer/print_context.c)
   mkdir llvm/build
-  (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} ..)
+  (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} -DLLVM_HOST_TRIPLE={{hostarch}} -DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}} ..)
   $(MAKE) -C llvm/build llvm-tblgen
   $(MAKE) -C llvm/build
   $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm4
