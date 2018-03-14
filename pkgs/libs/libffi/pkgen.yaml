@@ -19,8 +19,7 @@ script:
   if [ -d out/libffi/usr/lib64 ]; then mv out/libffi/usr/lib64/* out/libffi/usr/lib; rm -r out/libffi/usr/lib64; fi
   mkdir -p out/libffi-doc/usr
   mv out/libffi/usr/share out/libffi-doc/usr
-  mkdir out/libffi-dev/usr
-  mv out/libffi/usr/lib/libffi-*/include out/libffi-dev/usr/include
-  rm -r out/libffi/usr/lib/libffi-*
-  mkdir out/libffi-dev/usr/lib
+  mkdir -p out/libffi-dev/usr/include out/libffi-dev/usr/lib
+  mv out/libffi/usr/lib/libffi-* out/libffi-dev/usr/lib/libffi-*
+  (cd out/libffi-dev/usr/include && for i in $(ls ../lib/libffi-*/include); do ln -s ../lib/libffi-*/include/$i $i; done)
   mv out/libffi/usr/lib/pkgconfig out/libffi-dev/usr/lib/pkgconfig
