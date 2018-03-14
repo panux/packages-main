@@ -11,6 +11,8 @@ packages:
   freetype-dev:
     dependencies:
     - zlib-dev
+    - libpng-dev
+    - bzip2-dev
     - freetype
     - freetype-headers
   freetype-headers:
