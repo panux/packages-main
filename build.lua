@@ -8,12 +8,32 @@ local pktbl = nil
 ffi.cdef[[
 int setenv(const char *name, const char *value, int overwrite);
 char *strerror(int errnum);
+int execvp(const char*path, const char*const argv[]);
 ]]
 os.setenv = function(name, value)
     local code = ffi.C.setenv(name, value, 1)
     if code == -1 then
         error(ffi.C.strerror(ffi.errno()))
     end
+end
+
+--containerize if necessary
+if os.getenv("NOCONTAINER") ~= "true" then
+    --re-exec
+    arg[0] = "./tools/containerize.sh"
+    --move all elements in arg over
+    local i = #arg
+    while i ~= -1 do
+        arg[i + 1] = arg[i]
+        print(arg[i + 1])
+        i = i - 1
+    end
+    arg[0] = nil
+    i = #arg
+    arg = ffi.new("const char*[?]", #arg+1, arg)
+    arg[i] = nil
+    ffi.C.execvp(arg[0], arg)
+    error(ffi.string(ffi.C.strerror(ffi.errno())))
 end
 
 --set HOSTARCH
