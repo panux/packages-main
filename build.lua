@@ -25,7 +25,6 @@ if os.getenv("NOCONTAINER") ~= "true" then
     local i = #arg
     while i ~= -1 do
         arg[i + 1] = arg[i]
-        print(arg[i + 1])
         i = i - 1
     end
     arg[0] = nil
