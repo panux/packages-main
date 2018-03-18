@@ -15,7 +15,9 @@ RUN wget https://github.com/panux/panux-build-tools/archive/v0.1.tar.gz -O panux
     rm panux-build-tools.tar.gz &&\
     make -C /root/panux-build-tools-* install &&\
     rm -r /root/panux-build-tools-*
+RUN ln -s /bin/busybox /usr/bin/busybox &&\
+    ln -s /usr/bin/luajit /bin/luajit
 VOLUME /var/run/docker.sock
 WORKDIR /root/packages-main
 ENV NOCONTAINER true
-ENTRYPOINT ["/usr/bin/luajit", "/usr/bin/lbuild"]
+ENTRYPOINT ["/usr/bin/lbuild"]
