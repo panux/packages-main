@@ -1,5 +1,5 @@
 FROM alpine:3.7
-RUN apk --no-cache add go git luajit gcc wget make libc-dev docker
+RUN apk --no-cache add go git luajit gcc wget make libc-dev docker g++
 RUN wget https://github.com/panux/lbuild/archive/v0.1.1.tar.gz -O lbuild.tar.gz &&\
     tar -xf lbuild.tar.gz -C /root &&\
     rm lbuild.tar.gz &&\

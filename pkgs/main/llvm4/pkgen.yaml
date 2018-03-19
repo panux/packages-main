@@ -20,7 +20,7 @@ packages:
     - libstdcpp
     - musl
     - zlib
-version: 4.0.0
+version: 4.0.1
 builddependencies:
 - g++
 - binutils-dev
@@ -32,12 +32,12 @@ builddependencies:
 - zlib-dev
 sources:
 - https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch?h=3.7-stable
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-build-with-musl-libc.patch?h=3.7-stable
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/cmake-fix-libLLVM-name.patch?h=3.7-stable
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/disable-FileSystemTest.CreateDir-perms-assert.patch?h=3.7-stable
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/fix-CheckAtomic.cmake.patch?h=3.7-stable
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/silent-amdgpu-test-failing.patch?h=3.7-stable
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-build-with-musl-libc.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/disable-FileSystemTest.CreateDir-perms-assert.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/fix-CheckAtomic.cmake.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/silent-amdgpu-test-failing.patch
+- file://./un64.h
 oneshell: true
 data:
   cmake:
@@ -65,7 +65,6 @@ data:
     - DLLVM_LINK_LLVM_DYLIB=ON
     - DLLVM_TARGETS_TO_BUILD='X86;ARM;AArch64;PowerPC;SystemZ;AMDGPU;NVPTX;Mips;BPF'
   patches:
-    - cmake-fix-libLLVM-name.patch
     - disable-FileSystemTest.CreateDir-perms-assert.patch
     - fix-CheckAtomic.cmake.patch
     - llvm-fix-build-with-musl-libc.patch
@@ -120,14 +119,19 @@ data:
     - sanstats
 script:
 - |
+  set -e
   tar -xf src/llvm-{{.Version}}.src.tar.xz
   mv llvm-{{.Version}}.src llvm
+  sed -i 's/if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)/if defined(REEEEE)/g' /usr/include/stdio.h {{/* patch the patch! */}}
   {{range .Data.patches}}
-  (cd llvm && patch -p1 -i ../src/{{.}})
+  # (cd llvm && patch -p1 -i ../src/{{.}})
   {{- end}}
+  (cd llvm && patch -p1 -i ../src/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
+  # (cd llvm && patch -p1 -i ../src/ll.patch)
   (cd llvm && rm test/tools/llvm-symbolizer/print_context.c)
   mkdir llvm/build
-  (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} -DLLVM_HOST_TRIPLE={{hostarch}} -DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}} ..)
+  (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} -DLLVM_HOST_TRIPLE={{hostarch}}-musl-linux -DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}} ..)
+  # cat src/un64.h >> /usr/include/stdio.h
   $(MAKE) -C llvm/build llvm-tblgen
   $(MAKE) -C llvm/build
   $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm4
