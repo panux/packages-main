@@ -21,9 +21,9 @@ packages:
   expat-dev:
     dependencies:
     - libexpat-dev
-version: 2.2.4
+version: 2.2.5
 sources:
-- https://newcontinuum.dl.sourceforge.net/project/expat/expat/{{.Version}}/expat-{{.Version}}.tar.bz2
+- https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-{{.Version}}.tar.bz2
 builddependencies:
 - gpp
 - libstdcpp
