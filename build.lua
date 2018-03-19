@@ -289,7 +289,7 @@ ruletable:addgenerator(function(name)
             local fromln = "FROM " .. base
             local instln
             if fname == "Dockerfile.bootstrap" then
-                instln = "RUN apk --no-cache add make bash gcc libc-dev binutils"
+                instln = "RUN apk --no-cache add make bash gcc libc-dev binutils ccache"
                 local l
                 for l in io.lines(path:dirname(name) .. "/builddeps.list") do
                     if l ~= "" then
@@ -299,7 +299,7 @@ ruletable:addgenerator(function(name)
             else
                 instln = "ADD rootfs.tar.gz /"
             end
-            local df = fromln .. "\n" .. instln .. "\n"
+            local df = fromln .. "\n" .. instln .. "\n" .. "ENV PATH=\"/usr/lib/ccache/bin:${PATH}\"\nENV CCACHE_DIR=/ccache\n"
             local f = assert(io.open(name, "w"))
             f:write(df)
             f:close()
@@ -419,6 +419,9 @@ ruletable:addgenerator(function(name)
                 local a = os.getenv("HOSTARCH")
                 --resolve deps and convert to dep files
                 local bdli = {"make", "gcc", "musl-dev", "base"}
+		if pkgname ~= "ccache" then
+			table.insert(bdli, "ccache")
+		end
                 local l
                 for l in io.lines(path:dirname(name) .. "/builddeps.list") do
                     if l ~= "" then
