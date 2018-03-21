@@ -5,7 +5,7 @@ Packages for Project Panux
 In order to build packages, all you need is docker and a shell. To try building a package (busybox in this example), run:
 ````sh
 ./build.sh meta/x86_64/busybox.meta
-```
+````
 Once this finishes, there will be a busybox package stored into ````out/x86_64/busybox.tar.gz````.
 
 **NOTE:** If there are not sufficient permissions, ````build.sh```` will re-execute itself with sudo. All permissions will be reset to the invoking user after the build completes. For this reason, it is best to let ````build.sh```` execute sudo by itself.
