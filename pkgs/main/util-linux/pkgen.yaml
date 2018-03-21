@@ -1,7 +1,6 @@
 packages:
   util-linux:
     dependencies:
-    - findmnt
     - libblkid
     - libfdisk
     - libmount
@@ -18,28 +17,8 @@ packages:
     - libsmartcols
     - libuuid
   util-linux-doc:
-  blkid:
-    dependencies:
-    - libblkid
-  cfdisk:
-    dependencies:
-    - libfdisk
-    - libmount
-    - libsmartcols
-    - ncurses-libs
-  sfdisk:
-    dependencies:
-    - libfdisk
-    - libsmartcols
-    - ncurses-libs
-  findmnt:
-    dependencies:
-    - libblkid
-    - libmount
-    - libsmartcols
-  mcookie:
-    dependencies:
-    - findmnt
+  util-linux-man:
+  util-linux-locale:
   libblkid:
     dependencies:
     - libuuid
@@ -52,7 +31,7 @@ packages:
     - libblkid
   libsmartcols:
   libuuid:
-version: 2.30
+version: 2.31
 builddependencies:
 - gcc
 - libc-dev
@@ -60,42 +39,36 @@ builddependencies:
 - ncurses-dev
 - linux-headers
 - zlib-dev
+- readline-dev
 sources:
 - https://www.kernel.org/pub/linux/utils/util-linux/v{{.Version}}/util-linux-{{.Version}}.tar.xz
 data:
-  bins:
-    blkid: blkid
-    cfdisk: cfdisk
-    sfdisk: sfdisk
   libs:
-    libblkid: libblkid.*
-    libfdisk: libfdisk.*
-    libmount: libmount.*
-    libsmartcols: libsmartcols.*
-    libuuid: libuuid.*
+  - libblkid
+  - libfdisk
+  - libmount
+  - libsmartcols
+  - libuuid
 script:
 - |
-  tar -xf src/util-linux-{{.Version}}.tar.xz
-  mv util-linux-{{.Version}} util-linux
-  (cd util-linux && ./configure --prefix=/usr)
+  set -e
+  {{extract "util-linux" "xz"}}
+  {{configure "util-linux" "--disable-kill --disable-login --disable-last --disable-sulogin --disable-su --disable-makeinstall-chown"}}
   $(MAKE) -C util-linux
   $(MAKE) -C util-linux DESTDIR=$(shell pwd)/out/util-linux install
-  mkdir -p out/mcookie/usr/bin
-  mv out/util-linux/usr/bin/mcookie out/mcookie/usr/bin
-  mkdir -p out/util-linux-bash-completion/usr/share
-  mv out/util-linux/usr/share/bash-completion out/util-linux-bash-completion/usr/share
-  mkdir -p out/util-linux-dev/usr/lib
-  mv out/util-linux/usr/include out/util-linux-dev/usr
-  mv out/util-linux/usr/lib/*.a out/util-linux/usr/lib/*.so out/util-linux/usr/lib/pkgconfig out/util-linux-dev/usr/lib
-  mkdir -p out/util-linux-doc/usr
-  mv out/util-linux/usr/share out/util-linux-doc/usr
-  {{- range $i, $v := .Data.bins}}
-  mkdir -p out/{{$i}}/sbin
-  mv out/util-linux/sbin/{{$v}} out/{{$i}}/sbin
+  {{pkmv "/usr/share/locale" "util-linux" "util-linux-locale"}}
+  {{pkmv "/usr/share/bash-completion" "util-linux" "util-linux-bash-completion"}}
+  {{pkmv "/usr/share/doc" "util-linux" "util-linux-doc"}}
+  {{pkmv "/usr/share/man" "util-linux" "util-linux-man"}}
+  {{pkmv "/usr/include" "util-linux" "util-linux-dev"}}
+  {{pkmv "/usr/lib/pkgconfig" "util-linux" "util-linux-dev"}}
+  mv out/util-linux/lib/* out/util-linux/usr/lib
+  rm -r out/util-linux/lib
+  {{- range .Data.libs}}
+  rm out/util-linux/usr/lib/{{.}}.so out/util-linux/usr/lib/{{.}}.so.1
+  ln -s $$(basename out/util-linux/usr/lib/{{.}}.so.*) out/util-linux/usr/lib/{{.}}.so
+  ln -s $$(basename out/util-linux/usr/lib/{{.}}.so.*) out/util-linux/usr/lib/{{.}}.so.1
+  {{pkmv (printf "/usr/lib/%s.*" .) "util-linux" .}}
   {{- end}}
-  mkdir -p out/findmnt/bin
-  mv out/util-linux/bin/findmnt out/findmnt/bin
-  {{- range $i, $v := .Data.libs}}
-  mkdir -p out/{{$i}}/lib
-  mv out/util-linux/lib/{{$v}} out/{{$i}}/lib
-  {{- end}}
+  mv out/util-linux/bin/* out/util-linux/sbin/* out/util-linux/usr/sbin/* out/util-linux/usr/bin
+  rm -r out/util-linux/bin out/util-linux/sbin out/util-linux/usr/sbin
