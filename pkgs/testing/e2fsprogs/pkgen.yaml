@@ -29,8 +29,8 @@ script:
 - |
   set -e
   {{extract "e2fsprogs" "xz"}}
-  {{configure "e2fsprogs" "--enable-elf-shlibs --enable-symlink-install --disable-fsck --disable-uuidd --disable-libuuid --disable-libblkid --disable-tls --disable-nls --enable-shared --disable-static"}}
-  $(MAKE) -C e2fsprogs LDCONFIG=:
+  {{configure "e2fsprogs" "--enable-elf-shlibs --enable-symlink-install --disable-fsck --disable-uuidd --disable-libuuid --disable-libblkid --disable-tls --disable-nls"}}
+  $(MAKE) -C e2fsprogs
   make -j1 -C e2fsprogs DESTDIR=$(shell pwd)/out/e2fsprogs LDCONFIG=: install install-libs
   {{pkmv "usr/include" "e2fsprogs" "e2fsprogs-headers"}}
   {{pkmv "usr/bin/compile_et" "e2fsprogs" "e2fsprogs-dev"}}
