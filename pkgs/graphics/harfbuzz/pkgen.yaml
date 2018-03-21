@@ -15,7 +15,7 @@ packages:
     - harfbuzz
     - libharfbuzz-icu
     - harfbuzz-headers
-    - icu-headers
+    - icu-dev
   libharfbuzz-icu:
     dependencies:
     - harfbuzz
@@ -37,7 +37,7 @@ sources:
 script:
 - |
   {{extract "harfbuzz" "bz2"}}
-  (cd harfbuzz && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --disable-static --with-graphite2)
+  {{configure "harfbuzz" "--disable-static --with-graphite2"}}
   $(MAKE) -C harfbuzz
   $(MAKE) -C harfbuzz DESTDIR=$(shell pwd)/out/harfbuzz install
   {{pkmv "usr/include" "harfbuzz" "harfbuzz-headers"}}
