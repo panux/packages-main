@@ -50,6 +50,7 @@ script:
   {{pkmv "usr/share" "glib" "glib-dev"}}
   {{pkmv "usr/include" "glib" "glib-dev"}}
   {{pkmv "usr/lib/*.so" "glib" "glib-dev"}}
+  rm out/glib/usr/lib/*.la
   {{pkmv "usr/lib/pkgconfig" "glib" "glib-dev"}}
   {{pkmv "usr/lib/glib-2.0" "glib" "glib-dev"}}
   {{pkmv "usr/bin/*" "glib" "glib-dev"}}
