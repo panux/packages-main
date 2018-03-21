@@ -16,11 +16,8 @@ packages:
     dependencies:
     - libcom_err
   e2fsprogs-doc:
-  e2fsprogs-extra:
-    dependencies:
-    - e2fsprogs
   libcom_err:
-version: 1.43.6
+version: 1.43.9
 builddependencies:
 - util-linux-dev
 - linux-headers
@@ -30,16 +27,18 @@ sources:
 oneshell: true
 script:
 - |
+  set -e
   {{extract "e2fsprogs" "xz"}}
-  (cd e2fsprogs && ./configure --mandir=/usr/share/man --sysconfdir=/etc --enable-elf-shlibs --enable-symlink-install --disable-fsck --disable-uuidd --disable-libuuid --disable-libblkid	--disable-tls	--disable-nls)
-  $(MAKE) -C e2fsprogs
-  $(MAKE) -C e2fsprogs DESTDIR=$(shell pwd)/out/e2fsprogs LDCONFIG=: install install-libs
+  {{configure "e2fsprogs" "--enable-elf-shlibs --enable-symlink-install --disable-fsck --disable-uuidd --disable-libuuid --disable-libblkid --disable-tls --disable-nls --enable-shared --disable-static"}}
+  $(MAKE) -C e2fsprogs LDCONFIG=:
+  make -j1 -C e2fsprogs DESTDIR=$(shell pwd)/out/e2fsprogs LDCONFIG=: install install-libs
   {{pkmv "usr/include" "e2fsprogs" "e2fsprogs-headers"}}
   {{pkmv "usr/bin/compile_et" "e2fsprogs" "e2fsprogs-dev"}}
   {{pkmv "usr/bin/mk_cmds" "e2fsprogs" "e2fsprogs-dev"}}
   {{pkmv "usr/share/et" "e2fsprogs" "e2fsprogs-dev"}}
   {{pkmv "usr/share/ss" "e2fsprogs" "e2fsprogs-dev"}}
   {{pkmv "usr/lib/libcom_err*" "e2fsprogs" "libcom_err"}}
-  {{pkmv "lib" "e2fsprogs" "e2fsprogs-libs"}}
+  {{pkmv "usr/lib" "e2fsprogs" "e2fsprogs-libs"}}
   {{pkmv "usr/share/man" "e2fsprogs" "e2fsprogs-doc"}}
-  {{pkmv "usr/*bin" "e2fsprogs" "e2fsprogs-extra"}}
+  mv out/e2fsprogs/usr/sbin/* out/e2fsprogs/usr/bin
+  rm -r out/e2fsprogs/usr/sbin
