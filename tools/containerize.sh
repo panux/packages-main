@@ -16,7 +16,7 @@ if [ ! -w "$DOCKERSOCK" ]; then
 		SUDO=sudo
 	fi
 	echo Insufficient permissions on docker socket "($DOCKERSOCK)" > /dev/stderr
-	$SUDO "$0" "$@"
+	exec $SUDO PARUSER=$(whoami) "$0" "$@"
 	exit 1
 fi
 
@@ -28,4 +28,9 @@ else
 fi
 
 docker build $DOCKERFLAGS tools -t panux/packages-main > /dev/null
-exec docker run --rm -it -e PMP="$(pwd)" -v "$(pwd)":/root/packages-main -v /var/run/docker.sock:/var/run/docker.sock panux/packages-main "$@"
+docker run --rm -it -e PMP="$(pwd)" -v "$(pwd)":/root/packages-main -v /var/run/docker.sock:/var/run/docker.sock panux/packages-main "$@"
+
+if [ ! -z "$PARUSER" ]; then
+	echo "Fixing permissions. . ."
+	chown -R $PARUSER .
+fi
