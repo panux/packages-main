@@ -2,11 +2,14 @@ packages:
   pcre:
     dependencies:
     - musl
-    - ncurses
+    - zlib
+    - bzip2
+    - readline
   pcre-dev:
-    depedencies:
+    dependencies:
     - pcre
     - pcre-headers
+    - pkgconfig
   pcre-doc:
     dependencies:
     - pcre-man
