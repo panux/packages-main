@@ -5,6 +5,7 @@ packages:
   zlib-dev:
     dependencies:
     - zlib
+    - pkgconfig
   zlib-man:
     dependencies:
     - zlib
@@ -18,7 +19,7 @@ sources:
 script:
 - |
   {{extract "zlib" "gz"}}
-  (cd zlib && CC=/usr/bin/{{confarch}}-*-linux-musl-gcc ./configure --prefix=/usr)
+  (cd zlib && CC="ccache gcc" ./configure --prefix=/usr)
   $(MAKE) -C zlib
   $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
   mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
@@ -26,4 +27,4 @@ script:
   mv out/zlib/usr/lib/libz.a out/zlib-dev/usr/lib/libz.a
   mkdir out/zlib-man/usr
   mv out/zlib/usr/share out/zlib-man/usr/share
-  rm -r out/zlib/usr/lib/pkgconfig
+  {{pkmv "/usr/lib/pkgconfig" "zlib" "zlib-dev"}}
