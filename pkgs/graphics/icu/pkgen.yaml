@@ -14,6 +14,7 @@ packages:
     dependencies:
     - icu
     - g++
+    - icu-headers
 builddependencies:
 - g++
 version: 60.2
