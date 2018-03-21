@@ -17,6 +17,6 @@ sources:
 script:
 - |
   {{extract "libdrm" "bz2"}}
-  {{configure "--enable-udev --disable-valgrind"}}
+  {{configure "libdrm" "--enable-udev --disable-valgrind"}}
   $(MAKE) -C libdrm
   $(MAKE) -C libdrm DESTDIR=$(shell pwd)/out/libdrm install
