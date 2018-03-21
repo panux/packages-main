@@ -18,6 +18,7 @@ builddependencies:
 sources:
 - https://dev.gentoo.org/~blueness/eudev/eudev-{{.Version}}.tar.gz
 - file://./eudev.sh
+- file://./oninstall.sh
 script:
 - tar -xf src/eudev-{{.Version}}.tar.gz
 - mv eudev-{{.Version}} eudev
@@ -27,8 +28,7 @@ script:
 - mkdir out/eudev/usr/bin
 - mv out/eudev/sbin/udevd out/eudev/bin/udevadm out/eudev/usr/bin
 - rm -r out/eudev/sbin out/eudev/bin
-- echo '#!/bin/sh' > out/eudev/.oninstall
-- echo 'for g in tty dialout kmem input video audio lp disk cdrom tape; do addgroup -S $$g; done' >> out/eudev/.oninstall
+- cp src/oninstall.sh out/eudev/.oninstall
 - chmod 700 out/eudev/.oninstall
 - mkdir -p out/eudev-dev/usr/lib
 - mv out/eudev/usr/include out/eudev-dev/usr
