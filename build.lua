@@ -625,3 +625,21 @@ ruletable:addgenerator(function(name)
     end
     return r
 end)
+
+--add rule for all
+local allrule = {name = "all"}
+function allrule:deps()
+    genltbl()
+    local d = {}
+    local v
+    for v in pairs(ltbl) do
+        table.insert(d, string.format("meta/%s/%s.meta", os.getenv("HOSTARCH"), v))
+    end
+    return d
+end
+function allrule:run()
+    return promise(function(s, f)
+        s()
+    end)
+end
+add(allrule)
