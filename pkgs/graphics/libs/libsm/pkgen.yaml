@@ -10,22 +10,25 @@ packages:
     - libsm
     - libsm-doc
     - xproto
+    - pkgconfig
   libsm-doc:
 version: 1.2.2
 builddependencies:
 - xproto
 - xtrans
 - libice-dev
+- util-linux-dev
 - e2fsprogs-dev
+- util-macros
 sources:
 - https://www.x.org/releases/individual/lib/libSM-{{.Version}}.tar.bz2
 script:
 - |
   {{extract "libSM" "bz2"}}
-  (cd libSM && ./configure --build={{confarch}}-pc-linux-gnu --prefix=/usr --sysconfdir=/etc)
+  {{configure "libSM" "--without-fop"}}
   $(MAKE) -C libSM
   $(MAKE) -C libSM DESTDIR=$(shell pwd)/out/libsm install
   mkdir -p out/libsm-dev/usr/lib
   mv out/libsm/usr/include out/libsm-dev/usr
-  mv out/libsm/usr/lib/*.a out/libsm/usr/lib/*.so out/libsm/usr/lib/pkgconfig out/libsm-dev/usr/lib
+  mv out/libsm/usr/lib/*.a out/libsm/usr/lib/pkgconfig out/libsm-dev/usr/lib
   mkdir -p out/libsm/usr/share out/libsm-doc/usr
