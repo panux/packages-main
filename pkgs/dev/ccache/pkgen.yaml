@@ -20,13 +20,14 @@ data:
   - g++
 script:
 - |
+  set -e
   {{extract "ccache" "xz"}}
   {{configure "ccache"}}
   $(MAKE) -C ccache
-  install -Dm 755 ccache out/ccache/usr/bin/ccache
-  install -Dm 644 ccache.1 out/ccache/usr/share/man/man1/ccache.1
+  install -Dm 755 ccache/ccache out/ccache/usr/bin/ccache
+  install -Dm 644 ccache/ccache.1 out/ccache/usr/share/man/man1/ccache.1
   mkdir -p out/ccache/usr/lib/ccache/bin {{/* generate ccache links */}}
   {{- range .Data.progs }}
   ln -s /usr/bin/ccache out/ccache/usr/lib/ccache/bin/{{.}}
-  ln -s /usr/bin/ccache out/ccache/usr/lib/ccache/bin/$(shell basename /usr/bin/*-{{.}})
+  if [ -e /usr/bin/{{confarch}}-pc-linux-musl-{{.}} ]; then ln -s /usr/bin/ccache out/ccache/usr/lib/ccache/bin/{{confarch}}-pc-linux-musl-{{.}}; fi
   {{- end}}
