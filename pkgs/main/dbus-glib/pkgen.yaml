@@ -4,12 +4,14 @@ packages:
     - libdbus
     - expat
     - glib
+    - libffi
   dbus-glib-dev:
     dependencies:
     - dbus-dev
     - dbus-glib
     - dbus-glib-headers
     - glib-dev
+    - libffi-dev
     - pkgconf
   dbus-glib-headers:
   dbus-glib-doc:
@@ -22,12 +24,13 @@ builddependencies:
 - glib-dev
 - gettext-dev
 - expat-dev
+- libffi-dev
 sources:
 - https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-{{.Version}}.tar.gz
 script:
 - |
   {{extract "dbus-glib" "gz"}}
-  (cd dbus-glib && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-static=no --enable-bash-completion=no)
+  {{configure "dbus-glib" "--disable-bash-completion --disable-static --enable-shared --disable-checks"}}
   $(MAKE) -C dbus-glib
   $(MAKE) -C dbus-glib DESTDIR=$(shell pwd)/out/dbus-glib install
   {{pkmv "usr/include" "dbus-glib" "dbus-glib-headers"}}
