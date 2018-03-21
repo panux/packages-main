@@ -35,6 +35,7 @@ builddependencies:
 - expat-dev
 - libxml2-dev
 - bash
+- g++
 sources:
 - https://wayland.freedesktop.org/releases/wayland-{{.Version}}.tar.xz
 data:
