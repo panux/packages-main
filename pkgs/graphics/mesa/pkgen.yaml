@@ -35,11 +35,11 @@ packages:
   radeon-dri:
     dependencies:
     - mesa-core
-    - libllvm4
+    - libllvm
   swrast-dri:
     dependencies:
     - mesa-core
-    - libllvm4
+    - libllvm
   virtio-gpu-dri:
     dependencies:
     - mesa-core
@@ -86,7 +86,7 @@ packages:
     - libstdcpp
     - libdrm
     - libexpat
-    - libllvm4
+    - libllvm
     - libelf
     - zlib
   mesa-gl:
@@ -102,7 +102,7 @@ packages:
     - libxxf86vm
     - libglapi
     - musl
-    - libllvm4
+    - libllvm
     - libgl
   mesa-dev:
    dependencies:
@@ -129,8 +129,12 @@ packages:
    - presentproto
    - wayland-dev
    - mesa-headers
+   - wayland-protocols
+   - libvdpau-dev
+   - llvm-dev
 version: 17.3.6
 builddependencies:
+- libvdpau-dev
 - libxdamage-dev
 - libxxf86vm-dev
 - libxfixes-dev
@@ -146,7 +150,7 @@ builddependencies:
 - talloc-dev
 - flex
 - bison
-- llvm4-dev
+- llvm-dev
 - eudev-dev
 - libvdpau-dev
 - libxvmc-dev
@@ -162,6 +166,9 @@ builddependencies:
 - dri2proto
 - libdrm-dev
 - g++
+- wayland-protocols
+- python
+- gcc-include
 sources:
 - https://mesa.freedesktop.org/archive/mesa-{{.Version}}.tar.xz
 - https://git.alpinelinux.org/cgit/aports/plain/main/mesa/drmdeps.patch
@@ -196,15 +203,16 @@ script:
   {{extract "mesa" "xz"}}
   (cd mesa && patch -p1 -i ../src/drmdeps.patch)
   (cd mesa && ./autogen.sh)
-  {{configure "mesa" "--prefix=/usr --sysconfdir=/etc --with-dri-driverdir=/usr/lib/xorg/modules/dri --with-dri-drivers=radeon,nouveau,swrast,i915,i965 --with-gallium-drivers=nouveau,virgl,swrast,svga --with-vulcan-drivers=radeon,intel --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --with-llvm-prefix=/usr/lib/llvm4 --enable-llvm-shared-libs --with-egl-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau --enable-dri3 --enable-gallium-nouveau"}}
+  find /usr -name '*.la' -delete
+  {{configure "mesa" "--prefix=/usr --sysconfdir=/etc --with-dri-driverdir=/usr/lib/xorg/modules/dri --with-dri-drivers=radeon,nouveau,swrast,i915,i965 --with-gallium-drivers=nouveau,virgl,swrast,svga --with-vulcan-drivers=radeon,intel --enable-llvm --disable-asm --disable-xvmc --enable-glx-rts --enable-llvm-shared-libs --with-platforms=x11,drm,wayland --enable-shared-glapi --enable-gbm --disable-glx-tls --disable-nine --enable-dri --enable-glx --enable-osmesa --enable-gles1 --enable-gles2 --enable-egl --enable-texture-float --enable-xa --enable-vdpau --enable-dri3 --enable-gallium-nouveau"}}
   $(MAKE) -C mesa
   $(MAKE) -C mesa DESTDIR=$(shell pwd)/out/mesa install
+  {{pkmv "/usr/lib/pkgconfig" "mesa" "mesa-dev"}}
   {{- range $i, $v := .Data.headers}}
   mkdir -p out/{{$i}}/usr/include
   mv out/mesa/usr/include/{{$v}} out/{{$i}}/usr/include
   {{- end}}
   rm -r out/mesa/usr/include
-  rm -r out/mesa/usr/lib/pkgconfig
   {{- range $i, $v := .Data.dri}}
   mkdir -p out/{{$i}}/usr/lib/xorg/modules/dri
   mv out/mesa/usr/lib/xorg/modules/dri/{{$v}} out/{{$i}}/usr/lib/xorg/modules/dri
