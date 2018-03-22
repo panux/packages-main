@@ -1,0 +1,13 @@
+packages:
+  wayland-protocols:
+version: 1.13
+sources:
+- https://wayland.freedesktop.org/releases/wayland-protocols-{{.Version}}.tar.xz
+builddependencies:
+- wayland-dev
+script:
+- |
+  {{extract "wayland-protocols" "xz"}}
+  {{configure "wayland-protocols"}}
+  $(MAKE) -C wayland-protocols
+  $(MAKE) -C wayland-protocols install DESTDIR=$(shell pwd)/out/wayland-protocols
