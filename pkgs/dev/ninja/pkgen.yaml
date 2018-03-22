@@ -1,0 +1,16 @@
+packages:
+  ninja:
+    dependencies:
+    - libstdcpp
+version: 1.8.2
+sources:
+- https://github.com/ninja-build/ninja/archive/v{{.Version}}.tar.gz
+builddependencies:
+- python3
+- g++
+script:
+- |
+  mv src/v{{.Version}}.tar.gz src/ninja-{{.Version}}.tar.gz
+  {{extract "ninja" "gz"}}
+  (cd ninja && python3 ./configure.py --bootstrap)
+  install -m755 -D ninja/ninja out/ninja/usr/bin/ninja
