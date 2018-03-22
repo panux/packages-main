@@ -37,4 +37,5 @@ script:
   {{pkmv "usr/include" "gdk-pixbuf" "gdk-pixbuf-headers"}}
   {{pkmv "usr/share/man" "gdk-pixbuf" "gdk-pixbuf-man"}}
   {{pkmv "usr/share/locale" "gdk-pixbuf" "gdk-pixbuf-locale"}}
+  {{pkmv "usr/share/gir*" "gdk-pixbuf" "gdk-pixbuf-dev"}}
   {{pkmv "usr/share" "gdk-pixbuf" "gdk-pixbuf-doc"}}
