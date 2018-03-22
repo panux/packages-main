@@ -1,0 +1,26 @@
+packages:
+  graphene:
+  graphene-headers:
+  graphene-tests:
+  graphene-dev:
+    dependencies:
+    - graphene
+    - graphene-headers
+    - graphene-tests
+version: 1.8.0
+sources:
+- https://github.com/ebassi/graphene/releases/download/1.8.0/graphene-{{.Version}}.tar.xz
+builddependencies:
+- meson
+- g++
+- gobject-introspection-dev
+script:
+- |
+  {{extract "graphene" "xz"}}
+  (cd graphene && meson _build --prefix=/usr --libdir=/usr/lib --includedir=/usr/include)
+  ninja -l 6 -C graphene/_build test
+  DESTDIR=$(shell pwd)/out/graphene ninja -l 6 -C graphene/_build install
+  {{pkmv "/usr/include" "graphene" "graphene-headers"}}
+  {{pkmv "/usr/lib/pkgconfig" "graphene" "graphene-dev"}}
+  {{pkmv "/usr/share/installed-tests" "graphene" "graphene-tests"}}
+  {{pkmv "/usr/libexec/installed-tests" "graphene" "graphene-tests"}}
