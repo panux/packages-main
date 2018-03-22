@@ -26,6 +26,7 @@ packages:
     - musl
     - pango
     - shared-mime-info
+    - graphene
   gtk3-dev:
     dependencies:
     - at-spi2-atk-dev
@@ -47,10 +48,9 @@ packages:
     - libxinerama-dev
     - libxrandr-dev
     - pango-dev
-    - gtk3-pkginfo
-  gtk3-pkginfo:
-    dependencies:
-    - pkgconf
+    - graphene-dev
+    - pkgconfig
+    - gtk3-headers
   gtk3-headers:
   gtk3-doc:
     dependencies:
@@ -60,7 +60,7 @@ packages:
     dependencies:
     - shared-mime-info
     - gtk-update-icon-cache
-version: 3.22.26
+version: 3.91.2
 builddependencies:
 - at-spi2-atk-dev
 - atk-dev
@@ -83,29 +83,27 @@ builddependencies:
 - cups-dev
 - expat-dev
 - gettext-dev
-- gnutls-dev
 - gobject-introspection-dev
 - libice-dev
 - tiff-dev
 - zlib-dev
+- graphene-dev
 sources:
-- https://download.gnome.org/sources/gtk+/3.22/gtk+-{{.Version}}.tar.xz
-builder: alpine
+- https://gensho.ftp.acc.umu.se/pub/gnome/sources/gtk+/3.91/gtk+-{{.Version}}.tar.xz
 script:
 - |
+  set -e
   {{extract "gtk+" "xz"}}
-  (cd gtk+ && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --localstatedir=/var --enable-xkb --enable-xinerama	--enable-xrandr	--enable-xfixes	--enable-xcomposite	--enable-xdamage --enable-x11-backend)
+  {{configure "gtk+" "--enable-xkb --enable-xinerama	--enable-xrandr	--enable-xfixes	--enable-xcomposite	--enable-xdamage --enable-x11-backend --disable-glibtest"}}
   (cd gtk+ && sed -i 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool)
   $(MAKE) -C gtk+
   $(MAKE) -C gtk+ DESTDIR=$(shell pwd)/out/gtk3 install
-  {{pkmv "usr/include" "gtk3" "gtk3-headers"}}
-  {{pkmv "usr/lib/gtk-2.0/include" "gtk3" "gtk3-headers"}}
-  {{pkmv "usr/share/gtk-doc" "gtk3" "gtk3-doc"}}
-  {{pkmv "usr/share/man" "gtk3" "gtk3-man"}}
-  {{pkmv "usr/lib/pkginfo" "gtk3" "gtk3-pkginfo"}}
-  {{pkmv "usr/share/locale" "gtk3" "gtk3-locale"}}
-  {{pkmv "usr/share/gettext" "gtk3" "gtk3-dev"}}
-  {{pkmv "usr/share/aclocal" "gtk3" "gtk3-dev"}}
-  {{pkmv "usr/share/gir-1.0" "gtk3" "gtk3-dev"}}
   rm -f out/gtk3/usr/bin/gtk-update-icon-cache
   rm -f out/gtk3-man/usr/share/man/man1/gtk-update-icon-cache.1
+  {{pkmv "usr/include" "gtk3" "gtk3-headers"}}
+  {{pkmv "usr/share/gtk-doc" "gtk3" "gtk3-doc"}}
+  {{pkmv "usr/share/man" "gtk3" "gtk3-man"}}
+  {{pkmv "usr/lib/pkgconfig" "gtk3" "gtk3-dev"}}
+  {{pkmv "usr/share/locale" "gtk3" "gtk3-locale"}}
+  {{pkmv "usr/share/gettext" "gtk3" "gtk3-dev"}}
+  {{pkmv "usr/share/gir-1.0" "gtk3" "gtk3-dev"}}
