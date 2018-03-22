@@ -1,0 +1,17 @@
+packages:
+  meson:
+    dependencies:
+    - ninja
+    - python3
+  meson-man:
+version: 0.45.1
+sources:
+- https://github.com/mesonbuild/meson/releases/download/{{.Version}}/meson-{{.Version}}.tar.gz
+builddependencies:
+- python3-dev
+script:
+- |
+  {{extract "meson" "gz"}}
+  (cd meson && python3 setup.py build)
+  (cd meson && python3 setup.py install --prefix=/usr --root=$(shell pwd)/out/meson)
+  {{mvman "meson"}}
