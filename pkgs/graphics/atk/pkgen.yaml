@@ -8,6 +8,7 @@ packages:
     - atk
     - atk-headers
     - glib-dev
+    - gobject-introspection-dev
   atk-headers:
   atk-doc:
   atk-locale:
@@ -25,4 +26,5 @@ script:
   $(MAKE) -C atk DESTDIR=$(shell pwd)/out/atk install
   {{pkmv "usr/include" "atk" "atk-headers"}}
   {{pkmv "usr/share/locale" "atk" "atk-locale"}}
+  {{pkmv "usr/share/gir*" "atk" "atk-dev"}}
   {{pkmv "usr/share" "atk" "atk-doc"}}
