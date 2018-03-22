@@ -14,4 +14,4 @@ script:
   {{extract "gawk" "xz"}}
   {{configure "gawk" "--sysconfdir=/etc --disable-nls --infodir=/usr/share/info"}}
   $(MAKE) -C gawk
-  $(MAKE) -C gawk install
+  $(MAKE) -C gawk install DESTDIR=$(shell pwd)/out/gawk
