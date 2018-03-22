@@ -1,26 +1,26 @@
 packages:
-  llvm4:
+  llvm:
     dependencies:
       - libgcc
       - libstdcpp
       - musl
-      - libllvm4
-  llvm4-dev:
+      - libllvm
+  llvm-dev:
     dependencies:
     - libstdcpp
-    - llvm4
-    - llvm4-headers
-    - libllvm4
+    - llvm
+    - llvm-headers
+    - libllvm
     - musl
-  llvm4-headers:
-  libllvm4:
+  llvm-headers:
+  libllvm:
     dependencies:
     - libffi
     - libgcc
     - libstdcpp
     - musl
     - zlib
-version: 4.0.1
+version: 5.0.1
 builddependencies:
 - g++
 - binutils-dev
@@ -32,13 +32,13 @@ builddependencies:
 - zlib-dev
 sources:
 - https://llvm.org/releases/{{.Version}}/llvm-{{.Version}}.src.tar.xz
-- https://git.alpinelinux.org/cgit/aports/plain/community/llvm4/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
+- https://git.alpinelinux.org/cgit/aports/plain/community/llvm/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch
 oneshell: true
 data:
   cmake:
     - Wno-dev
     - DCMAKE_BUILD_TYPE=Release
-    - DCMAKE_INSTALL_PREFIX=/usr/lib/llvm4
+    - DCMAKE_INSTALL_PREFIX=/usr/lib/llvm
     - DCMAKE_VERBOSE_MAKEFILE=NO
     - DLLVM_BINUTILS_INCDIR=/usr/include
     - DLLVM_BUILD_DOCS=OFF
@@ -112,32 +112,31 @@ script:
   set -e
   tar -xf src/llvm-{{.Version}}.src.tar.xz
   mv llvm-{{.Version}}.src llvm
-  sed -i 's/if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)/if defined(REEEEE)/g' /usr/include/stdio.h /usr/include/sys/stat.h
-  (cd llvm && patch -p1 -i ../src/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
+  # sed -i 's/if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)/if defined(REEEEE)/g' /usr/include/stdio.h /usr/include/sys/stat.h
+  # (cd llvm && patch -p1 -i ../src/llvm-fix-DynamicLibrary-to-build-with-musl-libc.patch)
   (cd llvm && rm test/tools/llvm-symbolizer/print_context.c)
   mkdir llvm/build
   (cd llvm/build && cmake -G "Unix Makefiles" {{range .Data.cmake}} -{{.}}{{end}} -DLLVM_HOST_TRIPLE={{hostarch}}-musl-linux -DLLVM_DEFAULT_TARGET_TRIPLE={{hostarch}} ..)
   $(MAKE) -C llvm/build llvm-tblgen
   $(MAKE) -C llvm/build
-  $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm4
-  mkdir -p out/llvm4-headers/usr/include/llvm4
-  mv out/llvm4/usr/lib/llvm4/include/* out/llvm4-headers/usr/include/llvm4
-  rmdir out/llvm4/usr/lib/llvm4/include
-  mkdir -p out/llvm4-headers/usr/lib/llvm4
-  ln -s /usr/include/llvm4 out/llvm4-headers/usr/lib/llvm4/include
-  mkdir -p out/llvm4-dev/usr/lib/cmake/llvm4
-  mv out/llvm4/usr/lib/llvm4/lib/cmake/llvm/* out/llvm4-dev/usr/lib/cmake/llvm4
-  rmdir out/llvm4/usr/lib/llvm4/lib/cmake/llvm
-  mkdir -p out/llvm4-dev/usr/lib/llvm4/lib/cmake
-  ln -s /usr/lib/cmake/llvm4 out/llvm4-dev/usr/lib/llvm4/lib/cmake/llvm
-  {{pkmv "usr/lib/llvm4/lib/*.a" "llvm4" "llvm4-static"}}
-  mkdir -p out/libllvm4/usr/lib
-  mv out/llvm4/usr/lib/llvm4/lib/libLLVM*.so out/libllvm4/usr/lib
-  mkdir -p out/libllvm4/usr/lib/llvm4/lib
-  ln -s /usr/lib/libLLVM-4.0.0.so out/libllvm4/usr/lib/llvm4/lib/libLLVM-4.0.0.so
-  ln -s /usr/lib/libLLVM-4.0.so out/libllvm4/usr/lib/llvm4/lib/libLLVM-4.0.so
-  mkdir -p out/llvm4/usr/bin
-  mv out/llvm4/usr/lib/llvm4/bin/* out/llvm4/usr/bin
+  $(MAKE) -C llvm/build install DESTDIR=$(shell pwd)/out/llvm
+  mkdir -p out/llvm-headers/usr/include
+  mv out/llvm/usr/lib/llvm/include/* out/llvm-headers/usr/include
+  rmdir out/llvm/usr/lib/llvm/include
+  mkdir -p out/llvm-headers/usr/lib/llvm
+  mkdir -p out/llvm-dev/usr/lib/cmake/llvm
+  mv out/llvm/usr/lib/llvm/lib/cmake/llvm/* out/llvm-dev/usr/lib/cmake/llvm
+  rmdir out/llvm/usr/lib/llvm/lib/cmake/llvm
+  mkdir -p out/llvm-dev/usr/lib/llvm/lib/cmake
+  ln -s /usr/lib/cmake/llvm out/llvm-dev/usr/lib/llvm/lib/cmake/llvm
+  {{pkmv "usr/lib/llvm/lib/*.a" "llvm" "llvm-static"}}
+  mkdir -p out/libllvm/usr/lib
+  mv out/llvm/usr/lib/llvm/lib/libLLVM*.so out/libllvm/usr/lib
+  mkdir -p out/libllvm/usr/lib/llvm/lib
+  ln -s /usr/lib/libLLVM-5.0.1.so out/libllvm/usr/lib/llvm/lib/libLLVM-5.0.1.so
+  ln -s /usr/lib/libLLVM-5.0.so out/libllvm/usr/lib/llvm/lib/libLLVM-5.0.so
+  mkdir -p out/llvm/usr/bin
+  mv out/llvm/usr/lib/llvm/bin/* out/llvm/usr/bin
   {{range .Data.bins}}
-  ln -s /usr/bin/{{.}} out/llvm4/usr/lib/llvm4/bin
+  ln -s /usr/bin/{{.}} out/llvm/usr/lib/llvm/bin
   {{end -}}
