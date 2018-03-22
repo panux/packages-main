@@ -67,7 +67,6 @@ builddependencies:
 - glib-dev
 - gnutls-dev
 - gobject-introspection-dev
-- gtk-doc
 - hicolor-icon-theme
 - libice-dev
 - libx11-dev
