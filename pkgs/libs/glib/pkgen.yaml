@@ -22,7 +22,7 @@ packages:
     - python
     - util-linux-dev
     - zlib-dev
-version: 2.54.0
+version: 2.56.0
 builddependencies:
 - perl
 - python2
@@ -32,11 +32,16 @@ builddependencies:
 - libffi-dev
 - util-linux-dev
 - pcre-dev
+- autoconf
+- automake
+- libtool
 sources:
-- https://gemmei.ftp.acc.umu.se/pub/gnome/sources/glib/2.54/glib-{{.Version}}.tar.xz
+- https://github.com/GNOME/glib/archive/{{.Version}}.tar.gz
 script:
 - |
-  {{extract "glib" "xz"}}
+  mv src/{{.Version}}.tar.gz src/glib-{{.Version}}.tar.gz
+  {{extract "glib" "gz"}}
+  (cd glib && ./autogen.sh)
   {{configure "glib"}}
   $(MAKE) -C glib
   $(MAKE) -C glib DESTDIR=$(shell pwd)/out/glib install
