@@ -57,18 +57,20 @@ builddependencies:
 - libjpeg-turbo-dev
 - avahi-dev
 - linux-headers
-- cups-client
 - poppler-utils
 - libressl
 - dbus
 - g++
+- ca-certificates
 sources:
 - https://github.com/apple/cups/archive/v{{.Version}}.tar.gz
 script:
 - |
+  set -e
   tar -xf src/v{{.Version}}.tar.gz
   mv cups-{{.Version}} cups
-  (cd cups && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-libpaper --enable-ssl=yes --enable-gnutl)
+  sed -i 's/specified"/";exit 0/g' cups/install-sh
+  {{configure "cups" "--enable-libpaper --enable-ssl=yes"}}
   $(MAKE) -C cups
   $(MAKE) -C cups BUILDROOT=$(shell pwd)/out/cups install
   {{pkmv "usr/share/cups/ipptool" "cups" "ipptool"}}
