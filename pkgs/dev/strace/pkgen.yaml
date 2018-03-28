@@ -3,13 +3,14 @@ packages:
     dependencies:
     - libc
   strace-doc:
-version: 4.18
+version: 4.21
 builddependencies:
 - linux-headers
 - autoconf
 - automake
+- gawk
 sources:
-- https://sourceforge.net/projects/strace/files/strace/{{.Version}}/strace-{{.Version}}.tar.xz
+- https://github.com/strace/strace/releases/download/v4.21/strace-{{.Version}}.tar.xz
 builder: panux
 script:
 - |
