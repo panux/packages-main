@@ -120,7 +120,7 @@ builddependencies:
 - freetds-dev
 - gawk
 - gperf
-- gtk+2.0-dev
+- gtk2-dev
 - hicolor-icon-theme
 - icu-dev
 - libinput-dev
