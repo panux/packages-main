@@ -46,7 +46,7 @@ sources:
 - https://git.alpinelinux.org/cgit/aports/plain/main/vte/fix-includes.patch
 builddependencies:
 - pango-dev
-- gtk+2.0-dev
+- gtk2-dev
 - intltool
 - ncurses-dev
 - python2-dev
