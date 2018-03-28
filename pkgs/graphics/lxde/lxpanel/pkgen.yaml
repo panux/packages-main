@@ -32,7 +32,7 @@ builddependencies:
 - automake
 - intltool
 - alsa-lib-dev
-- gtk+2.0-dev
+- gtk2-dev
 - menu-cache-dev
 - libwnck-dev
 - libfm-dev
