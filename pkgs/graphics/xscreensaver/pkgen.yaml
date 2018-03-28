@@ -43,7 +43,7 @@ packages:
 version: 5.38
 builddependencies:
 - bc
-- gtk+2.0-dev
+- gtk2-dev
 - libjpeg-turbo-dev
 - mesa-dev
 - gettext-dev
