@@ -14,7 +14,6 @@ builddependencies:
 - linux-headers
 - eudev-dev
 - util-linux-dev
-- coreutils
 script:
 - tar -xf src/LVM2.{{.Version}}.tgz
 - mv LVM2.{{.Version}} lvm
