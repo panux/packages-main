@@ -30,7 +30,7 @@ builddependencies:
 - libxres-dev
 - intltool
 - glib-dev
-- gtk+2.0-dev
+- gtk2-dev
 - libx11-dev
 - pango-dev
 - cairo-dev
