@@ -15,7 +15,7 @@ packages:
   libunique-doc:
 version: 1.1.6
 builddependencies:
-- gtk+2.0-dev
+- gtk2-dev
 - dbus-glib-dev
 sources:
 - https://download.gnome.org/sources/libunique/1.1/libunique-{{.Version}}.tar.bz2
