@@ -27,7 +27,7 @@ packages:
 version: 2.40.19
 builddependencies:
 - glib-dev
-- gtk+2.0-dev
+- gtk2-dev
 - cairo-dev
 - libcroco-dev
 - libgsf-dev
