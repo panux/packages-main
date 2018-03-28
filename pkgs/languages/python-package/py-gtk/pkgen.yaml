@@ -1,0 +1,21 @@
+packages:
+  py-gtk:
+version: 2.24.0
+sources:
+- https://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz
+- https://git.alpinelinux.org/cgit/aports/plain/main/py-gtk/automake.patch
+- https://git.alpinelinux.org/cgit/aports/plain/main/py-gtk/pygtk-2.14.1-libdir-pc.patch
+builddependencies:
+- python2-dev
+- glib-dev
+script:
+- |
+  {{extract "pygtk" "gz"}}
+  # tar -xf src/PYGTK_2_14_1.tar.gz
+  # mv pygtk-PYGTK_2_14_1 pygtk
+  # cp /usr/share/aclocal-1.15/* /usr/share/aclocal/
+  # (cd pygtk && for i in ../src/*.patch; do patch -p0 -i $$i; done)
+  # (cd pygtk && autoreconf -vif)
+  (cd pygtk && ./configure --build={{confarch}} --host={{confarch}} --prefix=/usr)
+  $(MAKE) -C pygtk
+  $(MAKE) -C pygtk install DESTDIR=$(shell pwd)/out/py-gtk
