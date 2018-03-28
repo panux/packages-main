@@ -18,11 +18,9 @@ builddependencies:
 - mtdev-dev
 - eudev-dev
 - libevdev-dev
-- grep
 - doxygen
 - cairo-dev
-- gtk+3.0-dev
-- check-dev
+- gtk3-dev
 - g++
 - ninja
 sources:
