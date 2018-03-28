@@ -24,7 +24,7 @@ packages:
   libfm-man:
 version: 1.2.5
 builddependencies:
-- gtk+2.0-dev
+- gtk2-dev
 - menu-cache-dev
 - udisks-dev
 - intltool
