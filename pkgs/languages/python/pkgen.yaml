@@ -19,6 +19,7 @@ packages:
   python-dev:
     dependencies:
     - python
+    - pkgconfig
   python2:
     dependencies:
     - python
@@ -33,7 +34,6 @@ builddependencies:
 - libc-dev
 - zlib-dev
 - linux-headers
-- python-dev
 - libffi-dev
 - expat-dev
 - gdbm-dev
@@ -49,7 +49,6 @@ sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
 - https://pastebin.com/raw/my0mZJ3f
 oneshell: true
-builder: bootstrap
 script:
 - |
   tar -xf src/Python-{{.Version}}.tar.xz
