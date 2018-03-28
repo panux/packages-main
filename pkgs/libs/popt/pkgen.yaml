@@ -18,11 +18,10 @@ packages:
 version: 1.16
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/popt/popt-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "popt" "gz"}}
-  {{configure "popt" "--disable-static"}}
+  (cd popt && ./configure --build {{confarch}} --host {{confarch}} --prefix=/usr --libdir=/usr/lib --disable-static)
   $(MAKE) -C popt
   $(MAKE) -C popt install DESTDIR=$(shell pwd)/out/popt
   {{pkmv "usr/include" "popt" "popt-headers"}}
