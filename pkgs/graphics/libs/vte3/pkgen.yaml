@@ -47,7 +47,7 @@ sources:
 - https://ftp.gnome.org/pub/gnome/sources/vte/0.48/vte-{{.Version}}.tar.xz
 builddependencies:
 - pango-dev
-- gtk+3.0-dev
+- gtk3-dev
 - intltool
 - ncurses-dev
 - python2-dev
