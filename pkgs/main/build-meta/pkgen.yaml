@@ -1,0 +1,10 @@
+packages:
+  build-meta:
+    dependencies:
+    - make
+    - bash
+    - gcc
+    - libc-dev
+    - binutils
+version: v0.1
+builder: bootstrap
