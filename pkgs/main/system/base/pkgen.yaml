@@ -5,5 +5,13 @@ packages:
     - busybox
     - lpkg
     - profile
+  build-meta:
+    dependencies:
+    - make
+    - bash
+    - gcc
+    - libc-dev
+    - binutils
+    - ccache
 version: v0.1
 builder: bootstrap
