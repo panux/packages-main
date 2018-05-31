@@ -7,4 +7,3 @@ packages:
     - libc-dev
     - binutils
 version: v0.1
-builder: bootstrap
