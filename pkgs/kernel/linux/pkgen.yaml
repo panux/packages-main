@@ -13,7 +13,7 @@ oneshell: true
 builder: bootstrap
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
-- file://./conf
+- file://./conf/{{.Arch}}.conf
 - file://./headers-compat.patch
 builddependencies:
 - gcc
@@ -29,7 +29,7 @@ script:
 - |
   set -e
   {{extract "linux" "xz"}}
-  mv src/conf/{{buildarch}}.conf linux/.config
+  mv src/{{buildarch}}.conf linux/.config
   $(MAKE) -C linux
   $(MAKE) -C linux bzImage vmlinux modules
   mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
