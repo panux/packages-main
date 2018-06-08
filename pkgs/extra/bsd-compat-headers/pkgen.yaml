@@ -5,7 +5,6 @@ sources:
 - https://git.alpinelinux.org/cgit/aports/plain/main/libc-dev/sys-cdefs.h
 - https://git.alpinelinux.org/cgit/aports/plain/main/libc-dev/sys-queue.h
 - https://git.alpinelinux.org/cgit/aports/plain/main/libc-dev/sys-tree.h
-builder: panux
 script:
 - |
   mkdir -p out/bsd-compat-headers/usr/include/sys

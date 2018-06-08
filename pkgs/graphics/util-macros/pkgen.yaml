@@ -3,7 +3,6 @@ packages:
 version: 1.19.1
 sources:
 - https://www.x.org/releases/individual/util/util-macros-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "util-macros" "bz2"}}

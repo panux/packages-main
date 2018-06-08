@@ -17,7 +17,6 @@ builddependencies:
 - intltool
 sources:
 - https://sourceforge.net/projects/lxde/files/lxde-common%20%28default%20config%29/lxde-common%200.99/lxde-common-{{.Version}}.tar.xz
-builder: alpine
 script:
 - |
   {{extract "lxde-common" "xz"}}

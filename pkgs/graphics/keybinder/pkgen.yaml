@@ -20,7 +20,6 @@ builddependencies:
 - libxext-dev
 sources:
 - https://dev.alpinelinux.org/archive/keybinder/keybinder-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "keybinder" "gz"}}

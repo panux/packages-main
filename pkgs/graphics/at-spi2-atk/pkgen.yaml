@@ -25,7 +25,6 @@ builddependencies:
 - intltool
 sources:
 - https://download.gnome.org/sources/at-spi2-atk/2.26/at-spi2-atk-{{.Version}}.tar.xz
-builder: panux
 script:
 - |
   {{extract "at-spi2-atk" "xz"}}

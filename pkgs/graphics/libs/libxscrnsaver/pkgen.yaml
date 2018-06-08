@@ -25,7 +25,6 @@ builddependencies:
 - libx11-dev
 sources:
 - https://www.x.org/releases/individual/lib/libXScrnSaver-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "libXScrnSaver" "bz2"}}

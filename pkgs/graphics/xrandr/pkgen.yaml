@@ -12,7 +12,6 @@ builddependencies:
 - util-macros
 sources:
 - https://www.x.org/releases/individual/app/xrandr-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "xrandr" "bz2"}}

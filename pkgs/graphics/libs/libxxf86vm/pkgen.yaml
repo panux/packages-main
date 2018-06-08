@@ -25,7 +25,6 @@ builddependencies:
 - xf86vidmodeproto
 sources:
 - https://www.x.org/releases/individual/lib/libXxf86vm-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "libXxf86vm" "bz2"}}

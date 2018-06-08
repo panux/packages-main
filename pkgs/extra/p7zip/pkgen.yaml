@@ -4,13 +4,12 @@ packages:
     - p7zip
   p7zip:
     dependencies:
-    - libstdcpp
+    - libstdc++
 version: 16.02
 sources:
 - https://downloads.sourceforge.net/sourceforge/p7zip/p7zip_{{.Version}}_src_all.tar.bz2
 builddependencies:
-- gpp
-builder: panux
+- g++
 script:
 - |
   tar -xf src/p7zip_{{.Version}}_src_all.tar.bz2

@@ -3,7 +3,7 @@ packages:
     dependencies:
     - libgcc
     - libogg
-    - libstdcpp
+    - libstdc++
   flac-dev:
     dependencies:
     - flac
@@ -21,8 +21,8 @@ packages:
 version: 1.3.2
 builddependencies:
 - libogg-dev
-- gpp
-- libstdcpp-dev
+- g++
+- libstdc++-dev
 sources:
 - https://downloads.xiph.org/releases/flac/flac-{{.Version}}.tar.xz
 builder: panux

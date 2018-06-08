@@ -7,7 +7,6 @@ builddependencies:
 - util-macros
 sources:
 - https://www.x.org/releases/individual/proto/xf86vidmodeproto-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "xf86vidmodeproto" "bz2"}}

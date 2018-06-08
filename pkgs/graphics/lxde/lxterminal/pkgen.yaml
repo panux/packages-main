@@ -18,7 +18,6 @@ builddependencies:
 - vte-dev
 sources:
 - https://downloads.sourceforge.net/lxde/lxterminal-{{.Version}}.tar.xz
-builder: alpine
 script:
 - |
   {{extract "lxterminal" "xz"}}

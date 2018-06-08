@@ -5,7 +5,7 @@ packages:
     - libarchive
     - libcurl
     - libgcc
-    - libstdcpp
+    - libstdc++
     - libuv
     - musl
     - ncurses
@@ -14,8 +14,8 @@ packages:
   cmake-doc:
 version: 3.9.5
 builddependencies:
-- gpp
-- libstdcpp-dev
+- g++
+- libstdc++-dev
 - ncurses-dev
 - curl-headers
 - libcurl

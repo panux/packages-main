@@ -7,7 +7,6 @@ builddependencies:
 - perl
 sources:
 - https://sourceforge.net/projects/lsb/files/lsb_release/{{.Version}}/lsb-release-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "lsb-release" "gz"}}

@@ -9,7 +9,6 @@ packages:
 version: 5.3.4
 sources:
 - https://www.lua.org/ftp/lua-{{.Version}}.tar.gz
-builder: panux
 builddependencies:
 - gcc
 - libc-dev

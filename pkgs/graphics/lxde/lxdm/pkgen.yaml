@@ -31,7 +31,6 @@ builddependencies:
 sources:
 - https://downloads.sourceforge.net/lxdm/lxdm-{{.Version}}.tar.xz
 - file://./lxdm.initrd
-builder: panux
 oneshell: true
 script:
 - |

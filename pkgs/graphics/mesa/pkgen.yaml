@@ -48,7 +48,7 @@ packages:
     - expat
     - libdrm
     - libgcc
-    - libstdcpp
+    - libstdc++
     - libglapi
     - musl
     - zlib
@@ -83,7 +83,7 @@ packages:
   mesa-core:
     dependencies:
     - libglapi
-    - libstdcpp
+    - libstdc++
     - libdrm
     - libexpat
     - libllvm

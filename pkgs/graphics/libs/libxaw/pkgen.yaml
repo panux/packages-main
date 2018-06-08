@@ -30,7 +30,6 @@ builddependencies:
 - libxext-dev
 sources:
 - https://www.x.org/releases/individual/lib/libXaw-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "libXaw" "bz2"}}

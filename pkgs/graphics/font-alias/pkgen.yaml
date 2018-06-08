@@ -6,7 +6,6 @@ builddependencies:
 - util-macros
 sources:
 - https://www.x.org/releases/individual/font/font-alias-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "font-alias" "bz2"}}

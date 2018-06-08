@@ -23,7 +23,6 @@ builddependencies:
 - intltool
 sources:
 - https://downloads.sourceforge.net/pcmanfm/pcmanfm-{{.Version}}.tar.xz
-builder: panux
 script:
 - |
   {{extract "pcmanfm" "xz"}}

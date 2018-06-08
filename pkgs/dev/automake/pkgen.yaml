@@ -13,7 +13,6 @@ builddependencies:
 - autoconf
 sources:
 - https://ftp.gnu.org/pub/gnu/automake/automake-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "automake" "gz"}}

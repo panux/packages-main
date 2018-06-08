@@ -13,7 +13,6 @@ builddependencies:
 - glib-dev
 sources:
 - https://downloads.sourceforge.net/lxde/menu-cache-{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   {{extract "menu-cache" "gz"}}

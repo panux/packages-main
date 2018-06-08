@@ -3,12 +3,12 @@ packages:
     dependencies:
     - readline
     - zlib
-    - libstdcpp
+    - libstdc++
     - libintl
   gdb-doc:
 version: 7.12.1
 builddependencies:
-- gpp
+- g++
 - ncurses-dev
 - texinfo
 - readline-dev

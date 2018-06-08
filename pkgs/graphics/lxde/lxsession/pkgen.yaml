@@ -97,7 +97,6 @@ builddependencies:
 - libgomp
 sources:
 - https://sourceforge.net/projects/lxde/files/LXSession%20%28session%20manager%29/LXSession%200.5.x/lxsession-{{.Version}}.tar.xz
-builder: panux
 data:
   bins:
     - lxsettings-daemon

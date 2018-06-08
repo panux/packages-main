@@ -14,7 +14,6 @@ builddependencies:
 - gtk2-dev
 sources:
 - https://downloads.sourceforge.net/lxde/lxrandr-{{.Version}}.tar.xz
-builder: panux
 script:
 - |
   {{extract "lxrandr" "xz"}}

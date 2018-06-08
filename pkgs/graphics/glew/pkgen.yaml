@@ -21,7 +21,6 @@ builddependencies:
 - glu-dev
 sources:
 - https://downloads.sourceforge.net/glew/glew-{{.Version}}.tgz
-builder: panux
 script:
 - |
   tar xf src/glew-{{.Version}}.tgz

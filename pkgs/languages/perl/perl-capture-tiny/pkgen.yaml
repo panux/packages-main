@@ -9,7 +9,6 @@ builddependencies:
 - perl-dev
 sources:
 - https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-{{.Version}}.tar.gz
-builder: panux
 oneshell: true
 script:
 - |

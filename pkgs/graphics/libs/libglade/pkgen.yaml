@@ -26,7 +26,6 @@ builddependencies:
 - libxml2-dev
 sources:
 - https://download.gnome.org/sources/libglade/2.6/libglade-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "libglade" "bz2"}}

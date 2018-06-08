@@ -11,7 +11,6 @@ builddependencies:
 sources:
 - https://git.alpinelinux.org/cgit/ca-certificates/snapshot/ca-certificates-{{.Version}}.tar.bz2
 - file://./oninstall.sh
-builder: panux
 script:
 - |
   tar xf src/ca-certificates-{{.Version}}.tar.bz2

@@ -29,8 +29,8 @@ builddependencies:
 - glu-dev
 - xz-dev
 - cmake
-- gpp
-- libstdcpp-dev
+- g++
+- libstdc++-dev
 - linux-headers
 sources:
 - https://downloads.sourceforge.net/freeglut/freeglut-{{.Version}}.tar.gz

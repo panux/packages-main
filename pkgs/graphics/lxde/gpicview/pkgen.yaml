@@ -17,7 +17,6 @@ builddependencies:
 - libjpeg-turbo-dev
 sources:
 - https://downloads.sourceforge.net/project/lxde/GPicView%20%28image%20Viewer%29/0.2.x/gpicview-{{.Version}}.tar.xz
-builder: panux
 script:
 - |
   {{extract "gpicview" "xz"}}

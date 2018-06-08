@@ -23,7 +23,6 @@ builddependencies:
 - bzip2-dev
 sources:
 - https://download.savannah.gnu.org/releases/freetype/freetype-{{.Version}}.tar.bz2
-builder: panux
 script:
 - |
   {{extract "freetype" "bz2"}}

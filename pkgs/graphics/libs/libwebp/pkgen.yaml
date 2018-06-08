@@ -29,7 +29,6 @@ builddependencies:
 - gcc-include
 sources:
 - https://github.com/webmproject/libwebp/archive/v{{.Version}}.tar.gz
-builder: panux
 script:
 - |
   mv src/v{{.Version}}.tar.gz src/libwebp-{{.Version}}.tar.gz

@@ -3,11 +3,11 @@ packages:
     dependencies:
     - icu-libs
     - libgcc
-    - libstdcpp
+    - libstdc++
   icu-libs:
     dependencies:
     - libgcc
-    - libstdcpp
+    - libstdc++
   icu-headers:
   icu-doc:
   icu-dev:

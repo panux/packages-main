@@ -4,13 +4,10 @@ packages:
     - gcc-libexec
     - gcc-libcc1
     - binutils
-  gpp:
-    dependencies:
-    - gcc
   g++:
     dependencies:
-    - gpp
-    - libstdcpp-dev
+    - gcc
+    - libstdc++-dev
   gcc-ranlib:
   gcov:
   gcc-libexec:
@@ -33,13 +30,13 @@ packages:
   libatomic:
   libgcc:
   libitm:
-  libsupcpp:
+  libsupc++:
     dependencies:
-    - libstdcpp
-  libstdcpp:
+    - libstdc++
+  libstdc++:
     dependencies:
     - libgcc
-  libstdcpp-dev:
+  libstdc++-dev:
   libcilkrts:
 version: 7.2.0
 builder: bootstrap
@@ -98,27 +95,25 @@ script:
   {{- end}}
   mkdir -p out/gcc-libcc1/usr
   mv out/gcc/usr/lib out/gcc-libcc1/usr/lib
-  {{pkmv "usr/lib" "libstdc++" "libstdcpp"}}
-  {{pkmv "usr/lib" "libsupc++" "libsupcpp"}}
   mv out/libgcc_s/* out/libgcc
-  mkdir -p out/libstdcpp-dev/usr/include
-  mv out/gcc/usr/include/c++ out/libstdcpp-dev/usr/include/c++
-  mkdir -p out/gpp/usr/bin
-  mv out/gcc/usr/bin/g++ out/gpp/usr/bin/g++
-  mv out/gcc/usr/bin/c++ out/gpp/usr/bin/c++
-  mv out/gcc/usr/bin/*-g++ out/gpp/usr/bin
-  mv out/gcc/usr/bin/*-c++ out/gpp/usr/bin
+  mkdir -p out/libstdc++-dev/usr/include
+  mv out/gcc/usr/include/c++ out/libstdc++-dev/usr/include/c++
+  mkdir -p out/g++/usr/bin
+  mv out/gcc/usr/bin/g++ out/g++/usr/bin/g++
+  mv out/gcc/usr/bin/c++ out/g++/usr/bin/c++
+  mv out/gcc/usr/bin/*-g++ out/g++/usr/bin
+  mv out/gcc/usr/bin/*-c++ out/g++/usr/bin
   mkdir -p out/gcc-ranlib/usr/bin
   mv out/gcc/usr/bin/*-ranlib out/gcc-ranlib/usr/bin
   mkdir -p out/gcov/usr/bin
   mv out/gcc/usr/bin/gcov* out/gcov/usr/bin
   mkdir -p out/gcc-python-cxx/usr/share/gcc-{{.Version}}
   mv out/gcc/usr/share/gcc-{{.Version}}/python out/gcc-python-cxx/usr/share/gcc-{{.Version}}/python
-  mkdir -p out/gcc/etc/lpkg.d/alt.d/cc out/gpp/etc/lpkg.d/alt.d/c++
+  mkdir -p out/gcc/etc/lpkg.d/alt.d/cc out/g++/etc/lpkg.d/alt.d/c++
   ln -s /usr/bin/gcc out/gcc/etc/lpkg.d/alt.d/cc/00_gcc.provider
-  ln -s /usr/bin/g++ out/gpp/etc/lpkg.d/alt.d/c++/00_g++.provider
+  ln -s /usr/bin/g++ out/g++/etc/lpkg.d/alt.d/c++/00_g++.provider
   echo /usr/bin/cc > out/gcc/etc/lpkg.d/alt.d/cc/.target
-  echo /usr/bin/c++ > out/gpp/etc/lpkg.d/alt.d/c++/.target
+  echo /usr/bin/c++ > out/g++/etc/lpkg.d/alt.d/c++/.target
   mv src/oninstall_gcc.sh out/gcc/.oninstall
-  mv src/oninstall_g++.sh out/gpp/.oninstall
-  chmod 700 out/gcc/.oninstall out/gpp/.oninstall
+  mv src/oninstall_g++.sh out/g++/.oninstall
+  chmod 700 out/gcc/.oninstall out/g++/.oninstall
