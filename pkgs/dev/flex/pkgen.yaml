@@ -24,6 +24,7 @@ builddependencies:
 - m4
 - bison
 - help2man
+- gettext-dev
 sources:
 - https://github.com/westes/flex/releases/download/v{{.Version}}/flex-{{.Version}}.tar.gz
 builder: bootstrap
