@@ -13,7 +13,7 @@ version: 4.17
 builddependencies:
 - autoconf
 - automake
-- gpp
+- g++
 sources:
 - https://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v{{.Version}}/src/nspr-{{.Version}}.tar.gz
 - https://git.alpinelinux.org/cgit/aports/plain/main/nspr/fix-getproto.patch

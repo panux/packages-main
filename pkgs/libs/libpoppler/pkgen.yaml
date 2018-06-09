@@ -24,7 +24,7 @@ packages:
     - cairo
     - freetype
     - lcms2
-    - libstdcpp
+    - libstdc++
     - libpoppler
   poppler-utils:
     dependencies:
@@ -35,7 +35,7 @@ packages:
     - cairo
     - freetype
     - glib
-    - libstdcpp
+    - libstdc++
 version: 0.56.0
 builddependencies:
 - cairo-dev

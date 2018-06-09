@@ -4,7 +4,7 @@ packages:
     - busybox
     - libaio
     - libressl
-    - libstdcpp
+    - libstdc++
     - mariadb-common
     - ncurses
     - zlib
@@ -21,7 +21,7 @@ packages:
     dependencies:
     - libaio
     - libressl
-    - libstdcpp
+    - libstdc++
     - mariadb-common
     - zlib
   mariadb-client:

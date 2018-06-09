@@ -10,7 +10,7 @@ packages:
     - libgcc
     - pcre
     - libressl
-    - libstdcpp
+    - libstdc++
     - zlib
   qt5-dev:
     dependencies:
@@ -23,7 +23,7 @@ packages:
     - libpng-dev
     - libressl-dev
     - libsm-dev
-    - libstdcpp
+    - libstdc++
     - libx11-dev
     - libxext-dev
     - mesa-core
@@ -45,26 +45,26 @@ packages:
   qt5-tds:
     dependencies:
     - freetds
-    - libstdcpp
+    - libstdc++
     - qt5-base
   qt5-odbc:
     dependencies:
-    - libstdcpp
+    - libstdc++
     - qt5-base
     - unixodbc
   qt5-mysql:
     dependencies:
-    - libstdcpp
+    - libstdc++
     - libmysqlclient
     - qt5-base
   qt5-sqlite:
     dependencies:
-    - libstdcpp
+    - libstdc++
     - qt5-base
     - sqlite-libs
   qt5-postgresql: #probably won't work due to missing dependency (libpq), but if you want the lib, feel free to install
     dependencies:
-    - libstdcpp
+    - libstdc++
     - qt5-base
   qt5-x11:
     dependencies:
@@ -82,7 +82,7 @@ packages:
     - libjpeg-turbo
     - libpng
     - libsm
-    - libstdcpp
+    - libstdc++
     - libx11
     - libxcb
     - libxi

@@ -2,12 +2,12 @@ packages:
   llvm:
     dependencies:
       - libgcc
-      - libstdcpp
+      - libstdc++
       - musl
       - libllvm
   llvm-dev:
     dependencies:
-    - libstdcpp
+    - libstdc++
     - llvm
     - llvm-headers
     - libllvm
@@ -17,7 +17,7 @@ packages:
     dependencies:
     - libffi
     - libgcc
-    - libstdcpp
+    - libstdc++
     - musl
     - zlib
 version: 5.0.1

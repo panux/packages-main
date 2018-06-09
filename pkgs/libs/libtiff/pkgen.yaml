@@ -18,7 +18,7 @@ packages:
   libtiffxx:
     dependencies:
     - libtiff
-    - libstdcpp
+    - libstdc++
     - libgcc
   libtiff-headers:
   libtiff-doc:

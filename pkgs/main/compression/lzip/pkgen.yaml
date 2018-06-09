@@ -2,7 +2,7 @@ packages:
   lzip:
     dependencies:
     - libgcc
-    - libstdcpp
+    - libstdc++
     - musl
   lzip-doc:
     dependencies:
@@ -10,8 +10,8 @@ packages:
   lzip-man:
 version: 1.19
 builddependencies:
-- gpp
-- libstdcpp-dev
+- g++
+- libstdc++-dev
 sources:
 - https://download.savannah.gnu.org/releases/lzip/lzip-{{.Version}}.tar.gz
 builder: bootstrap

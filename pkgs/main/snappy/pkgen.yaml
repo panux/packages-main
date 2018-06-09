@@ -13,8 +13,8 @@ packages:
   snappy-doc:
 version: 1.1.4
 builddependencies:
-- gpp
-- libstdcpp-dev
+- g++
+- libstdc++-dev
 - gcc-include
 - zlib-dev
 sources:

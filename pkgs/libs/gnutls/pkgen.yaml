@@ -12,7 +12,7 @@ packages:
     dependencies:
     - gnutls-headers
     - libgcc
-    - libstdcpp
+    - libstdc++
     - libtasn1-dev
     - nettle-dev
     - p11-kit-dev

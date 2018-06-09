@@ -4,15 +4,15 @@ packages:
     dependencies:
     - berkley-db
   berkley-db-headers:
-  berkley-db-cpp:
+  berkley-db-c++:
     dependencies:
-    - libstdcpp
+    - libstdc++
     - libgcc
   berkley-db-doc:
   berkley-db-dev:
     dependencies:
     - berkley-db
-    - berkley-db-cpp
+    - berkley-db-c++
     - berkley-db-headers
 version: 5.3.28
 builddependencies:
@@ -30,4 +30,4 @@ script:
   mv out/berkley-db/usr/docs out/berkley-db-doc/usr/share/doc/db
   {{pkmv "usr/bin" "berkley-db" "berkley-db-utils"}}
   {{pkmv "usr/include" "berkley-db" "berkley-db-headers"}}
-  {{pkmv "usr/lib/libdb_cxx*.so" "berkley-db" "berkley-db-cpp"}}
+  {{pkmv "usr/lib/libdb_cxx*.so" "berkley-db" "berkley-db-c++"}}
