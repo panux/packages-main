@@ -13,7 +13,7 @@ oneshell: true
 builder: bootstrap
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
-- file://./conf/{{.Arch}}.conf
+- file://./conf/{{buildarch}}.conf
 - file://./headers-compat.patch
 builddependencies:
 - gcc
