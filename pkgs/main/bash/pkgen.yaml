@@ -31,7 +31,7 @@ script:
   {{/* pkmv "usr/share/include" "bash" "bash-headers" */}}
   {{pkmv "usr/share/locale" "bash" "bash-locale"}}
   {{pkmv "usr/share" "bash" "bash-doc"}}
-  rm out/bash/usr/lib/bash/Makefile.inc
+  {{/* rm out/bash/usr/lib/bash/Makefile.inc */}}
   mkdir -p out/bash/etc/lpkg.d/alt.d/sh
   ln -s /usr/bin/bash out/bash/etc/lpkg.d/alt.d/sh/00_bash.provider
   echo /usr/bin/sh > out/bash/etc/lpkg.d/alt.d/sh/.target
