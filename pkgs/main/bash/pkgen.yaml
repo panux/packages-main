@@ -28,7 +28,7 @@ script:
   {{configure "bash" "--without-bash-malloc"}}
   $(MAKE) -C bash
   $(MAKE) -C bash DESTDIR=$(shell pwd)/out/bash install
-  {{pkmv "usr/include" "bash" "bash-headers"}}
+  {{pkmv "usr/share/include" "bash" "bash-headers"}}
   {{pkmv "usr/share/locale" "bash" "bash-locale"}}
   {{pkmv "usr/share" "bash" "bash-doc"}}
   rm out/bash/usr/lib/bash/Makefile.inc
