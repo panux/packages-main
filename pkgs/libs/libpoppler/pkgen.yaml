@@ -6,7 +6,7 @@ packages:
     - lcms2
     - libjpeg-turbo
     - libpng
-    - libstdcpp
+    - libstdc++
     - musl
     - openjpeg
     - libtiff

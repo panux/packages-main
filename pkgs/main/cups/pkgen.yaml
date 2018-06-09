@@ -31,7 +31,7 @@ packages:
     - avahi-libs
     - gnutls
     - libgcc
-    - libstdcpp
+    - libstdc++
     - zlib
   cups-doc:
     dependencies:
