@@ -36,6 +36,6 @@ script:
   $(MAKE) -C flex DESTDIR=$(shell pwd)/out/flex install
   {{pkmv "usr/include" "flex" "flex-headers"}}
   {{pkmv "usr/lib/libfl.*" "flex" "libfl"}}
-  {{pkmv "usr/share/locale" "flex" "flex-locale"}}
+  {{/* pkmv "usr/share/locale" "flex" "flex-locale" */}}
   {{pkmv "usr/share/man" "flex" "flex-man"}}
   {{pkmv "usr/share" "flex" "flex-doc"}}
