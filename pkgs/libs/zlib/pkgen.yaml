@@ -19,7 +19,7 @@ sources:
 script:
 - |
   {{extract "zlib" "gz"}}
-  (cd zlib && CC="ccache gcc" ./configure --prefix=/usr)
+  (cd zlib && ./configure --prefix=/usr)
   $(MAKE) -C zlib
   $(MAKE) -C zlib DESTDIR=$(shell pwd)/out/zlib install
   mkdir out/zlib-dev/usr out/zlib-dev/usr/lib
