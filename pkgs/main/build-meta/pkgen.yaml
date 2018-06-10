@@ -6,5 +6,6 @@ packages:
     - gcc
     - libc-dev
     - binutils
+    - base
 version: v0.1
 builder: bootstrap
