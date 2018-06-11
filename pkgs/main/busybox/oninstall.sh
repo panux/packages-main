@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 echo busybox $1 $2
 chmod 6755 $2/usr/bin/busybox
