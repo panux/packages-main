@@ -1,3 +1,3 @@
-#!/usr/bin/sh
+#!/usr/bin/busybox sh
 
 lpkg-alt update wget

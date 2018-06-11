@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/busybox sh
 
 if [ "$1" != install ]; then
   exit 0
