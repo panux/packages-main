@@ -8,6 +8,7 @@ packages:
   gdbm-doc:
 version: 1.13
 builddependencies:
+- readline-dev
 sources:
 - https://ftp.gnu.org/pub/gnu/gdbm/gdbm-{{.Version}}.tar.gz
 script:
