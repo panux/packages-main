@@ -20,7 +20,6 @@ builddependencies:
 sources:
 script:
 - |
-  mkdir src
   (cd src && wget http://download.oracle.com/berkeley-db/db-{{.Version}}.tar.gz)
   {{extract "db" "gz"}}
   (cd db/build_unix && ../dist/configure {{confflags}} --prefix=/usr --mandir=/usr/share/man --enable-compat185	--enable-shared	--enable-cxx)
