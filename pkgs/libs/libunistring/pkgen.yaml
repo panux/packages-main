@@ -7,7 +7,7 @@ packages:
   libunistring-doc:
   libunistring-headers:
 version: 0.9.7
-builddependencies:
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/gnu/libunistring/libunistring-{{.Version}}.tar.xz
 script:
