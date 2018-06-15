@@ -39,3 +39,4 @@ script:
   {{pkmv "usr/share/doc" "libexpat" "libexpat-doc"}}
   {{pkmv "usr/share/man" "libexpat" "libexpat-man"}}
   {{pkmv "usr/bin" "libexpat" "xmlwf"}}
+builder: bootstrap

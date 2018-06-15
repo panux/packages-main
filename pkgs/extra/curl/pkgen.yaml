@@ -31,3 +31,4 @@ script:
   mv out/curl/usr/include out/curl-headers/usr
   mv out/curl/usr/bin out/curl/usr
   rm -r out/curl/usr
+builder: bootstrap

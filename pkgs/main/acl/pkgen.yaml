@@ -43,3 +43,4 @@ script:
   {{pkmv "usr/share/man" "acl" "acl-man"}}
   {{pkmv "usr/share" "acl" "acl-doc"}}
   {{pkmv "usr/lib/libacl.so.1*" "acl" "libacl"}}
+builder: bootstrap

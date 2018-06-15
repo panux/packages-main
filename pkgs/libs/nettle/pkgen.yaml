@@ -35,3 +35,4 @@ script:
   {{pkmv "usr/lib/libhogweed*" "nettle" "libhogweed"}}
   {{pkmv "usr/lib/pkgconfig" "nettle" "nettle-dev"}}
   rm -r out/nettle/usr
+builder: bootstrap

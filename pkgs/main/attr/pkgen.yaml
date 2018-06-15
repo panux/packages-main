@@ -47,3 +47,4 @@ script:
   {{pkmv "usr/share/man" "attr" "attr-man"}}
   {{pkmv "usr/share" "attr" "attr-doc"}}
   {{pkmv "usr/lib/libattr.so.1*" "attr" "libattr"}}
+builder: bootstrap

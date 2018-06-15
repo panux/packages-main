@@ -21,7 +21,7 @@ packages:
 version: 1.8.0
 sources:
 - https://github.com/lz4/lz4/archive/v{{.Version}}.tar.gz
-builder: panux
+builder: bootstrap
 builddependencies:
 - gcc
 - musl-dev

@@ -51,3 +51,4 @@ script:
   {{pkmv "usr/include" "libarchive" "libarchive-headers"}}
   {{pkmv "usr/share/man" "libarchive" "libarchive-man"}}
   {{pkmv "usr/bin" "libarchive" "libarchive-tools"}}
+builder: bootstrap

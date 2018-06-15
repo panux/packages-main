@@ -5,6 +5,7 @@ packages:
     - libressl
     - gnutls
 version: 1.19.1
+builder: bootstrap
 builddependencies:
 - gcc
 - gawk

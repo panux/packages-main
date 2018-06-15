@@ -34,3 +34,4 @@ script:
   {{pkmv "usr/lib/pkcs11" "p11-kit" "p11-kit-trust"}}
   {{pkmv "usr/lib/p11-kit/trust-extract-compat" "p11-kit" "p11-kit-trust"}}
   {{pkmv "usr/share" "p11-kit" "p11-kit-doc"}}
+builder: bootstrap

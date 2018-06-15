@@ -25,3 +25,4 @@ script:
   $(MAKE) -C libuv CFLAGS="$(CFLAGS) -D__USE_MISC" BUILDTYPE=Release
   $(MAKE) -C libuv DESTDIR=$(shell pwd)/out/libuv install
   {{pkmv "usr/include" "libuv" "libuv-headers"}}
+builder: bootstrap

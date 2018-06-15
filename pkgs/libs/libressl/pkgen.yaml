@@ -28,3 +28,4 @@ script:
   mv out/libressl/usr/lib/pkgconfig out/libressl-dev/usr/lib
   mkdir -p out/libressl-doc/usr
   mv out/libressl/usr/share out/libressl-doc/usr
+builder: bootstrap

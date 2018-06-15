@@ -13,6 +13,7 @@ packages:
     - libc-dev
     - xz
 version: 5.2.3
+builder: bootstrap
 builddependencies:
 - gcc
 - libc-dev

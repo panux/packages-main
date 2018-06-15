@@ -23,3 +23,4 @@ script:
   mv out/libffi/usr/lib/libffi-* out/libffi-dev/usr/lib/$$(basename out/libffi/usr/lib/libffi-*)
   (set -x && cd out/libffi-dev/usr/include && for i in $$(ls ../lib/libffi-*/include); do ln -s ../lib/libffi-*/include/$$i $$i; done)
   mv out/libffi/usr/lib/pkgconfig out/libffi-dev/usr/lib/pkgconfig
+builder: bootstrap

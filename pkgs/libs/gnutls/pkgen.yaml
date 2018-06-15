@@ -25,6 +25,7 @@ packages:
   gnutls-headers:
   libgnutls:
 version: 3.5.15
+builder: bootstrap
 builddependencies:
 - nettle-dev
 - zlib-dev

@@ -19,3 +19,4 @@ script:
   $(MAKE) -C libtasn1 DESTDIR=$(shell pwd)/out/libtasn1 install
   {{pkmv "usr/include" "libtasn1" "libtasn1-headers"}}
   {{pkmv "usr/share" "libtasn1" "libtasn1-doc"}}
+builder: bootstrap
