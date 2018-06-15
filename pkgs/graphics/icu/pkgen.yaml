@@ -31,3 +31,4 @@ script:
   {{pkmv "usr/lib/*.so.*" "icu" "icu-libs"}}
   {{pkmv "usr/include" "icu" "icu-headers"}}
   {{pkmv "usr/share" "icu" "icu-doc"}}
+builder: bootstrap

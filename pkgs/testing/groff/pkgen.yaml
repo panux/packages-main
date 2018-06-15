@@ -14,3 +14,4 @@ script:
   (cd groff && PAGE=letter ./configure --prefix=/usr --without-x)
   make -j1 -C groff
   make -j1 -C groff install DESTDIR=$(shell pwd)/out/groff
+builder: bootstrap

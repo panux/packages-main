@@ -22,3 +22,4 @@ script:
   {{pkmv "usr/share/man" "automake" "automake-man"}}
   {{pkmv "usr/share/doc" "automake" "automake-doc"}}
   {{pkmv "usr/share/info" "automake" "automake-doc"}}
+builder: bootstrap
