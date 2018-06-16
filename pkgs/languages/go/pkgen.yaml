@@ -13,7 +13,7 @@ builddependencies:
 - gcc
 - go
 oneshell: true
-bootstrap: true
+builder: bootstrap
 script:
 - tar -xf src/go{{.Version}}.src.tar.gz
 - patch src/default-buildmode-pie.patch
