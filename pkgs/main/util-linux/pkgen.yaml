@@ -72,3 +72,4 @@ script:
   {{- end}}
   mv out/util-linux/bin/* out/util-linux/sbin/* out/util-linux/usr/sbin/* out/util-linux/usr/bin
   rm -r out/util-linux/bin out/util-linux/sbin out/util-linux/usr/sbin
+builder: bootstrap

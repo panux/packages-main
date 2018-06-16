@@ -24,3 +24,4 @@ script:
   {{pkmv "usr/lib/*.so" "sqlite" "sqlite-dev"}}
   {{pkmv "usr/lib/pkgconfig" "sqlite" "sqlite-dev"}}
   {{pkmv "usr/share" "sqlite" "sqlite-doc"}}
+builder: bootstrap

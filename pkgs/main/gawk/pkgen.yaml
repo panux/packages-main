@@ -15,3 +15,4 @@ script:
   {{configure "gawk" "--sysconfdir=/etc --disable-nls --infodir=/usr/share/info"}}
   $(MAKE) -C gawk
   $(MAKE) -C gawk install DESTDIR=$(shell pwd)/out/gawk
+builder: bootstrap
