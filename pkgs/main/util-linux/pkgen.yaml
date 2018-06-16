@@ -56,7 +56,6 @@ script:
   {{configure "util-linux" "--disable-kill --disable-login --disable-last --disable-sulogin --disable-su --disable-makeinstall-chown"}}
   $(MAKE) -C util-linux
   $(MAKE) -C util-linux DESTDIR=$(shell pwd)/out/util-linux install
-  {{pkmv "/usr/share/locale" "util-linux" "util-linux-locale"}}
   {{pkmv "/usr/share/bash-completion" "util-linux" "util-linux-bash-completion"}}
   {{pkmv "/usr/share/doc" "util-linux" "util-linux-doc"}}
   {{pkmv "/usr/share/man" "util-linux" "util-linux-man"}}
