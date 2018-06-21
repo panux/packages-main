@@ -17,7 +17,7 @@ builddependencies:
 - g++
 - libstdc++-dev
 - ncurses-dev
-- curl-headers
+- curl-dev
 - libcurl
 - expat-dev
 - zlib-dev

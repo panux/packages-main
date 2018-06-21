@@ -9,6 +9,12 @@ packages:
     - zlib
   curl-man:
   curl-headers:
+  curl-dev:
+    dependencies:
+    - curl-headers
+    - gcc
+    - zlib-dev
+    - libressl-dev
 version: 7.58.0
 builddependencies:
 - zlib-dev
