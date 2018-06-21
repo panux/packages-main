@@ -19,7 +19,6 @@ builddependencies:
 - gcc
 - libc-dev
 - ncurses-dev
-- zip
 - zlib-dev
 - subversion
 - gettext
