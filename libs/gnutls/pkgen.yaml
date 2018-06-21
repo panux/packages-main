@@ -37,10 +37,11 @@ builddependencies:
 - autoconf
 - automake
 sources:
-- https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-{{.Version}}.tar.xz
+- https://gitlab.com/gnutls/gnutls/-/archive/gnutls_3_5_17/gnutls-gnutls_3_5_17.tar.gz
 script:
 - |
-  {{extract "gnutls" "xz"}}
+  tar -xvf src/gnutls-gnutls_3_5_17.tar.gz
+  mv gnutls-gnutls_3_5_17 gnutls
   find /usr -name '*.la' -delete
   (cd gnutls && autoreconf -vif)
   {{configure "gnutls"}}
