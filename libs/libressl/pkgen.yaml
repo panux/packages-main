@@ -19,6 +19,8 @@ script:
   find / -name sh -type l -delete
   find / -name bash -type l -delete
   ln -s /usr/bin/busybox /usr/bin/sh
+  if [ ! -e /bin/sh ]; then ln -s /usr/bin/busybox /bin/sh; fi
+  if [ ! -e /usr/bin/busybox ]; then ln -s /bin/busybox /usr/bin/busybox; fi
   {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
   $(MAKE) -C libressl
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
