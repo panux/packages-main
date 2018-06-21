@@ -36,6 +36,7 @@ builddependencies:
 - libtool
 - autoconf
 - automake
+- gettext-dev
 sources:
 - https://gitlab.com/gnutls/gnutls/-/archive/gnutls_3_5_17/gnutls-gnutls_3_5_17.tar.gz
 script:
