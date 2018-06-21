@@ -34,7 +34,7 @@ script:
   {{extract "flex" "gz"}}
   mv src/index.php src/110-gcc720-segfault.patch
   (cd flex && patch -p1 ../src/110-gcc720-segfault.patch)
-  {{configure "flex" "--infodir=/usr/share/info	--disable-static --enable-shared"}}
+  {{configure "flex" "--infodir=/usr/share/info	--disable-static --enable-shared ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes"}}
   $(MAKE) -C flex
   $(MAKE) -C flex DESTDIR=$(shell pwd)/out/flex install
   {{pkmv "usr/include" "flex" "flex-headers"}}
