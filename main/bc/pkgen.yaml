@@ -15,7 +15,7 @@ builddependencies:
 - texinfo
 sources:
 - https://ftp.gnu.org/gnu/bc/bc-{{.Version}}.tar.gz
-- https://./fixit.sh
+- file://./fixit.sh
 builder: bootstrap
 script:
 - |
