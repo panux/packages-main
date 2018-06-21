@@ -11,6 +11,7 @@ sources:
 - https://www.samba.org/ftp/ccache/ccache-{{.Version}}.tar.xz
 builddependencies:
 - zlib-dev
+builder: bootstrap
 data:
   progs:
   - cc
