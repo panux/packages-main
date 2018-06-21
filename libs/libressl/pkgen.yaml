@@ -16,10 +16,9 @@ sources:
 script:
 - |
   {{extract "libressl" "gz"}}
-  rm /usr/bin/sh
+  find / -name sh -type l -delete
+  find / -name bash -type l -delete
   ln -s /usr/bin/busybox /usr/bin/sh
-  readlink /usr/bin/sh
-  rm /usr/bin/bash
   {{configure "libressl" "--with-sysroot=$(shell pwd)/out/libressl"}}
   $(MAKE) -C libressl
   $(MAKE) -C libressl DESTDIR=$(shell pwd)/out/libressl install
