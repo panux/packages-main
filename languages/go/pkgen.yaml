@@ -9,7 +9,7 @@ sources:
 - https://golang.org/dl/go{{.Version}}.src.tar.gz
 - https://git.alpinelinux.org/cgit/aports/plain/community/go/default-buildmode-pie.patch
 - https://git.alpinelinux.org/cgit/aports/plain/community/go/set-external-linker.patch
-- https://dl.google.com/go/go{{.Version}}.linux-{{.HostArch.GoArch}}.tar.gz
+- https://dl.google.com/go/go{{.Version}}.linux-{{hostarch.GoArch}}.tar.gz
 builddependencies:
 - gcc
 - bash
@@ -17,7 +17,7 @@ oneshell: true
 script:
 - |
   mkdir gobootstrap
-  tar -xf src/go{{.Version}}.linux-{{.HostArch.GoArch}}.tar.gz -C gobootstrap
+  tar -xf src/go{{.Version}}.linux-{{hostarch.GoArch}}.tar.gz -C gobootstrap
   tar -xf src/go{{.Version}}.src.tar.gz
   patch src/default-buildmode-pie.patch
   patch src/set-external-linker.patch
