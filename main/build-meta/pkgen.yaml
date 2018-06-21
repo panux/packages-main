@@ -7,5 +7,6 @@ packages:
     - libc-dev
     - binutils
     - base
+    - ccache
 version: v0.1
 builder: bootstrap
