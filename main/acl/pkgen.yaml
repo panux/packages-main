@@ -34,6 +34,7 @@ script:
   unset PLATFORM
   export OPTIMIZER="${CFLAGS}"
   export DEBUG=-DNDEBUG
+  sed -i -e 's/--best/-9/g' acl/doc/Makefile
   (cd acl && CONFIG_SHELL=/bin/sh ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib)
   $(MAKE) -C acl
   $(MAKE) -C acl install install-lib install-dev DESTDIR=$(shell pwd)/out/acl
