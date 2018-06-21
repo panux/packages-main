@@ -32,6 +32,7 @@ sources:
 - https://git.alpinelinux.org/cgit/aports/plain/main/attr/fix-throw.patch
 script:
 - |
+  if [ -e /sbin/apk ]; apk update; apk upgrade; fi
   mv src/attr-{{.Version}}.src.tar.gz src/attr-{{.Version}}.tar.gz
   echo root:x:0:0:root:/root:/bin/sh > /etc/passwd
   echo root::0:0:99999:7::: > /etc/shadow
