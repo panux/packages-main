@@ -9,6 +9,7 @@ packages:
 version: 1.13
 builddependencies:
 - readline-dev
+builder: bootstrap
 sources:
 - https://ftp.gnu.org/pub/gnu/gdbm/gdbm-{{.Version}}.tar.gz
 script:
