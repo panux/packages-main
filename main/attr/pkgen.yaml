@@ -39,6 +39,7 @@ script:
   {{extract "attr" "gz"}}
   sed -i -e 's/--best/-9/g' attr/doc/Makefile
   (cd attr && patch -p1 -i ../src/fix-decls.patch && patch -p1 -i ../src/fix-throw.patch && sed -i -e '/HAVE_ZIPPED_MANPAGES/s:=.*:=false:'	include/builddefs.in)
+  (cd attr && autoreconf -vif)
   (cd attr && OPTIMIZER=$(CFLAGS) DEBUG=-DNDEBUG INSTALL_USER=root INSTALL_GROUP=root ./configure --prefix=/usr --libdir=/usr/lib)
   $(MAKE) -C attr
   (cd attr && make -j1 DESTDIR=$(shell pwd)/out/attr install install-lib install-dev)
