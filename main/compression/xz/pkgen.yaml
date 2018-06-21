@@ -23,6 +23,8 @@ builddependencies:
 - automake
 - libtool
 - bash
+- gettext-dev
+- git
 sources:
 - https://github.com/xz-mirror/xz/archive/v{{.Version}}.tar.gz
 script:
