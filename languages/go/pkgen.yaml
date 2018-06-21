@@ -12,6 +12,7 @@ sources:
 builddependencies:
 - gcc
 - go
+- bash
 oneshell: true
 builder: bootstrap
 script:
