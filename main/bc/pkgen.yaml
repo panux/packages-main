@@ -15,11 +15,14 @@ builddependencies:
 - texinfo
 sources:
 - https://ftp.gnu.org/gnu/bc/bc-{{.Version}}.tar.gz
+- https://./fixit.sh
 builder: bootstrap
 script:
 - |
   {{extract "bc" "gz"}}
   {{configure "bc" "--infodir=/usr/share/info --with-readline"}}
+  $(MAKE) -C bc distclean
+  (cd bc && sh ../src/fixit.sh)
   $(MAKE) -C bc
   $(MAKE) -C bc DESTDIR=$(shell pwd)/out/bc install
   {{pkmv "usr/share/man" "bc" "bc-man"}}
