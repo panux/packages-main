@@ -39,7 +39,7 @@ script:
   $(MAKE) -C acl
   $(MAKE) -C acl install install-lib install-dev DESTDIR=$(shell pwd)/out/acl
   {{pkmv "usr/include" "acl" "acl-headers"}}
-  {{pkmv "usr/share/locale" "acl" "acl-locale"}}
+  {{/* pkmv "usr/share/locale" "acl" "acl-locale" */}}
   {{pkmv "usr/share/man" "acl" "acl-man"}}
   {{pkmv "usr/share" "acl" "acl-doc"}}
   {{pkmv "usr/lib/libacl.so.1*" "acl" "libacl"}}
