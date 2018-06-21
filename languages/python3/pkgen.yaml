@@ -19,6 +19,7 @@ builddependencies:
 - libressl
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
+builder: bootstrap
 script:
 - tar -xf src/Python-{{.Version}}.tar.xz
 - mv Python-{{.Version}} python
