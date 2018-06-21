@@ -22,7 +22,7 @@ script:
   {{extract "bc" "gz"}}
   {{configure "bc" "--infodir=/usr/share/info --with-readline"}}
   $(MAKE) -C bc distclean
-  (cd bc && sh ../src/fixit.sh)
+  cat src/fixit.sh > bc/bc/fix-libmath_h
   $(MAKE) -C bc
   $(MAKE) -C bc DESTDIR=$(shell pwd)/out/bc install
   {{pkmv "usr/share/man" "bc" "bc-man"}}
