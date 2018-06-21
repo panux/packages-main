@@ -24,7 +24,7 @@ packages:
   gnutls-doc:
   gnutls-headers:
   libgnutls:
-version: 3.5.15
+version: 3.6.2
 builder: bootstrap
 builddependencies:
 - nettle-dev
@@ -38,13 +38,11 @@ builddependencies:
 - automake
 - gettext-dev
 sources:
-- https://gitlab.com/gnutls/gnutls/-/archive/gnutls_3_5_17/gnutls-gnutls_3_5_17.tar.gz
+- https://www.gnupg.org/ftp/gcrypt/gnutls/v$3.6/gnutls-{{.Version}}.tar.xz
 script:
 - |
-  tar -xvf src/gnutls-gnutls_3_5_17.tar.gz
-  mv gnutls-gnutls_3_5_17 gnutls
+  {{extract "gnutls" "xz"}}
   find /usr -name '*.la' -delete
-  (cd gnutls && autoreconf -vif)
   {{configure "gnutls"}}
   $(MAKE) -C gnutls
   $(MAKE) -C gnutls DESTDIR=$(shell pwd)/out/gnutls install
