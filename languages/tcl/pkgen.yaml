@@ -13,6 +13,7 @@ builddependencies:
 - sqlite-dev
 - libc-dev
 - gcc
+builder: bootstrap
 script:
 - |
   tar -xf src/core-8-6-4.tar.gz
