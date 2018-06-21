@@ -20,9 +20,8 @@ builder: bootstrap
 script:
 - |
   {{extract "bc" "gz"}}
-  {{configure "bc" "--infodir=/usr/share/info --with-readline"}}
-  $(MAKE) -C bc distclean
   cat src/fixit.sh > bc/bc/fix-libmath_h
+  {{configure "bc" "--infodir=/usr/share/info --with-readline"}}
   $(MAKE) -C bc
   $(MAKE) -C bc DESTDIR=$(shell pwd)/out/bc install
   {{pkmv "usr/share/man" "bc" "bc-man"}}
