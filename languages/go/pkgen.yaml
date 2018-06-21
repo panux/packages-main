@@ -11,8 +11,9 @@ sources:
 - https://git.alpinelinux.org/cgit/aports/plain/community/go/set-external-linker.patch
 builddependencies:
 - gcc
-- go-bootstrap
+- go
 oneshell: true
+builder: bootstrap
 script:
 - tar -xf src/go{{.Version}}.src.tar.gz
 - patch src/default-buildmode-pie.patch
