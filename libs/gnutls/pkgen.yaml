@@ -38,7 +38,7 @@ builddependencies:
 - automake
 - gettext-dev
 sources:
-- https://www.gnupg.org/ftp/gcrypt/gnutls/v$3.6/gnutls-{{.Version}}.tar.xz
+- https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-{{.Version}}.tar.xz
 script:
 - |
   {{extract "gnutls" "xz"}}
