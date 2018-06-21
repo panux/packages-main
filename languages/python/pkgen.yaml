@@ -48,6 +48,7 @@ builddependencies:
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
 - https://pastebin.com/raw/my0mZJ3f
+- https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable
 oneshell: true
 builder: bootstrap
 script:
@@ -55,7 +56,7 @@ script:
   tar -xf src/Python-{{.Version}}.tar.xz
   mv Python-{{.Version}} python
   mv src/my0mZJ3f ldwrap.sh
-  curl https://git.alpinelinux.org/cgit/aports/plain/main/python/musl-find_library.patch?h=3.3-stable > musl-find_library.patch
+  mv src/musl-find_library.patch musl-find_library.patch
   (cd python && patch -p1 -i ../musl-find_library.patch)
   if ! touch /dev/shm/python; then echo "problem"; return 1; fi
   (cd python && ./configure --prefix=/usr --enable-shared --with-threads --enable-ipv6 --with-system-ffi --with-system-expat --enable-unicode=ucs4)
