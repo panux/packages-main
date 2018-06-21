@@ -43,7 +43,7 @@ script:
 - |
   {{extract "gnutls" "xz"}}
   find /usr -name '*.la' -delete
-  {{configure "gnutls"}}
+  {{configure "gnutls" "--enable-local-libopts"}}
   $(MAKE) -C gnutls
   $(MAKE) -C gnutls DESTDIR=$(shell pwd)/out/gnutls install
   {{pkmv "usr/include" "gnutls" "gnutls-headers"}}
