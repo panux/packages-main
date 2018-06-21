@@ -35,7 +35,7 @@ builddependencies:
 - lz4-dev
 - acl-dev
 - libressl-dev
-- libexpat-dev
+- expat-dev
 - automake
 - autoconf
 - libtool
