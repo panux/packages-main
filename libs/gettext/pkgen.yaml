@@ -2,7 +2,6 @@ packages:
   gettext:
     dependencies:
     - libgomp
-    - libintl
     - libunistring
     - libxml2
     - musl
@@ -18,7 +17,7 @@ packages:
     - gettext
   libintl:
     dependencies:
-    - musl
+    - gettext
 version: 0.19.8.1
 builder: bootstrap
 builddependencies:
@@ -47,6 +46,6 @@ script:
   mv out/gettext/usr/share/locale out/gettext-locale/usr/share/locale
   mkdir -p out/gettext-static/usr/lib
   mv out/gettext/usr/lib/*.a out/gettext-static/usr/lib/
-  mkdir -p out/libintl/usr/lib
-  mv out/gettext/usr/lib/libintl.* out/libintl/usr/lib/
+  # mkdir -p out/libintl/usr/lib
+  # mv out/gettext/usr/lib/libintl.* out/libintl/usr/lib/
   rm -r out/gettext/usr/share
