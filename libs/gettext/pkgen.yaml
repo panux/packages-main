@@ -29,7 +29,7 @@ sources:
 script:
 - |
   {{extract "gettext" "xz"}}
-  {{configure "gettext" "--enable-shared"}}
+  {{configure "gettext" "--enable-shared --enable-static --enable-threads=posix --disable-java"}}
   $(MAKE) -C gettext
   $(MAKE) -C gettext DESTDIR=$(shell pwd)/out/gettext install
   mkdir -p out/gettext-doc/usr/share
