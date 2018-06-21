@@ -33,7 +33,6 @@ script:
   {{extract "expat" "bz2"}}
   {{configure "expat" "--disable-static"}}
   $(MAKE) -C expat
-  $(MAKE) -C expat check
   $(MAKE) -C expat install DESTDIR=$(shell pwd)/out/libexpat
   {{pkmv "usr/include" "libexpat" "libexpat-headers"}}
   {{pkmv "usr/share/doc" "libexpat" "libexpat-doc"}}
