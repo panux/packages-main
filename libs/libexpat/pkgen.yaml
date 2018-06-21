@@ -15,6 +15,7 @@ packages:
     - libexpat
     - xmlwf
     - libexpat-headers
+    - git
   expat:
     dependencies:
     - libexpat
@@ -27,7 +28,6 @@ sources:
 builddependencies:
 - g++
 - libstdc++
-builder: panux
 script:
 - |
   {{extract "expat" "bz2"}}
