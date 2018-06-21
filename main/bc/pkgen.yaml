@@ -7,7 +7,7 @@ packages:
     dependencies:
     - bc-man
   bc-man:
-version: 1.06.95
+version: 1.07.1
 builddependencies:
 - flex
 - bison
