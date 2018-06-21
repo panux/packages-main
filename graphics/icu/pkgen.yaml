@@ -25,7 +25,6 @@ script:
   tar -xf src/icu4c-*-src.tgz
   ln -s /usr/include/locale.h /usr/include/xlocale.h
   (cd icu/source && ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --with-data-packaging=library --disable-samples)
-  {{make "icu/source"}}
   $(MAKE) -C icu/source
   (cd icu/source && make -j1 DESTDIR=$(shell pwd)/out/icu install)
   {{pkmv "usr/lib/*.so.*" "icu" "icu-libs"}}
