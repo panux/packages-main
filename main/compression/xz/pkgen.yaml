@@ -22,7 +22,6 @@ builddependencies:
 - autoconf
 - automake
 - libtool
-- gettext-dev
 - bash
 sources:
 - https://github.com/xz-mirror/xz/archive/v{{.Version}}.tar.gz
@@ -30,7 +29,7 @@ script:
 - |
   mv src/v{{.Version}}.tar.gz src/xz-{{.Version}}.tar.gz
   {{extract "xz" "gz"}}
-  (cd xz && autoreconf -vif)
+  (cd xz && ./autogen.sh)
   {{configure "xz" "--disable-static --disable-gettext"}}
   $(MAKE) -C xz
   $(MAKE) -C xz DESTDIR=$(shell pwd)/out/xz install
