@@ -45,7 +45,7 @@ script:
   (cd attr && make -j1 DESTDIR=$(shell pwd)/out/attr install install-lib install-dev)
   rm -r out/attr/usr/share/man/man2 out/attr/usr/share/man/man5
   {{pkmv "usr/include" "attr" "attr-headers"}}
-  {{pkmv "usr/share/locale" "attr" "attr-locale"}}
+  {{/* pkmv "usr/share/locale" "attr" "attr-locale" */}}
   {{pkmv "usr/share/man" "attr" "attr-man"}}
   {{pkmv "usr/share" "attr" "attr-doc"}}
   {{pkmv "usr/lib/libattr.so.1*" "attr" "libattr"}}
