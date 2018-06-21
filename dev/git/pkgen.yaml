@@ -20,7 +20,6 @@ builddependencies:
 - libc-dev
 - ncurses-dev
 - zlib-dev
-- subversion
 - gettext
 - musl
 - perl
@@ -31,6 +30,7 @@ builddependencies:
 - curl-dev
 sources:
 - https://www.kernel.org/pub/software/scm/git/git-{{.Version}}.tar.xz
+builder: bootstrap
 script:
 - |
   {{extract "git" "xz"}}
