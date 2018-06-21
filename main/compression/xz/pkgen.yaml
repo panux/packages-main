@@ -28,7 +28,6 @@ sources:
 - https://github.com/xz-mirror/xz/archive/v{{.Version}}.tar.gz
 script:
 - |
-  lpkg-alt reconfigure sh 00_bash
   mv src/v{{.Version}}.tar.gz src/xz-{{.Version}}.tar.gz
   {{extract "xz" "gz"}}
   (cd xz && autoreconf -vif)
