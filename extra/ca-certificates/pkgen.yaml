@@ -2,7 +2,6 @@ packages:
   ca-certificates:
     dependencies:
     - libressl
-    - base
   ca-certificates-doc:
 version: 20170801
 builddependencies:
