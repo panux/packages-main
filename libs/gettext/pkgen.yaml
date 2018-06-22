@@ -12,6 +12,7 @@ packages:
     dependencies:
     - libintl
     - gettext
+    - git
   gettext-locale:
     dependencies:
     - gettext
