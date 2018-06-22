@@ -11,7 +11,6 @@ sources:
 builddependencies:
   - gcc
   - libc-dev
-builder: bootstrap
 script:
 - |
   {{extract "libsodium" "gz"}}

@@ -4,6 +4,6 @@ packages:
     - basefs
     - busybox
     - lpkg
+    - lpkg-net
     - profile
 version: v0.1
-builder: bootstrap

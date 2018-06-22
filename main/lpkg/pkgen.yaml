@@ -3,6 +3,9 @@ packages:
     dependencies:
     - busybox
     - musl
+  lpkg-net:
+    dependencies:
+    - lpkg
     - minisign
   lpkg-https:
     dependencies:
@@ -21,5 +24,5 @@ script:
   mv src/v{{.Version}}.tar.gz src/lpkg-{{.Version}}.tar.gz
   {{extract "lpkg" "gz"}}
   $(MAKE) -C lpkg DESTDIR=$(shell pwd)/out/lpkg install
-  mkdir -p out/lpkg-https/etc/lpkg.d/fetchers
-  mv out/lpkg/etc/lpkg.d/fetchers/02_https.sh out/lpkg-https/etc/lpkg.d/fetchers/02_https.sh
+  {{pkmv "etc/lpkg.d/fetchers" "lpkg" "lpkg-net"}}
+  {{pkmv "etc/lpkg.d/fetchers/02_https.sh" "lpkg-net" "lpkg-https"}}

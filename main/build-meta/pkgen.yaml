@@ -6,7 +6,10 @@ packages:
     - gcc
     - libc-dev
     - binutils
-    - base
     - ccache
+    - basefs
+    - busybox
+    - lpkg
+    - profile
 version: v0.1
 builder: bootstrap
