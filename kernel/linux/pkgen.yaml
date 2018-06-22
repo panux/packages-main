@@ -27,6 +27,7 @@ builddependencies:
 - libelf-dev
 - flex
 - bison
+- libressl-dev
 script:
 - |
   set -e
