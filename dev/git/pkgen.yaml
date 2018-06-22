@@ -39,7 +39,7 @@ script:
   mkdir -p out/git/etc/gitconfig
   $(MAKE) -C git
   $(MAKE) -C git DESTDIR=$(shell pwd)/out/git install
-  mkdir -p out/git-core/usr/local/share
+  {{/* mkdir -p out/git-core/usr/local/share
   mv out/git/usr/local/share/git-core out/git-core/usr/local/share
   mkdir -p out/git-core/usr/local/libexec
   mv out/git/usr/local/libexec/git-core out/git-core/usr/local/libexec
@@ -56,4 +56,4 @@ script:
   mkdir -p out/git-perl5/usr/local/lib
   mv out/git/usr/local/lib/perl5 out/git-perl5/usr/local/lib
   mkdir -p out/git-bin/usr/local
-  mv out/git/usr/local/bin out/git-bin/usr/local
+  mv out/git/usr/local/bin out/git-bin/usr/local */}}
