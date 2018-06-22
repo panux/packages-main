@@ -2,6 +2,7 @@ packages:
   ca-certificates:
     dependencies:
     - libressl
+    - musl
   ca-certificates-doc:
 version: 20170801
 builddependencies:
