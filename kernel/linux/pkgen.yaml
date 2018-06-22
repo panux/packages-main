@@ -25,6 +25,8 @@ builddependencies:
 - linux-headers
 - xz
 - libelf-dev
+- flex
+- bison
 script:
 - |
   set -e
