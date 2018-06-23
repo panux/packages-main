@@ -23,4 +23,3 @@ script:
   (cd out/ca-certificates/usr/share/ca-certificates && find . -name '*.crt' | sort | cut -b3-) > out/ca-certificates/etc/ca-certificates.conf
   cp src/oninstall.sh out/ca-certificates/.oninstall
   chmod 700 out/ca-certificates/.oninstall
-builder: bootstrap
