@@ -14,7 +14,6 @@ builder: bootstrap
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
 - file://./conf/{{buildarch}}.conf
-- file://./headers-compat.patch
 builddependencies:
 - gcc
 - libc-dev
@@ -38,7 +37,7 @@ script:
   mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
   $(MAKE) -C linux INSTALL_PATH=$(shell pwd)/out/linux-kernel/boot install
   $(MAKE) -C linux INSTALL_MOD_PATH=$(shell pwd)/out/linux-modules modules_install
-  (cd linux && for i in ../src/*.patch; do patch -p1 -i $$i; done)
+  # (cd linux && for i in ../src/*.patch; do patch -p1 -i $$i; done)
   $(MAKE) -C linux INSTALL_HDR_PATH=$(shell pwd)/out/linux-headers/usr headers_install
   mkdir out/linux-modules/usr out/linux-firmware/usr
   mv out/linux-modules/lib out/linux-modules/usr/lib
