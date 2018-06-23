@@ -14,8 +14,8 @@ sources:
 script:
 - |
   {{extract "alsa-lib" "bz2"}}
-  autoreconf --install
-  (cd alsa-lib && ./configure --prefix=/usr)
+  export GITCOMPILE_NO_MAKE=true
+  (cd alsa-lib && ./gitcompile --prefix=/usr)
   $(MAKE) -C alsa-lib
   $(MAKE) -C alsa-lib DESTDIR=$(shell pwd)/out/alsa-lib install
   {{pkmv "usr/include" "alsa-lib" "alsa-lib-headers"}}
