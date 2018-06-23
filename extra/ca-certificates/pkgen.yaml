@@ -1,6 +1,7 @@
 packages:
   ca-certificates:
     dependencies:
+    - busybox
     - libressl
     - musl
   ca-certificates-doc:
