@@ -11,7 +11,6 @@ builddependencies:
 sources:
 script:
 - |
-  mkdir src
   (cd src && wget ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-{{.Version}}.tar.gz)
   {{extract "unixODBC" "gz"}}
   mv unixODBC unixodbc
