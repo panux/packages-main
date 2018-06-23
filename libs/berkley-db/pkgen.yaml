@@ -22,7 +22,7 @@ script:
 - |
   (cd src && wget http://download.oracle.com/berkeley-db/db-{{.Version}}.tar.gz)
   {{extract "db" "gz"}}
-  (cd db/build_unix && ../dist/configure {{confflags}} --prefix=/usr --mandir=/usr/share/man --enable-compat185	--enable-shared	--enable-cxx)
+  (cd db/build_unix && ../dist/configure --prefix=/usr --mandir=/usr/share/man --enable-compat185	--enable-shared	--enable-cxx)
   $(MAKE) -C db/build_unix
   $(MAKE) -C db/build_unix DESTDIR=$(shell pwd)/out/berkley-db install
   mkdir -p out/berkley-db-doc/usr/share/doc
