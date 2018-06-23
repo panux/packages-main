@@ -1,3 +1,3 @@
 #!/usr/bin/busybox sh
 
-chroot $2 update-ca-certificates
+chroot $2 /usr/bin/update-ca-certificates
