@@ -4,6 +4,7 @@ packages:
     - busybox
     - libressl
     - musl
+    - basefs
   ca-certificates-doc:
 version: 20170801
 builddependencies:
