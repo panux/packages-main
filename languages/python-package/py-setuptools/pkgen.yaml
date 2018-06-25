@@ -5,7 +5,7 @@ packages:
   py2-setuptools:
     dependencies:
     - python2
-version: 33.1.1
+version: 39.2.0
 builddependencies:
 - python2-dev
 sources:
