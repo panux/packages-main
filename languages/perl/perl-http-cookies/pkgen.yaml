@@ -11,6 +11,8 @@ packages:
 version: 6.04
 builddependencies:
 - perl-dev
+- perl-http-date
+- perl-http-message
 sources:
 - https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTTP-Cookies-{{.Version}}.tar.gz
 builder: panux
