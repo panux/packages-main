@@ -10,6 +10,7 @@ packages:
 version: 6.04
 builddependencies:
 - perl-dev
+- perl-http-date
 sources:
 - https://cpan.metacpan.org/authors/id/G/GA/GAAS/File-Listing-{{.Version}}.tar.gz
 builder: panux
