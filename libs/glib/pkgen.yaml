@@ -46,7 +46,6 @@ script:
   $(MAKE) -C glib
   $(MAKE) -C glib DESTDIR=$(shell pwd)/out/glib install
   mkdir -p out/glib-doc/usr/share
-  {{pkmv "usr/share/gtk-doc" "glib" "glib-doc"}}
   mkdir -p out/glib-bash-completion/usr/share
   {{pkmv "usr/share/bash-completion" "glib" "glib-bash-completion"}}
   mkdir -p out/glib-lang/usr/share
