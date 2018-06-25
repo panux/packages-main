@@ -27,7 +27,7 @@ builddependencies:
 - libxext-dev
 - libsm-dev
 - tiff-dev
-- giflib-dev
+- libgif-dev
 - bzip2-dev
 - libpng-dev
 - libid3tag-dev
