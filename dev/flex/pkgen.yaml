@@ -29,6 +29,7 @@ builddependencies:
 - automake
 - libtool
 - flex
+- texinfo
 sources:
 - https://github.com/westes/flex/archive/master.tar.gz
 - https://bugs.openwrt.org/index.php?getfile=322
