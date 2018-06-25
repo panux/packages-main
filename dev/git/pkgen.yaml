@@ -34,10 +34,11 @@ builder: bootstrap
 script:
 - |
   {{extract "git" "xz"}}
+  export NO_PERL_MAKEMAKER=1
   {{configure "git" "--with-curl"}}
   mkdir -p out/git/usr
   mkdir -p out/git/etc/gitconfig
-  $(MAKE) -C git NO_PERL_MAKEMAKER=1
+  $(MAKE) -C git
   $(MAKE) -C git DESTDIR=$(shell pwd)/out/git install
   {{/* mkdir -p out/git-core/usr/local/share
   mv out/git/usr/local/share/git-core out/git-core/usr/local/share
