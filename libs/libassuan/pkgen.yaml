@@ -8,8 +8,6 @@ builddependencies:
   - libc-dev
   - libgpg-error-dev
   - xz
-data:
-  Parallell: 30
 sources:
   - https://www.gnupg.org/ftp/gcrypt/libassuan/libassuan-{{.Version}}.tar.bz2
 script:
@@ -18,11 +16,3 @@ script:
   {{configure "libassuan"}}
   $(MAKE) -C libassuan
   $(MAKE) -C libassuan DESTDIR=$(shell pwd)/out/libassuan install
-  mv out/libassuan/usr/local/lib out/libassuan/lib
-  mkdir -p out/libassuan-doc/usr/local/share out/libassuan-dev/usr/local/share
-  mv out/libassuan/usr/local/share/info out/libassuan-doc/usr/local/share/info
-  mv out/libassuan/usr/local/share/aclocal out/libassuan-dev/usr/local/share/aclocal
-  mv out/libassuan/usr/local/include out/libassuan-dev/usr/local/include
-  mv out/libassuan/lib out/libassuan/usr/lib
-  mv out/libassuan/usr/local/bin out/libassuan/usr/bin
-  rm -rf out/libassuan/usr/local
