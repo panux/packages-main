@@ -16,12 +16,17 @@ packages:
     dependencies:
     - popt-dev
 version: 1.16
+builddependencies:
+- autoconf
+- automake
+- libtool
+- gettext
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/popt/popt-{{.Version}}.tar.gz
 script:
 - |
   {{extract "popt" "gz"}}
-  (cd popt && ./configure --build {{confarch}} --host {{confarch}} --prefix=/usr --libdir=/usr/lib --disable-static)
+  (cd popt && ./autogen.sh --build {{confarch}} --host {{confarch}} --prefix=/usr --libdir=/usr/lib --disable-static)
   $(MAKE) -C popt
   $(MAKE) -C popt install DESTDIR=$(shell pwd)/out/popt
   {{pkmv "usr/include" "popt" "popt-headers"}}
