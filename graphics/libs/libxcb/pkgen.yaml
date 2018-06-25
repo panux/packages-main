@@ -26,7 +26,7 @@ sources:
 script:
 - |
   {{extract "libxcb" "bz2"}}
-  (cd libxcb && ./configure --prefix=/usr)
+  (cd libxcb && ./configure --prefix=/usr --disable-static --enable-shared --enable-xkb --enable-xinput --disable-xprint)
   $(MAKE) -C libxcb
   $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
   {{pkmv "usr/include" "libxcb" "libxcb-dev"}}

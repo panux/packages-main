@@ -5,6 +5,7 @@ packages:
   xcb-util-dev:
     dependencies:
     - libxcb-dev
+    - xcb-util
     - pkgconf
 version: 0.4.0
 builddependencies:
