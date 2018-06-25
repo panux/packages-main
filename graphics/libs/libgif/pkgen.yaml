@@ -26,6 +26,7 @@ script:
 - |
   {{extract "giflib" "bz2"}}
   (cd giflib && ./configure --prefix=/usr)
+  sed -i -e 's:xmlto:xmlto --skip-validation:' giflib/doc/Makefile.am
   $(MAKE) -C giflib
   $(MAKE) -C giflib DESTDIR=$(shell pwd)/out/libgif install
   {{pkmv "usr/include" "libgif" "libgif-headers"}}
