@@ -11,6 +11,8 @@ builddependencies:
 - dri2proto
 - libxext-dev
 - autoconf
+- automake
+- libtool
 - g++
 script:
 - |
