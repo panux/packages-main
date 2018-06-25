@@ -5,6 +5,7 @@ packages:
   libsodium-dev:
     dependencies:
     - musl-dev
+    - libsodium
 version: 1.0.13
 sources:
   - https://download.libsodium.org/libsodium/releases/libsodium-{{.Version}}.tar.gz
