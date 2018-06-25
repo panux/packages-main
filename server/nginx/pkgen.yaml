@@ -6,7 +6,7 @@ packages:
     - musl
     - pcre
     - zlib
-version: 1.12.1
+version: 1.12.2
 sources:
 - https://nginx.org/download/nginx-{{.Version}}.tar.gz
 - file://./oninstall.sh
