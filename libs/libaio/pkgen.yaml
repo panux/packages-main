@@ -9,7 +9,6 @@ builddependencies:
 sources:
 script:
 - |
-  mkdir src
   (cd src && wget http://ftp.debian.org/debian/pool/main/liba/libaio/libaio_{{.Version}}.orig.tar.gz)
   mv src/libaio_{{.Version}}.orig.tar.gz src/libaio-{{.Version}}.tar.gz
   {{extract "libaio" "gz"}}
