@@ -6,7 +6,7 @@ packages:
     dependencies:
     - dhcpcd-man
   dhcpcd-man:
-version: 6.11.5
+version: 7.0.6
 builddependencies:
 - linux-headers
 - bsd-compat-headers
@@ -14,8 +14,6 @@ builddependencies:
 sources:
 - https://roy.marples.name/downloads/dhcpcd/dhcpcd-{{.Version}}.tar.xz
 - file://./dhcpcd.initd
-builder: panux
-oneshell: true
 script:
 - |
   {{extract "dhcpcd" "xz"}}
