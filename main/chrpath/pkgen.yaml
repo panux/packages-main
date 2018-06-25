@@ -9,8 +9,7 @@ packages:
 version: 0.16
 builddependencies:
 sources:
-- https://alioth.debian.org/frs/download.php/latestfile/813/chrpath-{{.Version}}.tar.gz
-builder: panux
+- https://alioth-archive.debian.org/releases/chrpath/chrpath/{{.Version}}/chrpath-{{.Version}}.tar.gz
 script:
 - |
   {{extract "chrpath" "gz"}}
