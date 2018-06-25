@@ -8,7 +8,7 @@ packages:
 version: 1.0.7
 builddependencies:
 - py-setuptools
-- python2
+- python2-dev
 sources:
 - https://bitbucket.org/zzzeek/mako/get/rel_1_0_7.tar.bz2
 script:
