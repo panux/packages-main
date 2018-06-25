@@ -1,5 +1,7 @@
 packages:
   py-gtk:
+    py-cario:
+    py-gobject:
 version: 2.24.0
 sources:
 - https://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz
@@ -8,6 +10,13 @@ sources:
 builddependencies:
 - python2-dev
 - glib-dev
+- libglade-dev
+- py-cairo-dev
+- python2-dev
+- libffi-dev
+- autoconf
+- automake
+- libtool
 script:
 - |
   {{extract "pygtk" "gz"}}
