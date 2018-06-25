@@ -30,7 +30,6 @@ script:
   $(MAKE) -C libxcb
   $(MAKE) -C libxcb DESTDIR=$(shell pwd)/out/libxcb install
   {{pkmv "usr/include" "libxcb" "libxcb-dev"}}
-  {{pkmv "usr/lib/*.a" "libxcb" "libxcb-dev"}}
   {{pkmv "usr/lib/*.so" "libxcb" "libxcb-dev"}}
   {{pkmv "usr/lib/pkgconfig" "libxcb" "libxcb-dev"}}
   {{pkmv "usr/share" "libxcb" "libxcb-doc"}}
