@@ -14,6 +14,7 @@ builder: bootstrap
 sources:
 - https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-{{.Version}}.tar.xz
 - file://./conf/{{buildarch}}.conf
+- file://./no-error.mk
 builddependencies:
 - gcc
 - libc-dev
@@ -32,6 +33,7 @@ script:
   set -e
   {{extract "linux" "xz"}}
   mv src/{{buildarch}}.conf linux/.config
+  cat src/no-error.mk >> linux/Makefile
   $(MAKE) -C linux
   $(MAKE) -C linux bzImage vmlinux modules
   mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
