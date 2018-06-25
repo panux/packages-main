@@ -9,6 +9,8 @@ version: 1.1.5
 builddependencies:
 - linux-headers
 - autoconf
+- automake
+- libtool
 sources:
 - https://ftp.osuosl.org/pub/blfs/conglomeration/alsa-lib/alsa-lib-{{.Version}}.tar.bz2
 script:
