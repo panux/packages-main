@@ -14,7 +14,6 @@ packages:
   gnupg-libexec:
 version: 2.1.21
 builddependencies:
-  - alpine-sdk
   - autoconf
   - automake
   - gettext-dev
@@ -27,8 +26,6 @@ builddependencies:
   - libassuan-dev
   - openldap-dev
   - imagemagick
-data:
-  Parallell: 30
 sources:
   - https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-{{.Version}}.tar.bz2
 script:
