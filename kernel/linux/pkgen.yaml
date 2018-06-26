@@ -8,7 +8,7 @@ packages:
     dependencies:
     - linux-kernel
   linux-headers:
-version: 4.17.3
+version: 4.14.52
 oneshell: true
 builder: bootstrap
 sources:
@@ -33,7 +33,6 @@ script:
   set -e
   {{extract "linux" "xz"}}
   mv src/{{buildarch}}.conf linux/.config
-  cat src/no-error.mk >> linux/Makefile
   $(MAKE) -C linux
   $(MAKE) -C linux bzImage vmlinux modules
   mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
