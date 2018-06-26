@@ -14,7 +14,8 @@ builddependencies:
 - freetype-dev
 - fontsproto
 - zlib-dev
-- xproto xtrans
+- xproto
+- xtrans
 - util-macros
 - autoconf
 - automake
