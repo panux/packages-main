@@ -38,7 +38,7 @@ packages:
     - libgcc
   libstdc++-dev:
   libcilkrts:
-version: 8.1.0
+version: 7.2.0
 builder: bootstrap
 sources:
   - https://ftp.gnu.org/gnu/gcc/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
