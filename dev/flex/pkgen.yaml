@@ -40,10 +40,11 @@ script:
   mv flex-master flex
   # mv src/index.php src/110-gcc720-segfault.patch
   # (cd flex && patch -p1 ../src/110-gcc720-segfault.patch)
-  (cd flex && ./autogen.sh)
-  {{configure "flex" "--infodir=/usr/share/info	--disable-static --enable-shared ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes"}}
+  (cd flex && ./autogen.sh && ./configure --disable-static)
   $(MAKE) -C flex
   $(MAKE) -C flex DESTDIR=$(shell pwd)/out/flex install
+  mv out/flex/usr/local/* out/flex/usr/
+  rm -r out/flex/usr/local
   {{pkmv "usr/include" "flex" "flex-headers"}}
   {{pkmv "usr/lib/libfl.*" "flex" "libfl"}}
   {{/* pkmv "usr/share/locale" "flex" "flex-locale" */}}
