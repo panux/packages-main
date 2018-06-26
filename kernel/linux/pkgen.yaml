@@ -8,7 +8,7 @@ packages:
     dependencies:
     - linux-kernel
   linux-headers:
-version: 4.14.52
+version: 4.17.3
 oneshell: true
 builder: bootstrap
 sources:
