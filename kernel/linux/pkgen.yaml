@@ -33,6 +33,7 @@ script:
   set -e
   {{extract "linux" "xz"}}
   mv src/{{buildarch}}.conf linux/.config
+  if [ ! -e /lib/modules ]; then mkdir /lib/modules; fi
   $(MAKE) -C linux
   $(MAKE) -C linux bzImage vmlinux modules
   mkdir -p out/linux-kernel/boot out/linux-modules/lib/modules out/linux-firmware/lib/firmware
