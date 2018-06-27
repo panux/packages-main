@@ -28,6 +28,7 @@ builddependencies:
 - flex
 - bison
 - libressl-dev
+- gcc-include
 script:
 - |
   set -e
