@@ -15,13 +15,12 @@ sources:
 builddependencies:
 - popt-dev
 - linux-headers
-builder: panux
 script:
 - |
   tar -xf src/{{.Version}}.tar.gz
   cat src/haxe.h >> /usr/include/strings.h
   mv efivar-{{.Version}} efivar
-  $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion"
+  $(MAKE) -C efivar -j1 CFLAGS="-Os -flto -Wno-error=implicit-function-declaration -Wno-error=int-conversion -I/usr/include"
   $(MAKE) -C efivar -j1 libdir="/usr/lib" DESTDIR=$(shell pwd)/out/efivar install
   {{pkmv "usr/include" "efivar" "efivar-headers"}}
   {{pkmv "usr/lib/libefivar.*" "efivar" "libefivar"}}
