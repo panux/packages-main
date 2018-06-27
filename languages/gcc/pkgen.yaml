@@ -4,6 +4,7 @@ packages:
     - gcc-libexec
     - gcc-libcc1
     - binutils
+    - gcc-include
   g++:
     dependencies:
     - gcc
