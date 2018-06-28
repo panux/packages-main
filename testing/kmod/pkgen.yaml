@@ -30,7 +30,7 @@ script:
   mv out/kmod/usr/lib/libkmod.so out/kmod/usr/lib/pkgconfig out/kmod-dev/usr/lib
   mkdir -p out/kmod-doc/usr
   mv out/kmod/usr/share out/kmod-doc/usr
-  mkdir out/kmod/etc/lpkg.d/alt.d
+  mkdir -p out/kmod/etc/lpkg.d/alt.d
   echo '#!/bin/busybox sh' > out/kmod/.oninstall
   echo 'set -e' >> out/kmod/.oninstall
   for i in out/kmod/usr/bin/*; do
