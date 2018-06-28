@@ -40,3 +40,4 @@ script:
   ln -s /usr/bin/$$(basename $$i)-kmod out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/00_kmod.provider
   echo /usr/bin/$$(basename $$i) > out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/.target
   done
+  chmod +x out/kmod/.oninstall
