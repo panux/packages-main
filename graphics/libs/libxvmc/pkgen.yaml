@@ -39,5 +39,5 @@ script:
   $(MAKE) -C libXvMC install DESTDIR=$(shell pwd)/out/libxvmc
   {{pkmv "usr/include" "libxvmc" "libxvmc-headers"}}
   {{pkmv "usr/lib/pkgconfig" "libxvmc" "libxvmc-pkgconfig"}}
-  {{mvman "libxvmc"}}
-  rm -r out/libxvmc/usr/share
+  {{/* mvman "libxvmc" */}}
+  {{/* rm -r out/libxvmc/usr/share */}}
