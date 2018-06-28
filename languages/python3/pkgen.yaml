@@ -8,6 +8,12 @@ packages:
   python3-dev:
     dependencies:
     - python3
+    - g++
+    - zlib-dev
+    - linux-headers
+    - libffi-dev
+    - expat-dev
+    - libressl-dev
   python3-doc:
 version: 3.5.1
 builddependencies:
@@ -16,7 +22,7 @@ builddependencies:
 - linux-headers
 - libffi-dev
 - expat-dev
-- libressl
+- libressl-dev
 sources:
 - https://www.python.org/ftp/python/{{.Version}}/Python-{{.Version}}.tar.xz
 builder: bootstrap

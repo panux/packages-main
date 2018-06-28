@@ -20,6 +20,21 @@ packages:
     dependencies:
     - python
     - pkgconfig
+    - binutils
+    - g++
+    - libc-dev
+    - zlib-dev
+    - linux-headers
+    - libffi-dev
+    - expat-dev
+    - gdbm-dev
+    - ncurses-dev
+    - ncurses-libs
+    - libressl-dev
+    - readline-dev
+    - sqlite-dev
+    - bzip2-dev
+    - tcl-dev
   python2:
     dependencies:
     - python
