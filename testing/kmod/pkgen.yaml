@@ -9,6 +9,7 @@ packages:
     - kmod
   kmod-doc:
 version: 24
+builder: bootstrap
 builddependencies:
 - libxslt
 - zlib-dev
@@ -17,15 +18,25 @@ builddependencies:
 sources:
 - https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-{{.Version}}.tar.xz
 script:
-- tar -xf src/kmod-{{.Version}}.tar.xz
-- mv kmod-{{.Version}} kmod
-- (cd kmod && ./configure --prefix=/usr --sysconfdir=/etc --with-xz)
-- $(MAKE) -C kmod
-- $(MAKE) -C kmod DESTDIR=$(shell pwd)/out/kmod install
-- mkdir -p out/kmod-bash-completion/usr/share
-- mv out/kmod/usr/share/bash-completion out/kmod-bash-completion/usr/share
-- mkdir -p out/kmod-dev/usr/lib
-- mv out/kmod/usr/include out/kmod-dev/usr
-- mv out/kmod/usr/lib/libkmod.so out/kmod/usr/lib/pkgconfig out/kmod-dev/usr/lib
-- mkdir -p out/kmod-doc/usr
-- mv out/kmod/usr/share out/kmod-doc/usr
+- |
+  {{extract "kmod" "xz"}}
+  (cd kmod && ./configure --prefix=/usr --sysconfdir=/etc --with-xz)
+  $(MAKE) -C kmod
+  $(MAKE) -C kmod DESTDIR=$(shell pwd)/out/kmod install
+  mkdir -p out/kmod-bash-completion/usr/share
+  mv out/kmod/usr/share/bash-completion out/kmod-bash-completion/usr/share
+  mkdir -p out/kmod-dev/usr/lib
+  mv out/kmod/usr/include out/kmod-dev/usr
+  mv out/kmod/usr/lib/libkmod.so out/kmod/usr/lib/pkgconfig out/kmod-dev/usr/lib
+  mkdir -p out/kmod-doc/usr
+  mv out/kmod/usr/share out/kmod-doc/usr
+  mkdir out/kmod/etc/lpkg.d/alt.d
+  echo '#!/bin/busybox sh' > out/kmod/.oninstall
+  echo 'set -e' >> out/kmod/.oninstall
+  for i in out/kmod/usr/bin/*; do
+  echo "lpkg-alt update $$i" >> out/kmod/.oninstall
+  mv $$i $$i-kmod
+  mkdir out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)
+  ln -s /usr/bin/$$(basename $$i)-kmod out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/00_kmod.provider
+  echo /usr/bin/$$(basename $$i) > out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/.target
+  done
