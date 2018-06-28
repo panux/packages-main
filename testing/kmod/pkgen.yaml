@@ -15,6 +15,14 @@ builddependencies:
 - zlib-dev
 - xz-libs
 - xz-dev
+data:
+  bins:
+  - lsmod
+  - rmmod
+  - insmod
+  - modinfo
+  - modprobe
+  - depmod
 sources:
 - https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-{{.Version}}.tar.xz
 script:
@@ -23,7 +31,7 @@ script:
   (cd kmod && ./configure --prefix=/usr --sysconfdir=/etc --with-xz)
   $(MAKE) -C kmod
   $(MAKE) -C kmod DESTDIR=$(shell pwd)/out/kmod install
-  {{/* mkdir -p out/kmod-bash-completion/usr/share
+  mkdir -p out/kmod-bash-completion/usr/share
   mv out/kmod/usr/share/bash-completion out/kmod-bash-completion/usr/share
   mkdir -p out/kmod-dev/usr/lib
   mv out/kmod/usr/include out/kmod-dev/usr
@@ -33,11 +41,10 @@ script:
   mkdir -p out/kmod/etc/lpkg.d/alt.d
   echo '#!/bin/busybox sh' > out/kmod/.oninstall
   echo 'set -e' >> out/kmod/.oninstall
-  for i in out/kmod/usr/bin/*; do
-  echo "lpkg-alt update $$(basename $$i)" >> out/kmod/.oninstall
-  mv $$i $$i-kmod
-  mkdir out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)
-  ln -s /usr/bin/$$(basename $$i)-kmod out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/00_kmod.provider
-  echo /usr/bin/$$(basename $$i) > out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/.target
-  done
-  chmod +x out/kmod/.oninstall */}}
+  {{- range .Data.bins}}
+  echo 'lpkg-alt update {{.}}' >> out/kmod/.oninstall
+  mkdir out/kmod/etc/lpkg.d/alt.d/{{.}}
+  ln -s /usr/bin/kmod out/kmod/etc/lpkg.d/alt.d/{{.}}/00_kmod.provider
+  echo /usr/bin/{{.}} > out/kmod/etc/lpkg.d/alt.d/{{.}}/.target
+  {{- end}}
+  chmod +x out/kmod/.oninstall
