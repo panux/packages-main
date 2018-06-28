@@ -23,7 +23,7 @@ script:
   (cd kmod && ./configure --prefix=/usr --sysconfdir=/etc --with-xz)
   $(MAKE) -C kmod
   $(MAKE) -C kmod DESTDIR=$(shell pwd)/out/kmod install
-  mkdir -p out/kmod-bash-completion/usr/share
+  {{/* mkdir -p out/kmod-bash-completion/usr/share
   mv out/kmod/usr/share/bash-completion out/kmod-bash-completion/usr/share
   mkdir -p out/kmod-dev/usr/lib
   mv out/kmod/usr/include out/kmod-dev/usr
@@ -34,10 +34,10 @@ script:
   echo '#!/bin/busybox sh' > out/kmod/.oninstall
   echo 'set -e' >> out/kmod/.oninstall
   for i in out/kmod/usr/bin/*; do
-  echo "lpkg-alt update $$i" >> out/kmod/.oninstall
+  echo "lpkg-alt update $$(basename $$i)" >> out/kmod/.oninstall
   mv $$i $$i-kmod
   mkdir out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)
   ln -s /usr/bin/$$(basename $$i)-kmod out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/00_kmod.provider
   echo /usr/bin/$$(basename $$i) > out/kmod/etc/lpkg.d/alt.d/$$(basename $$i)/.target
   done
-  chmod +x out/kmod/.oninstall
+  chmod +x out/kmod/.oninstall */}}
