@@ -44,7 +44,7 @@ script:
   {{- range .Data.bins}}
   echo 'lpkg-alt update {{.}}' >> out/kmod/.oninstall
   mkdir out/kmod/etc/lpkg.d/alt.d/{{.}}
-  ln -s /usr/bin/kmod out/kmod/etc/lpkg.d/alt.d/{{.}}/00_kmod.provider
+  ln -s /usr/bin/kmod out/kmod/etc/lpkg.d/alt.d/{{.}}/02_kmod.provider
   echo /usr/bin/{{.}} > out/kmod/etc/lpkg.d/alt.d/{{.}}/.target
   {{- end}}
   chmod +x out/kmod/.oninstall
