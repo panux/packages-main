@@ -1,16 +1,16 @@
 packages:
   popt:
   popt-dev:
-    depedencies:
+    dependencies:
     - popt
     - popt-headers
   popt-doc:
-    depedencies:
+    dependencies:
     - popt-man
   popt-man:
   popt-headers:
   libpopt:
-    depedencies:
+    dependencies:
     - popt
   libpopt-dev:
     dependencies:
