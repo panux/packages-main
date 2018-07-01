@@ -14,7 +14,7 @@ packages:
   git-bin:
     dependencies:
     - git-core
-version: 2.13.2
+version: 2.18.0
 builddependencies:
 - gcc
 - libc-dev
