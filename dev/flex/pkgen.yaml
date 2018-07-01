@@ -19,7 +19,7 @@ packages:
     - flex-locale
   flex-man:
   flex-locale:
-version: 2.6.4.1
+version: 2.6.4
 builddependencies:
 - m4
 - bison
@@ -31,15 +31,14 @@ builddependencies:
 - flex
 - texinfo
 sources:
-- https://github.com/westes/flex/archive/master.tar.gz
+- https://github.com/westes/flex/releases/download/v{{.Version}}/flex-{{.Version}}.tar.gz
 - https://bugs.openwrt.org/index.php?getfile=322
 builder: bootstrap
 script:
 - |
-  tar -xf src/master.tar.gz
-  mv flex-master flex
-  # mv src/index.php src/110-gcc720-segfault.patch
-  # (cd flex && patch -p1 ../src/110-gcc720-segfault.patch)
+  {{extract "flex" "gz"}}
+  mv src/index.php src/110-gcc720-segfault.patch
+  (cd flex && patch -p1 ../src/110-gcc720-segfault.patch)
   (cd flex && ./autogen.sh && ./configure --disable-static)
   $(MAKE) -C flex
   $(MAKE) -C flex DESTDIR=$(shell pwd)/out/flex install
