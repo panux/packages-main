@@ -27,7 +27,6 @@ builddependencies:
 - xmlto
 - perl
 - tcl
-- tk
 sources:
 - https://www.kernel.org/pub/software/scm/git/git-{{.Version}}.tar.xz
 builder: bootstrap
