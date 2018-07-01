@@ -17,7 +17,7 @@ packages:
     - libcom_err
   e2fsprogs-doc:
   libcom_err:
-version: 1.43.9
+version: 1.44.2
 builddependencies:
 - util-linux-dev
 - linux-headers
