@@ -27,7 +27,7 @@ script:
 - |
   {{extract "popt" "gz"}}
   (cd popt && ./autogen.sh)
-  (cd popt && ./configure.sh --prefix=/usr --libdir=/usr/lib --disable-static)
+  (cd popt && ./configure --prefix=/usr --libdir=/usr/lib --disable-static)
   $(MAKE) -C popt
   $(MAKE) -C popt install DESTDIR=$(shell pwd)/out/popt
   {{pkmv "usr/include" "popt" "popt-headers"}}
