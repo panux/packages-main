@@ -31,7 +31,7 @@ script:
 - |
   mv src/v{{.Version}}.tar.gz src/xz-{{.Version}}.tar.gz
   {{extract "xz" "gz"}}
-  if [ -f /etc/gitconfig ]; then rm -r /etc/gitconfig; fi
+  if [ -e /etc/gitconfig ]; then rm -r /etc/gitconfig; fi
   (cd xz && ./autogen.sh)
   {{configure "xz" "--disable-static --disable-gettext"}}
   $(MAKE) -C xz
