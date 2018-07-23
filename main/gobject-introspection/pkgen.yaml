@@ -23,6 +23,8 @@ packages:
     - gobject-introspection-man
   gobject-introspection-man:
 version: 1.52.1
+nobootstrap:
+  python: true
 builddependencies:
 - python2
 - glib-dev
