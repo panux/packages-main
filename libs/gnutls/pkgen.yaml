@@ -24,7 +24,7 @@ packages:
   gnutls-doc:
   gnutls-headers:
   libgnutls:
-version: 3.6.2
+version: 3.6.3
 builder: bootstrap
 builddependencies:
 - nettle-dev
