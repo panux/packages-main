@@ -54,6 +54,7 @@ builddependencies:
   - mpfr-dev
   - mpc1-dev
   - zlib-dev
+  - isl-dev
 data:
   libs:
     - quadmath

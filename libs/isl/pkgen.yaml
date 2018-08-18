@@ -1,0 +1,29 @@
+packages:
+  libisl:
+  libisl-include:
+  libisl-dev:
+    dependencies:
+    - libisl
+    - libisl-include
+  isl:
+    dependencies:
+    - libisl
+  isl-dev:
+    dependencies:
+    - libisl-dev
+version: 0.18
+builder: bootstrap
+sources:
+- https://gcc.gnu.org/pub/gcc/infrastructure/isl-{{.Version}}.tar.bz2
+builddependencies:
+- g++
+- libc-dev
+script:
+- |
+  {{extract "isl" "bz2"}}
+  {{configure "isl" "--disable-static"}}
+  $(MAKE) -C isl
+  $(MAKE) -C isl install DESTDIR=$(shell pwd)/out/libisl
+  mkdir out/libisl-include/usr
+  mv out/libisl/usr/include out/libisl-include/usr/include
+  rm -r out/libisl/usr/share
