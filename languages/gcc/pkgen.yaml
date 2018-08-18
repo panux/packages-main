@@ -38,7 +38,6 @@ packages:
     dependencies:
     - libgcc
   libstdc++-dev:
-  libcilkrts:
 version: 8.2.0
 builder: bootstrap
 sources:
@@ -65,7 +64,6 @@ data:
     - itm
     - supc++
     - stdc++
-    - cilkrts
 oneshell: true
 script:
 - |
