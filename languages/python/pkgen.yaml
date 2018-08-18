@@ -42,7 +42,7 @@ packages:
     dependencies:
     - python-dev
   python-doc:
-version: 2.7.13
+version: 2.7.15
 builddependencies:
 - binutils
 - g++

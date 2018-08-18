@@ -39,7 +39,7 @@ packages:
     - libgcc
   libstdc++-dev:
   libcilkrts:
-version: 7.2.0
+version: 8.2.0
 builder: bootstrap
 sources:
   - https://ftp.gnu.org/gnu/gcc/gcc-{{.Version}}/gcc-{{.Version}}.tar.gz
@@ -73,7 +73,6 @@ script:
   mv gcc /gcc
   export CC=gcc
   export CXX=g++
-  sed -i -e 's/TARGET_CONFIGARGS = /TARGET_CONFIGARGS = CC=gcc CXX=g++ --build={{confarch}}-pc-linux-musl /g' Makefile
   (cd /gcc && ./configure CC=gcc CXX=g++ --disable-static --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --disable-libmpx --build={{confarch}}-pc-linux-musl)
   $(MAKE) -C /gcc CC=gcc CXX=g++
   $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
