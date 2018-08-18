@@ -69,12 +69,12 @@ oneshell: true
 script:
 - |
   {{extract "gcc" "gz"}}
-  mv gcc /gcc
+  mkdir build-gcc
   export CC=gcc
   export CXX=g++
-  (cd /gcc && ./configure CC=gcc CXX=g++ --disable-static --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --disable-libmpx --build={{confarch}}-pc-linux-musl)
-  $(MAKE) -C /gcc CC=gcc CXX=g++
-  $(MAKE) -C /gcc install DESTDIR=$(shell pwd)/out/gcc
+  (cd build-gcc && ../gcc/configure CC=gcc CXX=g++ --disable-static --prefix=/usr --enable-languages=c,c++ --disable-multilib --disable-bootstrap --disable-libsanitizer --with-system-zlib --disable-libmpx --build={{confarch}}-pc-linux-musl)
+  $(MAKE) -C build-gcc CC=gcc CXX=g++
+  $(MAKE) -C build-gcc install DESTDIR=$(shell pwd)/out/gcc
   mkdir out/gcc-libexec/usr
   mv out/gcc/usr/libexec out/gcc-libexec/usr/libexec
   mkdir -p out/gcc-install-tools/usr/lib/gcc/{{confarch}}-pc-linux-musl/{{.Version}}
