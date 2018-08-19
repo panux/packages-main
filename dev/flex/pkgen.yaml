@@ -32,13 +32,10 @@ builddependencies:
 - texinfo
 sources:
 - https://github.com/westes/flex/releases/download/v{{.Version}}/flex-{{.Version}}.tar.gz
-- https://bugs.openwrt.org/index.php?getfile=322
 builder: bootstrap
 script:
 - |
   {{extract "flex" "gz"}}
-  mv src/index.php src/110-gcc720-segfault.patch
-  (cd flex && patch -p1 ../src/110-gcc720-segfault.patch)
   (cd flex {{/* && ./autogen.sh */}} && ./configure --disable-static)
   $(MAKE) -C flex
   $(MAKE) -C flex DESTDIR=$(shell pwd)/out/flex install
