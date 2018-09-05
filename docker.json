@@ -1,1 +1,1 @@
-{"image":"sha256:4d8c014c9ac7680aa2186a3429dc215a7bc8c47ffdead6efc80712b4c4720c24","packages":["build-meta","g++","bison","flex","texinfo","gmp-dev","mpfr-dev","mpc1-dev","zlib-dev","isl-dev"]}
+{"image":"sha256:4d8c014c9ac7680aa2186a3429dc215a7bc8c47ffdead6efc80712b4c4720c24","packages":["build-meta","g++","bison","flex","texinfo","gmp-dev","mpfr-dev","mpc1-dev","zlib-dev","isl-dev","libressl-dev","autoconf","perl","base"]}

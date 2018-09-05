@@ -15,7 +15,6 @@ version: 10.30
 sources:
 - https://ftp.pcre.org/pub/pcre/pcre2-{{.Version}}.tar.gz
 builddependencies:
-- libedit-dev
 - zlib-dev
 - paxmark
 script:

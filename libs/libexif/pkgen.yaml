@@ -22,5 +22,4 @@ script:
   $(MAKE) -C libexif
   $(MAKE) -C libexif DESTDIR=$(shell pwd)/out/libexif install
   {{pkmv "usr/include" "libexif" "libexif-headers"}}
-  {{pkmv "usr/share/locale" "libexif" "libexif-locale"}}
   {{pkmv "usr/share" "libexif" "libexif-doc"}}
